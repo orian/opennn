@@ -1,13 +1,19 @@
 /****************************************************************************************************************/
 /*                                                                                                              */
-/*   OpenNN: Open Neural Networks Library                                                                       */
-/*   www.intelnics.com/opennn                                                                                   */
+/*   OpenNN: Open Neural Networks Library
+ */
+/*   www.intelnics.com/opennn
+ */
 /*                                                                                                              */
-/*   T R A I N I N G   R A T E   A L G O R I T H M   T E S T   C L A S S                                        */
+/*   T R A I N I N G   R A T E   A L G O R I T H M   T E S T   C L A S S
+ */
 /*                                                                                                              */
-/*   Roberto Lopez                                                                                              */
-/*   Intelnics - The artificial intelligence company                                                            */
-/*   robertolopez@intelnics.com                                                                                 */
+/*   Roberto Lopez
+ */
+/*   Intelnics - The artificial intelligence company
+ */
+/*   robertolopez@intelnics.com
+ */
 /*                                                                                                              */
 /****************************************************************************************************************/
 
@@ -17,518 +23,484 @@
 
 using namespace OpenNN;
 
-// GENERAL CONSTRUCTOR 
+// GENERAL CONSTRUCTOR
 
-TrainingRateAlgorithmTest::TrainingRateAlgorithmTest(void) : UnitTesting() 
-{
-}
-
+TrainingRateAlgorithmTest::TrainingRateAlgorithmTest(void) : UnitTesting() {}
 
 // DESTRUCTOR
 
-TrainingRateAlgorithmTest::~TrainingRateAlgorithmTest(void)
-{
-}
-
+TrainingRateAlgorithmTest::~TrainingRateAlgorithmTest(void) {}
 
 // METHODS
 
-void TrainingRateAlgorithmTest::test_constructor(void)
-{
-   message += "test_constructor\n"; 
+void TrainingRateAlgorithmTest::test_constructor(void) {
+  message += "test_constructor\n";
 
-   PerformanceFunctional pf;
+  PerformanceFunctional pf;
 
-   TrainingRateAlgorithm tra1(&pf);
+  TrainingRateAlgorithm tra1(&pf);
 
-   assert_true(tra1.has_performance_functional() == true, LOG);
+  assert_true(tra1.has_performance_functional() == true, LOG);
 
-   TrainingRateAlgorithm tra2;
+  TrainingRateAlgorithm tra2;
 
-   assert_true(tra2.has_performance_functional() == false, LOG);
+  assert_true(tra2.has_performance_functional() == false, LOG);
 }
 
-
-void TrainingRateAlgorithmTest::test_destructor(void)
-{
-   message += "test_destructor\n"; 
+void TrainingRateAlgorithmTest::test_destructor(void) {
+  message += "test_destructor\n";
 }
 
+void TrainingRateAlgorithmTest::test_get_performance_functional_pointer(void) {
+  message += "test_get_performance_functional_pointer\n";
 
-void TrainingRateAlgorithmTest::test_get_performance_functional_pointer(void)
-{
-   message += "test_get_performance_functional_pointer\n"; 
-   
-   PerformanceFunctional pf;
+  PerformanceFunctional pf;
 
-   TrainingRateAlgorithm tra(&pf);
+  TrainingRateAlgorithm tra(&pf);
 
-   PerformanceFunctional* pfp = tra.get_performance_functional_pointer();
+  PerformanceFunctional* pfp = tra.get_performance_functional_pointer();
 
-   assert_true(pfp != NULL, LOG);
+  assert_true(pfp != NULL, LOG);
 }
 
+void TrainingRateAlgorithmTest::test_get_training_rate_method(void) {
+  message += "test_get_training_rate_method\n";
 
-void TrainingRateAlgorithmTest::test_get_training_rate_method(void)
-{
-   message += "test_get_training_rate_method\n"; 
+  TrainingRateAlgorithm tra;
 
-   TrainingRateAlgorithm tra;
+  tra.set_training_rate_method(TrainingRateAlgorithm::Fixed);
+  assert_true(tra.get_training_rate_method() == TrainingRateAlgorithm::Fixed,
+              LOG);
 
-   tra.set_training_rate_method(TrainingRateAlgorithm::Fixed);
-   assert_true(tra.get_training_rate_method() == TrainingRateAlgorithm::Fixed, LOG);
+  tra.set_training_rate_method(TrainingRateAlgorithm::GoldenSection);
+  assert_true(
+      tra.get_training_rate_method() == TrainingRateAlgorithm::GoldenSection,
+      LOG);
 
-   tra.set_training_rate_method(TrainingRateAlgorithm::GoldenSection);
-   assert_true(tra.get_training_rate_method() == TrainingRateAlgorithm::GoldenSection, LOG);
-
-   tra.set_training_rate_method(TrainingRateAlgorithm::BrentMethod);
-   assert_true(tra.get_training_rate_method() == TrainingRateAlgorithm::BrentMethod, LOG);
+  tra.set_training_rate_method(TrainingRateAlgorithm::BrentMethod);
+  assert_true(
+      tra.get_training_rate_method() == TrainingRateAlgorithm::BrentMethod,
+      LOG);
 }
 
-
-void TrainingRateAlgorithmTest::test_get_training_rate_method_name(void)
-{
-   message += "test_get_training_rate_method_name\n"; 
+void TrainingRateAlgorithmTest::test_get_training_rate_method_name(void) {
+  message += "test_get_training_rate_method_name\n";
 }
 
+void TrainingRateAlgorithmTest::test_get_warning_training_rate(void) {
+  message += "test_get_warning_training_rate\n";
 
-void TrainingRateAlgorithmTest::test_get_warning_training_rate(void)
-{
-   message += "test_get_warning_training_rate\n";
+  TrainingRateAlgorithm tra;
 
-   TrainingRateAlgorithm tra;
+  tra.set_warning_training_rate(0.0);
 
-   tra.set_warning_training_rate(0.0);
-
-   assert_true(tra.get_warning_training_rate() == 0.0, LOG);
+  assert_true(tra.get_warning_training_rate() == 0.0, LOG);
 }
 
+void TrainingRateAlgorithmTest::test_get_error_training_rate(void) {
+  message += "test_get_error_training_rate\n";
 
-void TrainingRateAlgorithmTest::test_get_error_training_rate(void)
-{
-   message += "test_get_error_training_rate\n";
+  TrainingRateAlgorithm tra;
 
-   TrainingRateAlgorithm tra;
+  tra.set_error_training_rate(0.0);
 
-   tra.set_error_training_rate(0.0);
-
-   assert_true(tra.get_error_training_rate() == 0.0, LOG);
+  assert_true(tra.get_error_training_rate() == 0.0, LOG);
 }
 
+void TrainingRateAlgorithmTest::test_get_display(void) {
+  message += "test_get_warning_gradient_norm\n";
 
-void TrainingRateAlgorithmTest::test_get_display(void)
-{
-   message += "test_get_warning_gradient_norm\n"; 
+  TrainingRateAlgorithm tra;
 
-   TrainingRateAlgorithm tra;
+  tra.set_display(false);
 
-   tra.set_display(false);
-
-   assert_true(tra.get_display() == false, LOG);
+  assert_true(tra.get_display() == false, LOG);
 }
 
+void TrainingRateAlgorithmTest::test_get_bracketing_factor(void) {
+  message += "test_get_bracketing_factor\n";
 
-void TrainingRateAlgorithmTest::test_get_bracketing_factor(void)   
-{
-   message += "test_get_bracketing_factor\n"; 
+  TrainingRateAlgorithm tra;
 
-   TrainingRateAlgorithm tra;
+  tra.set_bracketing_factor(0.0);
 
-   tra.set_bracketing_factor(0.0);
-
-   assert_true(tra.get_bracketing_factor() == 0.0, LOG);
+  assert_true(tra.get_bracketing_factor() == 0.0, LOG);
 }
 
-
-void TrainingRateAlgorithmTest::test_get_training_rate_tolerance(void)
-{
-   message += "test_get_training_rate_tolerance\n"; 
+void TrainingRateAlgorithmTest::test_get_training_rate_tolerance(void) {
+  message += "test_get_training_rate_tolerance\n";
 }
 
+void TrainingRateAlgorithmTest::test_set(void) { message += "test_set\n"; }
 
-void TrainingRateAlgorithmTest::test_set(void)
-{
-   message += "test_set\n"; 
+void TrainingRateAlgorithmTest::test_set_default(void) {
+  message += "test_set_default\n";
 }
 
-
-void TrainingRateAlgorithmTest::test_set_default(void)
-{
-   message += "test_set_default\n"; 
+void TrainingRateAlgorithmTest::test_set_performance_functional_pointer(void) {
+  message += "test_set_performance_functional_pointer\n";
 }
 
-
-void TrainingRateAlgorithmTest::test_set_performance_functional_pointer(void)
-{
-   message += "test_set_performance_functional_pointer\n"; 
+void TrainingRateAlgorithmTest::test_set_display(void) {
+  message += "test_set_display\n";
 }
 
-
-void TrainingRateAlgorithmTest::test_set_display(void)
-{
-   message += "test_set_display\n"; 
+void TrainingRateAlgorithmTest::test_set_training_rate_method(void) {
+  message += "test_set_training_rate_method\n";
 }
 
-
-void TrainingRateAlgorithmTest::test_set_training_rate_method(void)
-{
-   message += "test_set_training_rate_method\n"; 
+void TrainingRateAlgorithmTest::test_set_training_rate_tolerance(void) {
+  message += "test_set_training_rate_tolerance\n";
 }
 
-
-void TrainingRateAlgorithmTest::test_set_training_rate_tolerance(void)
-{
-   message += "test_set_training_rate_tolerance\n"; 
+void TrainingRateAlgorithmTest::test_set_warning_training_rate(void) {
+  message += "test_set_warning_training_rate\n";
 }
 
-
-void TrainingRateAlgorithmTest::test_set_warning_training_rate(void)
-{
-   message += "test_set_warning_training_rate\n"; 
+void TrainingRateAlgorithmTest::test_set_error_training_rate(void) {
+  message += "test_set_error_training_rate\n";
 }
 
+void TrainingRateAlgorithmTest::test_calculate_directional_point(void) {
+  message += "test_calculate_directional_point\n";
 
-void TrainingRateAlgorithmTest::test_set_error_training_rate(void)
-{
-   message += "test_set_error_training_rate\n"; 
+  //   NeuralNetwork nn;
+
+  //   PerformanceFunctional pf(&nn);
+
+  //   TrainingRateAlgorithm tra(&pf);
+
+  //   tra.calculate_directional_point();
 }
 
+void TrainingRateAlgorithmTest::test_calculate_fixed_directional_point(void) {
+  message += "test_calculate_fixed_directional_point\n";
 
-void TrainingRateAlgorithmTest::test_calculate_directional_point(void)
-{
-   message += "test_calculate_directional_point\n";
+  NeuralNetwork nn;
 
-//   NeuralNetwork nn;
+  Vector<double> parameters;
 
-//   PerformanceFunctional pf(&nn);
+  PerformanceFunctional pf(&nn);
 
-//   TrainingRateAlgorithm tra(&pf);
+  pf.destruct_all_terms();
+  pf.set_regularization_type(
+      PerformanceFunctional::NEURAL_PARAMETERS_NORM_REGULARIZATION);
 
-//   tra.calculate_directional_point();
+  double performance;
+  Vector<double> gradient;
+
+  TrainingRateAlgorithm tra(&pf);
+
+  Vector<double> training_direction;
+  double training_rate;
+
+  Vector<double> directional_point;
+
+  // Test
+
+  nn.set(1, 1);
+
+  nn.initialize_parameters(1.0);
+
+  performance = pf.calculate_performance();
+
+  gradient = pf.calculate_gradient();
+
+  training_direction = gradient * (-1.0);
+  training_rate = 0.001;
+
+  directional_point = tra.calculate_fixed_directional_point(
+      performance, training_direction, training_rate);
+
+  assert_true(directional_point.size() == 2, LOG);
+  assert_true(directional_point[1] < performance, LOG);
+
+  assert_true(directional_point[1] ==
+                  pf.calculate_performance(training_direction, training_rate),
+              LOG);
+
+  parameters = nn.arrange_parameters();
+
+  nn.set_parameters(parameters + training_direction * training_rate);
+
+  assert_true(directional_point[1] == pf.calculate_performance(), LOG);
+
+  // Test
+
+  nn.set(1, 1);
+
+  nn.initialize_parameters(1.0);
+
+  training_direction.set(2, -1.0);
+  training_rate = 1.0;
+
+  directional_point = tra.calculate_fixed_directional_point(
+      3.14, training_direction, training_rate);
+
+  assert_true(directional_point.size() == 2, LOG);
+  assert_true(directional_point[0] == 1.0, LOG);
+  assert_true(directional_point[1] == 0.0, LOG);
 }
 
+void TrainingRateAlgorithmTest::test_calculate_bracketing_triplet(void) {
+  message += "test_calculate_bracketing_triplet\n";
 
-void TrainingRateAlgorithmTest::test_calculate_fixed_directional_point(void)
-{
-   message += "test_calculate_fixed_directional_point\n";
+  DataSet ds(1, 1, 2);
 
-   NeuralNetwork nn;
+  NeuralNetwork nn(1, 1);
 
-   Vector<double> parameters;
+  PerformanceFunctional pf(&nn, &ds);
 
-   PerformanceFunctional pf(&nn);
+  TrainingRateAlgorithm tra(&pf);
 
-   pf.destruct_all_terms();
-   pf.set_regularization_type(PerformanceFunctional::NEURAL_PARAMETERS_NORM_REGULARIZATION);
+  double performance;
+  Vector<double> training_direction;
+  double initial_training_rate;
 
-   double performance;
-   Vector<double> gradient;
+  TrainingRateAlgorithm::Triplet triplet;
 
-   TrainingRateAlgorithm tra(&pf);
+  // Test
 
-   Vector<double> training_direction;
-   double training_rate;
+  pf.destruct_all_terms();
+  pf.set_regularization_type(
+      PerformanceFunctional::NEURAL_PARAMETERS_NORM_REGULARIZATION);
 
-   Vector<double> directional_point;
+  nn.randomize_parameters_normal();
 
-   // Test
+  performance = pf.calculate_performance();
+  training_direction = pf.calculate_gradient() * (-1.0);
+  initial_training_rate = 0.01;
 
-   nn.set(1, 1);
+  triplet = tra.calculate_bracketing_triplet(performance, training_direction,
+                                             initial_training_rate);
 
-   nn.initialize_parameters(1.0);
+  assert_true(triplet.A[0] <= triplet.U[0], LOG);
+  assert_true(triplet.U[0] <= triplet.B[0], LOG);
+  assert_true(triplet.A[1] >= triplet.U[1], LOG);
+  assert_true(triplet.U[1] <= triplet.B[1], LOG);
 
-   performance = pf.calculate_performance();
+  // Test
 
-   gradient = pf.calculate_gradient();
+  nn.initialize_parameters(0.0);
 
-   training_direction = gradient*(-1.0);
-   training_rate = 0.001;
+  performance = pf.calculate_performance();
+  training_direction = pf.calculate_gradient() * (-1.0);
+  initial_training_rate = 0.01;
 
-   directional_point = tra.calculate_fixed_directional_point(performance, training_direction, training_rate);
+  triplet = tra.calculate_bracketing_triplet(performance, training_direction,
+                                             initial_training_rate);
 
-   assert_true(directional_point.size() == 2, LOG);
-   assert_true(directional_point[1] < performance, LOG);
+  assert_true(triplet.has_length_zero(), LOG);
 
-   assert_true(directional_point[1] == pf.calculate_performance(training_direction, training_rate), LOG);
+  // Test
 
-   parameters = nn.arrange_parameters();
+  nn.initialize_parameters(1.0);
 
-   nn.set_parameters(parameters + training_direction*training_rate);
+  performance = pf.calculate_performance();
+  training_direction = pf.calculate_gradient() * (-1.0);
+  initial_training_rate = 0.0;
 
-   assert_true(directional_point[1] == pf.calculate_performance(), LOG);
+  triplet = tra.calculate_bracketing_triplet(performance, training_direction,
+                                             initial_training_rate);
 
-   // Test
+  assert_true(triplet.has_length_zero(), LOG);
 
-   nn.set(1, 1);
+  // Test
 
-   nn.initialize_parameters(1.0);
+  ds.set(1, 1, 1);
+  ds.randomize_data_normal();
 
-   training_direction.set(2, -1.0);
-   training_rate = 1.0;
+  nn.set(1, 1);
+  nn.randomize_parameters_normal();
 
-   directional_point = tra.calculate_fixed_directional_point(3.14, training_direction, training_rate);
+  pf.destruct_all_terms();
+  pf.set_objective_type(PerformanceFunctional::SUM_SQUARED_ERROR_OBJECTIVE);
 
-   assert_true(directional_point.size() == 2, LOG);
-   assert_true(directional_point[0] == 1.0, LOG);
-   assert_true(directional_point[1] == 0.0, LOG);
+  performance = pf.calculate_performance();
+  training_direction = pf.calculate_gradient() * (-1.0);
+  initial_training_rate = 0.001;
+
+  triplet = tra.calculate_bracketing_triplet(performance, training_direction,
+                                             initial_training_rate);
+
+  assert_true(triplet.A[0] <= triplet.U[0], LOG);
+  assert_true(triplet.U[0] <= triplet.B[0], LOG);
+  assert_true(triplet.A[1] >= triplet.U[1], LOG);
+  assert_true(triplet.U[1] <= triplet.B[1], LOG);
+
+  // Test
+
+  ds.set(1, 1, 3);
+  ds.randomize_data_normal();
+
+  nn.set(1, 1);
+  nn.randomize_parameters_normal();
+
+  pf.destruct_all_terms();
+  pf.set_objective_type(
+      PerformanceFunctional::NORMALIZED_SQUARED_ERROR_OBJECTIVE);
+
+  performance = pf.calculate_performance();
+  training_direction = pf.calculate_gradient() * (-1.0);
+  initial_training_rate = 0.001;
+
+  triplet = tra.calculate_bracketing_triplet(performance, training_direction,
+                                             initial_training_rate);
+
+  assert_true(triplet.A[0] <= triplet.U[0], LOG);
+  assert_true(triplet.U[0] <= triplet.B[0], LOG);
+  assert_true(triplet.A[1] >= triplet.U[1], LOG);
+  assert_true(triplet.U[1] <= triplet.B[1], LOG);
 }
 
+void TrainingRateAlgorithmTest::test_calculate_golden_section_directional_point(
+    void) {
+  message += "test_calculate_golden_section_directional_point\n";
 
-void TrainingRateAlgorithmTest::test_calculate_bracketing_triplet(void)
-{
-    message += "test_calculate_bracketing_triplet\n";
+  NeuralNetwork nn(1, 1);
 
-    DataSet ds(1, 1, 2);
+  PerformanceFunctional pf(&nn);
 
-    NeuralNetwork nn(1, 1);
+  pf.destruct_all_terms();
+  pf.set_regularization_type(
+      PerformanceFunctional::NEURAL_PARAMETERS_NORM_REGULARIZATION);
 
-    PerformanceFunctional pf(&nn, &ds);
+  TrainingRateAlgorithm tra(&pf);
 
-    TrainingRateAlgorithm tra(&pf);
+  nn.initialize_parameters(1.0);
 
-    double performance;
-    Vector<double> training_direction;
-    double initial_training_rate;
+  double performance = pf.calculate_performance();
+  Vector<double> gradient = pf.calculate_gradient();
 
-    TrainingRateAlgorithm::Triplet triplet;
+  Vector<double> training_direction = gradient * (-1.0);
+  double initial_training_rate = 0.001;
 
-    // Test
+  double training_rate_tolerance = 1.0e-6;
+  tra.set_training_rate_tolerance(training_rate_tolerance);
 
-    pf.destruct_all_terms();
-    pf.set_regularization_type(PerformanceFunctional::NEURAL_PARAMETERS_NORM_REGULARIZATION);
+  Vector<double> directional_point =
+      tra.calculate_golden_section_directional_point(
+          performance, training_direction, initial_training_rate);
 
-    nn.randomize_parameters_normal();
-
-    performance = pf.calculate_performance();
-    training_direction = pf.calculate_gradient()*(-1.0);
-    initial_training_rate = 0.01;
-
-    triplet = tra.calculate_bracketing_triplet(performance, training_direction, initial_training_rate);
-
-    assert_true(triplet.A[0] <= triplet.U[0], LOG);
-    assert_true(triplet.U[0] <= triplet.B[0], LOG);
-    assert_true(triplet.A[1] >= triplet.U[1], LOG);
-    assert_true(triplet.U[1] <= triplet.B[1], LOG);
-
-    // Test
-
-    nn.initialize_parameters(0.0);
-
-    performance = pf.calculate_performance();
-    training_direction = pf.calculate_gradient()*(-1.0);
-    initial_training_rate = 0.01;
-
-    triplet = tra.calculate_bracketing_triplet(performance, training_direction, initial_training_rate);
-
-    assert_true(triplet.has_length_zero(), LOG);
-
-    // Test
-
-    nn.initialize_parameters(1.0);
-
-    performance = pf.calculate_performance();
-    training_direction = pf.calculate_gradient()*(-1.0);
-    initial_training_rate = 0.0;
-
-    triplet = tra.calculate_bracketing_triplet(performance, training_direction, initial_training_rate);
-
-    assert_true(triplet.has_length_zero(), LOG);
-
-    // Test
-
-    ds.set(1, 1, 1);
-    ds.randomize_data_normal();
-
-    nn.set(1, 1);
-    nn.randomize_parameters_normal();
-
-    pf.destruct_all_terms();
-    pf.set_objective_type(PerformanceFunctional::SUM_SQUARED_ERROR_OBJECTIVE);
-
-    performance = pf.calculate_performance();
-    training_direction = pf.calculate_gradient()*(-1.0);
-    initial_training_rate = 0.001;
-
-    triplet = tra.calculate_bracketing_triplet(performance, training_direction, initial_training_rate);
-
-    assert_true(triplet.A[0] <= triplet.U[0], LOG);
-    assert_true(triplet.U[0] <= triplet.B[0], LOG);
-    assert_true(triplet.A[1] >= triplet.U[1], LOG);
-    assert_true(triplet.U[1] <= triplet.B[1], LOG);
-
-    // Test
-
-    ds.set(1, 1, 3);
-    ds.randomize_data_normal();
-
-    nn.set(1, 1);
-    nn.randomize_parameters_normal();
-
-    pf.destruct_all_terms();
-    pf.set_objective_type(PerformanceFunctional::NORMALIZED_SQUARED_ERROR_OBJECTIVE);
-
-    performance = pf.calculate_performance();
-    training_direction = pf.calculate_gradient()*(-1.0);
-    initial_training_rate = 0.001;
-
-    triplet = tra.calculate_bracketing_triplet(performance, training_direction, initial_training_rate);
-
-    assert_true(triplet.A[0] <= triplet.U[0], LOG);
-    assert_true(triplet.U[0] <= triplet.B[0], LOG);
-    assert_true(triplet.A[1] >= triplet.U[1], LOG);
-    assert_true(triplet.U[1] <= triplet.B[1], LOG);
+  assert_true(directional_point.size() == 2, LOG);
+  assert_true(directional_point[0] >= 0.0, LOG);
+  assert_true(directional_point[1] < performance, LOG);
 }
 
+void TrainingRateAlgorithmTest::test_calculate_Brent_method_directional_point(
+    void) {
+  message += "test_calculate_Brent_method_directional_point\n";
 
-void TrainingRateAlgorithmTest::test_calculate_golden_section_directional_point(void)
-{
-   message += "test_calculate_golden_section_directional_point\n";
+  NeuralNetwork nn(1, 1);
+  PerformanceFunctional pf(&nn);
 
-   NeuralNetwork nn(1, 1);
+  pf.destruct_all_terms();
+  pf.set_regularization_type(
+      PerformanceFunctional::NEURAL_PARAMETERS_NORM_REGULARIZATION);
 
-   PerformanceFunctional pf(&nn);
+  TrainingRateAlgorithm tra(&pf);
 
-   pf.destruct_all_terms();
-   pf.set_regularization_type(PerformanceFunctional::NEURAL_PARAMETERS_NORM_REGULARIZATION);
+  nn.initialize_parameters(1.0);
 
-   TrainingRateAlgorithm tra(&pf);
+  double performance = pf.calculate_performance();
+  Vector<double> gradient = pf.calculate_gradient();
 
-   nn.initialize_parameters(1.0);
+  Vector<double> training_direction = gradient * (-1.0);
+  double initial_training_rate = 0.001;
 
-   double performance = pf.calculate_performance();
-   Vector<double> gradient = pf.calculate_gradient();
+  double training_rate_tolerance = 1.0e-6;
+  tra.set_training_rate_tolerance(training_rate_tolerance);
 
-   Vector<double> training_direction = gradient*(-1.0);
-   double initial_training_rate = 0.001;
+  Vector<double> directional_point =
+      tra.calculate_Brent_method_directional_point(
+          performance, training_direction, initial_training_rate);
 
-   double training_rate_tolerance = 1.0e-6;
-   tra.set_training_rate_tolerance(training_rate_tolerance);
-  
-   Vector<double> directional_point
-   = tra.calculate_golden_section_directional_point(performance, training_direction, initial_training_rate);
-
-   assert_true(directional_point.size() == 2, LOG);
-   assert_true(directional_point[0] >= 0.0, LOG);
-   assert_true(directional_point[1] < performance, LOG);
+  assert_true(directional_point.size() == 2, LOG);
+  assert_true(directional_point[0] >= 0.0, LOG);
+  assert_true(directional_point[1] < performance, LOG);
 }
 
+void TrainingRateAlgorithmTest::test_to_XML(void) {
+  message += "test_to_XML\n";
 
-void TrainingRateAlgorithmTest::test_calculate_Brent_method_directional_point(void)
-{
-   message += "test_calculate_Brent_method_directional_point\n";
+  TrainingRateAlgorithm tra;
 
-   NeuralNetwork nn(1, 1);
-   PerformanceFunctional pf(&nn);
+  tinyxml2::XMLDocument* document = tra.to_XML();
 
-   pf.destruct_all_terms();
-   pf.set_regularization_type(PerformanceFunctional::NEURAL_PARAMETERS_NORM_REGULARIZATION);
+  assert_true(document != NULL, LOG);
 
-   TrainingRateAlgorithm tra(&pf);
-
-   nn.initialize_parameters(1.0);
-
-   double performance = pf.calculate_performance();
-   Vector<double> gradient = pf.calculate_gradient();
-
-   Vector<double> training_direction = gradient*(-1.0);
-   double initial_training_rate = 0.001;
-
-   double training_rate_tolerance = 1.0e-6;
-   tra.set_training_rate_tolerance(training_rate_tolerance);
-
-   Vector<double> directional_point
-   = tra.calculate_Brent_method_directional_point(performance, training_direction, initial_training_rate);
-
-   assert_true(directional_point.size() == 2, LOG);
-   assert_true(directional_point[0] >= 0.0, LOG);
-   assert_true(directional_point[1] < performance, LOG);
+  delete document;
 }
 
+void TrainingRateAlgorithmTest::run_test_case(void) {
+  message += "Running training rate algorithm test case...\n";
 
-void TrainingRateAlgorithmTest::test_to_XML(void)
-{
-   message += "test_to_XML\n";
+  // Constructor and destructor methods
 
-   TrainingRateAlgorithm  tra;
+  test_constructor();
+  test_destructor();
 
-   tinyxml2::XMLDocument* document = tra.to_XML();
+  // Get methods
 
-   assert_true(document != NULL, LOG);
+  test_get_performance_functional_pointer();
 
-   delete document;
-}
+  // Training operators
 
+  test_get_training_rate_method();
+  test_get_training_rate_method_name();
 
-void TrainingRateAlgorithmTest::run_test_case(void)
-{
-   message += "Running training rate algorithm test case...\n";
+  // Training parameters
 
-   // Constructor and destructor methods
+  test_get_bracketing_factor();
+  test_get_training_rate_tolerance();
 
-   test_constructor();
-   test_destructor();
+  test_get_warning_training_rate();
+  test_get_error_training_rate();
 
-   // Get methods
+  // Utilities
 
-   test_get_performance_functional_pointer();
+  test_get_display();
 
-   // Training operators
+  // Set methods
 
-   test_get_training_rate_method();
-   test_get_training_rate_method_name();
+  test_set();
+  test_set_default();
 
-   // Training parameters
+  test_set_performance_functional_pointer();
 
-   test_get_bracketing_factor();   
-   test_get_training_rate_tolerance();
+  // Training operators
 
-   test_get_warning_training_rate();
-   test_get_error_training_rate();
+  test_set_training_rate_method();
 
-   // Utilities
-   
-   test_get_display();
+  // Training parameters
 
-   // Set methods
+  test_set_training_rate_tolerance();
 
-   test_set();
-   test_set_default();   
+  test_set_warning_training_rate();
 
-   test_set_performance_functional_pointer();
+  test_set_error_training_rate();
 
-   // Training operators
+  // Utilities
 
-   test_set_training_rate_method();
+  test_set_display();
 
-   // Training parameters
+  // Training methods
 
-   test_set_training_rate_tolerance();
+  test_calculate_bracketing_triplet();
+  test_calculate_fixed_directional_point();
+  test_calculate_golden_section_directional_point();
+  test_calculate_Brent_method_directional_point();
+  test_calculate_directional_point();
 
-   test_set_warning_training_rate();
+  // Serialization methods
 
-   test_set_error_training_rate();
+  test_to_XML();
 
-   // Utilities
-
-   test_set_display();
-
-   // Training methods
-
-   test_calculate_bracketing_triplet();
-   test_calculate_fixed_directional_point();
-   test_calculate_golden_section_directional_point();
-   test_calculate_Brent_method_directional_point();
-   test_calculate_directional_point();
-
-   // Serialization methods
-
-   test_to_XML();
-
-   message += "End of training rate algorithm test case.\n";
+  message += "End of training rate algorithm test case.\n";
 }
 
 // OpenNN: Open Neural Networks Library.
-// Copyright (C) 2005-2014 Roberto Lopez 
+// Copyright (C) 2005-2014 Roberto Lopez
 //
 // This library is free software; you can redistribute it and/or
 // modify it under the terms of the GNU Lesser General Public

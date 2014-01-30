@@ -1,13 +1,19 @@
 /****************************************************************************************************************/
 /*                                                                                                              */
-/*   OpenNN: Open Neural Networks Library                                                                       */
-/*   www.intelnics.com/opennn                                                                                   */
+/*   OpenNN: Open Neural Networks Library
+ */
+/*   www.intelnics.com/opennn
+ */
 /*                                                                                                              */
-/*   Q U A S I - N E W T O N   M E T H O D   T E S T   C L A S S   H E A D E R                                  */
+/*   Q U A S I - N E W T O N   M E T H O D   T E S T   C L A S S   H E A D E R
+ */
 /*                                                                                                              */
-/*   Roberto Lopez                                                                                              */
-/*   Intelnics - The artificial intelligence company                                                            */
-/*   robertolopez@intelnics.com                                                                                 */
+/*   Roberto Lopez
+ */
+/*   Intelnics - The artificial intelligence company
+ */
+/*   robertolopez@intelnics.com
+ */
 /*                                                                                                              */
 /****************************************************************************************************************/
 
@@ -18,77 +24,70 @@
 
 #include "unit_testing.h"
 
-
 using namespace OpenNN;
 
+class QuasiNewtonMethodTest : public UnitTesting {
 
-class QuasiNewtonMethodTest : public UnitTesting 
-{
-
-#define	STRING(x) #x
+#define STRING(x) #x
 #define TOSTRING(x) STRING(x)
-#define LOG __FILE__ ":" TOSTRING(__LINE__)"\n"
+#define LOG __FILE__ ":" TOSTRING(__LINE__) "\n"
 
-public:
+ public:
 
-   // GENERAL CONSTRUCTOR
+  // GENERAL CONSTRUCTOR
 
-   explicit QuasiNewtonMethodTest(void);
+  explicit QuasiNewtonMethodTest(void);
 
+  // DESTRUCTOR
 
-   // DESTRUCTOR
+  virtual ~QuasiNewtonMethodTest(void);
 
-   virtual ~QuasiNewtonMethodTest(void);
+  // METHODS
 
+  // Constructor and destructor methods
 
-   // METHODS
+  void test_constructor(void);
+  void test_destructor(void);
 
-   // Constructor and destructor methods
+  // Get methods
 
-   void test_constructor(void);
-   void test_destructor(void); 
+  void test_get_inverse_Hessian_approximation_method(void);
+  void test_get_inverse_Hessian_approximation_method_name(void);
 
-   // Get methods
+  // Set methods
 
-   void test_get_inverse_Hessian_approximation_method(void);
-   void test_get_inverse_Hessian_approximation_method_name(void);
+  void test_set_inverse_Hessian_approximation_method(void);
 
-   // Set methods
+  // Training methods
 
-   void test_set_inverse_Hessian_approximation_method(void);
+  void test_calculate_DFP_inverse_Hessian_approximation(void);
+  void test_calculate_BFGS_inverse_Hessian_approximation(void);
 
-   // Training methods
+  void test_calculate_inverse_Hessian_approximation(void);
+  void test_calculate_training_direction(void);
 
-   void test_calculate_DFP_inverse_Hessian_approximation(void);
-   void test_calculate_BFGS_inverse_Hessian_approximation(void);
+  void test_perform_training(void);
 
-   void test_calculate_inverse_Hessian_approximation(void);
-   void test_calculate_training_direction(void);
+  // Training history methods
 
-   void test_perform_training(void);
+  void test_resize_training_history(void);
+  void test_set_reserve_all_training_history(void);
+  void test_get_training_history_XML(void);
 
-   // Training history methods
+  // Serialization methods
 
-   void test_resize_training_history(void);
-   void test_set_reserve_all_training_history(void);
-   void test_get_training_history_XML(void);   
+  void test_to_XML(void);
+  void test_load(void);
 
-   // Serialization methods
+  // Unit testing methods
 
-   void test_to_XML(void);   
-   void test_load(void);
-  
-   // Unit testing methods
-
-   void run_test_case(void);
+  void run_test_case(void);
 };
-
 
 #endif
 
-
 // OpenNN: Open Neural Networks Library.
-// Copyright (C) 2005-2014 Roberto Lopez 
+// Copyright (C) 2005-2014 Roberto Lopez
 //
 // This library is free software; you can redistribute it and/or
 // modify it under the terms of the GNU Lesser General Public

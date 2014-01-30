@@ -1,13 +1,19 @@
 /****************************************************************************************************************/
 /*                                                                                                              */
-/*   OpenNN: Open Neural Networks Library                                                                       */
-/*   www.intelnics.com/opennn                                                                                   */
+/*   OpenNN: Open Neural Networks Library
+ */
+/*   www.intelnics.com/opennn
+ */
 /*                                                                                                              */
-/*   P E R F O R M A N C E   F U N C T I O N A L   T E S T   C L A S S   H E A D E R                            */
+/*   P E R F O R M A N C E   F U N C T I O N A L   T E S T   C L A S S   H E A D
+ * E R                            */
 /*                                                                                                              */
-/*   Roberto Lopez                                                                                              */
-/*   Intelnics - The artificial intelligence company                                                            */
-/*   robertolopez@intelnics.com                                                                                 */
+/*   Roberto Lopez
+ */
+/*   Intelnics - The artificial intelligence company
+ */
+/*   robertolopez@intelnics.com
+ */
 /*                                                                                                              */
 /****************************************************************************************************************/
 
@@ -21,113 +27,106 @@
 
 using namespace OpenNN;
 
+class PerformanceFunctionalTest : public UnitTesting {
 
-class PerformanceFunctionalTest : public UnitTesting 
-{
-
-#define	STRING(x) #x
+#define STRING(x) #x
 #define TOSTRING(x) STRING(x)
-#define LOG __FILE__ ":" TOSTRING(__LINE__)"\n"
+#define LOG __FILE__ ":" TOSTRING(__LINE__) "\n"
 
-public:
+ public:
 
-   // GENERAL CONSTRUCTOR
+  // GENERAL CONSTRUCTOR
 
-   explicit PerformanceFunctionalTest(void);
+  explicit PerformanceFunctionalTest(void);
 
+  // DESTRUCTOR
 
-   // DESTRUCTOR
+  virtual ~PerformanceFunctionalTest(void);
 
-   virtual ~PerformanceFunctionalTest(void);
+  // METHODS
 
+  // Constructor and destructor methods
 
-   // METHODS
+  void test_constructor(void);
+  void test_destructor(void);
 
-   // Constructor and destructor methods
+  // Get methods
 
-   void test_constructor(void);
-   void test_destructor(void);
+  void test_get_neural_network_pointer(void);
 
-   // Get methods
+  void test_get_mathematical_model_pointer(void);
+  void test_get_data_set_pointer(void);
 
-   void test_get_neural_network_pointer(void);
+  void test_get_user_objective_pointer(void);
+  void test_get_user_regularization_pointer(void);
+  void test_get_user_constraints_pointer(void);
 
-   void test_get_mathematical_model_pointer(void);
-   void test_get_data_set_pointer(void);
+  void test_get_numerical_differentiation_pointer(void);
 
-   void test_get_user_objective_pointer(void);
-   void test_get_user_regularization_pointer(void);
-   void test_get_user_constraints_pointer(void);
+  // Serialization methods
 
-   void test_get_numerical_differentiation_pointer(void);
+  void test_get_display(void);
 
-   // Serialization methods
+  // Set methods
 
-   void test_get_display(void);
+  void test_set_neural_network_pointer(void);
+  void test_set_numerical_differentiation(void);
 
-   // Set methods
+  void test_set_default(void);
 
-   void test_set_neural_network_pointer(void);
-   void test_set_numerical_differentiation(void);
-   
-   void test_set_default(void);
+  // Serialization methods
 
-   // Serialization methods
+  void test_set_display(void);
 
-   void test_set_display(void);
+  // Objective functional performance methods
 
-   // Objective functional performance methods
+  void test_calculate_performance(void);
 
-   void test_calculate_performance(void);
+  void test_calculate_gradient(void);
 
-   void test_calculate_gradient(void);
+  void test_calculate_gradient_norm(void);
 
-   void test_calculate_gradient_norm(void);
+  void test_calculate_Hessian(void);
 
-   void test_calculate_Hessian(void);
+  void test_calculate_inverse_Hessian(void);
 
-   void test_calculate_inverse_Hessian(void);
+  void test_calculate_vector_dot_Hessian(void);
 
-   void test_calculate_vector_dot_Hessian(void);
+  void test_calculate_terms(void);
+  void test_calculate_terms_Jacobian(void);
 
-   void test_calculate_terms(void);
-   void test_calculate_terms_Jacobian(void);
+  // Taylor approximation methods
 
-   // Taylor approximation methods
+  void test_calculate_zero_order_Taylor_approximation(void);
+  void test_calculate_first_order_Taylor_approximation(void);
+  void test_calculate_second_order_Taylor_approximation(void);
 
-   void test_calculate_zero_order_Taylor_approximation(void);
-   void test_calculate_first_order_Taylor_approximation(void);
-   void test_calculate_second_order_Taylor_approximation(void);
+  // Directional performance methods
 
-   // Directional performance methods
-   
-   void test_calculate_directional_performance(void);
-   void test_calculate_directional_performance_derivative(void);
-   void test_calculate_directional_performance_second_derivative(void);
+  void test_calculate_directional_performance(void);
+  void test_calculate_directional_performance_derivative(void);
+  void test_calculate_directional_performance_second_derivative(void);
 
-   // Serialization methods
+  // Serialization methods
 
-   void test_to_XML(void);   
-   void test_from_XML(void);   
+  void test_to_XML(void);
+  void test_from_XML(void);
 
-   void test_print(void);   
-   void test_save(void);   
-   void test_load(void);   
+  void test_print(void);
+  void test_save(void);
+  void test_load(void);
 
-   void test_write_information(void);
+  void test_write_information(void);
 
-   // Unit testing methods
+  // Unit testing methods
 
-   void run_test_case(void);
-
+  void run_test_case(void);
 };
-
 
 #endif
 
-
 // OpenNN: Open Neural Networks Library.
-// Copyright (C) 2005-2014 Roberto Lopez 
+// Copyright (C) 2005-2014 Roberto Lopez
 //
 // This library is free software; you can redistribute it and/or
 // modify it under the terms of the GNU Lesser General Public

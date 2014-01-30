@@ -19,11 +19,19 @@ Then to build and install run:
 mkdir build
 cd build
 cmake -DCMAKE_BUILD_TYPE=Release ..
-make all
+make opennn
 sudo make install
 ```
 
 ##Run tests
+```
+mkdir build
+cd build
+cmake -DWithTests=ON ..
+make opennntests
+cd ../tests/bin
+../../build/bin/opennntests
+```
 
 ##Examples
 

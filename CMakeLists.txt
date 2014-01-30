@@ -22,7 +22,20 @@ set(MINOR_VERSION 0)
 set(PATCH_VERSION 0)
 set(VERSION ${MAJOR_VERSION}.${MINOR_VERSION}.${PATCH_VERSION})
 
+option(WithExamples "Build with examples." OFF)
+option(WithTests "Build with tests." OFF)
+
 set(CMAKE_RUNTIME_OUTPUT_DIRECTORY ${CMAKE_BINARY_DIR}/bin)
 set(CMAKE_LIBRARY_OUTPUT_DIRECTORY ${CMAKE_BINARY_DIR}/lib)
 
 add_subdirectory("${CMAKE_CURRENT_SOURCE_DIR}/source")
+
+if(WithTests)
+  MESSAGE("Will build tests.")
+  add_subdirectory("${CMAKE_CURRENT_SOURCE_DIR}/tests")
+endif()
+
+if(WithExamples)
+  MESSAGE("Will build examples.")
+  add_subdirectory("${CMAKE_CURRENT_SOURCE_DIR}/examples")
+endif()

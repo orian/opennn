@@ -1,13 +1,19 @@
 /****************************************************************************************************************/
 /*                                                                                                              */
-/*   OpenNN: Open Neural Networks Library                                                                       */
-/*   www.intelnics.com/opennn                                                                                   */
+/*   OpenNN: Open Neural Networks Library
+ */
+/*   www.intelnics.com/opennn
+ */
 /*                                                                                                              */
-/*   F I N A L   S O L U T I O N S   E R R O R   T E S T   C L A S S                                            */
+/*   F I N A L   S O L U T I O N S   E R R O R   T E S T   C L A S S
+ */
 /*                                                                                                              */
-/*   Roberto Lopez                                                                                              */
-/*   Intelnics - The artificial intelligence company                                                            */
-/*   robertolopez@intelnics.com                                                                                 */
+/*   Roberto Lopez
+ */
+/*   Intelnics - The artificial intelligence company
+ */
+/*   robertolopez@intelnics.com
+ */
 /*                                                                                                              */
 /****************************************************************************************************************/
 
@@ -19,124 +25,103 @@ using namespace OpenNN;
 
 // GENERAL CONSTRUCTOR
 
-FinalSolutionsErrorTest::FinalSolutionsErrorTest(void) : UnitTesting() 
-{
-}
-
+FinalSolutionsErrorTest::FinalSolutionsErrorTest(void) : UnitTesting() {}
 
 // DESTRUCTOR
 
-FinalSolutionsErrorTest::~FinalSolutionsErrorTest(void) 
-{
-}
-
+FinalSolutionsErrorTest::~FinalSolutionsErrorTest(void) {}
 
 // METHODS
 
 // @todo
 
-void FinalSolutionsErrorTest::test_constructor(void)
-{
-   message += "test_constructor\n";
+void FinalSolutionsErrorTest::test_constructor(void) {
+  message += "test_constructor\n";
 
-   // Default
+  // Default
 
-   NeuralNetwork nn;
-   MathematicalModel mm;
+  NeuralNetwork nn;
+  MathematicalModel mm;
 
-   FinalSolutionsError fse(&nn, &mm);
+  FinalSolutionsError fse(&nn, &mm);
 
-   assert_true(fse.get_neural_network_pointer() != NULL, LOG);
-   assert_true(fse.get_mathemtaical_model_pointer() != NULL, LOG);
-
+  assert_true(fse.get_neural_network_pointer() != NULL, LOG);
+  assert_true(fse.get_mathemtaical_model_pointer() != NULL, LOG);
 }
 
-
-void FinalSolutionsErrorTest::test_destructor(void)
-{
-   message += "test_destructor\n";
+void FinalSolutionsErrorTest::test_destructor(void) {
+  message += "test_destructor\n";
 }
 
 // @todo
 
-void FinalSolutionsErrorTest::test_calculate_performance(void)
-{
-   message += "test_calculate_performance\n";
+void FinalSolutionsErrorTest::test_calculate_performance(void) {
+  message += "test_calculate_performance\n";
 
-//   NeuralNetwork nn;
-//   Vector<double> network_parameters; 
+  //   NeuralNetwork nn;
+  //   Vector<double> network_parameters;
 
-//   FinalSolutionsError fse;
+  //   FinalSolutionsError fse;
 
-//   double performance;
+  //   double performance;
 
-   // Test
+  // Test
 }
 
+void FinalSolutionsErrorTest::test_to_XML(void) {
+  message += "test_to_XML\n";
 
-void FinalSolutionsErrorTest::test_to_XML(void)   
-{
-	message += "test_to_XML\n"; 
+  FinalSolutionsError fse;
 
-    FinalSolutionsError fse;
+  tinyxml2::XMLDocument* document = fse.to_XML();
 
-    tinyxml2::XMLDocument* document = fse.to_XML();
+  assert_true(document != NULL, LOG);
 
-    assert_true(document != NULL, LOG);
-
-    delete document;
-
+  delete document;
 }
 
+void FinalSolutionsErrorTest::test_from_XML(void) {
+  message += "test_from_XML\n";
 
-void FinalSolutionsErrorTest::test_from_XML(void)
-{
-	message += "test_from_XML\n"; 
+  std::string file_name = "../data/final_solutions_error.xml";
 
-    std::string file_name = "../data/final_solutions_error.xml";
+  //   FinalSolutionsError fse;
 
-//   FinalSolutionsError fse;
+  //   fse.set_display(false);
 
-//   fse.set_display(false);
+  //   fse.save(file_name);
 
-//   fse.save(file_name);
+  //   fse.load(file_name);
 
-//   fse.load(file_name);
-
-//   assert_true(fse.get_display() == false, LOG);
+  //   assert_true(fse.get_display() == false, LOG);
 }
 
+void FinalSolutionsErrorTest::run_test_case(void) {
+  message += "Running final solutions error test case...\n";
 
+  // Constructor and destructor methods
 
+  test_constructor();
+  test_destructor();
 
-void FinalSolutionsErrorTest::run_test_case(void)
-{
-   message += "Running final solutions error test case...\n";
+  // Get methods
 
-   // Constructor and destructor methods
+  // Set methods
 
-   test_constructor();
-   test_destructor();
+  // Performance methods
 
-   // Get methods
+  test_calculate_performance();
 
-   // Set methods
+  // Serialization methods
 
-   // Performance methods
+  test_to_XML();
+  test_from_XML();
 
-   test_calculate_performance();
-
-   // Serialization methods
-
-   test_to_XML();   
-   test_from_XML();
-
-   message += "End of final solutions error test case...\n";
+  message += "End of final solutions error test case...\n";
 }
-
 
 // OpenNN: Open Neural Networks Library.
-// Copyright (C) 2005-2014 Roberto Lopez 
+// Copyright (C) 2005-2014 Roberto Lopez
 //
 // This library is free software; you can redistribute it and/or
 // modify it under the terms of the GNU Lesser General Public

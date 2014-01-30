@@ -1,12 +1,17 @@
 /****************************************************************************************************************/
 /*                                                                                                              */
-/*   OpenNN: Open Neural Networks Library                                                                       */
-/*   http://flood.sourceforge.net                                                                               */
+/*   OpenNN: Open Neural Networks Library
+ */
+/*   http://flood.sourceforge.net
+ */
 /*                                                                                                              */
-/*   I N V E R S E   P R O B L E M   T E S T I N G   T E S T   C L A S S   H E A D E R                          */
+/*   I N V E R S E   P R O B L E M   T E S T I N G   T E S T   C L A S S   H E A
+ * D E R                          */
 /*                                                                                                              */
-/*   Roberto Lopez                                                                                              */ 
-/*   E-mail: roberto-lopez@users.sourceforge.net                                                                */ 
+/*   Roberto Lopez
+ */
+/*   E-mail: roberto-lopez@users.sourceforge.net
+ */
 /*                                                                                                              */
 /****************************************************************************************************************/
 
@@ -19,58 +24,52 @@
 
 using namespace OpenNN;
 
+class InverseProblemTestingTest : public UnitTesting {
 
-class InverseProblemTestingTest : public UnitTesting 
-{
-
-#define	STRING(x) #x
+#define STRING(x) #x
 #define TOSTRING(x) STRING(x)
-#define LOG __FILE__ ":" TOSTRING(__LINE__)"\n"
+#define LOG __FILE__ ":" TOSTRING(__LINE__) "\n"
 
-public:  
+ public:
 
-   // GENERAL CONSTRUCTOR
+  // GENERAL CONSTRUCTOR
 
-   explicit InverseProblemTestingTest(void);
+  explicit InverseProblemTestingTest(void);
 
+  // DESTRUCTOR
 
-   // DESTRUCTOR
+  virtual ~InverseProblemTestingTest(void);
 
-   virtual ~InverseProblemTestingTest(void);
+  // METHODS
 
+  // Constructor and destructor methods
 
-   // METHODS
+  void test_constructor(void);
+  void test_destructor(void);
 
-   // Constructor and destructor methods
+  // Get methods
 
-   void test_constructor(void);
-   void test_destructor(void);
+  void test_get_neural_network_pointer(void);
+  void test_get_data_set_pointer(void);
 
-   // Get methods
+  void test_get_display(void);
 
-   void test_get_neural_network_pointer(void);
-   void test_get_data_set_pointer(void);
-   
-   void test_get_display(void);
+  // Set methods
 
-   // Set methods
+  void test_set_neural_network_pointer(void);
+  void test_set_data_set_pointer(void);
 
-   void test_set_neural_network_pointer(void);
-   void test_set_data_set_pointer(void);
+  void test_set_display(void);
 
-   void test_set_display(void);
+  // Unit testing methods
 
-   // Unit testing methods
-
-   void run_test_case(void);
-
+  void run_test_case(void);
 };
-
 
 #endif
 
 // OpenNN: Open Neural Networks Library.
-// Copyright (C) 2005-2013 Roberto Lopez 
+// Copyright (C) 2005-2013 Roberto Lopez
 //
 // This library is free software; you can redistribute it and/or
 // modify it under the s of the GNU Lesser General Public

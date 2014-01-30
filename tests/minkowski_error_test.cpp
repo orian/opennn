@@ -1,13 +1,19 @@
 /****************************************************************************************************************/
 /*                                                                                                              */
-/*   OpenNN: Open Neural Networks Library                                                                       */
-/*   www.intelnics.com/opennn                                                                                   */
+/*   OpenNN: Open Neural Networks Library
+ */
+/*   www.intelnics.com/opennn
+ */
 /*                                                                                                              */
-/*   M I N K O W S K I   E R R O R   T E S T   C L A S S                                                        */
+/*   M I N K O W S K I   E R R O R   T E S T   C L A S S
+ */
 /*                                                                                                              */
-/*   Roberto Lopez                                                                                              */
-/*   Intelnics - The artificial intelligence company                                                            */
-/*   robertolopez@intelnics.com                                                                                 */
+/*   Roberto Lopez
+ */
+/*   Intelnics - The artificial intelligence company
+ */
+/*   robertolopez@intelnics.com
+ */
 /*                                                                                                              */
 /****************************************************************************************************************/
 
@@ -19,290 +25,268 @@ using namespace OpenNN;
 
 // GENERAL CONSTRUCTOR
 
-MinkowskiErrorTest::MinkowskiErrorTest(void) : UnitTesting() 
-{
-}
-
+MinkowskiErrorTest::MinkowskiErrorTest(void) : UnitTesting() {}
 
 // DESTRUCTOR
 
-MinkowskiErrorTest::~MinkowskiErrorTest(void) 
-{
-}
-
+MinkowskiErrorTest::~MinkowskiErrorTest(void) {}
 
 // METHODS
 
+void MinkowskiErrorTest::test_constructor(void) {
+  message += "test_constructor\n";
 
-void MinkowskiErrorTest::test_constructor(void)
-{
-   message += "test_constructor\n";
+  // Default
 
-   // Default
+  MinkowskiError me1;
 
-   MinkowskiError me1;
+  assert_true(me1.has_neural_network() == false, LOG);
+  assert_true(me1.has_data_set() == false, LOG);
 
-   assert_true(me1.has_neural_network() == false, LOG);
-   assert_true(me1.has_data_set() == false, LOG);
+  // Neural network
 
-   // Neural network
+  NeuralNetwork nn2;
+  MinkowskiError me2(&nn2);
 
-   NeuralNetwork nn2;
-   MinkowskiError me2(&nn2);
+  assert_true(me2.has_neural_network() == true, LOG);
+  assert_true(me2.has_data_set() == false, LOG);
 
-   assert_true(me2.has_neural_network() == true, LOG);
-   assert_true(me2.has_data_set() == false, LOG);
+  // Neural network and data set
 
-   // Neural network and data set
+  NeuralNetwork nn3;
+  DataSet ds3;
+  MinkowskiError me3(&nn3, &ds3);
 
-   NeuralNetwork nn3;
-   DataSet ds3;
-   MinkowskiError me3(&nn3, &ds3);
-
-   assert_true(me3.has_neural_network() == true, LOG);
-   assert_true(me3.has_data_set() == true, LOG);
-
+  assert_true(me3.has_neural_network() == true, LOG);
+  assert_true(me3.has_data_set() == true, LOG);
 }
 
-
-void MinkowskiErrorTest::test_destructor(void)
-{
-   message += "test_destructor\n";
+void MinkowskiErrorTest::test_destructor(void) {
+  message += "test_destructor\n";
 }
 
+void MinkowskiErrorTest::test_get_Minkowski_parameter(void) {
+  message += "test_get_Minkowski_parameter\n";
 
-void MinkowskiErrorTest::test_get_Minkowski_parameter(void)
-{
-   message += "test_get_Minkowski_parameter\n";
+  MinkowskiError me;
 
-   MinkowskiError me;
+  me.set_Minkowski_parameter(1.0);
 
-   me.set_Minkowski_parameter(1.0);
-   
-   assert_true(me.get_Minkowski_parameter() == 1.0, LOG);
+  assert_true(me.get_Minkowski_parameter() == 1.0, LOG);
 }
 
-
-void MinkowskiErrorTest::test_set_Minkowski_parameter(void)
-{
-   message += "test_set_Minkowski_parameter\n";
+void MinkowskiErrorTest::test_set_Minkowski_parameter(void) {
+  message += "test_set_Minkowski_parameter\n";
 }
 
+void MinkowskiErrorTest::test_calculate_performance(void) {
+  message += "test_calculate_performance\n";
 
-void MinkowskiErrorTest::test_calculate_performance(void)
-{
-   message += "test_calculate_performance\n";
+  Vector<double> parameters;
 
-   Vector<double> parameters;
+  NeuralNetwork nn(1, 1, 1);
+  nn.initialize_parameters(0.0);
 
-   NeuralNetwork nn(1,1,1);
-   nn.initialize_parameters(0.0);
+  DataSet ds(1, 1, 1);
+  ds.initialize_data(0.0);
 
-   DataSet ds(1,1,1);
-   ds.initialize_data(0.0);
+  MinkowskiError me(&nn, &ds);
 
-   MinkowskiError me(&nn, &ds);
+  assert_true(me.calculate_performance() == 0.0, LOG);
 
-   assert_true(me.calculate_performance() == 0.0, LOG);
+  // Test
 
-   // Test
+  nn.set(1, 1);
+  nn.randomize_parameters_normal();
 
-   nn.set(1, 1);
-   nn.randomize_parameters_normal();
+  parameters = nn.arrange_parameters();
 
-   parameters = nn.arrange_parameters();
+  ds.set(1, 1, 2);
+  ds.randomize_data_normal();
 
-   ds.set(1, 1, 2);
-   ds.randomize_data_normal();
+  assert_true(
+      me.calculate_performance() == me.calculate_performance(parameters), LOG);
 
-   assert_true(me.calculate_performance() == me.calculate_performance(parameters), LOG);     
-
-//   std::cout << me.calculate_performance() << std::endl;
-//   std::cout << me.calculate_performance(parameters) << std::endl;
+  //   std::cout << me.calculate_performance() << std::endl;
+  //   std::cout << me.calculate_performance(parameters) << std::endl;
 }
 
-
-void MinkowskiErrorTest::test_calculate_generalization_performance(void)
-{
-   message += "test_calculate_generalization_performance\n";  
+void MinkowskiErrorTest::test_calculate_generalization_performance(void) {
+  message += "test_calculate_generalization_performance\n";
 }
 
+void MinkowskiErrorTest::test_calculate_gradient(void) {
+  message += "test_calculate_gradient\n";
 
-void MinkowskiErrorTest::test_calculate_gradient(void)
-{
-   message += "test_calculate_gradient\n";
+  NumericalDifferentiation nd;
 
-   NumericalDifferentiation nd;
+  NeuralNetwork nn;
+  Vector<unsigned> architecture;
 
-   NeuralNetwork nn;
-   Vector<unsigned> architecture;
+  Vector<double> parameters;
 
-   Vector<double> parameters;
+  DataSet ds;
 
-   DataSet ds;
+  MinkowskiError me(&nn, &ds);
 
-   MinkowskiError me(&nn, &ds);
+  Vector<double> gradient;
+  Vector<double> numerical_gradient;
 
-   Vector<double> gradient;
-   Vector<double> numerical_gradient;
+  // Test
 
-   // Test
+  nn.set(1, 1, 1);
 
-   nn.set(1,1,1);
+  nn.initialize_parameters(0.0);
 
-   nn.initialize_parameters(0.0);
+  ds.set(1, 1, 1);
 
-   ds.set(1,1,1);
+  ds.initialize_data(0.0);
 
-   ds.initialize_data(0.0);
+  gradient = me.calculate_gradient();
 
-   gradient = me.calculate_gradient();
+  assert_true(gradient.size() == nn.count_parameters_number(), LOG);
+  assert_true(gradient == 0.0, LOG);
 
-   assert_true(gradient.size() == nn.count_parameters_number(), LOG);
-   assert_true(gradient == 0.0, LOG);
+  // Test
 
-   // Test 
+  nn.set(3, 4, 2);
+  nn.initialize_parameters(0.0);
 
-   nn.set(3,4,2);
-   nn.initialize_parameters(0.0);
+  ds.set(3, 2, 5);
+  me.set(&nn, &ds);
+  ds.initialize_data(0.0);
 
-   ds.set(3, 2, 5);
-   me.set(&nn, &ds);
-   ds.initialize_data(0.0);
+  gradient = me.calculate_gradient();
 
-   gradient = me.calculate_gradient();
+  assert_true(gradient.size() == nn.count_parameters_number(), LOG);
+  assert_true(gradient == 0.0, LOG);
 
-   assert_true(gradient.size() == nn.count_parameters_number(), LOG);
-   assert_true(gradient == 0.0, LOG);
+  // Test
 
-   // Test
+  architecture.set(3);
+  architecture[0] = 2;
+  architecture[1] = 1;
+  architecture[2] = 3;
 
-   architecture.set(3);
-   architecture[0] = 2;
-   architecture[1] = 1;
-   architecture[2] = 3;
+  nn.set(architecture);
+  nn.initialize_parameters(0.0);
 
-   nn.set(architecture);
-   nn.initialize_parameters(0.0);
+  ds.set(2, 3, 5);
+  me.set(&nn, &ds);
+  ds.initialize_data(0.0);
 
-   ds.set(2, 3, 5);
-   me.set(&nn, &ds);
-   ds.initialize_data(0.0);
+  gradient = me.calculate_gradient();
 
-   gradient = me.calculate_gradient();
+  assert_true(gradient.size() == nn.count_parameters_number(), LOG);
+  assert_true(gradient == 0.0, LOG);
 
-   assert_true(gradient.size() == nn.count_parameters_number(), LOG);
-   assert_true(gradient == 0.0, LOG);
+  // Test
 
-   // Test
+  nn.set(1, 1, 1);
 
-   nn.set(1,1,1);
+  nn.initialize_parameters(0.0);
 
-   nn.initialize_parameters(0.0);
+  ds.set(1, 1, 1);
 
-   ds.set(1,1,1);
+  ds.initialize_data(0.0);
 
-   ds.initialize_data(0.0);
+  gradient = me.calculate_gradient();
 
-   gradient = me.calculate_gradient();
+  assert_true(gradient.size() == nn.count_parameters_number(), LOG);
+  assert_true(gradient == 0.0, LOG);
 
-   assert_true(gradient.size() == nn.count_parameters_number(), LOG);
-   assert_true(gradient == 0.0, LOG);
+  // Test
 
-   // Test 
+  nn.set(3, 4, 2);
+  nn.initialize_parameters(0.0);
 
-   nn.set(3,4,2);
-   nn.initialize_parameters(0.0);
+  ds.set(3, 2, 5);
+  me.set(&nn, &ds);
+  ds.initialize_data(0.0);
 
-   ds.set(3,2,5);
-   me.set(&nn, &ds);
-   ds.initialize_data(0.0);
+  gradient = me.calculate_gradient();
 
-   gradient = me.calculate_gradient();
+  assert_true(gradient.size() == nn.count_parameters_number(), LOG);
+  assert_true(gradient == 0.0, LOG);
 
-   assert_true(gradient.size() == nn.count_parameters_number(), LOG);
-   assert_true(gradient == 0.0, LOG);
+  // Test
 
-   // Test
+  architecture.set(3);
+  architecture[0] = 2;
+  architecture[1] = 1;
+  architecture[2] = 2;
 
-   architecture.set(3);
-   architecture[0] = 2;
-   architecture[1] = 1;
-   architecture[2] = 2;
+  nn.set(architecture);
+  nn.initialize_parameters(0.0);
 
-   nn.set(architecture);
-   nn.initialize_parameters(0.0);
+  ds.set(2, 2, 3);
+  me.set(&nn, &ds);
+  ds.initialize_data(0.0);
 
-   ds.set(2,2,3);
-   me.set(&nn, &ds);
-   ds.initialize_data(0.0);
+  gradient = me.calculate_gradient();
 
-   gradient = me.calculate_gradient();
+  assert_true(gradient.size() == nn.count_parameters_number(), LOG);
+  assert_true(gradient == 0.0, LOG);
 
-   assert_true(gradient.size() == nn.count_parameters_number(), LOG);
-   assert_true(gradient == 0.0, LOG);
+  // Test
 
-   // Test
+  architecture.set(4, 1);
 
-   architecture.set(4, 1);
+  nn.set(architecture);
+  nn.randomize_parameters_normal();
 
-   nn.set(architecture);
-   nn.randomize_parameters_normal();
+  parameters = nn.arrange_parameters();
 
-   parameters = nn.arrange_parameters();
+  ds.set(1, 1, 1);
+  ds.randomize_data_normal();
 
-   ds.set(1,1,1);
-   ds.randomize_data_normal();
+  gradient = me.calculate_gradient();
+  numerical_gradient = nd.calculate_gradient(
+      me, &MinkowskiError::calculate_performance, parameters);
 
-   gradient = me.calculate_gradient();
-   numerical_gradient = nd.calculate_gradient(me, &MinkowskiError::calculate_performance, parameters);
+  assert_true(
+      (gradient - numerical_gradient).calculate_absolute_value() < 1.0e-3, LOG);
 
-   assert_true((gradient - numerical_gradient).calculate_absolute_value() < 1.0e-3, LOG);
+  // Test
 
-   // Test 
+  nn.set(5, 4, 3);
+  nn.randomize_parameters_normal();
 
-   nn.set(5,4,3);
-   nn.randomize_parameters_normal();
+  parameters = nn.arrange_parameters();
 
-   parameters = nn.arrange_parameters();
+  ds.set(5, 3, 2);
+  ds.randomize_data_normal();
 
-   ds.set(5,3,2);
-   ds.randomize_data_normal();
+  me.set_Minkowski_parameter(1.75);
 
-   me.set_Minkowski_parameter(1.75);
-
-   gradient = me.calculate_gradient();
-   numerical_gradient = nd.calculate_gradient(me, &MinkowskiError::calculate_performance, parameters);
-   assert_true((gradient - numerical_gradient).calculate_absolute_value() < 1.0e-3, LOG);
-
+  gradient = me.calculate_gradient();
+  numerical_gradient = nd.calculate_gradient(
+      me, &MinkowskiError::calculate_performance, parameters);
+  assert_true(
+      (gradient - numerical_gradient).calculate_absolute_value() < 1.0e-3, LOG);
 }
 
+void MinkowskiErrorTest::test_to_XML(void) {
+  message += "test_to_XML\n";
 
-void MinkowskiErrorTest::test_to_XML(void)   
-{
-   message += "test_to_XML\n";  
+  MinkowskiError me;
 
-   MinkowskiError me;
+  tinyxml2::XMLDocument* document;
 
-   tinyxml2::XMLDocument* document;
+  // Test
 
-   // Test
+  document = me.to_XML();
 
-   document = me.to_XML();
+  assert_true(document != NULL, LOG);
 
-   assert_true(document != NULL, LOG);
-
-   delete document;
-
+  delete document;
 }
 
+void MinkowskiErrorTest::test_from_XML(void) {
+  message += "test_from_XML\n";
 
-void MinkowskiErrorTest::test_from_XML(void)   
-{
-   message += "test_from_XML\n";
-
-   MinkowskiError me1;
-   MinkowskiError me2;
+  MinkowskiError me1;
+  MinkowskiError me2;
 
   tinyxml2::XMLDocument* document;
 
@@ -321,41 +305,38 @@ void MinkowskiErrorTest::test_from_XML(void)
   assert_true(me2.get_display() == false, LOG);
 }
 
+void MinkowskiErrorTest::run_test_case(void) {
+  message += "Running Minkowski error test case...\n";
 
-void MinkowskiErrorTest::run_test_case(void)
-{
-   message += "Running Minkowski error test case...\n";  
+  // Constructor and destructor methods
 
-   // Constructor and destructor methods
+  test_constructor();
+  test_destructor();
 
-   test_constructor();
-   test_destructor();
+  // Get methods
 
-   // Get methods
+  test_get_Minkowski_parameter();
 
-   test_get_Minkowski_parameter();
+  // Set methods
 
-   // Set methods
+  test_set_Minkowski_parameter();
 
-   test_set_Minkowski_parameter();
+  // Objective methods
 
-   // Objective methods
+  test_calculate_performance();
+  test_calculate_generalization_performance();
+  test_calculate_gradient();
 
-   test_calculate_performance();   
-   test_calculate_generalization_performance();
-   test_calculate_gradient();
+  // Serialization methods
 
-   // Serialization methods
+  test_to_XML();
+  test_from_XML();
 
-   test_to_XML();
-   test_from_XML();
-
-   message += "End of Minkowski error test case.\n";
+  message += "End of Minkowski error test case.\n";
 }
 
-
 // OpenNN: Open Neural Networks Library.
-// Copyright (C) 2005-2014 Roberto Lopez 
+// Copyright (C) 2005-2014 Roberto Lopez
 //
 // This library is free software; you can redistribute it and/or
 // modify it under the terms of the GNU Lesser General Public

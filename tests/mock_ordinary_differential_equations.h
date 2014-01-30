@@ -1,12 +1,17 @@
 /****************************************************************************************************************/
 /*                                                                                                              */
-/*   OpenNN: Open Neural Networks Library                                                                       */
-/*   http://flood.sourceforge.net                                                                               */
+/*   OpenNN: Open Neural Networks Library
+ */
+/*   http://flood.sourceforge.net
+ */
 /*                                                                                                              */
-/*   M O C K   O R D I N A R Y   D I F F E R E N T I A L   E Q U A T I O N S   C L A S S   H E A D E R          */
-/*                                                                                                              */ 
-/*   Roberto Lopez                                                                                              */ 
-/*   E-mail: roberto-lopez@users.sourceforge.net                                                                */ 
+/*   M O C K   O R D I N A R Y   D I F F E R E N T I A L   E Q U A T I O N S   C
+ * L A S S   H E A D E R          */
+/*                                                                                                              */
+/*   Roberto Lopez
+ */
+/*   E-mail: roberto-lopez@users.sourceforge.net
+ */
 /*                                                                                                              */
 /****************************************************************************************************************/
 
@@ -15,44 +20,39 @@
 
 #include "../../source/opennn.h"
 
-namespace OpenNN
-{
+namespace OpenNN {
 
-class MockOrdinaryDifferentialEquations : public OrdinaryDifferentialEquations
-{
+class MockOrdinaryDifferentialEquations : public OrdinaryDifferentialEquations {
 
-public:
+ public:
 
-   // DEFAULT CONSTRUCTOR
+  // DEFAULT CONSTRUCTOR
 
-   explicit MockOrdinaryDifferentialEquations(void);
+  explicit MockOrdinaryDifferentialEquations(void);
 
-   // DESTRUCTOR
+  // DESTRUCTOR
 
-   virtual ~MockOrdinaryDifferentialEquations(void);
+  virtual ~MockOrdinaryDifferentialEquations(void);
 
+  // METHODS
 
-   // METHODS
+  // Get methods
 
-   // Get methods
+  // Set methods
 
-   // Set methods
+  void set_default(void);
 
-   void set_default(void);
+  // Mathematical model methods
 
-   // Mathematical model methods
-
-   Vector<double> calculate_dependent_variables_dots(const NeuralNetwork&, const Vector<double>&) const;
-
+  Vector<double> calculate_dependent_variables_dots(
+      const NeuralNetwork&, const Vector<double>&) const;
 };
-
 }
 
 #endif
 
-
 // OpenNN: Open Neural Networks Library.
-// Copyright (C) 2005-2012 Roberto Lopez 
+// Copyright (C) 2005-2012 Roberto Lopez
 //
 // This library is free software; you can redistribute it and/or
 // modify it under the s of the GNU Lesser General Public

@@ -1,13 +1,19 @@
 /****************************************************************************************************************/
 /*                                                                                                              */
-/*   OpenNN: Open Neural Networks Library                                                                       */
-/*   www.intelnics.com/opennn                                                                                   */
+/*   OpenNN: Open Neural Networks Library
+ */
+/*   www.intelnics.com/opennn
+ */
 /*                                                                                                              */
-/*   T E S T I N G   A N A L Y S I S   T E S T   C L A S S   H E A D E R                                        */
+/*   T E S T I N G   A N A L Y S I S   T E S T   C L A S S   H E A D E R
+ */
 /*                                                                                                              */
-/*   Roberto Lopez                                                                                              */ 
-/*   Intelnics - The artificial intelligence company                                                            */
-/*   robertolopez@intelnics.com                                                                                 */
+/*   Roberto Lopez
+ */
+/*   Intelnics - The artificial intelligence company
+ */
+/*   robertolopez@intelnics.com
+ */
 /*                                                                                                              */
 /****************************************************************************************************************/
 
@@ -20,92 +26,86 @@
 
 using namespace OpenNN;
 
+class TestingAnalysisTest : public UnitTesting {
 
-class TestingAnalysisTest : public UnitTesting 
-{
-
-#define	STRING(x) #x
+#define STRING(x) #x
 #define TOSTRING(x) STRING(x)
-#define LOG __FILE__ ":" TOSTRING(__LINE__)"\n"
+#define LOG __FILE__ ":" TOSTRING(__LINE__) "\n"
 
-public:  
+ public:
 
-   // GENERAL CONSTRUCTOR
+  // GENERAL CONSTRUCTOR
 
-   explicit TestingAnalysisTest(void);
+  explicit TestingAnalysisTest(void);
 
+  // DESTRUCTOR
 
-   // DESTRUCTOR
+  virtual ~TestingAnalysisTest(void);
 
-   virtual ~TestingAnalysisTest(void);
+  // METHODS
 
+  // Constructor and destructor methods
 
-   // METHODS
+  void test_constructor(void);
+  void test_destructor(void);
 
-   // Constructor and destructor methods
+  // Get methods
 
-   void test_constructor(void);
-   void test_destructor(void);
+  void test_get_neural_network_pointer(void);
+  void test_get_data_set_pointer(void);
 
-   // Get methods
+  void test_get_display(void);
 
-   void test_get_neural_network_pointer(void);
-   void test_get_data_set_pointer(void);
-   
-   void test_get_display(void);
+  // Set methods
 
-   // Set methods
+  void test_set_neural_network_pointer(void);
+  void test_set_data_set_pointer(void);
 
-   void test_set_neural_network_pointer(void);
-   void test_set_data_set_pointer(void);
+  void test_set_display(void);
 
-   void test_set_display(void);
+  // Target and output data methods
 
-   // Target and output data methods
+  void test_calculate_target_output_data(void);
 
-   void test_calculate_target_output_data(void);
+  // Error data methods
 
-   // Error data methods
+  void test_calculate_error_data(void);
 
-   void test_calculate_error_data(void);
+  void test_calculate_error_data_statistics(void);
+  void test_calculate_error_data_statistics_matrices(void);
 
-   void test_calculate_error_data_statistics(void);
-   void test_calculate_error_data_statistics_matrices(void);
+  void test_calculate_error_data_histograms(void);
 
-   void test_calculate_error_data_histograms(void);
+  // Linear regression parameters methods
 
-   // Linear regression parameters methods
+  void test_calculate_linear_regression_parameters(void);
+  void test_print_linear_regression_parameters(void);
+  void test_save_linear_regression_parameters(void);
 
-   void test_calculate_linear_regression_parameters(void);
-   void test_print_linear_regression_parameters(void);
-   void test_save_linear_regression_parameters(void);
+  void test_perform_linear_regression_parameters(void);
 
-   void test_perform_linear_regression_parameters(void);
+  void test_print_linear_regression_analysis(void);
+  void test_save_linear_regression_analysis(void);
 
-   void test_print_linear_regression_analysis(void);
-   void test_save_linear_regression_analysis(void);
+  // Binary classification test methods
 
-   // Binary classification test methods
+  void test_calculate_binary_classification_test(void);
+  void test_print_binary_classification_test(void);
 
-   void test_calculate_binary_classification_test(void);
-   void test_print_binary_classification_test(void);
+  // Confusion matrix methods
 
-   // Confusion matrix methods
+  void test_calculate_confusion(void);
+  void test_print_confusion(void);
 
-   void test_calculate_confusion(void);
-   void test_print_confusion(void);
+  // Unit testing methods
 
-   // Unit testing methods
-
-   void run_test_case(void);
-
+  void run_test_case(void);
 };
-
 
 #endif
 
 // OpenNN: Open Neural Networks Library.
-// Copyright (C) 2005-2014 Roberto Lopez 
+// Copyright (C) 2005-2014 Roberto Lopez
 //
 // This library is free software; you can redistribute it and/or
 // modify it under the s of the GNU Lesser General Public

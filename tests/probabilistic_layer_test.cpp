@@ -1,13 +1,19 @@
 /****************************************************************************************************************/
 /*                                                                                                              */
-/*   OpenNN: Open Neural Networks Library                                                                       */
-/*   www.intelnics.com/opennn                                                                                   */
+/*   OpenNN: Open Neural Networks Library
+ */
+/*   www.intelnics.com/opennn
+ */
 /*                                                                                                              */
-/*   P R O B A B I L I S T I C   L A Y E R   T E S T   C L A S S                                                */
+/*   P R O B A B I L I S T I C   L A Y E R   T E S T   C L A S S
+ */
 /*                                                                                                              */
-/*   Roberto Lopez                                                                                              */
-/*   Intelnics - The artificial intelligence company                                                            */
-/*   robertolopez@intelnics.com                                                                                 */
+/*   Roberto Lopez
+ */
+/*   Intelnics - The artificial intelligence company
+ */
+/*   robertolopez@intelnics.com
+ */
 /*                                                                                                              */
 /****************************************************************************************************************/
 
@@ -15,297 +21,260 @@
 
 #include "probabilistic_layer_test.h"
 
-
 using namespace OpenNN;
-
 
 // GENERAL CONSTRUCTOR
 
-ProbabilisticLayerTest::ProbabilisticLayerTest(void) : UnitTesting()
-{
-}
-
+ProbabilisticLayerTest::ProbabilisticLayerTest(void) : UnitTesting() {}
 
 // DESTRUCTOR
 
-ProbabilisticLayerTest::~ProbabilisticLayerTest(void)
-{
-}
-
+ProbabilisticLayerTest::~ProbabilisticLayerTest(void) {}
 
 // METHODS
 
-void ProbabilisticLayerTest::test_constructor(void)
-{
-   message += "test_constructor\n";
+void ProbabilisticLayerTest::test_constructor(void) {
+  message += "test_constructor\n";
 
-   // Default constructor
+  // Default constructor
 
-   ProbabilisticLayer pl1;
+  ProbabilisticLayer pl1;
 
-   assert_true(pl1.get_probabilistic_neurons_number() == 0, LOG);
+  assert_true(pl1.get_probabilistic_neurons_number() == 0, LOG);
 
-   // Probabilistic neurons number constructor
+  // Probabilistic neurons number constructor
 
-   ProbabilisticLayer pl2(3);
+  ProbabilisticLayer pl2(3);
 
-   assert_true(pl2.get_probabilistic_neurons_number() == 3, LOG);
+  assert_true(pl2.get_probabilistic_neurons_number() == 3, LOG);
 
-   // Copy constructor
+  // Copy constructor
 
-   ProbabilisticLayer pl3(pl2);
+  ProbabilisticLayer pl3(pl2);
 
-   assert_true(pl3.get_probabilistic_neurons_number() == 3, LOG);
+  assert_true(pl3.get_probabilistic_neurons_number() == 3, LOG);
 }
 
-
-void ProbabilisticLayerTest::test_destructor(void)
-{
-   message += "test_destructor\n";
+void ProbabilisticLayerTest::test_destructor(void) {
+  message += "test_destructor\n";
 }
 
+void ProbabilisticLayerTest::test_assignment_operator(void) {
+  message += "test_assignment_operator\n";
 
-void ProbabilisticLayerTest::test_assignment_operator(void)
-{
-   message += "test_assignment_operator\n";
+  ProbabilisticLayer pl1;
+  ProbabilisticLayer pl2;
 
-   ProbabilisticLayer pl1;
-   ProbabilisticLayer pl2;
+  // Test
 
-   // Test
+  pl1.set(2);
 
-   pl1.set(2);
+  pl2 = pl1;
 
-   pl2 = pl1;
-
-   assert_true(pl2.get_probabilistic_neurons_number() == 2, LOG);
-
+  assert_true(pl2.get_probabilistic_neurons_number() == 2, LOG);
 }
 
+void ProbabilisticLayerTest::test_count_probabilistic_neurons_number(void) {
+  message += "test_count_probabilistic_neurons_number\n";
 
-void ProbabilisticLayerTest::test_count_probabilistic_neurons_number(void)
-{
-   message += "test_count_probabilistic_neurons_number\n";
+  ProbabilisticLayer pl;
 
-   ProbabilisticLayer pl;
+  // Test
 
-   // Test
+  pl.set();
+  assert_true(pl.get_probabilistic_neurons_number() == 0, LOG);
 
-   pl.set();
-   assert_true(pl.get_probabilistic_neurons_number() == 0, LOG);
+  // Test
 
-   // Test
-
-   pl.set(1);
-   assert_true(pl.get_probabilistic_neurons_number() == 1, LOG);
-
+  pl.set(1);
+  assert_true(pl.get_probabilistic_neurons_number() == 1, LOG);
 }
 
+void ProbabilisticLayerTest::test_set(void) { message += "test_set\n"; }
 
-void ProbabilisticLayerTest::test_set(void)
-{
-   message += "test_set\n";
+void ProbabilisticLayerTest::test_set_default(void) {
+  message += "test_set_default\n";
 }
 
-
-void ProbabilisticLayerTest::test_set_default(void)
-{
-   message += "test_set_default\n";
+void ProbabilisticLayerTest::test_get_display(void) {
+  message += "test_get_display\n";
 }
 
-
-void ProbabilisticLayerTest::test_get_display(void)
-{
-   message += "test_get_display\n";
+void ProbabilisticLayerTest::test_set_display(void) {
+  message += "test_set_display\n";
 }
 
+void ProbabilisticLayerTest::test_initialize_random(void) {
+  message += "test_initialize_random\n";
 
-void ProbabilisticLayerTest::test_set_display(void)
-{
-   message += "test_set_display\n";
+  ProbabilisticLayer pl;
+
+  // Test
+
+  pl.initialize_random();
 }
 
+void ProbabilisticLayerTest::test_calculate_outputs(void) {
+  message += "test_calculate_outputs\n";
 
-void ProbabilisticLayerTest::test_initialize_random(void)
-{
-   message += "test_initialize_random\n";
+  ProbabilisticLayer pl;
+  Vector<double> inputs;
+  Vector<double> outputs;
 
-   ProbabilisticLayer pl;
+  // Test
 
-   // Test
+  pl.set(1);
 
-   pl.initialize_random();
+  pl.set_probabilistic_method(ProbabilisticLayer::Competitive);
+
+  inputs.set(1, 0.0);
+  outputs = pl.calculate_outputs(inputs);
+
+  assert_true(outputs.size() == 1, LOG);
+  assert_true(outputs == 1.0, LOG);
+
+  // Test
+
+  pl.set(1);
+  pl.set_probabilistic_method(ProbabilisticLayer::Softmax);
+
+  inputs.set(1, 0.0);
+  outputs = pl.calculate_outputs(inputs);
+
+  assert_true(outputs.size() == 1, LOG);
+  assert_true(outputs == 1.0, LOG);
 }
 
+void ProbabilisticLayerTest::test_calculate_Jacobian(void) {
+  message += "test_calculate_Jacobian\n";
 
-void ProbabilisticLayerTest::test_calculate_outputs(void)
-{
-   message += "test_calculate_outputs\n";
+  NumericalDifferentiation nd;
 
-   ProbabilisticLayer pl;
-   Vector<double> inputs;
-   Vector<double> outputs;
+  ProbabilisticLayer pl;
 
-   // Test
+  Vector<double> inputs;
+  Matrix<double> Jacobian;
+  Matrix<double> numerical_Jacobian;
 
-   pl.set(1);
+  // Test
 
-   pl.set_probabilistic_method(ProbabilisticLayer::Competitive);
+  if (numerical_differentiation_tests) {
+    pl.set_probabilistic_method(ProbabilisticLayer::Softmax);
 
-   inputs.set(1, 0.0);
-   outputs = pl.calculate_outputs(inputs);
+    pl.set(3);
 
-   assert_true(outputs.size() == 1, LOG);
-   assert_true(outputs == 1.0, LOG);
+    inputs.set(3);
+    inputs.randomize_normal();
 
-   // Test
+    Jacobian = pl.calculate_Jacobian(inputs);
+    numerical_Jacobian = nd.calculate_Jacobian(
+        pl, &ProbabilisticLayer::calculate_outputs, inputs);
 
-   pl.set(1);
-   pl.set_probabilistic_method(ProbabilisticLayer::Softmax);
-
-   inputs.set(1, 0.0);
-   outputs = pl.calculate_outputs(inputs);
-
-   assert_true(outputs.size() == 1, LOG);
-   assert_true(outputs == 1.0, LOG);
+    assert_true(
+        (Jacobian - numerical_Jacobian).calculate_absolute_value() < 1.0e-3,
+        LOG);
+  }
 }
 
+void ProbabilisticLayerTest::test_to_XML(void) {
+  message += "test_to_XML\n";
 
-void ProbabilisticLayerTest::test_calculate_Jacobian(void)
-{
-   message += "test_calculate_Jacobian\n";
+  ProbabilisticLayer pl;
+  tinyxml2::XMLDocument* pld;
 
-   NumericalDifferentiation nd;
+  // Test
 
-   ProbabilisticLayer pl;
+  pl.set();
 
-   Vector<double> inputs;
-   Matrix<double> Jacobian;
-   Matrix<double> numerical_Jacobian;
+  pld = pl.to_XML();
 
-   // Test
+  assert_true(pld != NULL, LOG);
 
-   if(numerical_differentiation_tests)
-   {
-      pl.set_probabilistic_method(ProbabilisticLayer::Softmax);
+  // Test
 
-      pl.set(3);
+  pl.set(2);
+  pl.set_probabilistic_method(ProbabilisticLayer::Competitive);
+  pl.set_display(false);
 
-      inputs.set(3);
-      inputs.randomize_normal();
+  pld = pl.to_XML();
 
-      Jacobian = pl.calculate_Jacobian(inputs);
-      numerical_Jacobian = nd.calculate_Jacobian(pl, &ProbabilisticLayer::calculate_outputs, inputs);
+  pl.set(0);
 
-      assert_true((Jacobian-numerical_Jacobian).calculate_absolute_value() < 1.0e-3, LOG);
-   }
+  pl.from_XML(*pld);
+
+  assert_true(pl.get_probabilistic_neurons_number() == 2, LOG);
+  assert_true(pl.get_probabilistic_method() == ProbabilisticLayer::Competitive,
+              LOG);
+  assert_true(pl.get_display() == false, LOG);
+
+  delete pld;
 }
 
+void ProbabilisticLayerTest::test_from_XML(void) {
+  message += "test_from_XML\n";
 
-void ProbabilisticLayerTest::test_to_XML(void)
-{
-   message += "test_to_XML\n";
+  ProbabilisticLayer pl;
+  tinyxml2::XMLDocument* pld;
 
-   ProbabilisticLayer  pl;
-   tinyxml2::XMLDocument* pld;
+  // Test
 
-   // Test
+  pld = pl.to_XML();
 
-   pl.set();
+  pl.from_XML(*pld);
 
-   pld = pl.to_XML();
-
-   assert_true(pld != NULL, LOG);
-
-   // Test
-
-   pl.set(2);
-   pl.set_probabilistic_method(ProbabilisticLayer::Competitive);
-   pl.set_display(false);
-
-   pld = pl.to_XML();
-
-   pl.set(0);
-
-   pl.from_XML(*pld);
-
-   assert_true(pl.get_probabilistic_neurons_number() == 2, LOG);
-   assert_true(pl.get_probabilistic_method() == ProbabilisticLayer::Competitive, LOG);
-   assert_true(pl.get_display() == false, LOG);
-
-   delete pld;
+  delete pld;
 }
 
+void ProbabilisticLayerTest::run_test_case(void) {
+  message += "Running probabilistic layer test case...\n";
 
-void ProbabilisticLayerTest::test_from_XML(void)
-{
-   message += "test_from_XML\n";
+  // Constructor and destructor methods
 
-   ProbabilisticLayer  pl;
-   tinyxml2::XMLDocument* pld;
+  test_constructor();
+  test_destructor();
 
-   // Test
+  // Assignment operators methods
 
-   pld = pl.to_XML();
+  test_assignment_operator();
 
-   pl.from_XML(*pld);
+  // Get methods
 
-   delete pld;
+  // Layer architecture
+
+  test_count_probabilistic_neurons_number();
+
+  // Display messages
+
+  test_get_display();
+
+  // Set methods
+
+  test_set();
+  test_set_default();
+
+  // Display messages
+
+  test_set_display();
+
+  // Neural network initialization methods
+
+  test_initialize_random();
+
+  // Probabilistic post-processing
+
+  test_calculate_outputs();
+  test_calculate_Jacobian();
+
+  // Serialization methods
+
+  test_to_XML();
+  test_from_XML();
+
+  message += "End of probabilistic layer test case.\n";
 }
-
-
-void ProbabilisticLayerTest::run_test_case(void)
-{
-   message += "Running probabilistic layer test case...\n";
-
-   // Constructor and destructor methods
-
-   test_constructor();
-   test_destructor();
-
-   // Assignment operators methods
-
-   test_assignment_operator();
-
-   // Get methods
-
-   // Layer architecture
-
-   test_count_probabilistic_neurons_number();
-
-   // Display messages
-
-   test_get_display();
-
-   // Set methods
-
-   test_set();
-   test_set_default();
-
-   // Display messages
-
-   test_set_display();
-
-   // Neural network initialization methods
-
-   test_initialize_random();
-
-   // Probabilistic post-processing
-
-   test_calculate_outputs();
-   test_calculate_Jacobian();
-
-   // Serialization methods
-
-   test_to_XML();
-   test_from_XML();
-
-   message += "End of probabilistic layer test case.\n";
-}
-
 
 // OpenNN: Open Neural Networks Library.
-// Copyright (C) 2005-2014 Roberto Lopez 
+// Copyright (C) 2005-2014 Roberto Lopez
 //
 // This library is free software; you can redistribute it and/or
 // modify it under the terms of the GNU Lesser General Public

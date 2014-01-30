@@ -1,13 +1,19 @@
 /****************************************************************************************************************/
 /*                                                                                                              */
-/*   OpenNN: Open Neural Networks Library                                                                       */
-/*   www.intelnics.com/opennn                                                                                   */
+/*   OpenNN: Open Neural Networks Library
+ */
+/*   www.intelnics.com/opennn
+ */
 /*                                                                                                              */
-/*   N U M E R I C A L   I N T E G R A T I O N   T E S T   C L A S S   H E A D E R                              */
+/*   N U M E R I C A L   I N T E G R A T I O N   T E S T   C L A S S   H E A D E
+ * R                              */
 /*                                                                                                              */
-/*   Roberto Lopez                                                                                              */
-/*   Intelnics - The artificial intelligence company                                                            */
-/*   robertolopez@intelnics.com                                                                                 */
+/*   Roberto Lopez
+ */
+/*   Intelnics - The artificial intelligence company
+ */
+/*   robertolopez@intelnics.com
+ */
 /*                                                                                                              */
 /****************************************************************************************************************/
 
@@ -20,47 +26,43 @@
 
 using namespace OpenNN;
 
-class NumericalIntegrationTest : public UnitTesting
-{
+class NumericalIntegrationTest : public UnitTesting {
 
-#define	STRING(x) #x
+#define STRING(x) #x
 #define TOSTRING(x) STRING(x)
-#define LOG __FILE__ ":" TOSTRING(__LINE__)"\n"
+#define LOG __FILE__ ":" TOSTRING(__LINE__) "\n"
 
-public:
+ public:
 
-   // GENERAL CONSTRUCTOR
+  // GENERAL CONSTRUCTOR
 
-   explicit NumericalIntegrationTest(void);
+  explicit NumericalIntegrationTest(void);
 
+  // DESTRUCTOR
 
-   // DESTRUCTOR
+  virtual ~NumericalIntegrationTest(void);
 
-   virtual ~NumericalIntegrationTest(void);
+  // METHODS
 
-   // METHODS
+  // Constructor and destructor methods
 
-   // Constructor and destructor methods
+  void test_constructor(void);
+  void test_destructor(void);
 
-   void test_constructor(void);
-   void test_destructor(void);
+  // Integration methods
 
-   // Integration methods
+  void test_calculate_trapezoid_integral(void);
+  void test_calculate_Simpson_integral(void);
 
-   void test_calculate_trapezoid_integral(void);
-   void test_calculate_Simpson_integral(void);
+  // Unit testing methods
 
-   // Unit testing methods
-
-   void run_test_case(void);
+  void run_test_case(void);
 };
-
 
 #endif
 
-
 // OpenNN: Open Neural Networks Library.
-// Copyright (C) 2005-2014 Roberto Lopez 
+// Copyright (C) 2005-2014 Roberto Lopez
 //
 // This library is free software; you can redistribute it and/or
 // modify it under the terms of the GNU Lesser General Public

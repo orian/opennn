@@ -1,12 +1,17 @@
 /****************************************************************************************************************/
 /*                                                                                                              */
-/*   OpenNN: Open Neural Networks Library                                                                       */
-/*   http://flood.sourceforge.net                                                                               */
+/*   OpenNN: Open Neural Networks Library
+ */
+/*   http://flood.sourceforge.net
+ */
 /*                                                                                                              */
-/*   F U N C T I O N   R E G R E S S I O N   T E S T I N G   T E S T   C L A S S   H E A D E R                  */
+/*   F U N C T I O N   R E G R E S S I O N   T E S T I N G   T E S T   C L A S S
+ * H E A D E R                  */
 /*                                                                                                              */
-/*   Roberto Lopez                                                                                              */ 
-/*   E-mail: roberto-lopez@users.sourceforge.net                                                                */ 
+/*   Roberto Lopez
+ */
+/*   E-mail: roberto-lopez@users.sourceforge.net
+ */
 /*                                                                                                              */
 /****************************************************************************************************************/
 
@@ -19,75 +24,69 @@
 
 using namespace OpenNN;
 
+class FunctionRegressionTestingTest : public UnitTesting {
 
-class FunctionRegressionTestingTest : public UnitTesting 
-{
-
-#define	STRING(x) #x
+#define STRING(x) #x
 #define TOSTRING(x) STRING(x)
-#define LOG __FILE__ ":" TOSTRING(__LINE__)"\n"
+#define LOG __FILE__ ":" TOSTRING(__LINE__) "\n"
 
-public:  
+ public:
 
-   // GENERAL CONSTRUCTOR
+  // GENERAL CONSTRUCTOR
 
-   explicit FunctionRegressionTestingTest(void);
+  explicit FunctionRegressionTestingTest(void);
 
+  // DESTRUCTOR
 
-   // DESTRUCTOR
+  virtual ~FunctionRegressionTestingTest(void);
 
-   virtual ~FunctionRegressionTestingTest(void);
+  // METHODS
 
+  // Constructor and destructor methods
 
-   // METHODS
+  void test_constructor(void);
+  void test_destructor(void);
 
-   // Constructor and destructor methods
+  // Get methods
 
-   void test_constructor(void);
-   void test_destructor(void);
+  void test_get_neural_network_pointer(void);
+  void test_get_data_set_pointer(void);
 
-   // Get methods
+  void test_get_display(void);
 
-   void test_get_neural_network_pointer(void);
-   void test_get_data_set_pointer(void);
-   
-   void test_get_display(void);
+  // Set methods
 
-   // Set methods
+  void test_set_neural_network_pointer(void);
+  void test_set_data_set_pointer(void);
 
-   void test_set_neural_network_pointer(void);
-   void test_set_data_set_pointer(void);
+  void test_set_display(void);
 
-   void test_set_display(void);
+  // Testing target output data methods
 
-   // Testing target output data methods
+  void test_calculate_scaled_target_output_data(void);
+  void test_print_scaled_target_output_data(void);
+  void test_save_scaled_target_output_data(void);
 
-   void test_calculate_scaled_target_output_data(void);
-   void test_print_scaled_target_output_data(void);
-   void test_save_scaled_target_output_data(void);
+  // Linear regression parameters methods
 
-   // Linear regression parameters methods
+  void test_calculate_linear_regression_parameters(void);
+  void test_print_linear_regression_parameters(void);
+  void test_save_linear_regression_parameters(void);
 
-   void test_calculate_linear_regression_parameters(void);
-   void test_print_linear_regression_parameters(void);
-   void test_save_linear_regression_parameters(void);
+  // Linear regression analysis methods
 
-   // Linear regression analysis methods
+  void test_print_linear_regression_analysis(void);
+  void test_save_linear_regression_analysis(void);
 
-   void test_print_linear_regression_analysis(void);
-   void test_save_linear_regression_analysis(void);
+  // Unit testing methods
 
-   // Unit testing methods
-
-   void run_test_case(void);
-
+  void run_test_case(void);
 };
-
 
 #endif
 
 // OpenNN: Open Neural Networks Library.
-// Copyright (C) 2005-2013 Roberto Lopez 
+// Copyright (C) 2005-2013 Roberto Lopez
 //
 // This library is free software; you can redistribute it and/or
 // modify it under the s of the GNU Lesser General Public

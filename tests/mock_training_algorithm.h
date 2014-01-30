@@ -1,13 +1,19 @@
 /****************************************************************************************************************/
 /*                                                                                                              */
-/*   OpenNN: Open Neural Networks Library                                                                       */
-/*   www.intelnics.com/opennn                                                                                   */
+/*   OpenNN: Open Neural Networks Library
+ */
+/*   www.intelnics.com/opennn
+ */
 /*                                                                                                              */
-/*   M O C K   T R A I N I N G   A L G O R I T H M   C L A S S   H E A D E R                                    */
-/*                                                                                                              */ 
-/*   Roberto Lopez                                                                                              */ 
-/*   Intelnics - The artificial intelligence company                                                            */
-/*   robertolopez@intelnics.com                                                                                 */
+/*   M O C K   T R A I N I N G   A L G O R I T H M   C L A S S   H E A D E R
+ */
+/*                                                                                                              */
+/*   Roberto Lopez
+ */
+/*   Intelnics - The artificial intelligence company
+ */
+/*   robertolopez@intelnics.com
+ */
 /*                                                                                                              */
 /****************************************************************************************************************/
 
@@ -20,53 +26,42 @@
 
 using namespace OpenNN;
 
+class MockTrainingAlgorithm : public TrainingAlgorithm {
 
-class MockTrainingAlgorithm : public TrainingAlgorithm
-{
+ public:
 
-public:
+  // DEFAULT CONSTRUCTOR
 
-   // DEFAULT CONSTRUCTOR
+  explicit MockTrainingAlgorithm(void);
 
-   explicit MockTrainingAlgorithm(void); 
+  // GENERAL CONSTRUCTOR
 
+  explicit MockTrainingAlgorithm(PerformanceFunctional*);
 
-   // GENERAL CONSTRUCTOR
+  // DESTRUCTOR
 
-   explicit MockTrainingAlgorithm(PerformanceFunctional*); 
+  virtual ~MockTrainingAlgorithm(void);
 
+  // STRUCTURES
 
-   // DESTRUCTOR
+  struct MockTrainingAlgorithmResults : public Results {};
 
-   virtual ~MockTrainingAlgorithm(void);
+  // METHODS
 
+  // Training methods
 
-   // STRUCTURES 
+  MockTrainingAlgorithmResults* perform_training(void);
 
-   struct MockTrainingAlgorithmResults : public Results
-   {
-   };
+  // Serialization methods
 
-
-   // METHODS
-
-   // Training methods
-
-   MockTrainingAlgorithmResults* perform_training(void);
-
-   // Serialization methods
-
-   tinyxml2::XMLDocument* to_XML(void) const;
-   void from_XML(const tinyxml2::XMLDocument&);
-
+  tinyxml2::XMLDocument* to_XML(void) const;
+  void from_XML(const tinyxml2::XMLDocument&);
 };
-
 
 #endif
 
-
 // OpenNN: Open Neural Networks Library.
-// Copyright (C) 2005-2014 Roberto Lopez 
+// Copyright (C) 2005-2014 Roberto Lopez
 //
 // This library is free software; you can redistribute it and/or
 // modify it under the s of the GNU Lesser General Public

@@ -1,16 +1,21 @@
 /****************************************************************************************************************/
 /*                                                                                                              */
-/*   OpenNN: Open Neural Networks Library                                                                       */
-/*   www.intelnics.com/opennn                                                                                   */
+/*   OpenNN: Open Neural Networks Library
+ */
+/*   www.intelnics.com/opennn
+ */
 /*                                                                                                              */
-/*   C R O S S   E N T R O P Y   E R R O R   T E S T   C L A S S   H E A D E R                                  */
+/*   C R O S S   E N T R O P Y   E R R O R   T E S T   C L A S S   H E A D E R
+ */
 /*                                                                                                              */
-/*   Roberto Lopez                                                                                              */
-/*   Intelnics - The artificial intelligence company                                                            */
-/*   robertolopez@intelnics.com                                                                                 */
+/*   Roberto Lopez
+ */
+/*   Intelnics - The artificial intelligence company
+ */
+/*   robertolopez@intelnics.com
+ */
 /*                                                                                                              */
 /****************************************************************************************************************/
-
 
 #ifndef __CROSSENTROPYERRORTEST_H__
 #define __CROSSENTROPYERRORTEST_H__
@@ -21,53 +26,49 @@
 
 using namespace OpenNN;
 
-class CrossEntropyErrorTest : public UnitTesting
-{
+class CrossEntropyErrorTest : public UnitTesting {
 
-#define	STRING(x) #x
+#define STRING(x) #x
 #define TOSTRING(x) STRING(x)
-#define LOG __FILE__ ":" TOSTRING(__LINE__)"\n"
+#define LOG __FILE__ ":" TOSTRING(__LINE__) "\n"
 
-public:
+ public:
 
-   // GENERAL CONSTRUCTOR
+  // GENERAL CONSTRUCTOR
 
-   explicit CrossEntropyErrorTest(void);
+  explicit CrossEntropyErrorTest(void);
 
+  // DESTRUCTOR
 
-   // DESTRUCTOR
+  virtual ~CrossEntropyErrorTest(void);
 
-   virtual ~CrossEntropyErrorTest(void);
+  // METHODS
 
+  // Get methods
 
-   // METHODS
+  // Set methods
 
-   // Get methods
+  // Objective methods
 
-   // Set methods
+  void test_calculate_performance(void);
+  void test_calculate_generalization_performance(void);
 
-   // Objective methods
+  void test_calculate_gradient(void);
 
-   void test_calculate_performance(void);   
-   void test_calculate_generalization_performance(void);
+  void test_calculate_Hessian(void);
 
-   void test_calculate_gradient(void);
+  void test_to_XML(void);
+  void test_from_XML(void);
 
-   void test_calculate_Hessian(void);
+  // Unit testing methods
 
-   void test_to_XML(void);
-   void test_from_XML(void);
-
-   // Unit testing methods
-
-   void run_test_case(void);
+  void run_test_case(void);
 };
 
 #endif
 
-
 // OpenNN: Open Neural Networks Library.
-// Copyright (C) 2005-2014 Roberto Lopez 
+// Copyright (C) 2005-2014 Roberto Lopez
 //
 // This library is free software; you can redistribute it and/or
 // modify it under the terms of the GNU Lesser General Public

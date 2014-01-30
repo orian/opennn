@@ -1,13 +1,19 @@
 /****************************************************************************************************************/
 /*                                                                                                              */
-/*   OpenNN: Open Neural Networks Library                                                                       */
-/*   www.intelnics.com/opennn                                                                                   */
+/*   OpenNN: Open Neural Networks Library
+ */
+/*   www.intelnics.com/opennn
+ */
 /*                                                                                                              */
-/*   U N I T   T E S T I N G   C L A S S   H E A D E R                                                          */
+/*   U N I T   T E S T I N G   C L A S S   H E A D E R
+ */
 /*                                                                                                              */
-/*   Roberto Lopez                                                                                              */ 
-/*   Intelnics - The artificial intelligence company                                                            */
-/*   robertolopez@intelnics.com                                                                                 */
+/*   Roberto Lopez
+ */
+/*   Intelnics - The artificial intelligence company
+ */
+/*   robertolopez@intelnics.com
+ */
 /*                                                                                                              */
 /****************************************************************************************************************/
 
@@ -29,95 +35,94 @@
 
 #include "../source/opennn.h"
 
-class UnitTesting
-{
+class UnitTesting {
 
-public:
+ public:
 
-   // DEFAULT CONSTRUCTOR
+  // DEFAULT CONSTRUCTOR
 
-   explicit UnitTesting(void);
+  explicit UnitTesting(void);
 
-   // DESTRUCTOR
+  // DESTRUCTOR
 
-   virtual ~UnitTesting(void);
+  virtual ~UnitTesting(void);
 
-   // METHODS
+  // METHODS
 
-   // Get methods
+  // Get methods
 
-   unsigned get_tests_count(void) const;
-   unsigned get_tests_passed_count(void) const;
-   unsigned get_tests_failed_count(void) const;
+  unsigned get_tests_count(void) const;
+  unsigned get_tests_passed_count(void) const;
+  unsigned get_tests_failed_count(void) const;
 
-   bool get_numerical_differentiation_tests(void) const;
-   unsigned get_random_tests_number(void) const;
+  bool get_numerical_differentiation_tests(void) const;
+  unsigned get_random_tests_number(void) const;
 
-   std::string& get_message(void);
+  std::string& get_message(void);
 
-   const bool& get_display(void) const;
+  const bool& get_display(void) const;
 
-   // Set methods
+  // Set methods
 
-   void set_tests_count(const unsigned&);
-   void set_tests_passed_count(const unsigned&);
-   void set_tests_failed_count(const unsigned&);
+  void set_tests_count(const unsigned&);
+  void set_tests_passed_count(const unsigned&);
+  void set_tests_failed_count(const unsigned&);
 
-   void set_numerical_differentiation_tests(const bool&);
-   void set_random_tests_number(const unsigned&);
+  void set_numerical_differentiation_tests(const bool&);
+  void set_random_tests_number(const unsigned&);
 
-   void set_message(const std::string&);
+  void set_message(const std::string&);
 
-   void set_display(const bool&);
+  void set_display(const bool&);
 
-   // Unit testing methods
+  // Unit testing methods
 
-   void assert_true(const bool&, const std::string&);
-   void assert_false(const bool&, const std::string&);
-   
-   // Test case methods
+  void assert_true(const bool&, const std::string&);
+  void assert_false(const bool&, const std::string&);
 
-   /// This method runs all the methods contained in the test case. 
+  // Test case methods
 
-   virtual void run_test_case(void) = 0;
+  /// This method runs all the methods contained in the test case.
 
-   void print_results(void);
+  virtual void run_test_case(void) = 0;
 
-protected:
+  void print_results(void);
 
-   // Number of performed tests. 
+ protected:
 
-   unsigned tests_count;
+  // Number of performed tests.
 
-   // Number of tests which have passed the test case. 
- 
-   unsigned tests_passed_count;
+  unsigned tests_count;
 
-   // Number of tests which have failed the test case. 
+  // Number of tests which have passed the test case.
 
-   unsigned tests_failed_count;
+  unsigned tests_passed_count;
 
-   // True if test using numerical differentiation are to be performed. 
+  // Number of tests which have failed the test case.
 
-   bool numerical_differentiation_tests;
+  unsigned tests_failed_count;
 
-   // Number of iterations in random tests loops. 
+  // True if test using numerical differentiation are to be performed.
 
-   unsigned random_tests_number;
+  bool numerical_differentiation_tests;
 
-   // String with the test case information.
+  // Number of iterations in random tests loops.
 
-   std::string message;
+  unsigned random_tests_number;
 
-   // True if messages from this class are to be displayed, false otherwise. 
+  // String with the test case information.
 
-   bool display;
+  std::string message;
+
+  // True if messages from this class are to be displayed, false otherwise.
+
+  bool display;
 };
 
 #endif
 
 // OpenNN: Open Neural Networks Library.
-// Copyright (C) 2005-2014 Roberto Lopez 
+// Copyright (C) 2005-2014 Roberto Lopez
 //
 // This library is free software; you can redistribute it and/or
 // modify it under the terms of the GNU Lesser General Public

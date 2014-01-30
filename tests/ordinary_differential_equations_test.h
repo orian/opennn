@@ -1,13 +1,19 @@
 /****************************************************************************************************************/
 /*                                                                                                              */
-/*   OpenNN: Open Neural Networks Library                                                                       */
-/*   www.intelnics.com/opennn                                                                                   */
+/*   OpenNN: Open Neural Networks Library
+ */
+/*   www.intelnics.com/opennn
+ */
 /*                                                                                                              */
-/*   O R D I N A R Y   D I F F E R E N T I A L   E Q U A T I O N S   T E S T   C L A S S   H E A D E R          */
+/*   O R D I N A R Y   D I F F E R E N T I A L   E Q U A T I O N S   T E S T   C
+ * L A S S   H E A D E R          */
 /*                                                                                                              */
-/*   Roberto Lopez                                                                                              */
-/*   Intelnics - The artificial intelligence company                                                            */
-/*   E-mail: robertolopez@intelnics.com                                                                         */
+/*   Roberto Lopez
+ */
+/*   Intelnics - The artificial intelligence company
+ */
+/*   E-mail: robertolopez@intelnics.com
+ */
 /*                                                                                                              */
 /****************************************************************************************************************/
 
@@ -18,105 +24,113 @@
 
 #include "unit_testing.h"
 
-
 using namespace OpenNN;
 
+class OrdinaryDifferentialEquationsTest : public UnitTesting {
 
-class OrdinaryDifferentialEquationsTest : public UnitTesting 
-{
-
-#define	STRING(x) #x
+#define STRING(x) #x
 #define TOSTRING(x) STRING(x)
-#define LOG __FILE__ ":" TOSTRING(__LINE__)"\n"
+#define LOG __FILE__ ":" TOSTRING(__LINE__) "\n"
 
-public:
+ public:
 
-   // CONSTRUCTOR
+  // CONSTRUCTOR
 
-   explicit OrdinaryDifferentialEquationsTest(void);
+  explicit OrdinaryDifferentialEquationsTest(void);
 
-   // DESTRUCTOR
+  // DESTRUCTOR
 
-   virtual ~OrdinaryDifferentialEquationsTest(void);
+  virtual ~OrdinaryDifferentialEquationsTest(void);
 
-   // Constructor and destructor methods
+  // Constructor and destructor methods
 
-   void test_constructor(void);
-   void test_destructor(void);
+  void test_constructor(void);
+  void test_destructor(void);
 
-   // Get methods
+  // Get methods
 
-   void test_get_points_number(void);
+  void test_get_points_number(void);
 
-   void test_get_tolerance(void);
-   void test_get_initial_size(void);
-   void test_get_warning_size(void);
-   void test_get_error_size(void);
+  void test_get_tolerance(void);
+  void test_get_initial_size(void);
+  void test_get_warning_size(void);
+  void test_get_error_size(void);
 
-   void test_get_display(void);
+  void test_get_display(void);
 
-   // Set methods
+  // Set methods
 
-   void test_set_default(void);
+  void test_set_default(void);
 
-   void test_set_points_number(void);
+  void test_set_points_number(void);
 
-   void test_set_tolerance(void);
-   void test_set_initial_size(void);
-   void test_set_warning_size(void);
-   void test_set_error_size(void);
+  void test_set_tolerance(void);
+  void test_set_initial_size(void);
+  void test_set_warning_size(void);
+  void test_set_error_size(void);
 
-   void test_set_display(void);
+  void test_set_display(void);
 
-   // Runge-Kutta methods
+  // Runge-Kutta methods
 
-   void test_calculate_Runge_Kutta_integral_1(void);
-   void test_calculate_Runge_Kutta_integral_2(void);
-   void test_calculate_Runge_Kutta_integral_3(void);
-   void test_calculate_Runge_Kutta_integral_4(void);
-   void test_calculate_Runge_Kutta_integral_5(void);
+  void test_calculate_Runge_Kutta_integral_1(void);
+  void test_calculate_Runge_Kutta_integral_2(void);
+  void test_calculate_Runge_Kutta_integral_3(void);
+  void test_calculate_Runge_Kutta_integral_4(void);
+  void test_calculate_Runge_Kutta_integral_5(void);
 
-   // Runge-Kutta-Fehlberg methods
+  // Runge-Kutta-Fehlberg methods
 
-   void test_calculate_Runge_Kutta_Fehlberg_integral_1(void);
-   void test_calculate_Runge_Kutta_Fehlberg_integral_2(void);
-   void test_calculate_Runge_Kutta_Fehlberg_integral_3(void);
-   void test_calculate_Runge_Kutta_Fehlberg_integral_4(void);
-   void test_calculate_Runge_Kutta_Fehlberg_integral_5(void);
+  void test_calculate_Runge_Kutta_Fehlberg_integral_1(void);
+  void test_calculate_Runge_Kutta_Fehlberg_integral_2(void);
+  void test_calculate_Runge_Kutta_Fehlberg_integral_3(void);
+  void test_calculate_Runge_Kutta_Fehlberg_integral_4(void);
+  void test_calculate_Runge_Kutta_Fehlberg_integral_5(void);
 
-   double calculate_zero_dot(const NeuralNetwork&, const double&, const double&) const;
-   double calculate_zero_dot(const NeuralNetwork&, const double&, const double&, const double&) const;
-   double calculate_zero_dot(const NeuralNetwork&, const double&, const double&, const double&, const double&) const;
-   double calculate_zero_dot(const NeuralNetwork&, const double&, const double&, const double&, const double&, const double&) const;
-   double calculate_zero_dot(const NeuralNetwork&, const double&, const double&, const double&, const double&, const double&, const double&) const;
+  double calculate_zero_dot(const NeuralNetwork&, const double&,
+                            const double&) const;
+  double calculate_zero_dot(const NeuralNetwork&, const double&, const double&,
+                            const double&) const;
+  double calculate_zero_dot(const NeuralNetwork&, const double&, const double&,
+                            const double&, const double&) const;
+  double calculate_zero_dot(const NeuralNetwork&, const double&, const double&,
+                            const double&, const double&, const double&) const;
+  double calculate_zero_dot(const NeuralNetwork&, const double&, const double&,
+                            const double&, const double&, const double&,
+                            const double&) const;
 
-   double calculate_x_dot(const NeuralNetwork&, const double&, const double&) const;
-   double calculate_x_dot(const NeuralNetwork&, const double&, const double&, const double&) const;
-   double calculate_x_dot(const NeuralNetwork&, const double&, const double&, const double&, const double&) const;
-   double calculate_x_dot(const NeuralNetwork&, const double&, const double&, const double&, const double&, const double&) const;
-   double calculate_x_dot(const NeuralNetwork&, const double&, const double&, const double&, const double&, const double&, const double&) const;
+  double calculate_x_dot(const NeuralNetwork&, const double&,
+                         const double&) const;
+  double calculate_x_dot(const NeuralNetwork&, const double&, const double&,
+                         const double&) const;
+  double calculate_x_dot(const NeuralNetwork&, const double&, const double&,
+                         const double&, const double&) const;
+  double calculate_x_dot(const NeuralNetwork&, const double&, const double&,
+                         const double&, const double&, const double&) const;
+  double calculate_x_dot(const NeuralNetwork&, const double&, const double&,
+                         const double&, const double&, const double&,
+                         const double&) const;
 
-   double calculate_x_squared_dot(const NeuralNetwork&, const double&, const double&) const;
+  double calculate_x_squared_dot(const NeuralNetwork&, const double&,
+                                 const double&) const;
 
-   // Serialization methods
+  // Serialization methods
 
-   void test_to_XML(void);   
-   void test_from_XML(void);   
+  void test_to_XML(void);
+  void test_from_XML(void);
 
-   void test_save(void);
-   void test_load(void);
+  void test_save(void);
+  void test_load(void);
 
-   // Unit testing methods
+  // Unit testing methods
 
-   void run_test_case(void);
+  void run_test_case(void);
 };
-
 
 #endif
 
-
 // OpenNN: Open Neural Networks Library.
-// Copyright (C) 2005-2014 Roberto Lopez 
+// Copyright (C) 2005-2014 Roberto Lopez
 //
 // This library is free software; you can redistribute it and/or
 // modify it under the terms of the GNU Lesser General Public

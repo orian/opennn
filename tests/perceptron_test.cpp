@@ -1,13 +1,19 @@
 /****************************************************************************************************************/
 /*                                                                                                              */
-/*   OpenNN: Open Neural Networks Library                                                                       */
-/*   www.intelnics.com/opennn                                                                                   */
+/*   OpenNN: Open Neural Networks Library
+ */
+/*   www.intelnics.com/opennn
+ */
 /*                                                                                                              */
-/*   P E R C E P T R O N   T E S T   C L A S S                                                                  */
+/*   P E R C E P T R O N   T E S T   C L A S S
+ */
 /*                                                                                                              */
-/*   Roberto Lopez                                                                                              */
-/*   Intelnics - The artificial intelligence company                                                            */
-/*   robertolopez@intelnics.com                                                                                 */
+/*   Roberto Lopez
+ */
+/*   Intelnics - The artificial intelligence company
+ */
+/*   robertolopez@intelnics.com
+ */
 /*                                                                                                              */
 /****************************************************************************************************************/
 
@@ -15,1254 +21,1231 @@
 
 #include "perceptron_test.h"
 
-
 using namespace OpenNN;
 
+// CONSTRUCTOR
 
-// CONSTRUCTOR 
-
-PerceptronTest::PerceptronTest(void) : UnitTesting() 
-{
-}
-
+PerceptronTest::PerceptronTest(void) : UnitTesting() {}
 
 // DESTRUCTOR
 
-PerceptronTest::~PerceptronTest(void)
-{
-}
-
+PerceptronTest::~PerceptronTest(void) {}
 
 // METHODS
 
-void PerceptronTest::test_constructor(void)
-{
-   message += "test_constructor\n";
+void PerceptronTest::test_constructor(void) {
+  message += "test_constructor\n";
 
-   // Default constructor
+  // Default constructor
 
-   Perceptron p1;
+  Perceptron p1;
 
-   assert_true(p1.get_inputs_number() == 0, LOG);
+  assert_true(p1.get_inputs_number() == 0, LOG);
 
-   // Inputs number constructor 
+  // Inputs number constructor
 
-   Perceptron p2(1);
+  Perceptron p2(1);
 
-   assert_true(p2.get_inputs_number() == 1, LOG);
+  assert_true(p2.get_inputs_number() == 1, LOG);
 
-   // Inputs number and initialization constructor
-   
-   Perceptron p3(5, 0.0);
+  // Inputs number and initialization constructor
 
-   assert_true(p3.get_inputs_number() == 5, LOG);
-   assert_true(p3.arrange_parameters() == 0.0, LOG);
+  Perceptron p3(5, 0.0);
 
-   // Copy constructor
+  assert_true(p3.get_inputs_number() == 5, LOG);
+  assert_true(p3.arrange_parameters() == 0.0, LOG);
 
-   Perceptron p6(10, 2.0);
+  // Copy constructor
 
-   Perceptron p7(p6);
+  Perceptron p6(10, 2.0);
 
-   assert_true(p7.get_inputs_number() == 10, LOG);
-   assert_true(p7.arrange_parameters() == 2.0, LOG);
+  Perceptron p7(p6);
+
+  assert_true(p7.get_inputs_number() == 10, LOG);
+  assert_true(p7.arrange_parameters() == 2.0, LOG);
 }
 
+void PerceptronTest::test_destructor(void) { message += "test_destructor\n"; }
 
-void PerceptronTest::test_destructor(void)
-{
-   message += "test_destructor\n";
+void PerceptronTest::test_assignment_operator(void) {
+  message += "test_assignment_operator\n";
+
+  Perceptron p_1;
+
+  p_1.set_activation_function(Perceptron::Threshold);
+
+  Perceptron p_2 = p_1;
+
+  assert_true(p_2.get_activation_function() == Perceptron::Threshold, LOG);
 }
 
+void PerceptronTest::test_get_activation_function(void) {
+  message += "test_get_activation_function\n";
 
-void PerceptronTest::test_assignment_operator(void)
-{
-   message += "test_assignment_operator\n";
+  Perceptron p;
 
-   Perceptron p_1;
+  p.set_activation_function(Perceptron::SymmetricThreshold);
 
-   p_1.set_activation_function(Perceptron::Threshold);
-
-   Perceptron p_2 = p_1;
-
-   assert_true(p_2.get_activation_function() == Perceptron::Threshold, LOG);
+  assert_true(p.get_activation_function() == Perceptron::SymmetricThreshold,
+              LOG);
 }
 
+void PerceptronTest::test_count_inputs_number(void) {
+  message += "test_count_inputs_number\n";
 
-void PerceptronTest::test_get_activation_function(void)
-{
-   message += "test_get_activation_function\n";
+  Perceptron p;
 
-   Perceptron p;
-
-   p.set_activation_function(Perceptron::SymmetricThreshold);
-
-   assert_true(p.get_activation_function() == Perceptron::SymmetricThreshold, LOG);
+  assert_true(p.get_inputs_number() == 0, LOG);
 }
 
+void PerceptronTest::test_get_bias(void) {
+  message += "test_count_inputs_number\n";
 
-void PerceptronTest::test_count_inputs_number(void)
-{
-   message += "test_count_inputs_number\n";
+  Perceptron p;
+  p.initialize_parameters(0.0);
 
-   Perceptron p;
-
-   assert_true(p.get_inputs_number() == 0, LOG);
+  assert_true(p.get_bias() == 0.0, LOG);
 }
 
+void PerceptronTest::test_arrange_synaptic_weights(void) {
+  message += "test_arrange_synaptic_weights\n";
 
-void PerceptronTest::test_get_bias(void)   
-{
-   message += "test_count_inputs_number\n";
+  Perceptron p;
 
-   Perceptron p;
-   p.initialize_parameters(0.0);
+  Vector<double> synaptic_weights = p.arrange_synaptic_weights();
 
-   assert_true(p.get_bias() == 0.0, LOG);
+  assert_true(synaptic_weights.size() == 0, LOG);
 }
 
+void PerceptronTest::test_get_synaptic_weight(void) {
+  message += "test_arrange_synaptic_weights\n";
 
-void PerceptronTest::test_arrange_synaptic_weights(void)
-{
-   message += "test_arrange_synaptic_weights\n";
+  Perceptron p(1);
+  p.initialize_parameters(0.0);
 
-   Perceptron p;
-
-   Vector<double> synaptic_weights = p.arrange_synaptic_weights();
-
-   assert_true(synaptic_weights.size() == 0, LOG);
+  assert_true(p.get_synaptic_weight(0) == 0.0, LOG);
 }
 
+void PerceptronTest::test_count_parameters_number(void) {
+  message += "test_count_parameters_number\n";
 
-void PerceptronTest::test_get_synaptic_weight(void)
-{
-   message += "test_arrange_synaptic_weights\n";
+  Perceptron p(1);
 
-   Perceptron p(1);
-   p.initialize_parameters(0.0);
+  const unsigned parameters_number = p.count_parameters_number();
 
-   assert_true(p.get_synaptic_weight(0) == 0.0, LOG);
+  assert_true(parameters_number == 2, LOG);
 }
 
+void PerceptronTest::test_arrange_parameters(void) {
+  message += "test_arrange_parameters\n";
 
-void PerceptronTest::test_count_parameters_number(void)
-{
-   message += "test_count_parameters_number\n";
+  Perceptron p(1);
 
-   Perceptron p(1);
+  Vector<double> parameters = p.arrange_parameters();
 
-   const unsigned parameters_number = p.count_parameters_number();
+  unsigned size = parameters.size();
 
-   assert_true(parameters_number == 2, LOG);
+  assert_true(size == 2, LOG);
 }
 
+void PerceptronTest::test_get_display(void) {
+  message += "test_get_display\n";
 
-void PerceptronTest::test_arrange_parameters(void)
-{
-   message += "test_arrange_parameters\n";
-   
-   Perceptron p(1);
+  Perceptron p;
 
-   Vector<double> parameters = p.arrange_parameters();
+  p.set_display(true);
 
-   unsigned size = parameters.size();
-
-   assert_true(size == 2, LOG);
+  assert_true(p.get_display() == true, LOG);
 }
 
+void PerceptronTest::test_set(void) { message += "test_set\n"; }
 
-void PerceptronTest::test_get_display(void)
-{
-   message += "test_get_display\n";
-   
-   Perceptron p;
+void PerceptronTest::test_set_activation_function(void) {
+  message += "test_set_activation_function\n";
 
-   p.set_display(true);
+  Perceptron p;
 
-   assert_true(p.get_display() == true, LOG);
+  p.set_activation_function(Perceptron::Linear);
+
+  assert_true(p.get_activation_function() == Perceptron::Linear, LOG);
 }
 
+void PerceptronTest::test_set_inputs_number(void) {
+  message += "test_set_inputs_number\n";
 
-void PerceptronTest::test_set(void)
-{
-   message += "test_set\n";
+  Perceptron p;
+
+  p.set_inputs_number(0);
+
+  assert_true(p.get_inputs_number() == 0, LOG);
 }
 
+void PerceptronTest::test_set_bias(void) {
+  message += "test_set_bias\n";
 
-void PerceptronTest::test_set_activation_function(void)
-{
-   message += "test_set_activation_function\n";
+  Perceptron p;
 
-   Perceptron p;
+  p.set_bias(0.0);
 
-   p.set_activation_function(Perceptron::Linear);
-
-   assert_true(p.get_activation_function() == Perceptron::Linear, LOG);
+  assert_true(p.get_bias() == 0.0, LOG);
 }
 
+void PerceptronTest::test_set_synaptic_weights(void) {
+  message += "test_set_synaptic_weights\n";
 
-void PerceptronTest::test_set_inputs_number(void)
-{
-   message += "test_set_inputs_number\n";
+  Perceptron p;
 
-   Perceptron p;
+  Vector<double> synaptic_weights;
 
-   p.set_inputs_number(0);
+  p.set_synaptic_weights(synaptic_weights);
 
-   assert_true(p.get_inputs_number() == 0, LOG);
+  synaptic_weights = p.arrange_synaptic_weights();
+
+  assert_true(synaptic_weights.size() == 0, LOG);
 }
 
+void PerceptronTest::test_set_synaptic_weight(void) {
+  message += "test_set_synaptic_weight\n";
 
-void PerceptronTest::test_set_bias(void)
-{
-   message += "test_set_bias\n";
+  Perceptron p(2);
 
-   Perceptron p;
+  p.set_synaptic_weight(1, 1.0);
 
-   p.set_bias(0.0);
-
-   assert_true(p.get_bias() == 0.0, LOG);   
+  assert_true(p.get_synaptic_weight(1) == 1.0, LOG);
 }
 
+void PerceptronTest::test_set_parameters(void) {
+  message += "test_set_parameters\n";
 
-void PerceptronTest::test_set_synaptic_weights(void)
-{
-   message += "test_set_synaptic_weights\n";
+  Perceptron p;
 
-   Perceptron p;
+  Vector<double> parameters(1);
 
-   Vector<double> synaptic_weights;
+  p.set_parameters(parameters);
 
-   p.set_synaptic_weights(synaptic_weights);
+  parameters = p.arrange_parameters();
 
-   synaptic_weights = p.arrange_synaptic_weights();
-
-   assert_true(synaptic_weights.size() == 0, LOG);   
+  assert_true(parameters.size() == 1, LOG);
 }
 
+void PerceptronTest::test_set_display(void) {
+  message += "test_set_display\n";
 
-void PerceptronTest::test_set_synaptic_weight(void)
-{
-   message += "test_set_synaptic_weight\n";
+  Perceptron p;
 
-   Perceptron p(2);
+  p.set_display(false);
 
-   p.set_synaptic_weight(1, 1.0);
-
-   assert_true(p.get_synaptic_weight(1) == 1.0, LOG);   
+  assert_true(p.get_display() == false, LOG);
 }
 
+void PerceptronTest::test_grow_input(void) {
+  message += "test_grow_input\n";
 
-void PerceptronTest::test_set_parameters(void)
-{
-   message += "test_set_parameters\n";
+  Perceptron p;
 
-   Perceptron p;
+  // Test
 
-   Vector<double> parameters(1);
+  p.set(1);
+  p.grow_input();
 
-   p.set_parameters(parameters);
-
-   parameters = p.arrange_parameters();
-
-   assert_true(parameters.size() == 1, LOG);   
+  assert_true(p.get_inputs_number() == 2, LOG);
 }
 
+void PerceptronTest::test_prune_input(void) {
+  message += "test_prune_input";
 
-void PerceptronTest::test_set_display(void)
-{
-   message += "test_set_display\n";
+  Perceptron p;
 
-   Perceptron p;
+  // Test
 
-   p.set_display(false);
+  p.set(1);
+  p.prune_input(0);
 
-   assert_true(p.get_display() == false, LOG);   
+  assert_true(p.get_inputs_number() == 0, LOG);
+
+  // Test
+
+  p.set(2);
+  p.prune_input(1);
+
+  assert_true(p.get_inputs_number() == 1, LOG);
 }
 
+void PerceptronTest::test_initialize_parameters(void) {
+  message += "test_initialize_parameters\n";
 
-void PerceptronTest::test_grow_input(void)
-{
-    message += "test_grow_input\n";
+  Perceptron p(1);
 
-    Perceptron p;
+  p.initialize_parameters(0.0);
 
-    // Test
-
-    p.set(1);
-    p.grow_input();
-
-    assert_true(p.get_inputs_number() == 2, LOG);
+  assert_true(p.arrange_parameters() == 0.0, LOG);
 }
 
+void PerceptronTest::test_initialize_bias_uniform(void) {
+  message += "test_initialize_bias_uniform\n";
 
-void PerceptronTest::test_prune_input(void)
-{
-    message += "test_prune_input";
+  Perceptron p;
 
-    Perceptron p;
+  p.initialize_bias_uniform(0.0, 0.0);
 
-    // Test
-
-    p.set(1);
-    p.prune_input(0);
-
-    assert_true(p.get_inputs_number() == 0, LOG);
-
-    // Test
-
-    p.set(2);
-    p.prune_input(1);
-
-    assert_true(p.get_inputs_number() == 1, LOG);
-
+  assert_true(p.get_bias() == 0.0, LOG);
 }
 
+void PerceptronTest::test_initialize_bias_normal(void) {
+  message += "test_initialize_bias_normal\n";
 
-void PerceptronTest::test_initialize_parameters(void)
-{
-   message += "test_initialize_parameters\n";
+  Perceptron p;
 
-   Perceptron p(1);
+  p.initialize_bias_normal(0.0, 0.0);
 
-   p.initialize_parameters(0.0);
-
-   assert_true(p.arrange_parameters() == 0.0, LOG);   
+  assert_true(p.get_bias() == 0.0, LOG);
 }
 
+void PerceptronTest::test_initialize_synaptic_weights_uniform(void) {
+  message += "test_initialize_synaptic_weights_uniform\n";
 
-void PerceptronTest::test_initialize_bias_uniform(void)
-{
-   message += "test_initialize_bias_uniform\n";
+  Perceptron p(1);
 
-   Perceptron p;
+  p.initialize_synaptic_weights_uniform(0.0, 0.0);
 
-   p.initialize_bias_uniform(0.0, 0.0);
-
-   assert_true(p.get_bias() == 0.0, LOG);   
+  assert_true(p.get_synaptic_weight(0) == 0.0, LOG);
 }
 
+void PerceptronTest::test_initialize_synaptic_weights_normal(void) {
+  message += "test_initialize_synaptic_weights_normal\n";
 
-void PerceptronTest::test_initialize_bias_normal(void)
-{
-   message += "test_initialize_bias_normal\n";
+  Perceptron p(1);
 
-   Perceptron p;
+  p.initialize_synaptic_weights_normal(0.0, 0.0);
 
-   p.initialize_bias_normal(0.0, 0.0);
-
-   assert_true(p.get_bias() == 0.0, LOG);   
+  assert_true(p.get_synaptic_weight(0) == 0.0, LOG);
 }
 
+void PerceptronTest::test_calculate_combination(void) {
+  message += "test_calculate_combination\n";
 
-void PerceptronTest::test_initialize_synaptic_weights_uniform(void)
-{
-   message += "test_initialize_synaptic_weights_uniform\n";
+  Vector<double> parameters;
 
-   Perceptron p(1);
+  unsigned inputs_number = 3;
 
-   p.initialize_synaptic_weights_uniform(0.0, 0.0);
+  Perceptron p(inputs_number);
 
-   assert_true(p.get_synaptic_weight(0) == 0.0, LOG);   
+  double bias = 0.0;
+  Vector<double> synaptic_weights(inputs_number, 0.0);
+
+  p.set_bias(bias);
+  p.set_synaptic_weights(synaptic_weights);
+
+  Vector<double> inputs(inputs_number, 0.0);
+
+  double combination = p.calculate_combination(inputs);
+
+  assert_true(combination == 0.0, LOG);
+
+  p.set(3);
+
+  inputs.set(3);
+  inputs[0] = -0.8;
+  inputs[1] = 0.2;
+  inputs[2] = -0.4;
+
+  p.set_bias(-0.5);
+
+  synaptic_weights.set(3);
+  synaptic_weights[0] = 1.0;
+  synaptic_weights[1] = -0.75;
+  synaptic_weights[2] = 0.25;
+
+  p.set_synaptic_weights(synaptic_weights);
+
+  combination = p.calculate_combination(inputs);
+
+  assert_true(combination == -1.55, LOG);
+
+  // Test
+
+  p.set(1, 1);
+
+  inputs.set(1);
+  inputs.randomize_normal();
+
+  parameters = p.arrange_parameters();
+
+  assert_true(p.calculate_combination(inputs) ==
+                  p.calculate_combination(inputs, parameters),
+              LOG);
+
+  // Test
+
+  p.set(1, 1);
+
+  inputs.set(1, 2.0);
+
+  parameters = p.arrange_parameters() * 2.0;
+
+  assert_true(p.calculate_combination(inputs) !=
+                  p.calculate_combination(inputs, parameters),
+              LOG);
 }
 
+void PerceptronTest::test_calculate_combination_gradient(void) {
+  message += "test_calculate_combination_gradient\n";
 
-void PerceptronTest::test_initialize_synaptic_weights_normal(void)
-{
-   message += "test_initialize_synaptic_weights_normal\n";
+  Perceptron p;
 
-   Perceptron p(1);
+  Vector<double> inputs;
+  Vector<double> combination_gradient;
 
-   p.initialize_synaptic_weights_normal(0.0, 0.0);
+  NumericalDifferentiation nd;
 
-   assert_true(p.get_synaptic_weight(0) == 0.0, LOG);   
+  Vector<double> numerical_combination_gradient;
+
+  // Test
+
+  p.set(3);
+
+  inputs.set(3, 0.75);
+
+  combination_gradient = p.calculate_combination_gradient(inputs);
+
+  numerical_combination_gradient =
+      nd.calculate_gradient(p, &Perceptron::calculate_combination, inputs);
+
+  assert_true((combination_gradient - numerical_combination_gradient)
+                      .calculate_absolute_value() <
+                  1.0e-3,
+              LOG);
 }
 
+void PerceptronTest::test_calculate_combination_Hessian(void) {
+  message += "test_calculate_combination_Hessian\n";
 
-void PerceptronTest::test_calculate_combination(void)
-{
-   message += "test_calculate_combination\n";
+  Perceptron p;
 
-   Vector<double> parameters;
+  Vector<double> inputs;
+  Matrix<double> combination_Hessian;
 
-   unsigned inputs_number = 3;
+  NumericalDifferentiation nd;
 
-   Perceptron p(inputs_number);
+  Matrix<double> numerical_combination_Hessian;
 
-   double bias = 0.0;
-   Vector<double> synaptic_weights(inputs_number, 0.0);
+  // Test
 
-   p.set_bias(bias);
-   p.set_synaptic_weights(synaptic_weights);
+  p.set(3);
 
-   Vector<double> inputs(inputs_number, 0.0);
-   
-   double combination = p.calculate_combination(inputs);
+  inputs.set(3, 0.75);
 
-   assert_true(combination == 0.0, LOG);
+  combination_Hessian = p.calculate_combination_Hessian(inputs);
 
-   p.set(3);
+  numerical_combination_Hessian =
+      nd.calculate_Hessian(p, &Perceptron::calculate_combination, inputs);
 
-   inputs.set(3);
-   inputs[0] = -0.8;
-   inputs[1] =  0.2;
-   inputs[2] = -0.4;
-
-   p.set_bias(-0.5);
-
-   synaptic_weights.set(3);
-   synaptic_weights[0] =  1.0;
-   synaptic_weights[1] = -0.75;
-   synaptic_weights[2] =  0.25;
-
-   p.set_synaptic_weights(synaptic_weights);
-
-   combination = p.calculate_combination(inputs);
-
-   assert_true(combination == -1.55, LOG);
-
-   // Test
-
-   p.set(1, 1);
-
-   inputs.set(1);
-   inputs.randomize_normal();
-
-   parameters = p.arrange_parameters();
-
-   assert_true(p.calculate_combination(inputs) == p.calculate_combination(inputs, parameters), LOG);
-
-   // Test
-
-   p.set(1, 1);
-
-   inputs.set(1, 2.0);
-
-   parameters = p.arrange_parameters()*2.0;
-
-   assert_true(p.calculate_combination(inputs) != p.calculate_combination(inputs, parameters), LOG);
+  assert_true((combination_Hessian - numerical_combination_Hessian)
+                      .calculate_absolute_value() <
+                  1.0e-3,
+              LOG);
 }
 
+void PerceptronTest::test_calculate_combination_parameters_gradient(void) {
+  message += "test_calculate_combination_parameters_gradient\n";
 
-void PerceptronTest::test_calculate_combination_gradient(void)
-{
-   message += "test_calculate_combination_gradient\n";
+  NumericalDifferentiation nd;
 
-   Perceptron p;
+  Perceptron p;
 
-   Vector<double> inputs;
-   Vector<double> combination_gradient;   
+  Vector<double> inputs;
+  Vector<double> parameters;
 
-   NumericalDifferentiation nd;
+  Vector<double> combination_gradient;
 
-   Vector<double> numerical_combination_gradient;
+  Vector<double> numerical_combination_gradient;
 
-   // Test
+  // Test
 
-   p.set(3);
+  p.set_inputs_number(2);
 
-   inputs.set(3, 0.75);
+  inputs.set(2, 0.53);
 
-   combination_gradient = p.calculate_combination_gradient(inputs);
-     
-   numerical_combination_gradient = nd.calculate_gradient(p, &Perceptron::calculate_combination, inputs);
-   
-   assert_true((combination_gradient-numerical_combination_gradient).calculate_absolute_value() < 1.0e-3, LOG);
+  parameters.set(3, -0.07);
+
+  p.set_parameters(parameters);
+
+  combination_gradient = p.calculate_combination_gradient(inputs, parameters);
+
+  numerical_combination_gradient = nd.calculate_gradient(
+      p, &Perceptron::calculate_combination, inputs, parameters);
+
+  assert_true(combination_gradient.size() == p.count_parameters_number(), LOG);
+  assert_true((combination_gradient - numerical_combination_gradient)
+                      .calculate_absolute_value() <
+                  1.0e-3,
+              LOG);
 }
 
+void PerceptronTest::test_calculate_combination_parameters_Hessian(void) {
+  message += "test_calculate_combination_parameters_Hessian\n";
 
-void PerceptronTest::test_calculate_combination_Hessian(void)
-{
-   message += "test_calculate_combination_Hessian\n";
+  NumericalDifferentiation nd;
 
-   Perceptron p;
+  Perceptron p;
 
-   Vector<double> inputs;
-   Matrix<double> combination_Hessian;   
+  Vector<double> inputs;
+  Vector<double> parameters;
 
-   NumericalDifferentiation nd;
+  Matrix<double> combination_parameters_Hessian;
 
-   Matrix<double> numerical_combination_Hessian;
+  Matrix<double> numerical_combination_parameters_Hessian;
 
-   // Test
+  // Test
 
-   p.set(3);
+  p.set_inputs_number(2);
 
-   inputs.set(3, 0.75);
+  inputs.set(2, 0.53);
 
-   combination_Hessian = p.calculate_combination_Hessian(inputs);
-     
-   numerical_combination_Hessian = nd.calculate_Hessian(p, &Perceptron::calculate_combination, inputs);
+  parameters.set(3, -0.07);
 
-   assert_true((combination_Hessian-numerical_combination_Hessian).calculate_absolute_value() < 1.0e-3, LOG);
+  p.set_parameters(parameters);
+
+  combination_parameters_Hessian =
+      p.calculate_combination_Hessian(inputs, parameters);
+
+  numerical_combination_parameters_Hessian = nd.calculate_Hessian(
+      p, &Perceptron::calculate_combination, inputs, parameters);
+
+  assert_true(combination_parameters_Hessian.get_rows_number() ==
+                  p.count_parameters_number(),
+              LOG);
+  assert_true(combination_parameters_Hessian.get_columns_number() ==
+                  p.count_parameters_number(),
+              LOG);
+  assert_true(
+      (combination_parameters_Hessian -
+       numerical_combination_parameters_Hessian).calculate_absolute_value() <
+          1.0e-3,
+      LOG);
 }
 
+void PerceptronTest::test_calculate_activation(void) {
+  message += "test_calculate_activation\n";
 
-void PerceptronTest::test_calculate_combination_parameters_gradient(void)
-{
-   message += "test_calculate_combination_parameters_gradient\n";
+  double activation;
 
-   NumericalDifferentiation nd;
+  Perceptron p;
 
-   Perceptron p;
+  double combination;
 
-   Vector<double> inputs;
-   Vector<double> parameters;
+  // Logistic activation function
 
-   Vector<double> combination_gradient;
+  p.set_activation_function(Perceptron::Logistic);
 
-   Vector<double> numerical_combination_gradient;
+  combination = 0.0;
+  activation = p.calculate_activation(combination);
+  assert_true(activation == 0.5, LOG);
 
-   // Test
-   
-   p.set_inputs_number(2);
+  // Hyperbolic tangent activation function
 
-   inputs.set(2, 0.53);
+  p.set_activation_function(Perceptron::HyperbolicTangent);
 
-   parameters.set(3, -0.07);
+  combination = 0.0;
+  activation = p.calculate_activation(combination);
+  assert_true(activation == 0.0, LOG);
 
-   p.set_parameters(parameters);
+  // Threshold activation function
 
-   combination_gradient = p.calculate_combination_gradient(inputs, parameters);
+  p.set_activation_function(Perceptron::Threshold);
 
-   numerical_combination_gradient = nd.calculate_gradient(p, &Perceptron::calculate_combination, inputs, parameters);
-   
-   assert_true(combination_gradient.size() == p.count_parameters_number(), LOG);
-   assert_true((combination_gradient-numerical_combination_gradient).calculate_absolute_value() < 1.0e-3, LOG);
+  combination = 0.0;
+  activation = p.calculate_activation(combination);
+  assert_true(activation == 1.0, LOG);
+
+  // Symmetric threshold activation function
+
+  p.set_activation_function(Perceptron::SymmetricThreshold);
+
+  combination = 0.0;
+  activation = p.calculate_activation(combination);
+  assert_true(activation == 1.0, LOG);
+
+  // Linear activation function
+
+  p.set_activation_function(Perceptron::Linear);
+
+  combination = 0.0;
+  activation = p.calculate_activation(combination);
+  assert_true(combination == 0.0, LOG);
+
+  // Threshold activation function
+
+  p.set_activation_function(Perceptron::Threshold);
+
+  combination = 0.0;
+  activation = p.calculate_activation(combination);
+  assert_true(activation == 1.0, LOG);
+
+  // SymmetricThreshold activation function
+
+  p.set_activation_function(Perceptron::SymmetricThreshold);
+
+  combination = 0.0;
+  activation = p.calculate_activation(combination);
+  assert_true(activation == 1.0, LOG);
+
+  // Logistic activation function
+
+  p.set_activation_function(Perceptron::Logistic);
+
+  combination = 0.0;
+  activation = p.calculate_activation(combination);
+
+  assert_true(fabs(activation - 1.0 / (1.0 + exp(-combination))) < 1.0e-12,
+              LOG);
+
+  // Hyperbolic tangent activation function
+
+  p.set_activation_function(Perceptron::HyperbolicTangent);
+
+  activation = p.calculate_activation(combination);
+  assert_true(fabs(activation - tanh(combination)) < 1.0e-12, LOG);
+
+  // Linear activation function
+
+  p.set_activation_function(Perceptron::Linear);
+
+  activation = p.calculate_activation(combination);
+  assert_true(combination == activation, LOG);
 }
 
+void PerceptronTest::test_calculate_activation_derivative(void) {
+  message += "test_calculate_activation_derivative\n";
 
-void PerceptronTest::test_calculate_combination_parameters_Hessian(void)
-{
-   message += "test_calculate_combination_parameters_Hessian\n";
+  Perceptron p;
 
-   NumericalDifferentiation nd;
+  double combination;
+  double activation_derivative;
 
-   Perceptron p;
+  NumericalDifferentiation nd;
 
-   Vector<double> inputs;
-   Vector<double> parameters;   
+  double numerical_derivative;
 
-   Matrix<double> combination_parameters_Hessian;
+  // Logistic activation function
 
-   Matrix<double> numerical_combination_parameters_Hessian;
+  p.set_activation_function(Perceptron::Logistic);
 
-   // Test
-   
-   p.set_inputs_number(2);
+  // Test
 
-   inputs.set(2, 0.53);
+  combination = 0.0;
+  activation_derivative = p.calculate_activation_derivative(combination);
 
-   parameters.set(3, -0.07);
+  assert_true(activation_derivative == 0.25, LOG);
 
-   p.set_parameters(parameters);
+  // Test
 
-   combination_parameters_Hessian = p.calculate_combination_Hessian(inputs, parameters);
+  combination = -1.55;
+  activation_derivative = p.calculate_activation_derivative(combination);
 
-   numerical_combination_parameters_Hessian = nd.calculate_Hessian(p, &Perceptron::calculate_combination, inputs, parameters);
-   
-   assert_true(combination_parameters_Hessian.get_rows_number() == p.count_parameters_number(), LOG);
-   assert_true(combination_parameters_Hessian.get_columns_number() == p.count_parameters_number(), LOG);
-   assert_true((combination_parameters_Hessian-numerical_combination_parameters_Hessian).calculate_absolute_value() < 1.0e-3, LOG);
+  numerical_derivative = nd.calculate_derivative(
+      p, &Perceptron::calculate_activation, combination);
+
+  assert_true(fabs(activation_derivative - numerical_derivative) < 1.0e-3, LOG);
+
+  // Hyperbolic tangent activation function
+
+  p.set_activation_function(Perceptron::HyperbolicTangent);
+
+  // Test
+
+  combination = 0.0;
+  activation_derivative = p.calculate_activation_derivative(combination);
+  assert_true(activation_derivative == 1.0, LOG);
+
+  // Test
+
+  combination = -1.55;
+  activation_derivative = p.calculate_activation_derivative(combination);
+
+  numerical_derivative = nd.calculate_derivative(
+      p, &Perceptron::calculate_activation, combination);
+
+  assert_true(fabs(activation_derivative - numerical_derivative) < 1.0e-3, LOG);
+
+  // Linear activation function
+
+  p.set_activation_function(Perceptron::Linear);
+
+  // Test
+
+  combination = 0.0;
+  activation_derivative = p.calculate_activation_derivative(combination);
+  assert_true(activation_derivative == 1.0, LOG);
+
+  numerical_derivative = nd.calculate_derivative(
+      p, &Perceptron::calculate_activation, combination);
+
+  assert_true(fabs(activation_derivative - numerical_derivative) < 1.0e-3, LOG);
 }
 
+void PerceptronTest::test_calculate_activation_second_derivative(void) {
+  message += "test_calculate_activation_second_derivative\n";
 
-void PerceptronTest::test_calculate_activation(void)
-{
-   message += "test_calculate_activation\n";
+  Perceptron p;
 
-   double activation;   
+  double combination;
+  double activation_second_derivative;
 
-   Perceptron p;
+  NumericalDifferentiation nd;
 
-   double combination;
-   
-   // Logistic activation function 
-   
-   p.set_activation_function(Perceptron::Logistic);
+  double activation_numerical_second_derivative;
 
-   combination = 0.0;
-   activation = p.calculate_activation(combination);
-   assert_true(activation == 0.5, LOG);
+  // Logistic activation function
 
-   // Hyperbolic tangent activation function 
+  p.set_activation_function(Perceptron::Logistic);
 
-   p.set_activation_function(Perceptron::HyperbolicTangent);
+  // Test
 
-   combination = 0.0;
-   activation = p.calculate_activation(combination);
-   assert_true(activation == 0.0, LOG);
+  combination = 0.0;
+  activation_second_derivative =
+      p.calculate_activation_second_derivative(combination);
+  assert_true(activation_second_derivative == 0.0, LOG);
 
-   // Threshold activation function 
-   
-   p.set_activation_function(Perceptron::Threshold);
+  // Test
 
-   combination = 0.0;
-   activation = p.calculate_activation(combination);
-   assert_true(activation == 1.0, LOG);
+  combination = -1.55;
+  activation_second_derivative =
+      p.calculate_activation_second_derivative(combination);
 
-   // Symmetric threshold activation function 
-   
-   p.set_activation_function(Perceptron::SymmetricThreshold);
+  activation_numerical_second_derivative = nd.calculate_second_derivative(
+      p, &Perceptron::calculate_activation, combination);
 
-   combination = 0.0;
-   activation = p.calculate_activation(combination);
-   assert_true(activation == 1.0, LOG);
+  assert_true(fabs(activation_second_derivative -
+                   activation_numerical_second_derivative) <
+                  1.0e-3,
+              LOG);
 
-   // Linear activation function
-   
-   p.set_activation_function(Perceptron::Linear);
+  // Hyperbolic tangent activation function
 
-   combination = 0.0;
-   activation = p.calculate_activation(combination);
-   assert_true(combination == 0.0, LOG);
+  p.set_activation_function(Perceptron::HyperbolicTangent);
 
-   // Threshold activation function 
-   
-   p.set_activation_function(Perceptron::Threshold);
+  // Test
 
-   combination = 0.0;
-   activation = p.calculate_activation(combination);
-   assert_true(activation == 1.0, LOG);
+  combination = 0.0;
+  activation_second_derivative =
+      p.calculate_activation_second_derivative(combination);
+  assert_true(activation_second_derivative == 0.0, LOG);
 
-   // SymmetricThreshold activation function 
-   
-   p.set_activation_function(Perceptron::SymmetricThreshold);
+  // Test
 
-   combination = 0.0;
-   activation = p.calculate_activation(combination);
-   assert_true(activation == 1.0, LOG);
+  combination = -1.55;
+  activation_second_derivative =
+      p.calculate_activation_second_derivative(combination);
 
-   // Logistic activation function 
-   
-   p.set_activation_function(Perceptron::Logistic);
+  activation_numerical_second_derivative = nd.calculate_second_derivative(
+      p, &Perceptron::calculate_activation, combination);
 
-   combination = 0.0;
-   activation = p.calculate_activation(combination);
+  assert_true(fabs(activation_second_derivative -
+                   activation_numerical_second_derivative) <
+                  1.0e-3,
+              LOG);
 
-   assert_true(fabs(activation - 1.0/(1.0+exp(-combination))) < 1.0e-12, LOG);
+  // Linear activation function
 
-   // Hyperbolic tangent activation function 
+  p.set_activation_function(Perceptron::Linear);
 
-   p.set_activation_function(Perceptron::HyperbolicTangent);
+  // Test
 
-   activation = p.calculate_activation(combination);
-   assert_true(fabs(activation - tanh(combination)) < 1.0e-12, LOG);
+  combination = 0.0;
+  activation_second_derivative =
+      p.calculate_activation_second_derivative(combination);
+  assert_true(activation_second_derivative == 0.0, LOG);
 
-   // Linear activation function
-   
-   p.set_activation_function(Perceptron::Linear);
+  // Test
 
-   activation = p.calculate_activation(combination);
-   assert_true(combination == activation, LOG);
+  combination = -1.55;
+  activation_second_derivative =
+      p.calculate_activation_second_derivative(combination);
+
+  activation_numerical_second_derivative = nd.calculate_second_derivative(
+      p, &Perceptron::calculate_activation, combination);
+
+  assert_true(fabs(activation_second_derivative -
+                   activation_numerical_second_derivative) <
+                  1.0e-3,
+              LOG);
 }
 
+void PerceptronTest::test_calculate_output(void) {
+  message += "test_calculate_output\n";
 
-void PerceptronTest::test_calculate_activation_derivative(void)
-{
-   message += "test_calculate_activation_derivative\n";
+  double output;
+  double potential_output;
 
-   Perceptron p;
+  Vector<double> parameters;
 
-   double combination;
-   double activation_derivative;   
+  unsigned inputs_number = 3;
 
-   NumericalDifferentiation nd;
+  Perceptron p(inputs_number);
 
-   double numerical_derivative;
+  double bias = 0.0;
+  Vector<double> synaptic_weights(inputs_number, 0.0);
 
-   // Logistic activation function 
-   
-   p.set_activation_function(Perceptron::Logistic);
+  p.set_bias(bias);
+  p.set_synaptic_weights(synaptic_weights);
 
-   // Test
+  Vector<double> inputs(inputs_number, 0.0);
 
-   combination = 0.0;
-   activation_derivative = p.calculate_activation_derivative(combination);
-   
-   assert_true(activation_derivative == 0.25, LOG);
+  double combination = p.calculate_combination(inputs);
 
-   // Test
+  // Logistic activation function
 
-   combination = -1.55;
-   activation_derivative = p.calculate_activation_derivative(combination);
-   
-   numerical_derivative = nd.calculate_derivative(p, &Perceptron::calculate_activation, combination);
-   
-   assert_true(fabs(activation_derivative-numerical_derivative) < 1.0e-3, LOG);
+  p.set_activation_function(Perceptron::Logistic);
 
-   // Hyperbolic tangent activation function 
+  output = p.calculate_output(inputs);
+  assert_true(output == 0.5, LOG);
 
-   p.set_activation_function(Perceptron::HyperbolicTangent);
+  // Hyperbolic tangent activation function
 
-   // Test
+  p.set_activation_function(Perceptron::HyperbolicTangent);
 
-   combination = 0.0;
-   activation_derivative = p.calculate_activation_derivative(combination);
-   assert_true(activation_derivative == 1.0, LOG);
-  
-   // Test
+  output = p.calculate_output(inputs);
+  assert_true(output == 0.0, LOG);
 
-   combination = -1.55;
-   activation_derivative = p.calculate_activation_derivative(combination);
+  // Threshold activation function
 
-   numerical_derivative = nd.calculate_derivative(p, &Perceptron::calculate_activation, combination);
-   
-   assert_true(fabs(activation_derivative-numerical_derivative) < 1.0e-3, LOG);
+  p.set_activation_function(Perceptron::Threshold);
 
-   // Linear activation function
-   
-   p.set_activation_function(Perceptron::Linear);
+  output = p.calculate_output(inputs);
+  assert_true(output == 1.0, LOG);
 
-   // Test
+  // SymmetricThreshold activation function
 
-   combination = 0.0;
-   activation_derivative = p.calculate_activation_derivative(combination);
-   assert_true(activation_derivative == 1.0, LOG);
+  p.set_activation_function(Perceptron::SymmetricThreshold);
 
-   numerical_derivative = nd.calculate_derivative(p, &Perceptron::calculate_activation, combination);
-   
-   assert_true(fabs(activation_derivative-numerical_derivative) < 1.0e-3, LOG);
+  output = p.calculate_output(inputs);
+  assert_true(output == 1.0, LOG);
+
+  // Linear activation function
+
+  p.set_activation_function(Perceptron::Linear);
+
+  output = p.calculate_output(inputs);
+  assert_true(output == 0.0, LOG);
+
+  // Test
+
+  p.set(2);
+
+  p.set_activation_function(Perceptron::Logistic);
+
+  inputs.set(2);
+  inputs[0] = -0.2;
+  inputs[1] = 0.5;
+
+  p.set_bias(-0.5);
+
+  synaptic_weights.set(2);
+  synaptic_weights[0] = 1.0;
+  synaptic_weights[1] = 0.25;
+
+  p.set_synaptic_weights(synaptic_weights);
+
+  output = p.calculate_output(inputs);
+
+  // New test
+
+  p.set(3);
+
+  inputs.set(3);
+  inputs[0] = -0.8;
+  inputs[1] = 0.2;
+  inputs[2] = -0.4;
+
+  p.set_bias(-0.5);
+
+  synaptic_weights.set(3);
+  synaptic_weights[0] = 1.0;
+  synaptic_weights[1] = -0.75;
+  synaptic_weights[2] = 0.25;
+
+  p.set_synaptic_weights(synaptic_weights);
+
+  output = p.calculate_output(inputs);
+
+  // Logistic activation function
+
+  p.set_activation_function(Perceptron::Logistic);
+
+  combination = p.calculate_combination(inputs);
+  output = p.calculate_output(inputs);
+  assert_true(fabs(output - 1.0 / (1.0 + exp(-combination))) < 1.0e-12, LOG);
+
+  // Hyperbolic tangent activation function
+
+  p.set_activation_function(Perceptron::HyperbolicTangent);
+
+  combination = p.calculate_combination(inputs);
+  output = p.calculate_output(inputs);
+  assert_true(fabs(output - tanh(combination)) < 1.0e-12, LOG);
+
+  // Threshold activation function
+
+  p.set_activation_function(Perceptron::Threshold);
+
+  output = p.calculate_output(inputs);
+  assert_true(output == 0.0, LOG);
+
+  // Symmetric threshold activation function
+
+  p.set_activation_function(Perceptron::SymmetricThreshold);
+
+  output = p.calculate_output(inputs);
+  assert_true(output == -1.0, LOG);
+
+  // Linear activation function
+
+  p.set_activation_function(Perceptron::Linear);
+
+  combination = p.calculate_combination(inputs);
+  output = p.calculate_output(inputs);
+  assert_true(fabs(output - combination) < 1.0e-12, LOG);
+
+  // Test
+
+  inputs.set(1, 3.0);
+
+  p.set(1, 1);
+
+  p.initialize_parameters(2.0);
+
+  output = p.calculate_output(inputs);
+
+  parameters.set(2, 1.0);
+
+  potential_output = p.calculate_output(inputs, parameters);
+
+  assert_true(output != potential_output, LOG);
 }
 
-  
-void PerceptronTest::test_calculate_activation_second_derivative(void)
-{
-   message += "test_calculate_activation_second_derivative\n";
-
-   Perceptron p;
-
-   double combination;   
-   double activation_second_derivative;   
-
-   NumericalDifferentiation nd;
-
-   double activation_numerical_second_derivative;
-
-   // Logistic activation function 
-   
-   p.set_activation_function(Perceptron::Logistic);
-
-   // Test
-
-   combination = 0.0;
-   activation_second_derivative = p.calculate_activation_second_derivative(combination);
-   assert_true(activation_second_derivative == 0.0, LOG);
-
-   // Test
-
-   combination = -1.55;
-   activation_second_derivative = p.calculate_activation_second_derivative(combination);
-
-   activation_numerical_second_derivative = nd.calculate_second_derivative(p, &Perceptron::calculate_activation, combination);
-   
-   assert_true(fabs(activation_second_derivative-activation_numerical_second_derivative) < 1.0e-3, LOG);
-
-   // Hyperbolic tangent activation function 
-
-   p.set_activation_function(Perceptron::HyperbolicTangent);
-
-   // Test
-
-   combination = 0.0;
-   activation_second_derivative = p.calculate_activation_second_derivative(combination);
-   assert_true(activation_second_derivative == 0.0, LOG);
-
-   // Test
-
-   combination = -1.55;
-   activation_second_derivative = p.calculate_activation_second_derivative(combination);
-
-   activation_numerical_second_derivative = nd.calculate_second_derivative(p, &Perceptron::calculate_activation, combination);
-   
-   assert_true(fabs(activation_second_derivative-activation_numerical_second_derivative) < 1.0e-3, LOG); 
-
-   // Linear activation function
-   
-   p.set_activation_function(Perceptron::Linear);
-
-   // Test
-
-   combination = 0.0;
-   activation_second_derivative = p.calculate_activation_second_derivative(combination);
-   assert_true(activation_second_derivative == 0.0, LOG);
-
-   // Test
-
-   combination = -1.55;
-   activation_second_derivative = p.calculate_activation_second_derivative(combination);
-
-   activation_numerical_second_derivative = nd.calculate_second_derivative(p, &Perceptron::calculate_activation, combination);
-   
-   assert_true(fabs(activation_second_derivative-activation_numerical_second_derivative) < 1.0e-3, LOG);
+void PerceptronTest::test_calculate_parameters_outputs(void) {
+  message += "test_calculate_parameters_output\n";
 }
 
+void PerceptronTest::test_calculate_gradient(void) {
+  message += "test_calculate_gradient\n";
 
-void PerceptronTest::test_calculate_output(void)
-{
-   message += "test_calculate_output\n";
+  Perceptron p;
 
-   double output;
-   double potential_output;
+  Vector<double> inputs;
+  Vector<double> gradient;
 
-   Vector<double> parameters;
+  NumericalDifferentiation nd;
 
-   unsigned inputs_number = 3;
+  Vector<double> numerical_gradient;
 
-   Perceptron p(inputs_number);
+  // Logistic activation function
 
-   double bias = 0.0;
-   Vector<double> synaptic_weights(inputs_number, 0.0);
+  p.set_activation_function(Perceptron::Logistic);
 
-   p.set_bias(bias);
-   p.set_synaptic_weights(synaptic_weights);
+  // Test
 
-   Vector<double> inputs(inputs_number, 0.0);
+  p.set(3);
 
-   double combination = p.calculate_combination(inputs);
+  inputs.set(3, 0.75);
 
-   // Logistic activation function 
-   
-   p.set_activation_function(Perceptron::Logistic);
+  gradient = p.calculate_gradient(inputs);
 
-   output = p.calculate_output(inputs);
-   assert_true(output == 0.5, LOG);
+  numerical_gradient =
+      nd.calculate_gradient(p, &Perceptron::calculate_output, inputs);
 
-   // Hyperbolic tangent activation function 
+  assert_true(
+      (gradient - numerical_gradient).calculate_absolute_value() < 1.0e-3, LOG);
 
-   p.set_activation_function(Perceptron::HyperbolicTangent);
+  // Hyperbolic tangent activation function
 
-   output = p.calculate_output(inputs);
-   assert_true(output == 0.0, LOG);
+  p.set_activation_function(Perceptron::HyperbolicTangent);
 
-   // Threshold activation function 
-   
-   p.set_activation_function(Perceptron::Threshold);
+  // Test
 
-   output = p.calculate_output(inputs);
-   assert_true(output == 1.0, LOG);
+  p.set(3);
 
-   // SymmetricThreshold activation function 
-   
-   p.set_activation_function(Perceptron::SymmetricThreshold);
+  inputs.set(3, 0.75);
 
-   output = p.calculate_output(inputs);
-   assert_true(output == 1.0, LOG);
+  gradient = p.calculate_gradient(inputs);
 
-   // Linear activation function
-   
-   p.set_activation_function(Perceptron::Linear);
+  numerical_gradient =
+      nd.calculate_gradient(p, &Perceptron::calculate_output, inputs);
 
-   output = p.calculate_output(inputs);
-   assert_true(output == 0.0, LOG);
+  assert_true(
+      (gradient - numerical_gradient).calculate_absolute_value() < 1.0e-3, LOG);
 
-   // Test
+  // Linear activation function
 
-   p.set(2);
+  p.set_activation_function(Perceptron::Linear);
 
-   p.set_activation_function(Perceptron::Logistic);
+  // Test
 
-   inputs.set(2);
-   inputs[0] = -0.2;
-   inputs[1] =  0.5;
+  p.set(3);
 
-   p.set_bias(-0.5);
+  inputs.set(3, 0.75);
 
-   synaptic_weights.set(2);
-   synaptic_weights[0] = 1.0;
-   synaptic_weights[1] = 0.25;
+  gradient = p.calculate_gradient(inputs);
 
-   p.set_synaptic_weights(synaptic_weights);
+  numerical_gradient =
+      nd.calculate_gradient(p, &Perceptron::calculate_output, inputs);
 
-   output = p.calculate_output(inputs);
-
-   // New test
-
-   p.set(3);
-
-   inputs.set(3);
-   inputs[0] = -0.8;
-   inputs[1] =  0.2;
-   inputs[2] = -0.4;
-
-   p.set_bias(-0.5);
-
-   synaptic_weights.set(3);
-   synaptic_weights[0] =  1.0;
-   synaptic_weights[1] = -0.75;
-   synaptic_weights[2] =  0.25;
-
-   p.set_synaptic_weights(synaptic_weights);
-
-   output = p.calculate_output(inputs);
-
-   // Logistic activation function 
-   
-   p.set_activation_function(Perceptron::Logistic);
-
-   combination = p.calculate_combination(inputs);
-   output = p.calculate_output(inputs);
-   assert_true(fabs(output - 1.0/(1.0 + exp(-combination))) < 1.0e-12, LOG);
-
-   // Hyperbolic tangent activation function 
-
-   p.set_activation_function(Perceptron::HyperbolicTangent);
-
-   combination = p.calculate_combination(inputs);
-   output = p.calculate_output(inputs);
-   assert_true(fabs(output - tanh(combination)) < 1.0e-12, LOG);
-
-   // Threshold activation function 
-   
-   p.set_activation_function(Perceptron::Threshold);
-
-   output = p.calculate_output(inputs);
-   assert_true(output == 0.0, LOG);
-
-   // Symmetric threshold activation function 
-   
-   p.set_activation_function(Perceptron::SymmetricThreshold);
-
-   output = p.calculate_output(inputs);
-   assert_true(output == -1.0, LOG);
-
-   // Linear activation function
-   
-   p.set_activation_function(Perceptron::Linear);
-
-   combination = p.calculate_combination(inputs);
-   output = p.calculate_output(inputs);
-   assert_true(fabs(output - combination) < 1.0e-12, LOG);
-
-
-   // Test
-
-   inputs.set(1, 3.0);
-
-   p.set(1, 1);
-
-   p.initialize_parameters(2.0);
-
-   output = p.calculate_output(inputs);
-
-   parameters.set(2, 1.0);
-
-   potential_output = p.calculate_output(inputs, parameters);
-
-   assert_true(output != potential_output, LOG);
+  assert_true(
+      (gradient - numerical_gradient).calculate_absolute_value() < 1.0e-3, LOG);
 }
 
+void PerceptronTest::test_calculate_Hessian(void) {
+  message += "test_calculate_Hessian\n";
 
-void PerceptronTest::test_calculate_parameters_outputs(void)
-{
-   message += "test_calculate_parameters_output\n";
+  Perceptron p;
+
+  Vector<double> inputs;
+  Matrix<double> Hessian;
+
+  NumericalDifferentiation nd;
+
+  Matrix<double> numerical_Hessian;
+
+  // Logistic activation function
+
+  p.set_activation_function(Perceptron::Logistic);
+
+  // Test
+
+  p.set(3);
+
+  inputs.set(3, 0.75);
+
+  Hessian = p.calculate_Hessian(inputs);
+
+  numerical_Hessian =
+      nd.calculate_Hessian(p, &Perceptron::calculate_output, inputs);
+
+  assert_true((Hessian - numerical_Hessian).calculate_absolute_value() < 1.0e-3,
+              LOG);
+  assert_true(Hessian.is_symmetric(), LOG);
+
+  // Hyperbolic tangent activation function
+
+  p.set_activation_function(Perceptron::HyperbolicTangent);
+
+  // Test
+
+  p.set(3);
+
+  inputs.set(3, 0.75);
+
+  Hessian = p.calculate_Hessian(inputs);
+
+  numerical_Hessian =
+      nd.calculate_Hessian(p, &Perceptron::calculate_output, inputs);
+
+  assert_true((Hessian - numerical_Hessian).calculate_absolute_value() < 1.0e-3,
+              LOG);
+  assert_true(Hessian.is_symmetric(), LOG);
+
+  // Linear activation function
+
+  p.set_activation_function(Perceptron::Linear);
+
+  // Test
+
+  p.set(3);
+
+  inputs.set(3, 0.75);
+
+  Hessian = p.calculate_Hessian(inputs);
+
+  numerical_Hessian =
+      nd.calculate_Hessian(p, &Perceptron::calculate_output, inputs);
+
+  assert_true((Hessian - numerical_Hessian).calculate_absolute_value() < 1.0e-3,
+              LOG);
+  assert_true(Hessian.is_symmetric(), LOG);
 }
 
+void PerceptronTest::test_calculate_parameters_gradient(void) {
+  message += "test_calculate_parameters_gradient\n";
 
-void PerceptronTest::test_calculate_gradient(void)
-{
-   message += "test_calculate_gradient\n";
+  NumericalDifferentiation nd;
 
-   Perceptron p;
+  Perceptron p;
 
-   Vector<double> inputs;
-   Vector<double> gradient;   
+  Vector<double> inputs;
+  Vector<double> parameters;
 
-   NumericalDifferentiation nd;
+  Vector<double> parameters_gradient;
+  Vector<double> numerical_parameters_gradient;
 
-   Vector<double> numerical_gradient;
+  // Test
 
-   // Logistic activation function 
-   
-   p.set_activation_function(Perceptron::Logistic);
+  p.set_inputs_number(2);
 
-   // Test
+  inputs.set(2, 0.82);
+  parameters.set(3, -0.93);
 
-   p.set(3);
+  p.set_parameters(parameters);
 
-   inputs.set(3, 0.75);
+  parameters_gradient = p.calculate_gradient(inputs, parameters);
 
-   gradient = p.calculate_gradient(inputs);
-     
-   numerical_gradient = nd.calculate_gradient(p, &Perceptron::calculate_output, inputs);
-   
-   assert_true((gradient-numerical_gradient).calculate_absolute_value() < 1.0e-3, LOG);
+  numerical_parameters_gradient = nd.calculate_gradient(
+      p, &Perceptron::calculate_output, inputs, parameters);
 
-   // Hyperbolic tangent activation function 
-
-   p.set_activation_function(Perceptron::HyperbolicTangent);
-
-   // Test
-
-   p.set(3);
-
-   inputs.set(3, 0.75);
-
-   gradient = p.calculate_gradient(inputs);
-     
-   numerical_gradient = nd.calculate_gradient(p, &Perceptron::calculate_output, inputs);
-   
-   assert_true((gradient-numerical_gradient).calculate_absolute_value() < 1.0e-3, LOG);
-
-   // Linear activation function
-   
-   p.set_activation_function(Perceptron::Linear);
-
-   // Test
-
-   p.set(3);
-
-   inputs.set(3, 0.75);
-
-   gradient = p.calculate_gradient(inputs);
-     
-   numerical_gradient = nd.calculate_gradient(p, &Perceptron::calculate_output, inputs);
-   
-   assert_true((gradient-numerical_gradient).calculate_absolute_value() < 1.0e-3, LOG);
+  assert_true(parameters_gradient.size() == p.count_parameters_number(), LOG);
+  assert_true((parameters_gradient - numerical_parameters_gradient)
+                      .calculate_absolute_value() <
+                  1.0e-3,
+              LOG);
 }
 
+void PerceptronTest::test_calculate_parameters_Hessian(void) {
+  message += "test_calculate_parameters_Hessian\n";
 
-void PerceptronTest::test_calculate_Hessian(void)
-{
-   message += "test_calculate_Hessian\n";
+  NumericalDifferentiation nd;
 
-   Perceptron p;
+  Perceptron p;
 
-   Vector<double> inputs;
-   Matrix<double> Hessian;   
+  Vector<double> inputs;
+  Vector<double> parameters;
 
-   NumericalDifferentiation nd;
+  Matrix<double> parameters_Hessian;
+  Matrix<double> numerical_parameters_Hessian;
 
-   Matrix<double> numerical_Hessian;
+  // Test
 
-   // Logistic activation function 
-   
-   p.set_activation_function(Perceptron::Logistic);
+  p.set_inputs_number(2);
 
-   // Test
+  inputs.set(2, 0.82);
+  parameters.set(3, -0.93);
 
-   p.set(3);
+  p.set_parameters(parameters);
 
-   inputs.set(3, 0.75);
+  parameters_Hessian = p.calculate_Hessian(inputs, parameters);
 
-   Hessian = p.calculate_Hessian(inputs);
-     
-   numerical_Hessian = nd.calculate_Hessian(p, &Perceptron::calculate_output, inputs);
+  numerical_parameters_Hessian = nd.calculate_Hessian(
+      p, &Perceptron::calculate_output, inputs, parameters);
 
-   assert_true((Hessian-numerical_Hessian).calculate_absolute_value() < 1.0e-3, LOG);
-   assert_true(Hessian.is_symmetric(), LOG);
+  assert_true((parameters_Hessian - numerical_parameters_Hessian)
+                      .calculate_absolute_value() <
+                  1.0e-3,
+              LOG);
+  assert_true(parameters_Hessian.is_symmetric(), LOG);
 
-   // Hyperbolic tangent activation function 
+  // Test
 
-   p.set_activation_function(Perceptron::HyperbolicTangent);
+  p.set_inputs_number(3);
 
-   // Test
+  inputs.set(3);
+  inputs[0] = -0.8;
+  inputs[1] = 0.2;
+  inputs[2] = -0.4;
 
-   p.set(3);
+  parameters.set(4);
+  parameters[0] = -0.5;
+  parameters[1] = 1.0;
+  parameters[2] = -0.75;
+  parameters[3] = 0.25;
 
-   inputs.set(3, 0.75);
+  p.set_parameters(parameters);
 
-   Hessian = p.calculate_Hessian(inputs);
-     
-   numerical_Hessian = nd.calculate_Hessian(p, &Perceptron::calculate_output, inputs);
-   
-   assert_true((Hessian-numerical_Hessian).calculate_absolute_value() < 1.0e-3, LOG);
-   assert_true(Hessian.is_symmetric(), LOG);
+  parameters_Hessian = p.calculate_Hessian(inputs, parameters);
 
-   // Linear activation function
-   
-   p.set_activation_function(Perceptron::Linear);
+  numerical_parameters_Hessian = nd.calculate_Hessian(
+      p, &Perceptron::calculate_output, inputs, parameters);
 
-   // Test
-
-   p.set(3);
-
-   inputs.set(3, 0.75);
-
-   Hessian = p.calculate_Hessian(inputs);
-     
-   numerical_Hessian = nd.calculate_Hessian(p, &Perceptron::calculate_output, inputs);
-   
-   assert_true((Hessian-numerical_Hessian).calculate_absolute_value() < 1.0e-3, LOG);
-   assert_true(Hessian.is_symmetric(), LOG);
+  assert_true((parameters_Hessian - numerical_parameters_Hessian)
+                      .calculate_absolute_value() <
+                  1.0e-3,
+              LOG);
+  assert_true(parameters_Hessian.is_symmetric(), LOG);
 }
 
+void PerceptronTest::run_test_case(void) {
+  message += "Running perceptron test case...\n";
 
-void PerceptronTest::test_calculate_parameters_gradient(void)
-{
-   message += "test_calculate_parameters_gradient\n";
+  // Constructor and destructor methods
 
-   NumericalDifferentiation nd;
+  test_constructor();
+  test_destructor();
 
-   Perceptron p;
+  // Assignment operator
 
-   Vector<double> inputs;
-   Vector<double> parameters;   
+  test_assignment_operator();
 
-   Vector<double> parameters_gradient;
-   Vector<double> numerical_parameters_gradient;
+  // Get methods
 
-   // Test
-   
-   p.set_inputs_number(2);
+  test_count_inputs_number();
+  test_get_activation_function();
+  test_get_bias();
+  test_arrange_synaptic_weights();
+  test_get_synaptic_weight();
+  test_count_parameters_number();
+  test_arrange_parameters();
+  test_get_display();
 
-   inputs.set(2, 0.82);
-   parameters.set(3, -0.93);
+  // Set methods
 
-   p.set_parameters(parameters);
+  test_set();
 
-   parameters_gradient = p.calculate_gradient(inputs, parameters);
+  test_set_inputs_number();
+  test_set_activation_function();
+  test_set_bias();
+  test_set_synaptic_weights();
+  test_set_synaptic_weight();
+  test_set_parameters();
+  test_set_display();
 
-   numerical_parameters_gradient = nd.calculate_gradient(p, &Perceptron::calculate_output, inputs, parameters);
-   
-   assert_true(parameters_gradient.size() == p.count_parameters_number(), LOG);
-   assert_true((parameters_gradient-numerical_parameters_gradient).calculate_absolute_value() < 1.0e-3, LOG);
+  // Growing and pruning
+
+  test_grow_input();
+  test_prune_input();
+
+  // Initialization methods
+
+  test_initialize_bias_uniform();
+  test_initialize_bias_normal();
+
+  test_initialize_synaptic_weights_uniform();
+  test_initialize_synaptic_weights_normal();
+
+  test_initialize_parameters();
+
+  // Combination methods
+
+  test_calculate_combination();
+
+  // Activation methods
+
+  test_calculate_activation();
+  test_calculate_activation_derivative();
+  test_calculate_activation_second_derivative();
+
+  // Output methods
+
+  test_calculate_output();
+
+  // Gradient methods
+
+  test_calculate_gradient();
+  test_calculate_parameters_gradient();
+
+  test_calculate_combination_gradient();
+  test_calculate_combination_parameters_gradient();
+
+  // Hessian methods
+
+  test_calculate_Hessian();
+  test_calculate_Hessian();
+  test_calculate_parameters_Hessian();
+  test_calculate_combination_Hessian();
+  test_calculate_combination_parameters_Hessian();
+
+  message += "End of perceptron test case.\n";
 }
-
-
-void PerceptronTest::test_calculate_parameters_Hessian(void)
-{
-   message += "test_calculate_parameters_Hessian\n";
-
-   NumericalDifferentiation nd;
-
-   Perceptron p;
-
-   Vector<double> inputs;
-   Vector<double> parameters;   
-
-   Matrix<double> parameters_Hessian;
-   Matrix<double> numerical_parameters_Hessian;
-
-   // Test
-   
-   p.set_inputs_number(2);
-
-   inputs.set(2, 0.82);
-   parameters.set(3, -0.93);
-
-   p.set_parameters(parameters);
-
-   parameters_Hessian = p.calculate_Hessian(inputs, parameters);
-
-   numerical_parameters_Hessian = nd.calculate_Hessian(p, &Perceptron::calculate_output, inputs, parameters);
-   
-   assert_true((parameters_Hessian-numerical_parameters_Hessian).calculate_absolute_value() < 1.0e-3, LOG);
-   assert_true(parameters_Hessian.is_symmetric(), LOG);
-
-   // Test
-   
-   p.set_inputs_number(3);
-
-   inputs.set(3);
-   inputs[0] = -0.8;
-   inputs[1] =  0.2;
-   inputs[2] = -0.4;
-
-   parameters.set(4);
-   parameters[0] = -0.5;
-   parameters[1] = 1.0;
-   parameters[2] = -0.75;
-   parameters[3] = 0.25;
-
-   p.set_parameters(parameters);
-
-   parameters_Hessian = p.calculate_Hessian(inputs, parameters);
-
-   numerical_parameters_Hessian = nd.calculate_Hessian(p, &Perceptron::calculate_output, inputs, parameters);
-   
-   assert_true((parameters_Hessian-numerical_parameters_Hessian).calculate_absolute_value() < 1.0e-3, LOG);
-   assert_true(parameters_Hessian.is_symmetric(), LOG);
-}
-
-
-void PerceptronTest::run_test_case(void)
-{
-   message += "Running perceptron test case...\n";
-
-   // Constructor and destructor methods
-
-   test_constructor();
-   test_destructor(); 
-
-   // Assignment operator 
-
-   test_assignment_operator();
-
-   // Get methods
-
-   test_count_inputs_number();
-   test_get_activation_function();
-   test_get_bias();   
-   test_arrange_synaptic_weights();
-   test_get_synaptic_weight();
-   test_count_parameters_number();
-   test_arrange_parameters();
-   test_get_display();
-
-   // Set methods
-
-   test_set();
-
-   test_set_inputs_number();
-   test_set_activation_function();
-   test_set_bias();
-   test_set_synaptic_weights();
-   test_set_synaptic_weight();
-   test_set_parameters();
-   test_set_display();
-
-   // Growing and pruning
-
-   test_grow_input();
-   test_prune_input();
-
-   // Initialization methods
-
-   test_initialize_bias_uniform();
-   test_initialize_bias_normal();
-
-   test_initialize_synaptic_weights_uniform();
-   test_initialize_synaptic_weights_normal();
-
-   test_initialize_parameters();
-
-   // Combination methods
-
-   test_calculate_combination();
-
-   // Activation methods
-
-   test_calculate_activation();
-   test_calculate_activation_derivative();
-   test_calculate_activation_second_derivative();
-
-   // Output methods
-
-   test_calculate_output();
-
-   // Gradient methods
-
-   test_calculate_gradient();
-   test_calculate_parameters_gradient();
-
-   test_calculate_combination_gradient();
-   test_calculate_combination_parameters_gradient();
-
-   // Hessian methods
-
-   test_calculate_Hessian();
-   test_calculate_Hessian();
-   test_calculate_parameters_Hessian();
-   test_calculate_combination_Hessian();
-   test_calculate_combination_parameters_Hessian();
-
-   message += "End of perceptron test case.\n";
-}
-
 
 // OpenNN: Open Neural Networks Library.
-// Copyright (C) 2005-2014 Roberto Lopez 
+// Copyright (C) 2005-2014 Roberto Lopez
 //
 // This library is free software; you can redistribute it and/or
 // modify it under the terms of the GNU Lesser General Public
@@ -1277,4 +1260,3 @@ void PerceptronTest::run_test_case(void)
 // You should have received a copy of the GNU Lesser General Public
 // License along with this library; if not, write to the Free Software
 // Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
-

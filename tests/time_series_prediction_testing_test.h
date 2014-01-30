@@ -1,12 +1,17 @@
 /****************************************************************************************************************/
 /*                                                                                                              */
-/*   OpenNN: Open Neural Networks Library                                                                       */
-/*   http://flood.sourceforge.net                                                                               */
+/*   OpenNN: Open Neural Networks Library
+ */
+/*   http://flood.sourceforge.net
+ */
 /*                                                                                                              */
-/*   T I M E   S E R I E S   P R E D I C T I O N   T E S T I N G   T E S T   C L A S S   H E A D E R            */
+/*   T I M E   S E R I E S   P R E D I C T I O N   T E S T I N G   T E S T   C L
+ * A S S   H E A D E R            */
 /*                                                                                                              */
-/*   Roberto Lopez                                                                                              */ 
-/*   E-mail: roberto-lopez@users.sourceforge.net                                                                */ 
+/*   Roberto Lopez
+ */
+/*   E-mail: roberto-lopez@users.sourceforge.net
+ */
 /*                                                                                                              */
 /****************************************************************************************************************/
 
@@ -19,58 +24,52 @@
 
 using namespace OpenNN;
 
+class TimeSeriesPredictionTestingTest : public UnitTesting {
 
-class TimeSeriesPredictionTestingTest : public UnitTesting 
-{
-
-#define	STRING(x) #x
+#define STRING(x) #x
 #define TOSTRING(x) STRING(x)
-#define LOG __FILE__ ":" TOSTRING(__LINE__)"\n"
+#define LOG __FILE__ ":" TOSTRING(__LINE__) "\n"
 
-public:  
+ public:
 
-   // GENERAL CONSTRUCTOR
+  // GENERAL CONSTRUCTOR
 
-   explicit TimeSeriesPredictionTestingTest(void);
+  explicit TimeSeriesPredictionTestingTest(void);
 
+  // DESTRUCTOR
 
-   // DESTRUCTOR
+  virtual ~TimeSeriesPredictionTestingTest(void);
 
-   virtual ~TimeSeriesPredictionTestingTest(void);
+  // METHODS
 
+  // Constructor and destructor methods
 
-   // METHODS
+  void test_constructor(void);
+  void test_destructor(void);
 
-   // Constructor and destructor methods
+  // Get methods
 
-   void test_constructor(void);
-   void test_destructor(void);
+  void test_get_neural_network_pointer(void);
+  void test_get_data_set_pointer(void);
 
-   // Get methods
+  void test_get_display(void);
 
-   void test_get_neural_network_pointer(void);
-   void test_get_data_set_pointer(void);
-   
-   void test_get_display(void);
+  // Set methods
 
-   // Set methods
+  void test_set_neural_network_pointer(void);
+  void test_set_data_set_pointer(void);
 
-   void test_set_neural_network_pointer(void);
-   void test_set_data_set_pointer(void);
+  void test_set_display(void);
 
-   void test_set_display(void);
+  // Unit testing methods
 
-   // Unit testing methods
-
-   void run_test_case(void);
-
+  void run_test_case(void);
 };
-
 
 #endif
 
 // OpenNN: An Open Source Neural Networks C++ Library.
-// Copyright (C) 2005-2013 Roberto Lopez 
+// Copyright (C) 2005-2013 Roberto Lopez
 //
 // This library is free software; you can redistribute it and/or
 // modify it under the s of the GNU Lesser General Public

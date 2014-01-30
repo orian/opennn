@@ -1,13 +1,19 @@
 /****************************************************************************************************************/
 /*                                                                                                              */
-/*   OpenNN: Open Neural Networks Library                                                                       */
-/*   www.intelnics.com/opennn                                                                                   */
+/*   OpenNN: Open Neural Networks Library
+ */
+/*   www.intelnics.com/opennn
+ */
 /*                                                                                                              */
-/*   N E W T O N   M E T H O D   T E S T   C L A S S   H E A D E R                                              */
+/*   N E W T O N   M E T H O D   T E S T   C L A S S   H E A D E R
+ */
 /*                                                                                                              */
-/*   Roberto Lopez                                                                                              */
-/*   Intelnics - The artificial intelligence company                                                            */
-/*   robertolopez@intelnics.com                                                                                 */
+/*   Roberto Lopez
+ */
+/*   Intelnics - The artificial intelligence company
+ */
+/*   robertolopez@intelnics.com
+ */
 /*                                                                                                              */
 /****************************************************************************************************************/
 
@@ -20,59 +26,54 @@
 
 using namespace OpenNN;
 
+class NewtonMethodTest : public UnitTesting {
 
-class NewtonMethodTest : public UnitTesting 
-{
-
-#define	STRING(x) #x
+#define STRING(x) #x
 #define TOSTRING(x) STRING(x)
-#define LOG __FILE__ ":" TOSTRING(__LINE__)"\n"
+#define LOG __FILE__ ":" TOSTRING(__LINE__) "\n"
 
-public:
+ public:
 
-   // CONSTRUCTOR
+  // CONSTRUCTOR
 
-   explicit NewtonMethodTest(void);
+  explicit NewtonMethodTest(void);
 
-   // DESTRUCTOR
+  // DESTRUCTOR
 
-   virtual ~NewtonMethodTest(void);
+  virtual ~NewtonMethodTest(void);
 
-   // Constructor and destructor methods
+  // Constructor and destructor methods
 
-   void test_constructor(void);
-   void test_destructor(void);
+  void test_constructor(void);
+  void test_destructor(void);
 
-   // Training methods
+  // Training methods
 
-   void test_calculate_gradient_descent_training_direction(void);
-   void test_calculate_training_direction(void);
+  void test_calculate_gradient_descent_training_direction(void);
+  void test_calculate_training_direction(void);
 
-   void test_perform_training(void);
+  void test_perform_training(void);
 
-   // Training history methods
+  // Training history methods
 
-   void test_resize_training_history(void);
-   void test_set_reserve_all_training_history(void);
+  void test_resize_training_history(void);
+  void test_set_reserve_all_training_history(void);
 
-   // Serialization methods
+  // Serialization methods
 
-   void test_to_XML(void);
+  void test_to_XML(void);
 
-   void test_from_XML(void);
+  void test_from_XML(void);
 
-   // Unit testing methods
+  // Unit testing methods
 
-   void run_test_case(void);
-
+  void run_test_case(void);
 };
-
 
 #endif
 
-
 // OpenNN: Open Neural Networks Library.
-// Copyright (C) 2005-2014 Roberto Lopez 
+// Copyright (C) 2005-2014 Roberto Lopez
 //
 // This library is free software; you can redistribute it and/or
 // modify it under the terms of the GNU Lesser General Public

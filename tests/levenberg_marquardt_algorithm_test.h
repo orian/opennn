@@ -1,13 +1,19 @@
 /****************************************************************************************************************/
 /*                                                                                                              */
-/*   OpenNN: Open Neural Networks Library                                                                       */
-/*   www.intelnics.com/opennn                                                                                   */
+/*   OpenNN: Open Neural Networks Library
+ */
+/*   www.intelnics.com/opennn
+ */
 /*                                                                                                              */
-/*   L E V E N B E R G   M A R Q U A R D T   A L G O R I T H M   T E S T   C L A S S   H E A D E R              */
+/*   L E V E N B E R G   M A R Q U A R D T   A L G O R I T H M   T E S T   C L A
+ * S S   H E A D E R              */
 /*                                                                                                              */
-/*   Roberto Lopez                                                                                              */
-/*   Intelnics - The artificial intelligence company                                                            */
-/*   robertolopez@intelnics.com                                                                                 */
+/*   Roberto Lopez
+ */
+/*   Intelnics - The artificial intelligence company
+ */
+/*   robertolopez@intelnics.com
+ */
 /*                                                                                                              */
 /****************************************************************************************************************/
 
@@ -21,81 +27,76 @@
 
 using namespace OpenNN;
 
-class LevenbergMarquardtAlgorithmTest : public UnitTesting 
-{
+class LevenbergMarquardtAlgorithmTest : public UnitTesting {
 
-#define	STRING(x) #x
+#define STRING(x) #x
 #define TOSTRING(x) STRING(x)
-#define LOG __FILE__ ":" TOSTRING(__LINE__)"\n"
+#define LOG __FILE__ ":" TOSTRING(__LINE__) "\n"
 
-public:
+ public:
 
-   // GENERAL CONSTRUCTOR
+  // GENERAL CONSTRUCTOR
 
-   explicit LevenbergMarquardtAlgorithmTest(void); 
+  explicit LevenbergMarquardtAlgorithmTest(void);
 
+  // DESTRUCTOR
 
-   // DESTRUCTOR
+  virtual ~LevenbergMarquardtAlgorithmTest(void);
 
-   virtual ~LevenbergMarquardtAlgorithmTest(void);
+  // METHODS
 
+  // Constructor and destructor methods
 
-   // METHODS
+  void test_constructor(void);
+  void test_destructor(void);
 
-   // Constructor and destructor methods
+  // METHODS
 
-   void test_constructor(void);
-   void test_destructor(void);
+  // Get methods
 
-   // METHODS
+  void test_get_damping_parameter(void);
 
-   // Get methods
+  void test_get_damping_parameter_factor(void);
 
-   void test_get_damping_parameter(void);
+  void test_get_minimum_damping_parameter(void);
+  void test_get_maximum_damping_parameter(void);
 
-   void test_get_damping_parameter_factor(void);
+  // Set methods
 
-   void test_get_minimum_damping_parameter(void);
-   void test_get_maximum_damping_parameter(void);
+  void test_set_damping_parameter(void);
 
-   // Set methods
+  void test_set_damping_parameter_factor(void);
 
-   void test_set_damping_parameter(void);
+  void test_set_minimum_damping_parameter(void);
+  void test_set_maximum_damping_parameter(void);
 
-   void test_set_damping_parameter_factor(void);
+  // Training methods
 
-   void test_set_minimum_damping_parameter(void);
-   void test_set_maximum_damping_parameter(void);
+  void test_calculate_performance(void);
+  void test_calculate_gradient(void);
+  void test_calculate_Hessian_approximation(void);
 
-   // Training methods
+  void test_perform_training(void);
 
-   void test_calculate_performance(void);
-   void test_calculate_gradient(void);
-   void test_calculate_Hessian_approximation(void);
+  // Training history methods
 
-   void test_perform_training(void);
+  void test_resize_training_history(void);
+  void test_set_reserve_all_training_history(void);
 
-   // Training history methods
+  // Serialization methods
 
-   void test_resize_training_history(void);
-   void test_set_reserve_all_training_history(void);
+  void test_to_XML(void);
+  void test_from_XML(void);
 
-   // Serialization methods
+  // Unit testing methods
 
-   void test_to_XML(void);   
-   void test_from_XML(void);
-
-   // Unit testing methods
-
-   void run_test_case(void);
+  void run_test_case(void);
 };
-
 
 #endif
 
-
 // OpenNN: Open Neural Networks Library.
-// Copyright (C) 2005-2014 Roberto Lopez 
+// Copyright (C) 2005-2014 Roberto Lopez
 //
 // This library is free software; you can redistribute it and/or
 // modify it under the terms of the GNU Lesser General Public
@@ -110,4 +111,3 @@ public:
 // You should have received a copy of the GNU Lesser General Public
 // License along with this library; if not, write to the Free Software
 // Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
-

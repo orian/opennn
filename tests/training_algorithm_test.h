@@ -1,13 +1,19 @@
 /****************************************************************************************************************/
 /*                                                                                                              */
-/*   OpenNN: Open Neural Networks Library                                                                       */
-/*   www.intelnics.com/opennn                                                                                   */
+/*   OpenNN: Open Neural Networks Library
+ */
+/*   www.intelnics.com/opennn
+ */
 /*                                                                                                              */
-/*   T R A I N I N G   A L G O R I T H M   T E S T   C L A S S   H E A D E R                                    */
-/*                                                                                                              */ 
-/*   Roberto Lopez                                                                                              */ 
-/*   Intelnics - The artificial intelligence company                                                            */
-/*   robertolopez@intelnics.com                                                                                 */
+/*   T R A I N I N G   A L G O R I T H M   T E S T   C L A S S   H E A D E R
+ */
+/*                                                                                                              */
+/*   Roberto Lopez
+ */
+/*   Intelnics - The artificial intelligence company
+ */
+/*   robertolopez@intelnics.com
+ */
 /*                                                                                                              */
 /****************************************************************************************************************/
 
@@ -20,73 +26,66 @@
 
 using namespace OpenNN;
 
+class TrainingAlgorithmTest : public UnitTesting {
 
-class TrainingAlgorithmTest : public UnitTesting 
-{
-
-#define	STRING(x) #x
+#define STRING(x) #x
 #define TOSTRING(x) STRING(x)
-#define LOG __FILE__ ":" TOSTRING(__LINE__)"\n"
+#define LOG __FILE__ ":" TOSTRING(__LINE__) "\n"
 
-public:
+ public:
 
-   // GENERAL CONSTRUCTOR
+  // GENERAL CONSTRUCTOR
 
-   explicit TrainingAlgorithmTest(void); 
+  explicit TrainingAlgorithmTest(void);
 
+  // DESTRUCTOR
 
-   // DESTRUCTOR
+  virtual ~TrainingAlgorithmTest(void);
 
-   virtual ~TrainingAlgorithmTest(void);
+  // METHODS
 
+  // Constructor and destructor methods
 
-   // METHODS
+  void test_constructor(void);
+  void test_destructor(void);
 
-   // Constructor and destructor methods
+  // Get methods
 
-   void test_constructor(void);
-   void test_destructor(void);
+  void test_get_performance_functional_pointer(void);
 
-   // Get methods
+  void test_get_display(void);
 
-   void test_get_performance_functional_pointer(void);
+  // Set methods
 
-   void test_get_display(void);
+  void test_set_performance_functional_pointer(void);
 
-   // Set methods
+  void test_set_display(void);
 
-   void test_set_performance_functional_pointer(void);
+  void test_set(void);
+  void test_set_default(void);
 
-   void test_set_display(void);
+  // Training methods
 
-   void test_set(void);
-   void test_set_default(void);
+  void test_perform_training(void);
 
-   // Training methods
+  // Serialization methods
 
-   void test_perform_training(void);
+  void test_to_XML(void);
+  void test_from_XML(void);
 
-   // Serialization methods
+  void test_print(void);
+  void test_save(void);
+  void test_load(void);
 
-   void test_to_XML(void);
-   void test_from_XML(void);
+  // Unit testing methods
 
-   void test_print(void);
-   void test_save(void);
-   void test_load(void);
-
-   // Unit testing methods
-
-   void run_test_case(void);
-
+  void run_test_case(void);
 };
-
 
 #endif
 
-
 // OpenNN: Open Neural Networks Library.
-// Copyright (C) 2005-2014 Roberto Lopez 
+// Copyright (C) 2005-2014 Roberto Lopez
 //
 // This library is free software; you can redistribute it and/or
 // modify it under the terms of the GNU Lesser General Public
@@ -101,4 +100,3 @@ public:
 // You should have received a copy of the GNU Lesser General Public
 // License along with this library; if not, write to the Free Software
 // Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
-

@@ -1,13 +1,19 @@
 /****************************************************************************************************************/
 /*                                                                                                              */
-/*   OpenNN: Open Neural Networks Library                                                                       */
-/*   www.intelnics.com/opennn                                                                                   */
+/*   OpenNN: Open Neural Networks Library
+ */
+/*   www.intelnics.com/opennn
+ */
 /*                                                                                                              */
-/*   I N V E R S E   S U M   S Q U A R E D   E R R O R   T E S T   C L A S S   H E A D E R                      */
+/*   I N V E R S E   S U M   S Q U A R E D   E R R O R   T E S T   C L A S S   H
+ * E A D E R                      */
 /*                                                                                                              */
-/*   Roberto Lopez                                                                                              */
-/*   Intelnics - The artificial intelligence company                                                            */
-/*   robertolopez@intelnics.com                                                                                 */
+/*   Roberto Lopez
+ */
+/*   Intelnics - The artificial intelligence company
+ */
+/*   robertolopez@intelnics.com
+ */
 /*                                                                                                              */
 /****************************************************************************************************************/
 
@@ -20,57 +26,52 @@
 
 using namespace OpenNN;
 
-class InverseSumSquaredErrorTest : public UnitTesting 
-{
+class InverseSumSquaredErrorTest : public UnitTesting {
 
-#define	STRING(x) #x
+#define STRING(x) #x
 #define TOSTRING(x) STRING(x)
-#define LOG __FILE__ ":" TOSTRING(__LINE__)"\n"
+#define LOG __FILE__ ":" TOSTRING(__LINE__) "\n"
 
-public:
+ public:
 
-   // GENERAL CONSTRUCTOR
+  // GENERAL CONSTRUCTOR
 
-   explicit InverseSumSquaredErrorTest(void);
+  explicit InverseSumSquaredErrorTest(void);
 
+  // DESTRUCTOR
 
-   // DESTRUCTOR
+  virtual ~InverseSumSquaredErrorTest(void);
 
-   virtual ~InverseSumSquaredErrorTest(void);
+  // METHODS
 
+  // Constructor and destructor methods
 
-   // METHODS
+  void test_constructor(void);
+  void test_destructor(void);
 
-   // Constructor and destructor methods
+  // Get methods
 
-   void test_constructor(void);
-   void test_destructor(void);
+  // Set methods
 
-   // Get methods
+  // Objective methods
 
-   // Set methods
+  void test_calculate_performance(void);
+  void test_calculate_generalization_performance(void);
 
-   // Objective methods
+  // Serialization methods
 
-   void test_calculate_performance(void); 
-   void test_calculate_generalization_performance(void);
+  void test_to_XML(void);
+  void test_from_XML(void);
 
-   // Serialization methods
+  // Unit testing methods
 
-   void test_to_XML(void);   
-   void test_from_XML(void);
-
-   // Unit testing methods
-
-   void run_test_case(void);
+  void run_test_case(void);
 };
-
 
 #endif
 
-
 // OpenNN: Open Neural Networks Library.
-// Copyright (C) 2005-2014 Roberto Lopez 
+// Copyright (C) 2005-2014 Roberto Lopez
 //
 // This library is free software; you can redistribute it and/or
 // modify it under the terms of the GNU Lesser General Public

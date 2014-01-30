@@ -1,12 +1,17 @@
 /****************************************************************************************************************/
 /*                                                                                                              */
-/*   OpenNN: Open Neural Networks Library                                                                       */
-/*   http://flood.sourceforge.net                                                                               */
+/*   OpenNN: Open Neural Networks Library
+ */
+/*   http://flood.sourceforge.net
+ */
 /*                                                                                                              */
-/*   P A T T E R N   R E C O G N I T I O N   T E S T I N G   T E S T   C L A S S   H E A D E R                  */
+/*   P A T T E R N   R E C O G N I T I O N   T E S T I N G   T E S T   C L A S S
+ * H E A D E R                  */
 /*                                                                                                              */
-/*   Roberto Lopez                                                                                              */
-/*   E-mail: roberto-lopez@users.sourceforge.net                                                                */
+/*   Roberto Lopez
+ */
+/*   E-mail: roberto-lopez@users.sourceforge.net
+ */
 /*                                                                                                              */
 /****************************************************************************************************************/
 
@@ -19,92 +24,89 @@
 
 using namespace OpenNN;
 
-class PatternRecognitionTestingTest : public UnitTesting 
-{
+class PatternRecognitionTestingTest : public UnitTesting {
 
-#define	STRING(x) #x
+#define STRING(x) #x
 #define TOSTRING(x) STRING(x)
-#define LOG __FILE__ ":" TOSTRING(__LINE__)"\n"
+#define LOG __FILE__ ":" TOSTRING(__LINE__) "\n"
 
-public:
+ public:
 
-   // CONSTRUCTOR
+  // CONSTRUCTOR
 
-   explicit PatternRecognitionTestingTest(void);
+  explicit PatternRecognitionTestingTest(void);
 
-   // DESTRUCTOR
+  // DESTRUCTOR
 
-   virtual ~PatternRecognitionTestingTest(void);
+  virtual ~PatternRecognitionTestingTest(void);
 
-   // METHODS
+  // METHODS
 
-   // Constructor methods
+  // Constructor methods
 
-   void test_constructor(void);
+  void test_constructor(void);
 
-   // Destructor methods
-   
-   void test_destructor(void);
+  // Destructor methods
 
-   // Get methods
+  void test_destructor(void);
 
-   void test_get_neural_network_pointer(void);
-   void test_get_data_set_pointer(void);
-   
-   void test_get_display(void);
+  // Get methods
 
-   // Set methods
+  void test_get_neural_network_pointer(void);
+  void test_get_data_set_pointer(void);
 
-   void test_set_neural_network_pointer(void);
-   void test_set_data_set_pointer(void);
+  void test_get_display(void);
 
-   void test_set_display(void);
+  // Set methods
 
-   // Output data methods
+  void test_set_neural_network_pointer(void);
+  void test_set_data_set_pointer(void);
 
-   void test_calculate_binary_output_data(void);
+  void test_set_display(void);
 
-   void test_calculate_binary_training_output_data(void);
-   void test_calculate_binary_validation_output_data(void);
-   void test_calculate_binary_testing_output_data(void);
+  // Output data methods
 
-   // Target data methods
+  void test_calculate_binary_output_data(void);
 
-   void test_get_binary_target_data(void);
+  void test_calculate_binary_training_output_data(void);
+  void test_calculate_binary_validation_output_data(void);
+  void test_calculate_binary_testing_output_data(void);
 
-   void test_get_binary_training_target_data(void);
-   void test_get_binary_validation_target_data(void);
-   void test_get_binary_testing_target_data(void);
+  // Target data methods
 
-   // Binary classification test methods
+  void test_get_binary_target_data(void);
 
-   void test_calculate_binary_classification_test(void);
-   void test_print_binary_classification_test(void);
-   void test_save_binary_classification_test(void);
+  void test_get_binary_training_target_data(void);
+  void test_get_binary_validation_target_data(void);
+  void test_get_binary_testing_target_data(void);
 
-   // Confusion matrix methods
-   
-   void test_calculate_confusion(void);
-   void test_print_confusion(void);
-   void test_save_confusion(void);
+  // Binary classification test methods
 
-   // Testing results methods
+  void test_calculate_binary_classification_test(void);
+  void test_print_binary_classification_test(void);
+  void test_save_binary_classification_test(void);
 
-   void test_get_testing_results(void);
-   void test_print_testing_results(void);
-   void test_save_testing_results(void);
+  // Confusion matrix methods
 
-   // Unit testing methods
+  void test_calculate_confusion(void);
+  void test_print_confusion(void);
+  void test_save_confusion(void);
 
-   void run_test_case(void);
+  // Testing results methods
 
+  void test_get_testing_results(void);
+  void test_print_testing_results(void);
+  void test_save_testing_results(void);
+
+  // Unit testing methods
+
+  void run_test_case(void);
 };
 
 #endif
 
-
 // OpenNN: Open Neural Networks Library.
-// Copyright (C) 2005-2013 Roberto Lopez 
+// Copyright (C) 2005-2013 Roberto Lopez
 //
 // This library is free software; you can redistribute it and/or
 // modify it under the s of the GNU Lesser General Public

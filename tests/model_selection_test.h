@@ -1,13 +1,19 @@
 /****************************************************************************************************************/
 /*                                                                                                              */
-/*   OpenNN: An Open Source Neural Networks C++ Library                                                         */
-/*   www.intelnics.com/opennn                                                                                   */
+/*   OpenNN: An Open Source Neural Networks C++ Library
+ */
+/*   www.intelnics.com/opennn
+ */
 /*                                                                                                              */
-/*   M O D E L   S E L E C T I O N   T E S T   C L A S S   H E A D E R                                          */
+/*   M O D E L   S E L E C T I O N   T E S T   C L A S S   H E A D E R
+ */
 /*                                                                                                              */
-/*   Roberto Lopez                                                                                              */
-/*   Intelnics - The artificial intelligence company                                                            */
-/*   robertolopez@intelnics.com                                                                                 */
+/*   Roberto Lopez
+ */
+/*   Intelnics - The artificial intelligence company
+ */
+/*   robertolopez@intelnics.com
+ */
 /*                                                                                                              */
 /****************************************************************************************************************/
 
@@ -18,77 +24,71 @@
 
 using namespace OpenNN;
 
+class ModelSelectionTest : public UnitTesting {
 
-class ModelSelectionTest : public UnitTesting 
-{
-
-#define	STRING(x) #x
+#define STRING(x) #x
 #define TOSTRING(x) STRING(x)
-#define LOG __FILE__ ":" TOSTRING(__LINE__)"\n"
+#define LOG __FILE__ ":" TOSTRING(__LINE__) "\n"
 
-public:
+ public:
 
-   // GENERAL CONSTRUCTOR
+  // GENERAL CONSTRUCTOR
 
-   explicit ModelSelectionTest(void);
+  explicit ModelSelectionTest(void);
 
+  // DESTRUCTOR
 
-   // DESTRUCTOR
+  virtual ~ModelSelectionTest(void);
 
-   virtual ~ModelSelectionTest(void);
+  // METHODS
 
+  // Constructor and destructor methods
 
-   // METHODS
+  void test_constructor(void);
+  void test_destructor(void);
 
-   // Constructor and destructor methods
+  // Get methods
 
-   void test_constructor(void);
-   void test_destructor(void);
+  void test_get_training_strategy_pointer(void);
 
-   // Get methods
+  void test_get_hidden_layer_sizes(void);
+  void test_get_sample_size(void);
 
-   void test_get_training_strategy_pointer(void);
+  void test_get_display(void);
 
-   void test_get_hidden_layer_sizes(void);
-   void test_get_sample_size(void);
+  // Set methods
 
-   void test_get_display(void);
+  void test_set_training_strategy_pointer(void);
 
-   // Set methods
+  void test_set_default(void);
 
-   void test_set_training_strategy_pointer(void);
+  void test_set_hidden_layer_sizes(void);
+  void test_set_sample_size(void);
 
-   void test_set_default(void);
+  void test_set_assays_numbers(void);
 
-   void test_set_hidden_layer_sizes(void);
-   void test_set_sample_size(void);
+  void test_set_display(void);
 
-   void test_set_assays_numbers(void);
+  // Model order selection methods
 
-   void test_set_display(void);
+  void test_perform_model_order_selection(void);
 
-   // Model order selection methods
+  // Serialization methods
 
-   void test_perform_model_order_selection(void);
+  void test_to_XML(void);
+  void test_print(void);
+  void test_save(void);
+  void test_load(void);
 
-   // Serialization methods
+  // Unit testing methods
 
-   void test_to_XML(void);   
-   void test_print(void);
-   void test_save(void);
-   void test_load(void);
-
-   // Unit testing methods
-
-   void run_test_case(void);
+  void run_test_case(void);
 };
-
 
 #endif
 
-
 // OpenNN: Open Neural Networks Library.
-// Copyright (C) 2005-2014 Roberto Lopez 
+// Copyright (C) 2005-2014 Roberto Lopez
 //
 // This library is free software; you can redistribute it and/or
 // modify it under the s of the GNU Lesser General Public

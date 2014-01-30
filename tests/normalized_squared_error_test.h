@@ -1,16 +1,21 @@
 /****************************************************************************************************************/
 /*                                                                                                              */
-/*   OpenNN: Open Neural Networks Library                                                                       */
-/*   www.intelnics.com/opennn                                                                                   */
+/*   OpenNN: Open Neural Networks Library
+ */
+/*   www.intelnics.com/opennn
+ */
 /*                                                                                                              */
-/*   N O R M A L I Z E D   S Q U A R E D   E R R O R   T E S T   C L A S S   H E A D E R                        */
+/*   N O R M A L I Z E D   S Q U A R E D   E R R O R   T E S T   C L A S S   H E
+ * A D E R                        */
 /*                                                                                                              */
-/*   Roberto Lopez                                                                                              */ 
-/*   Intelnics - The artificial intelligence company                                                            */
-/*   robertolopez@intelnics.com                                                                                 */
+/*   Roberto Lopez
+ */
+/*   Intelnics - The artificial intelligence company
+ */
+/*   robertolopez@intelnics.com
+ */
 /*                                                                                                              */
 /****************************************************************************************************************/
-
 
 #ifndef __NORMALIZEDSQUAREDERRORTEST_H__
 #define __NORMALIZEDSQUAREDERRORTEST_H__
@@ -21,72 +26,66 @@
 
 using namespace OpenNN;
 
+class NormalizedSquaredErrorTest : public UnitTesting {
 
-class NormalizedSquaredErrorTest : public UnitTesting 
-{
-
-#define	STRING(x) #x
+#define STRING(x) #x
 #define TOSTRING(x) STRING(x)
-#define LOG __FILE__ ":" TOSTRING(__LINE__)"\n"
+#define LOG __FILE__ ":" TOSTRING(__LINE__) "\n"
 
-public:
+ public:
 
-   // GENERAL CONSTRUCTOR
+  // GENERAL CONSTRUCTOR
 
-   explicit NormalizedSquaredErrorTest(void);
+  explicit NormalizedSquaredErrorTest(void);
 
+  // DESTRUCTOR
 
-   // DESTRUCTOR
+  virtual ~NormalizedSquaredErrorTest(void);
 
-   virtual ~NormalizedSquaredErrorTest(void);
+  // METHODS
 
+  // Constructor and destructor methods
 
-   // METHODS
+  void test_constructor(void);
+  void test_destructor(void);
 
-   // Constructor and destructor methods
+  // Get methods
 
-   void test_constructor(void);
-   void test_destructor(void);
+  // Set methods
 
-   // Get methods
+  // Normalization coefficient
 
-   // Set methods
- 
-   // Normalization coefficient
+  void test_calculate_training_normalization_coefficient(void);
+  void test_calculate_generalization_normalization_coefficient(void);
 
-   void test_calculate_training_normalization_coefficient(void);   
-   void test_calculate_generalization_normalization_coefficient(void);   
+  // Objective methods
 
-   // Objective methods
+  void test_calculate_performance(void);
+  void test_calculate_generalization_performance(void);
 
-   void test_calculate_performance(void);   
-   void test_calculate_generalization_performance(void);
+  void test_calculate_gradient(void);
+  void test_calculate_Hessian(void);
 
-   void test_calculate_gradient(void);
-   void test_calculate_Hessian(void);
+  // Objective terms methods
 
-   // Objective terms methods
+  void test_calculate_performance_terms(void);
 
-   void test_calculate_performance_terms(void);
+  void test_calculate_Jacobian_terms(void);
 
-   void test_calculate_Jacobian_terms(void);
+  // Serialization methods
 
-   // Serialization methods
+  void test_to_XML(void);
+  void test_from_XML(void);
 
-   void test_to_XML(void);
-   void test_from_XML(void);
+  // Unit testing methods
 
-   // Unit testing methods
-
-   void run_test_case(void);
+  void run_test_case(void);
 };
-
 
 #endif
 
-
 // OpenNN: Open Neural Networks Library.
-// Copyright (C) 2005-2014 Roberto Lopez 
+// Copyright (C) 2005-2014 Roberto Lopez
 //
 // This library is free software; you can redistribute it and/or
 // modify it under the terms of the GNU Lesser General Public

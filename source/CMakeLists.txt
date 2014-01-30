@@ -43,6 +43,7 @@ SET(HEADERS
   solutions_error.h
   sum_squared_error.h
   testing_analysis.h
+  tinyxml2_ext.h
   training_algorithm.h
   training_rate_algorithm.h
   training_strategy.h
@@ -94,6 +95,7 @@ SET(SOURCE
   solutions_error.cpp
   sum_squared_error.cpp
   testing_analysis.cpp
+  tinyxml2_ext.cpp
   training_algorithm.cpp
   training_rate_algorithm.cpp
   training_strategy.cpp
@@ -101,4 +103,4 @@ SET(SOURCE
   variables.cpp
 )
 
-add_library(libopennn MODULE ${SOURCE})
+add_library(opennn SHARED ${SOURCE})

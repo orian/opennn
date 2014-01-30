@@ -1,13 +1,19 @@
 /****************************************************************************************************************/
 /*                                                                                                              */
-/*   OpenNN: Open Neural Networks Library                                                                       */
-/*   www.intelnics.com/opennn                                                                                   */
+/*   OpenNN: Open Neural Networks Library
+ */
+/*   www.intelnics.com/opennn
+ */
 /*                                                                                                              */
-/*   R O O T   M E A N   S Q U A R E D   E R R O R   T E S T   C L A S S   H E A D E R                          */
+/*   R O O T   M E A N   S Q U A R E D   E R R O R   T E S T   C L A S S   H E A
+ * D E R                          */
 /*                                                                                                              */
-/*   Roberto Lopez                                                                                              */
-/*   Intelnics - The artificial intelligence company                                                            */
-/*   robertolopez@intelnics.com                                                                                 */
+/*   Roberto Lopez
+ */
+/*   Intelnics - The artificial intelligence company
+ */
+/*   robertolopez@intelnics.com
+ */
 /*                                                                                                              */
 /****************************************************************************************************************/
 
@@ -18,64 +24,57 @@
 
 using namespace OpenNN;
 
+class RootMeanSquaredErrorTest : public UnitTesting {
 
-class RootMeanSquaredErrorTest : public UnitTesting 
-{
-
-#define	STRING(x) #x
+#define STRING(x) #x
 #define TOSTRING(x) STRING(x)
-#define LOG __FILE__ ":" TOSTRING(__LINE__)"\n"
+#define LOG __FILE__ ":" TOSTRING(__LINE__) "\n"
 
+ public:
 
-public:
+  // GENERAL CONSTRUCTOR
 
-   // GENERAL CONSTRUCTOR
+  explicit RootMeanSquaredErrorTest(void);
 
-   explicit RootMeanSquaredErrorTest(void);
+  // DESTRUCTOR
 
+  virtual ~RootMeanSquaredErrorTest(void);
 
-   // DESTRUCTOR
+  // METHODS
 
-   virtual ~RootMeanSquaredErrorTest(void);
+  // Constructor and destructor methods
 
+  void test_constructor(void);
+  void test_destructor(void);
 
-   // METHODS
+  // Get methods
 
-   // Constructor and destructor methods
+  // Set methods
 
-   void test_constructor(void);
-   void test_destructor(void);
+  // Objective methods
 
-   // Get methods
+  void test_calculate_performance(void);
 
-   // Set methods
+  void test_calculate_generalization_performance(void);
 
-   // Objective methods
+  void test_calculate_gradient(void);
 
-   void test_calculate_performance(void);   
+  void test_calculate_Hessian(void);
 
-   void test_calculate_generalization_performance(void);
+  // Serialization methods
 
-   void test_calculate_gradient(void);
+  void test_to_XML(void);
+  void test_from_XML(void);
 
-   void test_calculate_Hessian(void);
+  // Unit testing methods
 
-   // Serialization methods
-
-   void test_to_XML(void);   
-   void test_from_XML(void);
-
-   // Unit testing methods
-
-   void run_test_case(void);
+  void run_test_case(void);
 };
-
 
 #endif
 
-
 // OpenNN: Open Neural Networks Library.
-// Copyright (C) 2005-2014 Roberto Lopez 
+// Copyright (C) 2005-2014 Roberto Lopez
 //
 // This library is free software; you can redistribute it and/or
 // modify it under the terms of the GNU Lesser General Public

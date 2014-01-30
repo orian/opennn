@@ -5,20 +5,20 @@
         <TrainingRateAlgorithm>
             <TrainingRateMethod>BrentMethod</TrainingRateMethod>
             <BracketingFactor>1.5</BracketingFactor>
-            <TrainingRateTolerance>1e-006</TrainingRateTolerance>
+            <TrainingRateTolerance>1e-06</TrainingRateTolerance>
             <WarningTrainingRate>1000</WarningTrainingRate>
-            <ErrorTrainingRate>1e+006</ErrorTrainingRate>
+            <ErrorTrainingRate>1e+06</ErrorTrainingRate>
             <Display>1</Display>
         </TrainingRateAlgorithm>
         <WarningParametersNorm>1000</WarningParametersNorm>
         <WarningGradientNorm>1000</WarningGradientNorm>
         <WarningTrainingRate>1000</WarningTrainingRate>
-        <ErrorParametersNorm>1e+006</ErrorParametersNorm>
-        <ErrorGradientNorm>1e+006</ErrorGradientNorm>
-        <ErrorTrainingRate>1e+006</ErrorTrainingRate>
+        <ErrorParametersNorm>1e+06</ErrorParametersNorm>
+        <ErrorGradientNorm>1e+06</ErrorGradientNorm>
+        <ErrorTrainingRate>1e+06</ErrorTrainingRate>
         <MinimumParametersIncrementNorm>0</MinimumParametersIncrementNorm>
         <MinimumPerformanceIncrease>0</MinimumPerformanceIncrease>
-        <PerformanceGoal>-1e+099</PerformanceGoal>
+        <PerformanceGoal>-1e+99</PerformanceGoal>
         <GradientNormGoal>0</GradientNormGoal>
         <MaximumGeneralizationPerformanceDecreases>1000000</MaximumGeneralizationPerformanceDecreases>
         <MaximumIterationsNumber>1000</MaximumIterationsNumber>

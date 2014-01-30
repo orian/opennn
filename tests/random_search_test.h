@@ -1,13 +1,19 @@
 /****************************************************************************************************************/
 /*                                                                                                              */
-/*   OpenNN: Open Neural Networks Library                                                                       */
-/*   www.intelnics.com/opennn                                                                                   */
+/*   OpenNN: Open Neural Networks Library
+ */
+/*   www.intelnics.com/opennn
+ */
 /*                                                                                                              */
-/*   R A N D O M   S E A R C H   T E S T   C L A S S   H E A D E R                                              */
-/*                                                                                                              */ 
-/*   Roberto Lopez                                                                                              */ 
-/*   Intelnics - The artificial intelligence company                                                            */
-/*   robertolopez@intelnics.com                                                                                 */
+/*   R A N D O M   S E A R C H   T E S T   C L A S S   H E A D E R
+ */
+/*                                                                                                              */
+/*   Roberto Lopez
+ */
+/*   Intelnics - The artificial intelligence company
+ */
+/*   robertolopez@intelnics.com
+ */
 /*                                                                                                              */
 /****************************************************************************************************************/
 
@@ -18,82 +24,74 @@
 
 #include "unit_testing.h"
 
-
 using namespace OpenNN;
 
+class RandomSearchTest : public UnitTesting {
 
-class RandomSearchTest : public UnitTesting
-{
-
-#define	STRING(x) #x
+#define STRING(x) #x
 #define TOSTRING(x) STRING(x)
-#define LOG __FILE__ ":" TOSTRING(__LINE__)"\n"
+#define LOG __FILE__ ":" TOSTRING(__LINE__) "\n"
 
-public:
+ public:
 
-   // GENERAL CONSTRUCTOR
+  // GENERAL CONSTRUCTOR
 
-   explicit RandomSearchTest(void); 
+  explicit RandomSearchTest(void);
 
+  // DESTRUCTOR
 
-   // DESTRUCTOR
+  virtual ~RandomSearchTest(void);
 
-   virtual ~RandomSearchTest(void);
+  // METHODS
 
+  // Constructor and destructor methods
 
-   // METHODS
+  void test_constructor(void);
+  void test_destructor(void);
 
-   // Constructor and destructor methods
+  // Get methods
 
-   void test_constructor(void);
-   void test_destructor(void); 
+  void test_get_training_rate_reduction_factor(void);
 
-   // Get methods
+  void test_get_reserve_parameters_history(void);
+  void test_get_reserve_parameters_norm_history(void);
 
-   void test_get_training_rate_reduction_factor(void);
+  void test_get_reserve_performance_history(void);
 
-   void test_get_reserve_parameters_history(void);
-   void test_get_reserve_parameters_norm_history(void);
+  // Set methods
 
-   void test_get_reserve_performance_history(void);
+  void test_set_training_rate_reduction_factor(void);
 
-   // Set methods
+  void test_set_reserve_parameters_history(void);
+  void test_set_reserve_parameters_norm_history(void);
 
-   void test_set_training_rate_reduction_factor(void);
+  void test_set_reserve_performance_history(void);
 
-   void test_set_reserve_parameters_history(void);
-   void test_set_reserve_parameters_norm_history(void);
+  // Training methods
 
-   void test_set_reserve_performance_history(void);
+  void test_calculate_training_direction(void);
 
-   // Training methods
+  void test_perform_training(void);
 
-   void test_calculate_training_direction(void);
+  // Training history methods
 
-   void test_perform_training(void);
+  void test_set_reserve_all_training_history(void);
 
-   // Training history methods
+  // Utiltity methods
 
-   void test_set_reserve_all_training_history(void);
+  void test_to_XML(void);
 
-   // Utiltity methods
+  void test_from_XML(void);
 
-   void test_to_XML(void);
+  // Unit testing methods
 
-   void test_from_XML(void);
-
-   // Unit testing methods
-
-   void run_test_case(void);
-
+  void run_test_case(void);
 };
-
 
 #endif
 
-
 // OpenNN: Open Neural Networks Library.
-// Copyright (C) 2005-2014 Roberto Lopez 
+// Copyright (C) 2005-2014 Roberto Lopez
 //
 // This library is free software; you can redistribute it and/or
 // modify it under the terms of the GNU Lesser General Public

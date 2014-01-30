@@ -1,13 +1,19 @@
 /****************************************************************************************************************/
 /*                                                                                                              */
-/*   OpenNN: Open Neural Networks Library                                                                       */
-/*   www.intelnics.com/opennn                                                                                   */
+/*   OpenNN: Open Neural Networks Library
+ */
+/*   www.intelnics.com/opennn
+ */
 /*                                                                                                              */
-/*   L I N E A R   A L G E B R A I C   E Q U A T I O N S   T E S T   C L A S S   H E A D E R                    */
-/*                                                                                                              */ 
-/*   Roberto Lopez                                                                                              */ 
-/*   Intelnics - The artificial intelligence company                                                            */
-/*   robertolopez@intelnics.com                                                                                 */
+/*   L I N E A R   A L G E B R A I C   E Q U A T I O N S   T E S T   C L A S S
+ * H E A D E R                    */
+/*                                                                                                              */
+/*   Roberto Lopez
+ */
+/*   Intelnics - The artificial intelligence company
+ */
+/*   robertolopez@intelnics.com
+ */
 /*                                                                                                              */
 /****************************************************************************************************************/
 
@@ -20,45 +26,42 @@
 
 using namespace OpenNN;
 
-class LinearAlgebraicEquationsTest : public UnitTesting 
-{
+class LinearAlgebraicEquationsTest : public UnitTesting {
 
 #define STRING(x) #x
 #define TOSTRING(x) STRING(x)
-#define LOG __FILE__ ":" TOSTRING(__LINE__)"\n"
+#define LOG __FILE__ ":" TOSTRING(__LINE__) "\n"
 
-public:  
+ public:
 
-   // GENERAL CONSTRUCTOR
+  // GENERAL CONSTRUCTOR
 
-   explicit LinearAlgebraicEquationsTest(void);
+  explicit LinearAlgebraicEquationsTest(void);
 
+  // DESTRUCTOR
 
-   // DESTRUCTOR
+  virtual ~LinearAlgebraicEquationsTest(void);
 
-   virtual ~LinearAlgebraicEquationsTest(void);
+  // METHODS
 
-    // METHODS
+  // Constructor and destructor methods
 
-   // Constructor and destructor methods
+  void test_constructor(void);
+  void test_destructor(void);
 
-   void test_constructor(void);
-   void test_destructor(void);
+  // Gauss-Jordan elimination methods
 
-   // Gauss-Jordan elimination methods
+  void test_perform_Gauss_Jordan_elimination(void);
 
-   void test_perform_Gauss_Jordan_elimination(void);
+  // Unit testing methods
 
-   // Unit testing methods
-
-   void run_test_case(void);
+  void run_test_case(void);
 };
 
 #endif
 
-
 // OpenNN: Open Neural Networks Library.
-// Copyright (C) 2005-2014 Roberto Lopez 
+// Copyright (C) 2005-2014 Roberto Lopez
 //
 // This library is free software; you can redistribute it and/or
 // modify it under the terms of the GNU Lesser General Public
@@ -73,4 +76,3 @@ public:
 // You should have received a copy of the GNU Lesser General Public
 // License along with this library; if not, write to the Free Software
 // Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
-

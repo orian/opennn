@@ -1,13 +1,19 @@
 /****************************************************************************************************************/
 /*                                                                                                              */
-/*   OpenNN: Open Neural Networks Library                                                                       */
-/*   www.intelnics.com/opennn                                                                                   */
+/*   OpenNN: Open Neural Networks Library
+ */
+/*   www.intelnics.com/opennn
+ */
 /*                                                                                                              */
-/*   P R O B A B I L I S T I C   L A Y E R   T E S T   C L A S S   H E A D E R                                  */
+/*   P R O B A B I L I S T I C   L A Y E R   T E S T   C L A S S   H E A D E R
+ */
 /*                                                                                                              */
-/*   Roberto Lopez                                                                                              */
-/*   Intelnics - The artificial intelligence company                                                            */
-/*   robertolopez@intelnics.com                                                                                 */
+/*   Roberto Lopez
+ */
+/*   Intelnics - The artificial intelligence company
+ */
+/*   robertolopez@intelnics.com
+ */
 /*                                                                                                              */
 /****************************************************************************************************************/
 
@@ -30,89 +36,82 @@
 
 using namespace OpenNN;
 
-
-class ProbabilisticLayerTest : public UnitTesting
-{
+class ProbabilisticLayerTest : public UnitTesting {
 
 #define STRING(x) #x
 #define TOSTRING(x) STRING(x)
-#define LOG __FILE__ ":" TOSTRING(__LINE__)"\n"
+#define LOG __FILE__ ":" TOSTRING(__LINE__) "\n"
 
-public:
+ public:
 
-   // GENERAL CONSTRUCTOR
+  // GENERAL CONSTRUCTOR
 
-   explicit ProbabilisticLayerTest(void);
+  explicit ProbabilisticLayerTest(void);
 
+  // DESTRUCTOR
 
-   // DESTRUCTOR
+  virtual ~ProbabilisticLayerTest(void);
 
-   virtual ~ProbabilisticLayerTest(void);
+  // METHODS
 
-   // METHODS
+  // Constructor and destructor methods
 
-   // Constructor and destructor methods
+  void test_constructor(void);
+  void test_destructor(void);
 
-   void test_constructor(void);
-   void test_destructor(void);
+  // Assignment operators methods
 
-   // Assignment operators methods
+  void test_assignment_operator(void);
 
-   void test_assignment_operator(void);
+  // Get methods
 
-   // Get methods
+  // Probabilistic layer
 
-   // Probabilistic layer
+  void test_count_probabilistic_neurons_number(void);
 
-   void test_count_probabilistic_neurons_number(void);
+  // Output variables probabilistic postprocessing
 
-   // Output variables probabilistic postprocessing
+  // Display messages
 
+  void test_get_display(void);
 
-   // Display messages
+  // SET METHODS
 
-   void test_get_display(void);
+  void test_set(void);
+  void test_set_default(void);
 
-   // SET METHODS
+  // Display messages
 
-   void test_set(void);
-   void test_set_default(void);
+  void test_set_display(void);
 
-   // Display messages
+  // Neural network initialization methods
 
-   void test_set_display(void);
-
-   // Neural network initialization methods
-
-   void test_initialize_random(void);
+  void test_initialize_random(void);
 
   // Probabilistic post-processing
 
-   void test_calculate_outputs(void);
-   void test_calculate_Jacobian(void);
-   void test_calculate_Hessian_form(void);
+  void test_calculate_outputs(void);
+  void test_calculate_Jacobian(void);
+  void test_calculate_Hessian_form(void);
 
-   // Expression methods
+  // Expression methods
 
-   void test_get_layer_expression(void);
+  void test_get_layer_expression(void);
 
-   // Serialization methods
+  // Serialization methods
 
-   void test_to_XML(void);
-   void test_from_XML(void);
+  void test_to_XML(void);
+  void test_from_XML(void);
 
-   // Unit testing methods
+  // Unit testing methods
 
-   void run_test_case(void);
+  void run_test_case(void);
 };
-
 
 #endif
 
-
-
 // OpenNN: Open Neural Networks Library.
-// Copyright (C) 2005-2014 Roberto Lopez 
+// Copyright (C) 2005-2014 Roberto Lopez
 //
 // This library is free software; you can redistribute it and/or
 // modify it under the terms of the GNU Lesser General Public

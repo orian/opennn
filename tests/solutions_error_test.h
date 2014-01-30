@@ -1,13 +1,19 @@
 /****************************************************************************************************************/
 /*                                                                                                              */
-/*   OpenNN: Open Neural Networks Library                                                                       */
-/*   www.intelnics.com/opennn                                                                                   */
+/*   OpenNN: Open Neural Networks Library
+ */
+/*   www.intelnics.com/opennn
+ */
 /*                                                                                                              */
-/*   S O L U T I O N S   E R R O R   T E S T   C L A S S   H E A D E R                                          */
+/*   S O L U T I O N S   E R R O R   T E S T   C L A S S   H E A D E R
+ */
 /*                                                                                                              */
-/*   Roberto Lopez                                                                                              */
-/*   Intelnics - The artificial intelligence company                                                            */
-/*   robertolopez@intelnics.com                                                                                 */
+/*   Roberto Lopez
+ */
+/*   Intelnics - The artificial intelligence company
+ */
+/*   robertolopez@intelnics.com
+ */
 /*                                                                                                              */
 /****************************************************************************************************************/
 
@@ -18,57 +24,51 @@
 
 #include "unit_testing.h"
 
+class SolutionsErrorTest : public UnitTesting {
 
-class SolutionsErrorTest : public UnitTesting 
-{
-
-#define	STRING(x) #x
+#define STRING(x) #x
 #define TOSTRING(x) STRING(x)
-#define LOG __FILE__ ":" TOSTRING(__LINE__)"\n"
+#define LOG __FILE__ ":" TOSTRING(__LINE__) "\n"
 
-public:
+ public:
 
-   // GENERAL CONSTRUCTOR
+  // GENERAL CONSTRUCTOR
 
-   explicit SolutionsErrorTest(void);
+  explicit SolutionsErrorTest(void);
 
+  // DESTRUCTOR
 
-   // DESTRUCTOR
+  virtual ~SolutionsErrorTest(void);
 
-   virtual ~SolutionsErrorTest(void);
+  // METHODS
 
+  // Constructor and destructor methods
 
-   // METHODS
+  void test_constructor(void);
+  void test_destructor(void);
 
-   // Constructor and destructor methods
+  // Get methods
 
-   void test_constructor(void);
-   void test_destructor(void);
+  // Set methods
 
-   // Get methods
+  // Constraints methods
 
-   // Set methods
+  void test_calculate_constraints(void);
 
-   // Constraints methods
+  // Serialization methods
 
-   void test_calculate_constraints(void); 
+  void test_to_XML(void);
+  void test_from_XML(void);
 
-   // Serialization methods
+  // Unit testing methods
 
-   void test_to_XML(void);   
-   void test_from_XML(void);
-
-   // Unit testing methods
-
-   void run_test_case(void);
+  void run_test_case(void);
 };
-
 
 #endif
 
-
 // OpenNN: Open Neural Networks Library.
-// Copyright (C) 2005-2014 Roberto Lopez 
+// Copyright (C) 2005-2014 Roberto Lopez
 //
 // This library is free software; you can redistribute it and/or
 // modify it under the terms of the GNU Lesser General Public

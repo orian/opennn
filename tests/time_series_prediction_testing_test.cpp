@@ -1,12 +1,17 @@
 /****************************************************************************************************************/
 /*                                                                                                              */
-/*   OpenNN: Open Neural Networks Library                                                                       */
-/*   http://flood.sourceforge.net                                                                               */
+/*   OpenNN: Open Neural Networks Library
+ */
+/*   http://flood.sourceforge.net
+ */
 /*                                                                                                              */
-/*   T I M E   S E R I E S   P R E D I C T I O N   T E S T I N G   T E S T   C L A S S                          */
-/*                                                                                                              */ 
-/*   Roberto Lopez                                                                                              */ 
-/*   E-mail: roberto-lopez@users.sourceforge.net                                                                */ 
+/*   T I M E   S E R I E S   P R E D I C T I O N   T E S T I N G   T E S T   C L
+ * A S S                          */
+/*                                                                                                              */
+/*   Roberto Lopez
+ */
+/*   E-mail: roberto-lopez@users.sourceforge.net
+ */
 /*                                                                                                              */
 /****************************************************************************************************************/
 
@@ -20,176 +25,149 @@
 
 using namespace OpenNN;
 
-
 // GENERAL CONSTRUCTOR
 
-TimeSeriesPredictionTestingTest::TimeSeriesPredictionTestingTest(void) : UnitTesting() 
-{
-}
-
+TimeSeriesPredictionTestingTest::TimeSeriesPredictionTestingTest(void)
+    : UnitTesting() {}
 
 // DESTRUCTOR
 
-TimeSeriesPredictionTestingTest::~TimeSeriesPredictionTestingTest(void)
-{
-}
-
+TimeSeriesPredictionTestingTest::~TimeSeriesPredictionTestingTest(void) {}
 
 // METHODS
 
 // void test_constructor(void) method
 
-void TimeSeriesPredictionTestingTest::test_constructor(void)
-{
-   message += "test_constructor\n";
+void TimeSeriesPredictionTestingTest::test_constructor(void) {
+  message += "test_constructor\n";
 
-   // Default constructor
+  // Default constructor
 
-   TimeSeriesPredictionTesting tspt1;
+  TimeSeriesPredictionTesting tspt1;
 
-   assert_true(tspt1.get_neural_network_pointer() == NULL, LOG);
-   assert_true(tspt1.get_data_set_pointer() == NULL, LOG);
+  assert_true(tspt1.get_neural_network_pointer() == NULL, LOG);
+  assert_true(tspt1.get_data_set_pointer() == NULL, LOG);
 
-   // Neural network constructor
+  // Neural network constructor
 
-   NeuralNetwork nn2;
-   TimeSeriesPredictionTesting tsptu2(&nn2);
+  NeuralNetwork nn2;
+  TimeSeriesPredictionTesting tsptu2(&nn2);
 
-   assert_true(tsptu2.get_neural_network_pointer() != NULL, LOG);
-   assert_true(tsptu2.get_data_set_pointer() == NULL, LOG);
+  assert_true(tsptu2.get_neural_network_pointer() != NULL, LOG);
+  assert_true(tsptu2.get_data_set_pointer() == NULL, LOG);
 
-   // Data set constructor
+  // Data set constructor
 
-   DataSet ds3;
-   TimeSeriesPredictionTesting tspt3(&ds3);
+  DataSet ds3;
+  TimeSeriesPredictionTesting tspt3(&ds3);
 
-   assert_true(tspt3.get_neural_network_pointer() == NULL, LOG);
-   assert_true(tspt3.get_data_set_pointer() != NULL, LOG);
+  assert_true(tspt3.get_neural_network_pointer() == NULL, LOG);
+  assert_true(tspt3.get_data_set_pointer() != NULL, LOG);
 
-   // Neural network and data set constructor
+  // Neural network and data set constructor
 
-   NeuralNetwork nn4;
-   DataSet ds4;
+  NeuralNetwork nn4;
+  DataSet ds4;
 
-   TimeSeriesPredictionTesting tspt4(&nn4, &ds4);
+  TimeSeriesPredictionTesting tspt4(&nn4, &ds4);
 
-   assert_true(tspt4.get_neural_network_pointer() != NULL, LOG);
-   assert_true(tspt4.get_data_set_pointer() != NULL, LOG);
-
+  assert_true(tspt4.get_neural_network_pointer() != NULL, LOG);
+  assert_true(tspt4.get_data_set_pointer() != NULL, LOG);
 }
-
 
 // void test_destructor(void) method
 
-void TimeSeriesPredictionTestingTest::test_destructor(void)
-{
-   message += "test_destructor\n";
+void TimeSeriesPredictionTestingTest::test_destructor(void) {
+  message += "test_destructor\n";
 }
-
 
 // Get methods
 
 // void test_get_neural_network_pointer(void) method
 
-void TimeSeriesPredictionTestingTest::test_get_neural_network_pointer(void)
-{
-   message += "test_get_neural_network_pointer\n";
+void TimeSeriesPredictionTestingTest::test_get_neural_network_pointer(void) {
+  message += "test_get_neural_network_pointer\n";
 
-   TimeSeriesPredictionTesting mu;
+  TimeSeriesPredictionTesting mu;
 
-   assert_true(mu.get_neural_network_pointer() == NULL, LOG);
+  assert_true(mu.get_neural_network_pointer() == NULL, LOG);
 
-   NeuralNetwork nn;
+  NeuralNetwork nn;
 
-   mu.set_neural_network_pointer(&nn);
-   
-   assert_true(mu.get_neural_network_pointer() != NULL, LOG);
+  mu.set_neural_network_pointer(&nn);
 
+  assert_true(mu.get_neural_network_pointer() != NULL, LOG);
 }
-
 
 // void test_get_data_set_pointer(void) method
 
-void TimeSeriesPredictionTestingTest::test_get_data_set_pointer(void)
-{
-   message += "test_get_data_set_pointer\n";
+void TimeSeriesPredictionTestingTest::test_get_data_set_pointer(void) {
+  message += "test_get_data_set_pointer\n";
 
-   TimeSeriesPredictionTesting mu;
+  TimeSeriesPredictionTesting mu;
 
-   assert_true(mu.get_data_set_pointer() == NULL, LOG);
+  assert_true(mu.get_data_set_pointer() == NULL, LOG);
 
-   DataSet ds;
+  DataSet ds;
 
-   mu.set_data_set_pointer(&ds);
-   
-   assert_true(mu.get_data_set_pointer() != NULL, LOG);
+  mu.set_data_set_pointer(&ds);
 
+  assert_true(mu.get_data_set_pointer() != NULL, LOG);
 }
-
 
 // void test_get_display(void) method
 
-void TimeSeriesPredictionTestingTest::test_get_display(void)
-{
-   message += "test_get_display\n";
+void TimeSeriesPredictionTestingTest::test_get_display(void) {
+  message += "test_get_display\n";
 }
-
 
 // void test_set_neural_network_pointer(void) method
 
-void TimeSeriesPredictionTestingTest::test_set_neural_network_pointer(void)
-{
-   message += "test_set_neural_network_pointer\n";
+void TimeSeriesPredictionTestingTest::test_set_neural_network_pointer(void) {
+  message += "test_set_neural_network_pointer\n";
 }
-
 
 // void test_set_data_set_pointer(void) method
 
-void TimeSeriesPredictionTestingTest::test_set_data_set_pointer(void)
-{
-   message += "test_set_data_set_pointer\n";
+void TimeSeriesPredictionTestingTest::test_set_data_set_pointer(void) {
+  message += "test_set_data_set_pointer\n";
 }
-
 
 // void test_set_display(void) method
 
-void TimeSeriesPredictionTestingTest::test_set_display(void)
-{
-   message += "test_set_display\n";
+void TimeSeriesPredictionTestingTest::test_set_display(void) {
+  message += "test_set_display\n";
 }
-
 
 // void run_test_case(void) method
 
-void TimeSeriesPredictionTestingTest::run_test_case(void)
-{
-   message += "Running time series prediction testing test case...\n";
+void TimeSeriesPredictionTestingTest::run_test_case(void) {
+  message += "Running time series prediction testing test case...\n";
 
-   // Constructor and destructor methods
+  // Constructor and destructor methods
 
-   test_constructor();
-   test_destructor();
+  test_constructor();
+  test_destructor();
 
-   // Get methods
+  // Get methods
 
-   test_get_neural_network_pointer();
-   test_get_data_set_pointer();
-   
-   test_get_display();
+  test_get_neural_network_pointer();
+  test_get_data_set_pointer();
 
-   // Set methods
+  test_get_display();
 
-   test_set_neural_network_pointer();
-   test_set_data_set_pointer();
+  // Set methods
 
-   test_set_display();
+  test_set_neural_network_pointer();
+  test_set_data_set_pointer();
 
-   message += "End of time series prediction testing test case\n";
+  test_set_display();
+
+  message += "End of time series prediction testing test case\n";
 }
 
-
 // OpenNN: Open Neural Networks Library.
-// Copyright (C) 2005-2013 Roberto Lopez 
+// Copyright (C) 2005-2013 Roberto Lopez
 //
 // This library is free software; you can redistribute it and/or
 // modify it under the s of the GNU Lesser General Public

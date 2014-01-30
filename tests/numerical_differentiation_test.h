@@ -1,13 +1,19 @@
 /****************************************************************************************************************/
 /*                                                                                                              */
-/*   OpenNN: Open Neural Networks Library                                                                       */
-/*   www.intelnics.com/opennn                                                                                   */
+/*   OpenNN: Open Neural Networks Library
+ */
+/*   www.intelnics.com/opennn
+ */
 /*                                                                                                              */
-/*   N U M E R I C A L   D I F F E R E N T I A T I O N   T E S T   C L A S S   H E A D E R                      */
+/*   N U M E R I C A L   D I F F E R E N T I A T I O N   T E S T   C L A S S   H
+ * E A D E R                      */
 /*                                                                                                              */
-/*   Roberto Lopez                                                                                              */
-/*   Intelnics - The artificial intelligence company                                                            */
-/*   robertolopez@intelnics.com                                                                                 */
+/*   Roberto Lopez
+ */
+/*   Intelnics - The artificial intelligence company
+ */
+/*   robertolopez@intelnics.com
+ */
 /*                                                                                                              */
 /****************************************************************************************************************/
 
@@ -20,102 +26,96 @@
 
 using namespace OpenNN;
 
-class NumericalDifferentiationTest : public UnitTesting
-{
+class NumericalDifferentiationTest : public UnitTesting {
 
-#define	STRING(x) #x
+#define STRING(x) #x
 #define TOSTRING(x) STRING(x)
-#define LOG __FILE__ ":" TOSTRING(__LINE__)"\n"
+#define LOG __FILE__ ":" TOSTRING(__LINE__) "\n"
 
-public:
+ public:
 
-   // GENERAL CONSTRUCTOR
+  // GENERAL CONSTRUCTOR
 
-   explicit NumericalDifferentiationTest(void);
+  explicit NumericalDifferentiationTest(void);
 
+  // DESTRUCTOR
 
-   // DESTRUCTOR
+  virtual ~NumericalDifferentiationTest(void);
 
-   virtual ~NumericalDifferentiationTest(void);
+  // METHODS
 
-   // METHODS
+  // Constructor and destructor methods
 
-   // Constructor and destructor methods
+  void test_constructor(void);
+  void test_destructor(void);
 
-   void test_constructor(void);
-   void test_destructor(void);
+  // Derivative methods
 
-   // Derivative methods
+  void test_calculate_forward_differences_derivative(void);
+  void test_calculate_central_differences_derivative(void);
+  void test_calculate_derivative(void);
 
-   void test_calculate_forward_differences_derivative(void);
-   void test_calculate_central_differences_derivative(void);
-   void test_calculate_derivative(void);
+  //   void test_calculate_forward_differences_derivative(void);
+  //   void test_calculate_central_differences_derivative(void);
+  //   void test_calculate_derivative(void);
 
-//   void test_calculate_forward_differences_derivative(void);
-//   void test_calculate_central_differences_derivative(void);
-//   void test_calculate_derivative(void);
+  // Second derivative methods
 
-   // Second derivative methods
+  void test_calculate_forward_differences_second_derivative(void);
+  void test_calculate_central_differences_second_derivative(void);
+  void test_calculate_second_derivative(void);
 
-   void test_calculate_forward_differences_second_derivative(void);
-   void test_calculate_central_differences_second_derivative(void);
-   void test_calculate_second_derivative(void);
+  //   void test_calculate_forward_differences_second_derivative(void);
+  //   void test_calculate_central_differences_second_derivative(void);
+  //   void test_calculate_second_derivative(void);
 
-//   void test_calculate_forward_differences_second_derivative(void);
-//   void test_calculate_central_differences_second_derivative(void);
-//   void test_calculate_second_derivative(void);
+  // Gradient methods
 
-   // Gradient methods
+  void test_calculate_forward_differences_gradient(void);
+  void test_calculate_central_differences_gradient(void);
+  void test_calculate_gradient(void);
 
-   void test_calculate_forward_differences_gradient(void);
-   void test_calculate_central_differences_gradient(void);
-   void test_calculate_gradient(void);
+  // Hessian methods
 
-   // Hessian methods
+  void test_calculate_forward_differences_Hessian(void);
+  void test_calculate_central_differences_Hessian(void);
+  void test_calculate_Hessian(void);
 
-   void test_calculate_forward_differences_Hessian(void);
-   void test_calculate_central_differences_Hessian(void);
-   void test_calculate_Hessian(void);
+  // Jacobian methods
 
-   // Jacobian methods
+  void test_calculate_forward_differences_Jacobian(void);
+  void test_calculate_central_differences_Jacobian(void);
+  void test_calculate_Jacobian(void);
 
-   void test_calculate_forward_differences_Jacobian(void);
-   void test_calculate_central_differences_Jacobian(void);
-   void test_calculate_Jacobian(void);
+  // Hessian methods
 
-   // Hessian methods
+  void test_calculate_forward_differences_Hessian_form(void);
+  void test_calculate_central_differences_Hessian_form(void);
+  void test_calculate_Hessian_form(void);
 
-   void test_calculate_forward_differences_Hessian_form(void);
-   void test_calculate_central_differences_Hessian_form(void);
-   void test_calculate_Hessian_form(void);
+  // Unit testing methods
 
-   // Unit testing methods
+  void run_test_case(void);
 
-   void run_test_case(void);
+ private:
 
-private:
+  // Constant methods
 
-   // Constant methods
+  double f1(const double&) const;
+  double f2(const Vector<double>&) const;
+  Vector<double> f3(const Vector<double>&) const;
 
-   double f1(const double&) const ;
-   double f2(const Vector<double>&) const;
-   Vector<double> f3(const Vector<double>&) const;
+  // Non constant methods
 
-   // Non constant methods
-
-   double f4(const double&);
-   double f5(const Vector<double>&);
-   Vector<double> f6(const Vector<double>&);
-
-
+  double f4(const double&);
+  double f5(const Vector<double>&);
+  Vector<double> f6(const Vector<double>&);
 };
-
 
 #endif
 
-
 // OpenNN: Open Neural Networks Library.
-// Copyright (C) 2005-2014 Roberto Lopez 
+// Copyright (C) 2005-2014 Roberto Lopez
 //
 // This library is free software; you can redistribute it and/or
 // modify it under the terms of the GNU Lesser General Public

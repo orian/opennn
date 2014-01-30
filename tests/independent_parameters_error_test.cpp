@@ -1,13 +1,19 @@
 /****************************************************************************************************************/
 /*                                                                                                              */
-/*   OpenNN: Open Neural Networks Library                                                                       */
-/*   www.intelnics.com/opennn                                                                                   */
+/*   OpenNN: Open Neural Networks Library
+ */
+/*   www.intelnics.com/opennn
+ */
 /*                                                                                                              */
-/*   S U M   S Q U A R E D   E R R O R   T E S T   C L A S S                                                    */
+/*   S U M   S Q U A R E D   E R R O R   T E S T   C L A S S
+ */
 /*                                                                                                              */
-/*   Roberto Lopez                                                                                              */
-/*   Intelnics - The artificial intelligence company                                                            */
-/*   robertolopez@intelnics.com                                                                                 */
+/*   Roberto Lopez
+ */
+/*   Intelnics - The artificial intelligence company
+ */
+/*   robertolopez@intelnics.com
+ */
 /*                                                                                                              */
 /****************************************************************************************************************/
 
@@ -17,137 +23,117 @@
 
 using namespace OpenNN;
 
-
 // GENERAL CONSTRUCTOR
 
-IndependentParametersErrorTest::IndependentParametersErrorTest(void) : UnitTesting() 
-{
-}
-
+IndependentParametersErrorTest::IndependentParametersErrorTest(void)
+    : UnitTesting() {}
 
 // DESTRUCTOR
 
-IndependentParametersErrorTest::~IndependentParametersErrorTest(void) 
-{
-}
-
+IndependentParametersErrorTest::~IndependentParametersErrorTest(void) {}
 
 // METHODS
 
-void IndependentParametersErrorTest::test_constructor(void)
-{
-   message += "test_constructor\n";
+void IndependentParametersErrorTest::test_constructor(void) {
+  message += "test_constructor\n";
 
-   // Default
+  // Default
 
-   IndependentParametersError ipe1;
+  IndependentParametersError ipe1;
 
-   assert_true(ipe1.has_neural_network() == false, LOG);
+  assert_true(ipe1.has_neural_network() == false, LOG);
 
-   // Neural network
+  // Neural network
 
-   NeuralNetwork nn2;
-   IndependentParametersError ipe2(&nn2);
+  NeuralNetwork nn2;
+  IndependentParametersError ipe2(&nn2);
 
-   assert_true(ipe2.get_neural_network_pointer() != NULL, LOG);
-
+  assert_true(ipe2.get_neural_network_pointer() != NULL, LOG);
 }
 
-
-void IndependentParametersErrorTest::test_destructor(void)
-{
-   message += "test_destructor\n";
+void IndependentParametersErrorTest::test_destructor(void) {
+  message += "test_destructor\n";
 }
-
 
 // @todo
 
-void IndependentParametersErrorTest::test_calculate_performance(void)   
-{
-   message += "test_calculate_performance\n";
+void IndependentParametersErrorTest::test_calculate_performance(void) {
+  message += "test_calculate_performance\n";
 
-//   NeuralNetwork nn;
-//   Vector<double> parameters; 
+  //   NeuralNetwork nn;
+  //   Vector<double> parameters;
 
-//   IndependentParametersError ipe(&nn);
+  //   IndependentParametersError ipe(&nn);
 
-//   double performance;
+  //   double performance;
 
-   // Test
+  // Test
 
-//   nn.set(1);
-//   nn.initialize_parameters(0.0);
+  //   nn.set(1);
+  //   nn.initialize_parameters(0.0);
 
-//   performance = ipe.calculate_performance();
+  //   performance = ipe.calculate_performance();
 
-//   assert_true(performance == 0.0, LOG);
+  //   assert_true(performance == 0.0, LOG);
 
-   // Test
+  // Test
 
-//   nn.set(1, 1, 1);
-//   nn.initialize_parameters(0.0);
+  //   nn.set(1, 1, 1);
+  //   nn.initialize_parameters(0.0);
 
-//   objective = ipe.calculate_performance();
+  //   objective = ipe.calculate_performance();
 
-//   assert_true(objective == 1.0, LOG);
+  //   assert_true(objective == 1.0, LOG);
 }
 
+void IndependentParametersErrorTest::test_to_XML(void) {
+  message += "test_to_XML\n";
 
-void IndependentParametersErrorTest::test_to_XML(void)   
-{
-	message += "test_to_XML\n"; 
+  IndependentParametersError ipe;
 
-    IndependentParametersError ipe;
+  tinyxml2::XMLDocument* document;
 
-    tinyxml2::XMLDocument* document;
+  // Test
 
-    // Test
+  document = ipe.to_XML();
 
-    document = ipe.to_XML();
+  assert_true(document != NULL, LOG);
 
-    assert_true(document != NULL, LOG);
-
-    delete document;
-
+  delete document;
 }
 
+void IndependentParametersErrorTest::test_from_XML(void) {
+  //   IndependentParametersError ipe;
 
-void IndependentParametersErrorTest::test_from_XML(void)
-{
-//   IndependentParametersError ipe;
-
-//   assert_true(ipe.get_display() == false, LOG);
+  //   assert_true(ipe.get_display() == false, LOG);
 }
 
+void IndependentParametersErrorTest::run_test_case(void) {
+  message += "Running independent parameters error test case...\n";
 
-void IndependentParametersErrorTest::run_test_case(void)
-{
-   message += "Running independent parameters error test case...\n";
+  // Constructor and destructor methods
 
-   // Constructor and destructor methods
+  test_constructor();
+  test_destructor();
 
-   test_constructor();
-   test_destructor();
+  // Get methods
 
-   // Get methods
+  // Set methods
 
-   // Set methods
+  // Objective methods
 
-   // Objective methods
+  test_calculate_performance();
 
-   test_calculate_performance();   
+  // Serialization methods
 
-   // Serialization methods
+  test_to_XML();
+  test_from_XML();
 
-   test_to_XML();   
-   test_from_XML();
-
-   message += "End of independent parameters error test case.\n";
+  message += "End of independent parameters error test case.\n";
 }
-
 
 // OpenNN: Open Neural Networks Library.
-// Copyright (C) 2005-2014 Roberto Lopez 
+// Copyright (C) 2005-2014 Roberto Lopez
 //
 // This library is free software; you can redistribute it and/or
 // modify it under the terms of the GNU Lesser General Public
