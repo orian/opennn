@@ -1,0 +1,193 @@
+\index{Matrix class}
+
+As it happens with the \lstinline"Vector" class, the \lstinline"Matrix" class is also a template \cite{Eckel2000}. 
+Therefore, a \lstinline"Matrix" of any type can be created. 
+
+\subsubsection*{Members}
+
+The \lstinline"Matrix" class has three members:
+
+\begin{itemize}
+\item[-] The number of rows. 
+\item[-] The number of columns. 
+\item[-] A double pointer to some type. 
+\end{itemize}
+
+That members are private. Private members can be accessed only within methods of the class itself.
+
+\subsubsection*{File format}
+
+The member values of a matrix object can be serialized or deserialized to or from a data file. 
+The format is as follows. 
+
+\begin{lstlisting}
+element_00 ... element_0M
+...
+element_N0 ... element_NM
+\end{lstlisting}
+
+\subsubsection*{Constructors}
+
+The \lstinline"Matrix" class also implements multiple constructors, with different parameters.
+
+% Default constructor
+
+The default constructor creates a matrix with zero rows and zero columns, 
+
+\begin{lstlisting}
+Matrix<MyClass> m;
+\end{lstlisting}
+
+% Rows and columns numbers constructor
+
+In order to construct an empty \lstinline"Matrix" with a specified number of rows and columns we use
+
+\begin{lstlisting}
+Matrix<int> m(2, 3);
+\end{lstlisting}
+
+% Initialization constructor
+
+We can specify the number of rows and columns and initialize the \lstinline"Matrix" elements at the same time by doing
+
+\begin{lstlisting}
+Matrix<double> m(1, 5, 0.0);
+\end{lstlisting}
+
+% File constructor
+
+To build a \lstinline"Matrix" object by loading its members from a data file the following constructor is used, 
+
+\begin{lstlisting}
+Matrix<double> m(`Matrix.dat');
+\end{lstlisting}
+
+The format of a matrix data file is as follows: the first line contains the numbers of rows and columns separated by a blank space; the following data contains the matrix elements arranged in rows and columns. For instance, the next data will correspond to a \lstinline"Matrix" of zeros with 2 rows and 3 columns,
+
+\begin{lstlisting}
+2 3
+0 0 0
+0 0 0
+\end{lstlisting}
+
+% Copy constructor
+
+The copy constructor builds an object which is a copy of another object, 
+
+\begin{lstlisting}
+Matrix<bool> a(3,5);
+Matrix<bool> b(a);
+\end{lstlisting}
+
+\subsubsection*{Operators}
+
+% Assignment operator 
+
+The \lstinline"Matrix" class also implements the assignment operator, 
+
+
+\begin{lstlisting}
+Matrix<double> a(2,1);
+Matrix<bool> b = a;
+\end{lstlisting}
+
+% Reference operator 
+
+Below there is an usage example of the reference operator here. Note that row indexing goes from \lstinline"0" to
+\lstinline"rows_number-1"  and column indexing goes from \lstinline"0" to \lstinline"columns_number-1".
+
+% Arithmetic operators 
+
+\begin{lstlisting}
+Matrix<int> m(2, 2);
+m[0][0] = 1;
+m[0][1] = 2;
+m[1][0] = 3;
+m[1][1] = 4;
+\end{lstlisting}
+
+% Arithmetic operators
+
+The use of the arithmetic operators for the \lstinline"Matrix" class are very similar to those for the \lstinline"Vector" class. The following sentence uses the scalar difference operator, 
+
+\begin{lstlisting}
+Matrix<double> a(5, 7, 2.5);
+Matrix<double> b = a + 0.1;
+\end{lstlisting}
+
+% Arithmetic and assignment operators
+
+Also, using the arithmetic and assignment operators with the \lstinline"Matrix" class is similar than with the \lstinline"Vector" class. For instance, to assign by sum with another \lstinline"Matrix" we can write
+
+\begin{lstlisting}
+Matrix<double> a(1, 2, 1.0);
+Matrix<double> b(1, 2, 0.5);
+a += b;
+\end{lstlisting}
+
+% Equality and relational operators
+
+The not equal to operator with another \lstinline"Matrix" can be used in the following way, 
+
+\begin{lstlisting}
+Matrix<std::string> a(1, 1, `hello');
+Matrix<std::string> b(1, 1, `good bye');
+bool is_not_equal_to = (a != b);
+\end{lstlisting}
+
+The use of the greater than operator with a scalar is listed below
+
+\begin{lstlisting}
+Matrix<double> a(2, 3, 0.0);
+bool is_greater_than = (a > 1.0);
+\end{lstlisting}
+
+\subsubsection*{Methods}
+
+As it happens for the \lstinline"Vector" class, the \lstinline"Matrix" class implements get and set methods for all the members. 
+
+The \lstinline"get_rows_number" and \lstinline"get_columns_number" methods are very useful, 
+
+\begin{lstlisting}
+Matrix<MyClass> m(4, 2);
+int rows_number = m.get_rows_number();
+int columns_number = m.get_columns_number();
+\end{lstlisting}
+
+In order to set a new number of rows or columns to a \lstinline"Matrix" object, the \lstinline"set_rows_number" or \lstinline"set_columns_number" methods are used,
+
+\begin{lstlisting}
+Matrix<bool> m(1, 1);
+m.set_rows_number(2);
+m.set_columns_number(3);
+\end{lstlisting}
+
+% Initialization methods
+
+A \lstinline"Matrix" can be initialized with a given value, at random with an uniform distribution or at random with a normal distribution, 
+
+\begin{lstlisting}
+Matrix<double> m(4, 2);
+m.initialize(0.0);
+m.initialize_uniform(-0.2, 0.4);
+m.initialize_normal(-1.0, 0.25);
+\end{lstlisting}
+
+% Mathematical methods
+
+A set of mathematical methods are also implemented for convenience. For instance, the \lstinline"dot" method computes the dot product of this \lstinline"Matrix" with a \lstinline"Vector" or with another \lstinline"Matrix",
+
+\begin{lstlisting}
+Matrix<double> m(4, 2, 1.0);
+Vector<double> v(4, 2.0);
+Vector<double> dot_product = m.dot(v);
+\end{lstlisting}
+
+% Utility methods
+
+Finally, string serializing, printing, saving or loading utility methods are also implemented. For example, the use of the \lstinline"print" method is
+
+\begin{lstlisting}
+Matrix<bool> m(1, 3, false);
+m.print();
+\end{lstlisting}

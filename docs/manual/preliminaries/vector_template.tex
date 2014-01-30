@@ -1,0 +1,249 @@
+\index{Vector class}
+
+The \lstinline"Vector" class is a template, which means that it
+can be applied to different types \cite{Eckel2000}. That is, we
+can create a \lstinline"Vector" or \lstinline"int" numbers, \lstinline"MyClass" objects, etc.
+
+The \lstinline"Vector" in \texttt{OpenNN} is derived from the \lstinline"vector" in the Standard Template Library. 
+
+\subsubsection*{Members}
+
+The onl member of the \lstinline"Vector" class is:
+
+\begin{itemize}
+\item[-] A double pointer to some type. 
+\end{itemize}
+
+That two class members are declared as being private. 
+
+\subsubsection*{File format}
+
+Vector objects can be serialized or deserialized to or from a data file which contains the member values. The file format is as follows.
+
+\begin{lstlisting}
+element_0 element_1 ... element_N
+\end{lstlisting}
+
+\subsubsection*{Constructors}
+
+Multiple constructors are defined in the \lstinline"Vector" class, where the different constructors take different parameters. 
+
+% Default constructor
+
+The easiest way of creating a vector object is by means of the default constructor, wich builds a vector of size zero.
+For example, in order to construct an empty \lstinline"Vector" of
+\lstinline"int" numbers we use
+
+\begin{lstlisting}
+Vector<int> v;
+\end{lstlisting}
+
+% Size constructor
+
+The following sentence constructs a \lstinline"Vector" of $3$
+\lstinline"double" numbers.
+
+\begin{lstlisting}
+Vector<double> v(3);
+\end{lstlisting}
+
+% Size initialization constructor
+
+If we want to construct \lstinline"Vector" of $5$ \lstinline"bool"
+variables and initialize all the elements to $false$, we can use
+
+\begin{lstlisting}
+Vector<bool> v(5, false);
+\end{lstlisting}
+
+% File constructor
+
+It is also possible to construct an object of the \lstinline"Vector" class and at the same time 
+load its members from a file. In order to do that we can do
+
+\begin{lstlisting}
+Vector<int> v(`Vector.dat');
+\end{lstlisting}
+
+The file `Vector.dat' contains a first row with the size of the vector and an aditional row for each element of the vector. 
+
+% Copy constructor
+
+The following sentence constructs a \lstinline"Vector" which is a copy of another \lstinline"Vector",
+
+\begin{lstlisting}
+Vector<MyClass> v(3);
+Vector<MyClass> w(v);
+\end{lstlisting}
+
+\subsubsection*{Operators}
+
+The \lstinline"Vector" class also implements different types of operators for assignment, reference, arithmetics or comparison. 
+
+% Assignment operator 
+
+The assignment operator copies a vector into another vector, 
+
+\begin{lstlisting}
+Vector<int> v;
+Vector<int> w = v;
+\end{lstlisting}
+
+% Reference operator 
+
+The following sentence constructs a vector and sets the values of their elements using the reference operator. Note
+that indexing goes from $0$ to $n-1$, where $n$ is the
+\lstinline"Vector" size.
+
+\begin{lstlisting}
+Vector<double> v(3);
+v[0] = 1.0;
+v[1] = 2.0;
+v[2] = 3.0;
+\end{lstlisting}
+
+% Arithmetic operators 
+
+Sum, difference, product and quotient operators are included in the \lstinline"Vector" class to perform arithmetic operations with a scalar or another \lstinline"Vector". Note that the arithmetic operators with another \lstinline"Vector" require that they have the same sizes. 
+
+The following sentence uses the vector-scalar sum operator, 
+
+\begin{lstlisting}
+Vector<int> v(3, 1.0);
+Vector<int> w = v + 3.1415926;
+\end{lstlisting}
+
+An example of the use of the vector-vector multiplication operator is given below, 
+
+\begin{lstlisting}
+Vector<double> v(3, 1.2);
+Vector<double> w(3, 3.4);
+Vector<double> x = v*w;
+\end{lstlisting}
+
+% Arithmetic and assignment operators
+
+Assignment by sum, difference, product or quotient with a scalar or another \lstinline"Vector" is also possible by using the arithmetic and assignent operators. If another \lstinline"Vector" is to be used, it must have the same size.
+
+For instance, to assign by difference with a scalar, we migh do
+
+\begin{lstlisting}
+Vector<int> v(3, 2);
+v -= 1;
+\end{lstlisting}
+ 
+In order to assign by quotation with another \lstinline"Vector", we can write 
+
+\begin{lstlisting}
+Vector<double> v(3, 2.0);
+Vector<double> w(3, 0.5);
+v /= w;
+\end{lstlisting}
+
+% Equality and relational operators
+
+Equality and relational operators are also implemented here. They can be used with a scalar or another \lstinline"Vector". For the last case the same sizes are assumed. 
+
+An example of the equal to operator with a scalar is 
+
+\begin{lstlisting}
+Vector<bool> v(5, false);
+bool is_equal = (v == false);
+\end{lstlisting}
+
+The less than operator with another \lstinline"Vector" can be used as follows,
+
+\begin{lstlisting}
+Vector<int> v(5, 2.3);
+Vector<int> w(5, 3.2);
+bool is_less = (v < w);
+\end{lstlisting}
+
+\subsubsection*{Methods}
+
+Get and set methods for each member of this class are implemented to exchange information among objects. 
+
+% Size and element methods
+
+The method \lstinline"size" returns the size of a \lstinline"Vector".
+
+\begin{lstlisting}
+Vector<MyClass> v(3);
+int size = v.size();
+\end{lstlisting}
+
+On the other hand, the method \lstinline"set" sets a new size to a \lstinline"Vector". 
+Note that the element values of that \lstinline"Vector" are lost. 
+
+\begin{lstlisting}
+Vector<bool> v(3);
+v.set(6);
+\end{lstlisting}
+
+% Initialization methods
+
+If we want to initialize a vector at random we can use the \lstinline"initialize_uniform" or \lstinline"initialize_normal" methods, 
+
+\begin{lstlisting}
+Vector<double> v(5);
+v.initialize_uniform();
+Vector<double> w(3);
+w.initialize_normal();
+\end{lstlisting}
+
+% Mathematical methods
+
+The \lstinline"Vector" class also includes some mathematical methods which can be useful in the development of neural networks algorithms and applications. 
+
+The \lstinline"calculate_norm" method calculates the norm of the vector, 
+
+\begin{lstlisting}
+Vector<double> v(5, 3.1415927);
+double norm = v.calculate_norm();
+\end{lstlisting}
+
+In order to calculate the dot product between this \lstinline"Vector" and another \lstinline"Vector" we can do
+
+\begin{lstlisting}
+Vector<double> v(3, 2.0);
+Vector<double> w(3, 5.0);
+double dot = v.dot(w);
+\end{lstlisting}
+
+We can calculate the mean or the standard deviation values of the elements in a \lstinline"Vector" by using the \lstinline"calculate_mean" and \lstinline"calculate_standard_deviation" methods, respectively. For instance
+
+\begin{lstlisting}
+Vector<double> v(3, 4.0);
+double mean = v.calculate_mean();
+double standard_deviation = v.calculate_standard_deviation();
+\end{lstlisting}
+
+% Utility methods
+
+Finally, utility methods for serialization or loading and saving the class members to a file are also included. 
+In order to obtain a \lstinline"std::string" representation of a \lstinline"Vector" object we can make
+ 
+\begin{lstlisting}
+Vector<bool> v(1, false);
+std::string vector_string = v.to_string();
+\end{lstlisting}
+
+To save a \lstinline"Vector" object to a file we can do
+
+\begin{lstlisting}
+Vector<int> v(2, 0);
+v.save(`Vector.dat');
+\end{lstlisting}
+
+The first row of the file \lstinline"Vector.dat" is the size of the vector and the other rows contain the values of the elements of that vector. 
+
+If we want to load a \lstinline"Vector" object from a data file we could write
+
+\begin{lstlisting}
+Vector<double> v;
+v.load(`Vector.dat');
+\end{lstlisting}
+
+Where the format of the \lstinline"Vector.dat" file must be the same as that described above. 
+
+

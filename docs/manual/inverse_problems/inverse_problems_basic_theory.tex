@@ -1,0 +1,170 @@
+Inverse problems can be described as being opposed to direct
+problems. In a direct problem the cause is given, and the effect is
+determined. In an inverse problem the effect is given, and the cause
+is estimated \cite{Kirsch1996}. There are two main types of inverse
+problems: input estimation, in which the system properties and
+output are known and the input is to be estimated; and properties
+estimation, in which the the system input and output are known and
+the properties are to be estimated \cite{Kirsch1996}. Inverse
+problems are found in many areas of science and engineering.
+
+%Inverse problems are those where a set of measured results is
+%analyzed in order to get as much information as possible on a model
+%which is proposed to represent a system in the real world. Exact
+%inverse problems are related to most parts of mathematics. Applied
+%inverse problems are the keys to other sciences. Hence the field,
+%which is very wealthy, yields the best example of interdisciplinary
+%research but it has nevertheless a strong individuality. The
+%obtained results and explored directions of the 20th century are
+%sketched in this review, with attempts to predict their evolution.
+%
+%Inverse problems are the problems that consist of finding an
+%unknown property of an object, or a medium, from the observation
+%of a response of this object, or medium, to a probing signal.
+%Thus, the theory of inverse problems yields a theoretical basis
+%for remote sensing and non-destructive evaluation
+%\cite{Ramm2005}.
+
+%For example, if an acoustic plane wave is scattered by an
+%obstacle, and one observes the scattered field far from the
+%obstacle, or in some exterior region, then the inverse problem is
+%to find the shape and material properties of the obstacle. Such
+%problems are important in identification of flying objects
+%(airplanes missiles, etc.), objects immersed in water (submarines,
+%paces of fish, etc.), and in many other situations. In geophysics
+%one sends an acoustic wave from the surface of the earth and
+%collects the scattered field on the surface for various positions
+%of the source of the field for a fixed frequency, or for several
+%frequencies. The inverse problem is to find the subsurface
+%inhomogeneities. In technology one measures the eigenfrequencies
+%of a piece of a material, and the inverse problem is to find a
+%defect in this material, for example, a hole in a metal. In
+%geophysics the inhomogeneity can be an oil deposit, a cave, a
+%mine. In medicine it may be a tumor, or some abnormality in a
+%human body. If one is able to find inhomogeneities in a medium by
+%processing the scattered field on the surface, then one does not
+%have to drill a hole in a medium. This, in turn, avoids expensive
+%and destructive evaluation. The practical advantages of remote
+%sensing are what makes the inverse problems important
+%\cite{Ramm2005}.
+
+An inverse problem is specified by the following concepts:
+
+\begin{itemize}
+\item[-] Mathematical model.
+\item[-] Data set.
+\item[-] Neural network.
+\item[-] Performance functional.
+\item[-] Training strategy.
+\end{itemize}
+
+\subsubsection*{Mathematical model}
+\index{mathematical model}
+\index{unknown variable}
+\index{state variable}
+\index{algebraic operator}
+\index{differential operator}
+\index{forcing term}
+
+The mathematical model can be defined as a representation of the
+essential aspects of some system which presents knowledge of that
+system in usable form.
+
+%Let us represent $\mathbf{y}(\mathbf{x})$ the vector of unknowns
+%(inputs or properties) and
+%$\mathbf{u}(\mathbf{x})$ the vector of state variables. The mathematical model, or state equation, relating
+%unknown and state variables takes the form
+
+%\begin{eqnarray}\label{InputEstimationEquation}
+%\mathcal{L}(\mathbf{y}(\mathbf{x}),
+%\mathbf{u}(\mathbf{x}),\mathbf{x}) = \mathbf{f},
+%\end{eqnarray}
+
+%\noindent where $\mathcal{L}$ is some algebraic or differential
+%operator and $\mathbf{f}$ is some forcing term.
+
+
+%The variables of an inverse problem, i.e., variables which describe
+%the characteristics of the device for which the problem is
+%specified, are interrelated according to the following operator
+%equation \cite{Korovkin2007}:
+
+%Equation (\ref{InverseProblemsEquation}) provides a means to
+%calculate the variables $\mathbf{w}$ of the inverse problem for
+%any $\mathbf{p}$.
+
+\subsubsection*{Data set}
+\index{observed data}
+
+Inverse problems are those where a set of measured results is
+analyzed in order to get as much information as possible on a
+mathematical model which is proposed to represent a real system.
+
+Therefore, a data set on the state variables is
+needed in order to estimate the unknown variables of that system.
+
+In general, that data set is invariably affected by noise and
+uncertainty, which will translate into uncertainties in the system
+inputs or properties.
+
+\subsubsection*{Neural network}
+\index{unknowns constraint}
+
+The neural network represents here the inputs to the system or the properties of that system. 
+They might include boundary conditions or bounds. 
+
+\subsubsection*{Performance functional}
+\index{state constraint}
+\index{input constraint}\index{property constraint}
+\index{boundary condition}\index{lower and upper bounds}
+\index{admissible unknown}
+\index{admissible state}
+
+For inverse problems, the presence of restrictions is typical. 
+State constraints are those conditions that the system needs to
+hold. This type of restrictions depend on the particular problem.
+
+In this way, an unknown which satisfies all the input and state
+constraints is called an admissible unknown.
+
+
+Also, a state which satisfies the state constraints is called an
+admissible state.
+
+The inverse problem provides a link between the outputs from the
+model and the observed data. When formulating and solving inverse
+problems the concept of error functional is used to specify the
+proximity of the state variable to the
+observed data.
+
+
+Some common performance functionals for invers problems are the inverse sum squared
+error or the inverse Minkowski error. Regularization
+theory can also be applied here
+\cite{Bucur2005}.
+
+The solution of inverse problems is then reduced to finding the
+extremum of a functional.
+
+On the other hand, inverse problems might be ill-posed
+\cite{Tikhonov1977}. A problem is said to be
+well possed if the following conditions are true: (a) the solution to the problem exists;
+(b) the solution is unique; and (c) the solution
+is stable. This implies that for the
+above-considered problems, these conditions can be violated.
+Therefore, their solution requires application of special methods.
+In this regard, the use of regularization theory is widely used
+\cite{Engl2000}.
+
+In some elementary cases, it is possible to establish analytic
+connections between the sought inputs or properties and the observed
+data. But for the majority of cases the search of extrema for the
+error functional must be carried out numerically, and the so-called
+direct methods can be applied.
+
+\subsubsection*{Training strategy}
+
+The training strategy is entrusted to solve the reduced function optimization problems. 
+When possible, a quasi-Newton problem should be used. 
+If the gradient of the performance function cannot be computed accurately, an evolutionary algorithm could be used instead. 
+

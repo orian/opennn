@@ -1,0 +1,214 @@
+\documentclass[pdftex, a4paper, 10pt]{book}
+
+\usepackage{amsmath}
+\usepackage{graphicx}
+\usepackage{hyperref}
+\usepackage{listings}
+\usepackage{makeidx}
+\usepackage{plain}
+
+\lstset{language=C++, basicstyle=\footnotesize, showstringspaces=false}
+
+\newtheorem{definition}{Definition}
+\newtheorem{theorem}{Theorem}
+\newtheorem{example}{Example}
+\newtheorem{problem}{Problem}
+
+%\makeindex
+
+\begin{document}
+
+\vspace{5cm}
+
+\begin{figure}[h!]
+\begin{center}
+\includegraphics[width=1.0\textwidth]{opennn_logo_name}
+\end{center}
+\href{http://www.intelnics.com/opennn}{http://www.intelnics.com/opennn}\newline
+
+Version 1.0 manual\newline
+
+January 2014.
+\end{figure}
+
+\begin{center}
+\end{center}
+
+\vspace{5cm}
+
+{
+\Large
+\textbf{}\newline
+\textbf{Roberto Lopez}\newline
+Intelnics - \textit{The artificial intelligence company}\newline 
+\href{mailto:robertolopez@intelnics.com}{\nolinkurl{robertolopez@intelnics.com}}
+}
+
+\vspace{5cm}
+
+
+\begin{verbatim}
+Copyright (c) 2014 Roberto Lopez.
+Permission is granted to copy, distribute and/or modify this document
+under the terms of the GNU Free Documentation License, Version 1.3
+or any later version published by the Free Software Foundation;
+A copy of the license is included in the OpenNN folder called "license". 
+\end{verbatim}
+      
+\chapter*{Preface}	
+\input{preface/preface}	
+ 
+\tableofcontents
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\chapter{Preliminaries}\label{Preliminaries}
+
+\section{Building OpenNN}\label{BuildingOpenNN}
+\input{preliminaries/building_opennn}
+
+\section{OpenNN namespace}\label{OpenNNNamespace}
+\input{preliminaries/opennn_namespace}
+
+\section{Vector template}\label{VectorTemplate}
+\input{preliminaries/vector_template}
+
+\section{Matrix template}\label{MatrixTemplate}
+\input{preliminaries/matrix_template}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\chapter{Neural networks basis}\label{NeuralNetworksBasis}
+\input{neural_networks_basis/neural_networks_basis}
+
+\section{Learning problem}\label{LearningProblem}
+\input{neural_networks_basis/learning_problem}
+
+\section{Learning tasks}\label{LearningTasks}
+\input{neural_networks_basis/learning_tasks}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\chapter{Software model basis}\label{SoftwareModelBasis}
+\input{software_model_basis/software_model_basis}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\chapter{Neural network}\label{NeuralNetwork}
+\input{neural_network/neural_network}
+
+\section{Basic theory}\label{NeuralNetworkBasicTheory}
+\input{neural_network/basic_theory}
+
+\section{Software model}\label{NeuralNetworkSoftwareModel}
+\input{neural_network/software_model}
+
+\section{NeuralNetwork classes}\label{NeuralNetworkClassese}
+\input{neural_network/neural_network_classes}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+ 
+\chapter{Performance functional}\label{PerformanceFunctional}
+\input{performance_functional/performance_functional}
+
+\section{Basic theory}\label{PerformanceFunctionalBasicTheory}
+\input{performance_functional/basic_theory}
+
+\section{Software model}\label{PerformanceFunctionalModel}
+\input{performance_functional/software_model}
+
+\section{PerformanceFunctional classes}\label{PerformanceFunctionalClasses}
+\input{performance_functional/performance_functional_classes}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+ 
+\chapter{Training strategy}\label{TrainingStrategy}
+\input{training_strategy/training_strategy}
+
+\section{Basic theory}\label{TrainingStrategyBasicTheory}
+\input{training_strategy/basic_theory}
+
+\section{Software model}\label{TrainingStrategySoftwareModel}
+\input{training_strategy/software_model}
+
+\section{TrainingStrategy classes}\label{TrainingStrategyClasses}
+\input{training_strategy/training_strategy_classes}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\chapter{Function regression}\label{FunctionRegression}
+\input{function_regression/function_regression}
+
+\section{Basic theory}\label{BasicTheoryFunctionRegression}
+\input{function_regression/function_regression_basic_theory}
+ 
+\section{Examples}\label{ExamplesFunctionRegression}
+\input{function_regression/function_regression_examples}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+ 
+\chapter{Pattern recognition}\label{PatternRecognition}
+\input{pattern_recognition/pattern_recognition}
+
+\section{Basic theory}\label{PatternRecognitionBasicTheory}
+\input{pattern_recognition/pattern_recognition_basic_theory}
+
+\section{Examples}\label{ExamplesPatternRecognition}
+\input{pattern_recognition/pattern_recognition_examples}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\chapter{Optimal control}\label{OptimalControl}
+\input{optimal_control/optimal_control}
+
+\section{Basic theory}\label{BasicTheoryOptimalControl}
+\input{optimal_control/optimal_control_basic_theory}
+
+\section{Examples}\label{ExamplesOptimalControl}
+\input{optimal_control/optimal_control_examples}
+ 
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+ 
+\chapter{Optimal shape design}\label{OptimalShapeDesign}
+\input{optimal_shape_design/optimal_shape_design}
+
+\section{Basic theory}\label{BasicTheoryOptimalShapeDesign}
+\input{optimal_shape_design/optimal_shape_design_basic_theory}
+
+\section{Examples}\label{ExamplesOptimalShapeDesign}
+\input{optimal_shape_design/optimal_shape_design_examples}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+ 
+\chapter{Inverse problems}\label{InverseProblems}
+\input{inverse_problems/inverse_problems}
+
+\section{Basic theory}\label{BasicTheoryInverseProblems}
+\input{inverse_problems/inverse_problems_basic_theory}
+
+\section{Examples}\label{ExamplesInverseProblems}
+\input{inverse_problems/inverse_problems_examples}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+ 
+\chapter{Function optimization}\label{FunctionOptimization}
+\input{function_optimization/function_optimization}
+
+\section{Basic theory}\label{BasicTheoryFunctionOptimization}
+\input{function_optimization/function_optimization_basic_theory}
+ 
+\section{Examples}\label{FunctionOptimizationExamples}
+\input{function_optimization/function_optimization_examples}
+ 
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\appendix
+
+\chapter{Unit testing}\label{UnitTesting}
+\input{appendix/unit_testing}
+
+\bibliography{bibliography}\bibliographystyle{plain}
+
+%\printindex
+
+\end{document}

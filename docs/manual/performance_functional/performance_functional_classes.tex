@@ -1,0 +1,365 @@
+\index{Performance functional class}
+\index{Objective functional classes}
+
+\texttt{OpenNN} implements the \lstinline"PerformanceFunctional" concrete class. 
+This class manages different objective, regularization and constraints terms in order to construct a 
+performance functional suitable for our problem. 
+
+\subsection*{Members}
+
+The \lstinline"PerformanceFunctional" class contains:
+
+\begin{itemize}
+\item[-] The type of objective term.
+\item[-] The type of regularization term.
+\item[-] The type of constraints term.
+\item[-] A pointer to an objective performance term.
+\item[-] A pointer to a regularization performance term.
+\item[-] A pointer to a constraints performance term.
+\end{itemize}
+
+All that members are declared as private, and they can only be used with their corresponding get or set methods. 
+
+\subsection*{Constructors}
+
+As it has been said, the choice of the performance functional depends on the particular application. 
+A default performance functional is not associated to a neural network, it is not measured on a data set or a mathematical model,
+
+\begin{lstlisting}
+PerformanceFunctional pf;
+\end{lstlisting}
+
+The default objective functional in the performance functional above is a normalized squared error. 
+This is very used in function regression, pattern recognition and time series prediction. 
+
+That performance functional does not contain any regularization or constraints terms by default. Also, it does not have  numerical differentiation utilities. 
+
+The following sentence constructs a performance functional associated to a neural network and to be measured on a data set.
+
+\begin{lstlisting}
+NeuralNetwork nn(1, 1);
+
+DataSet ds(1, 1, 1);
+ds.initialize_data(0.0);
+
+PerformanceFunctional pf(&nn, &ds);
+\end{lstlisting}
+
+As before the default objective functional is the normalized squared error. 
+
+\subsubsection*{Methods}
+
+% Evaluation
+
+The \lstinline"calculate_performance" method calculates the performance of some neural network. 
+It is called as follows, 
+
+\begin{lstlisting}
+double performance = pf.calculate_performance();
+\end{lstlisting}
+
+Note that the evaluation of the performance functional is the sum of the objective, regularization and constraints terms. 
+
+% Gradient
+
+The \lstinline"calculate_gradient" method calculates the partial derivatives of the performance with respect to the neural network parameters. 
+
+\begin{lstlisting}
+PerformanceFunctional pf;
+
+Vector<double> gradient = pf.calculate_gradient();
+\end{lstlisting}
+
+As before, the gradient of the performance functional is the sum of the objective, the regularization and the constraints gradients. 
+
+Note that, most of the times, an analytical solution for the gradient is achieved.
+An example is the normalized squared error. 
+On the other hand, some applications might need numerical differentiation. 
+An example is the outputs integrals performance term.
+
+% Hessian
+
+Similarly, the Hessian matrix can be computed using the \lstinline"calculate_Hessian" method, 
+
+\begin{lstlisting}
+Matrix<double> Hessian = pf.calculate_Hessian();
+\end{lstlisting}
+
+The Hessian of the objective functional is also the sum of the objective, regularization and constraints matrices of second derivatives. 
+
+% Objective method
+
+If the user wants another objective functional than the default, he can writte
+
+\begin{lstlisting}
+pf.construct_objective_term('MEAN_SQUARED_ERROR');
+\end{lstlisting}
+
+The above sets the objective functional to be the mean squared error. 
+
+% Regularization method
+
+The performance functional is not regularized by default. 
+To change that, the following can be used
+
+\begin{lstlisting}
+pf.construct_regularization_term('NEURAL_PARAMETERS_NORM');
+\end{lstlisting}
+
+The above sets the default regularization method to be the multilayer perceptron parameters norm. 
+Also, it sets the weight for that regularization term. 
+
+% Constraints method
+
+Finally, the performance functional does not include a constraints term by default. 
+The use of constrains might be difficult, so the interested reader is referred to look at the examples included in OpenNN.  
+
+% Numerical differentiation method
+
+%The default method for numerical differentiation is central differences. If you want to use forward differences instead, you %can write
+
+%\begin{lstlisting}
+%MockObjectiveFunctional mof;
+%mof.set_numerical_differentiation_method
+%(ObjectiveFunctional::ForwardDifferences);
+%\end{lstlisting}
+%
+%
+%\subsubsection*{Derived classes}
+%\index{SumSquaredError class}
+%\index{MeanSquaredError class}
+%\index{RootMeanSquaredError class}
+%\index{NormalizedSquaredError class}
+%\index{MinkowskiError class}
+%%\index{CrossEntropyError class}
+%
+%\index{GeodesicProblem class}
+%\index{BrachistochroneProblem class}
+%\index{CatenaryProblem class}
+%\index{IsoperimetricProblem class}
+%
+%\index{CarProblem example}
+%\index{CarProblemNeurocomputing example}
+%\index{FedBatchFermenterProblem example}
+%\index{AircraftLandingProblem example}
+%
+%\index{PrecipitateDissolutionModeling example}
+%
+%\index{MinimumDragProblem example}
+%
+%\index{DeJongFunction example}
+%\index{RosenbrockFunction example}
+%\index{RastriginFunction example}
+%\index{PlaneCylinder example}
+%%\index{WeldedBeam example}
+%
+%For data modeling problems, such as function regression or pattern
+%recognition, \texttt{OpenNN} includes the
+%classes \lstinline"SumSquaredError", \lstinline"MeanSquaredError",
+%\lstinline"RootMeanSquaredError",
+%\lstinline"NormalizedSquaredError" and \lstinline"MinkowskiError". Read Chapters
+%\ref{FunctionRegression} and \ref{PatternRecognition} to learn about modeling of data and the use of that classes.
+%
+%On the other hand, other types of variational problems require
+%programming another derived class. As a way of illustration,
+%\texttt{OpenNN} includes the examples \lstinline"GeodesicProblem",
+%\lstinline"BrachistochroneProblem", \lstinline"CatenaryProblem" and
+%\lstinline"IsoperimetricProblem", which are classical problems in
+%the calculus of variations.
+%
+%Examples for optimal control problems included are
+%\lstinline"CarProblem",
+%\lstinline"CarProblemNeurocomputing",
+%\lstinline"FedBatchFermenterProblem" and
+%\lstinline"AircraftLandingProblem", see Chapter
+%\ref{OptimalControl}.
+%
+%Regarding inverse problems, \texttt{OpenNN} includes the example
+%\lstinline"PrecipitateDissolutionModeling". Read Chapter
+%\ref{InverseProblems} to see how this type of problems are
+%formulated and how to solve them by means of a neural network.
+%
+%As an example of optimal shape design, the
+%\lstinline"MinimumDragProblem" example is
+%included. All these is explained in
+%Chapter \ref{OptimalShapeDesign}.
+%
+%Finally, \texttt{OpenNN} can be used as a software tool for function
+%optimization problems. Some examples included are
+%\lstinline"DeJongFunction", \lstinline"RosenbrockFunction",
+%\lstinline"RastriginFunction", \lstinline"PlaneCylinder" and \lstinline"WeldedBeam". Please
+%read Chapter \ref{FunctionOptimization} if you are
+%interested on that.
+
+\subsection*{XML formats}
+
+
+\subsubsection*{Sum squared error}
+
+The XML format of a sum squared error is as follows.
+
+\begin{lstlisting}
+<SumSquaredError>
+   <Display>boolean</Display>
+</SumSquaredError>
+\end{lstlisting}
+
+\subsubsection*{Mean squared error}
+
+The XML format of the mean squared error is very similar to that of the sum squared error.
+
+\begin{lstlisting}
+<MeanSquaredError>
+   <Display>boolean</Display>
+</MeanSquaredError>
+\end{lstlisting}
+
+\subsubsection*{Root mean squared error}
+
+The XML format of the root mean squared error is very similar to that of the sum squared error.
+
+\begin{lstlisting}
+<RootMeanSquaredError>
+   <Display>boolean</Display>
+</RootMeanSquaredError>
+\end{lstlisting}
+
+\subsubsection*{Normalized squared error}
+
+The XML format of the normalized squared error is very similar to that of the sum squared error.
+
+\begin{lstlisting}
+<NormalizedSquaredError>
+   <Display>boolean</Display>
+</NormalizedSquaredError>
+\end{lstlisting}
+
+\subsubsection*{Minkowski squared error}
+
+The XML format of the root mean squared error is as follows.
+
+\begin{lstlisting}
+<MinkowskiError>
+   <MinkowskiParameter>real</MinkowskiParameter>
+   <Display>boolean</Display>
+</MinkowskiError>
+\end{lstlisting}
+
+\subsubsection*{Cross entropy error}
+
+The XML format of the cross entropy error is very similar to that of the sum squared error.
+
+\begin{lstlisting}
+<CrossEntropyError>
+   <Display>boolean</Display>
+</CrossEntropyError>
+\end{lstlisting}
+
+\subsubsection*{Neural parameters norm}
+
+The XML format of the neural parameters norm performance term is as follows.
+
+\begin{lstlisting}
+<NeuralParametersNorm>
+   <NeuralParametersNormWeight>real</NeuralParametersNormWeight>
+   <Display>boolean</Display>
+</NeuralParametersNorm>
+\end{lstlisting}
+
+\subsubsection*{Outputs integrals}
+
+The XML format of the outputs integrals performance term is as follows.
+
+\begin{lstlisting}
+<OutputsIntegrals>
+   <NumericalIntegration>
+   numerical_integration_element
+   </NumericalIntegration>
+   <OutputsIntegralsWeights>real_vector</OutputsIntegralsWeights>
+   <Display>boolean</Display>
+</OutputsIntegrals>
+\end{lstlisting}
+
+\subsubsection*{Final solutions error}
+
+The XML format of the final solutions error performance term is as follows.
+
+\begin{lstlisting}
+<FinalSolutionsError>
+   <NumericalDifferentiation>
+   numerical_differentiation_element
+   </NumericalDifferentiation>
+   <TargetFinalSolutions>real_vector</TargetFinalSolutions>
+   <FinalSolutionsErrorsWeights>real_vector</FinalSolutionsErrorsWeights>
+   <Display>boolean</Display>
+</FinalSolutionsError>
+\end{lstlisting}
+
+\subsubsection*{Solutions error}
+
+The XML format of the solutions error performance term is as follows.
+
+\begin{lstlisting}
+<FinalSolutionsError>
+   <NumericalDifferentiation>
+   numerical_differentiation_element
+   </NumericalDifferentiation>
+   <SolutionsErrorMethod>string</SolutionsErrorMethod>
+   <SolutionsErrorsWeights>real_vector</SolutionsErrorsWeights>
+   <Display>boolean</Display>
+</FinalSolutionsError>
+\end{lstlisting}
+
+\subsubsection*{Independent parameters error}
+
+The XML format of the independent parameters error performance term is as follows.
+
+\begin{lstlisting}
+<IndependentParametersError>
+   <NumericalDifferentiation>
+   numerical_differentiation_element
+   </NumericalDifferentiation>
+   <TargetIndependentParameters>real_vector</TargetIndependentParameters>
+   <IndependentParametersErrorsWeights>real_vector</IndependentParametersErrorsWeights>
+   <Display>boolean</Display>
+</IndependentParametersError>
+\end{lstlisting}
+
+\subsubsection*{Inverse sum squared error}
+
+The XML format of the independent parameters error performance term is as follows.
+
+\begin{lstlisting}
+<InverseSumSquaredError>
+   <NumericalDifferentiation>
+   numerical_differentiation_element
+   </NumericalDifferentiation>
+   <Display>boolean</Display>
+</InverseSumSquaredError>
+\end{lstlisting}
+
+\subsubsection{Performance functional}
+
+The XML format of a complete performance functional object is as follows.
+
+\begin{lstlisting}
+<PerformanceFunctional>
+   <ObjectiveTermType>string</ObjectiveTermType>
+   <RegularizationTermType>string</RegularizationTermType>
+   <ConstraintsTermType>string</ConstraintsTermType>
+   <ObjectiveTermFlag>boolean</ObjectiveTermFlag>
+   <RegularizationTermFlag>boolean</RegularizationTermFlag>
+   <ConstraintsTermFlag>boolean</ConstraintsTermFlag>
+   <ObjectiveTerm>   
+   objective_term_element
+   </ObjectiveTerm>   
+   <RegularizationTerm>   
+   regularization_term_element
+   </RegularizationTerm>   
+   <ConstraintsTerm>   
+   constraints_term_element
+   </ConstraintsTerm>   
+   <Display>boolean</Display>
+</PerformanceFunctional>
+\end{lstlisting}
+

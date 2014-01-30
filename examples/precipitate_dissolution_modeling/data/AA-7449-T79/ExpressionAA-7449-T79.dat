@@ -1,0 +1,13 @@
+<Flood version='3.0' class='MultilayerPerceptron' content='Expression'>
+<InputsScaling>
+scaled_log(t/t*)=2*(log(t/t*)--6)/(6--6)-1;
+</InputsScaling>
+<ForwardPropagation>
+y11=tanh(-1.21019+0.315447*scaled_log(t/t*));
+y12=tanh(1.05078+1.44078*scaled_log(t/t*));
+y13=tanh(1.12228-1.48116*scaled_log(t/t*));
+scaled_1-f/f0=(0.242857-0.173556*y11+2.16768*y12+0.102453*y13);
+</ForwardPropagation>
+<OutputsUnscaling>
+1-f/f0=0.5*(1-f/f0+1.0)*(1-0)+0;
+</OutputsUnscaling>

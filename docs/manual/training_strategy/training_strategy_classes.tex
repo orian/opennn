@@ -1,0 +1,424 @@
+\texttt{OpenNN} includes the class \lstinline"TrainingStrategy" to represent the concept of training strategy. 
+
+\subsection*{Members}
+
+The training strategy class contains:
+
+\begin{itemize}
+\item[-] A pointer to a performance functional object.
+\item[-] A pointer to an initialization training algorithm.
+\item[-] A pointer to a main training algorithm.
+\item[-] A pointer to a refinement training algorithm.
+\item[-] The type of initialization training algorithm.
+\item[-] The type of main training algorithm.
+\item[-] The type of refinement training algorithm.
+\item[-] A flag for using the initialization training algorithm.
+\item[-] A flag for using the main training algorithm.
+\item[-] A flag for using the refinement training algorithm.
+\end{itemize}
+
+All members are private, and must be accessed or modified by means of get and set methods, respectively. 
+
+\subsection*{Constructors}
+
+To construct a training strategy object associated to a performance functional object we do the following:
+
+\begin{lstlisting}
+TrainingStrategy ts(&pf);
+\end{lstlisting}
+
+\noindent where \lstinline"pf" is some performance functional object. 
+
+\subsection*{Methods}
+
+The default training strategy consists on a main training algorithm of the quasi-Newton method type. 
+The next sentence sets a different training strategy.
+
+\begin{lstlisting}
+RandomSearch* rsp = new RandomSearch(&pf);
+rsp->set_epochs_number(10);
+ts.set_initialization_training_algorithm(rsp);
+
+
+GradientDescent* gdp = new GradientDescent(&pf);
+gdp->set_epochs_number(25);
+ts.set_main_training_algorithm(gdp);
+\end{lstlisting}
+
+
+The most important method of a training strategy is called \lstinline"perform_training". 
+The use is as follows:
+
+\begin{lstlisting}
+ts.perform_training();
+\end{lstlisting}
+
+\noindent where \lstinline"ts" is some training strategy object. 
+
+We can save the above object to a XML file. 
+
+\begin{lstlisting}
+ts.save("training_strategy.xml");
+\end{lstlisting}
+
+
+\subsection*{XML formats}
+
+In this section we list the XML formats of the training strategy classes in \texttt{OpenNN}. 
+
+\subsubsection*{Training rate algorithm}
+
+Some training algorithms contain a training rate object inside. 
+The format of this object is listed below. 
+
+\begin{lstlisting}
+<TrainingRateAlgorithm>
+   <TrainingRateMethod>string</TrainingRateMethod>
+   <BracketingFactor>real</BracketingFactor>
+   <FirstTrainingRate>real</FirstTrainingRate>
+   <Display>boolean</Display>
+</TrainingRateAlgorithm> 
+\end{lstlisting}
+
+\subsubsection*{Gradient descent}
+   
+The file format of this class is listed below. 
+
+\begin{lstlisting}
+<GradientDescent>
+   <TrainingRate>
+   training_rate_element
+   </TrainingRate>
+   <WarningTrainingRate>real</WarningTrainingRate>
+   <ErrorTrainingRate>real<ErrorTrainingRate>
+   
+   <MinimumParametersIncrementNorm>real</MinimumParametersIncrementNorm>
+   <EvaluationGoal>real</EvaluationGoal>
+   <MinimumEvaluationImprovement>real</MinimumEvaluationImprovement>
+   <GradientNormGoal>real</GradientNormGoal>
+   <MaximumEpochsNumber>integer</MaximumEpochsNumber>
+   <MaximumTime>real</MaximumTime>
+   
+   <ReserveElapsedTimeHistory>boolean</ReserveElapsedTimeHistory>
+   <ReserveParametersHistory>boolean</ReserveParametersHistory>
+   <ReserveParametersNormHistory>boolean</ReserveParametersNormHistory>
+   <ReservePerformanceHistory>boolean</ReserveEvaluationHistory>
+   <ReserveValidationErrorHistory>boolean</ReserveValidationErrorHistory>
+   <ReserveGradientHistory>boolean</ReserveGradientHistory>
+   <ReserveGradientNormHistory>boolean</ReserveGradientNormHistory>
+   <ReserveTrainingDirectionHistory>boolean</ReserveTrainingDirectionHistory>
+   <ReserveTrainingDirectionNormHistory>boolean</ReserveTrainingDirectionNormHistory>
+   <ReserveTrainingRateHistory>boolean</ReserveTrainingRateHistory>
+   
+   <WarningParametersNorm>real</WarningParametersNorm>
+   <WarningGradientNorm>real</WarningGradientNorm>
+   <Display>boolean</Display>
+   <DisplayPeriod>integer</DisplayPeriod>
+</GradientDescent>   
+\end{lstlisting}
+
+\subsubsection*{Newton method}
+
+The file format of this class is listed below. 
+
+\begin{lstlisting}
+<NewtonMethod>
+   <TrainingRateMethod>
+   training_rate_method
+   </TrainingRateMethod>
+         
+   <WarningParametersNorm>real</WarningParametersNorm>
+   <WarningGradientNorm>real</WarningGradientNorm>
+   <WarningTrainingRate>real</WarningTrainingRate>
+   
+   <ErrorParametersNorm>real</ErrorParametersNorm>
+   <ErrorGradientNorm>real</ErrorGradientNorm>
+   <ErrorTrainingRate>real</ErrorTrainingRate>
+   
+   <MinimumParametersIncrementNorm>real</MinimumParametersIncrementNorm>
+ 
+   <MinimumEvaluationImprovement>real</MinimumEvaluationImprovement>
+   <EvaluationGoal>real</EvaluationGoal>
+ 
+   <GradientNormGoal>real</GradientNormGoal>
+   
+   <MaximumEpochsNumber>integer</MaximumEpochsNumber>
+   
+   <MaximumTime>real</MaximumTime>
+   
+   <ReserveParametersHistory>boolean</ReserveParametersHistory>   
+   <ReserveParametersNormHistory>boolean</ReserveParametersNormHistory>
+
+   <ReserveEvaluationHistory>boolean</ReserveEvaluationHistory>   
+   <ReserveGeneralizationErrorHistory>boolean</ReserveGeneralizationErrorHistory>
+   <ReserveGradientHistory>boolean</ReserveGradientHistory>
+   <ReserveGradientNormHistory>boolean</ReserveGradientNormHistory>
+   <ReserveInverseHessianHistory>boolean</ReserveInverseHessianHistory>
+   
+   <ReserveTrainingDirectionHistory>boolean</ReserveTrainingDirectionHistory>
+   <ReserveTrainingDirectionNormHistory>boolean</ReserveTrainingDirectionNormHistory>
+   <ReserveTrainingRateHistory>boolean</ReserveTrainingRateHistory>
+   <ReserveElapsedTimeHistory>boolean</ReserveElapsedTimeHistory>
+   
+   <Display>boolean</Display>
+   <DisplayPeriod>integer</DisplayPeriod>
+</NewtonMethod>
+\end{lstlisting}
+
+
+\subsubsection*{Conjugate gradient}
+
+The file format of the conjugate gradien object is as follows:
+
+\begin{lstlisting}
+<ConjugateGradient>
+   <TrainingDirectionMethod>string</TrainingDirectionMethod>
+   
+   <TrainingRateAlgorithm>
+   training_rate_algorithm_element
+   </TrainingRateAlgorithm>
+      
+   <WarningParametersNorm>real</WarningParametersNorm>
+   <WarningGradientNorm>real</WarningGradientNorm>
+   <WarningTrainingRate>real</WarningTrainingRate>
+   
+   <ErrorParametersNorm>real</ErrorParametersNorm>
+   <ErrorGradientNorm>real</ErrorGradientNorm>
+   <ErrorTrainingRate>real</ErrorTrainingRate>
+   
+   <MinimumParametersIncrementNorm>real</MinimumParametersIncrementNorm>
+  
+   <MinimumEvaluationImprovement>real</MinimumEvaluationImprovement> 
+   <EvaluationGoal>real</EvaluationGoal>
+   <GradientNormGoal>real</GradientNormGoal>
+   
+   <MaximumEpochsNumber>integer</MaximumEpochsNumber>
+   <MaximumTime>real</MaximumTime>
+   
+   <ReserveParametersHistory>boolean</ReserveParametersHistory>
+   <ReserveParametersNormHistory>boolean</ReserveParametersNormHistory>
+   
+   <ReserveEvaluationHistory>boolean</ReserveEvaluationHistory>
+   <ReserveGeneralizationEvaluationHistory>boolean</ReserveGeneralizationEvaluationHistory>
+   <ReserveGradientHistory>boolean</ReserveGradientHistory>
+   <ReserveGradientNormHistory>boolean</ReserveGradientNormHistory>
+   
+   <ReserveTrainingDirectionHistory>boolean</ReserveTrainingDirectionHistory>
+   <ReserveTrainingDirectionNormHistory>boolean</ReserveTrainingDirectionNormHistory>
+   <ReserveTrainingRateHistory>boolean</ReserveTrainingRateHistory>
+   <ReserveElapsedTimeHistory>boolean</ReserveElapsedTimeHistory>
+   
+   <DisplayPeriod>integer</DisplayPeriod>
+   <Display>boolean</Display>
+</ConjugateGradient>
+\end{lstlisting}
+
+
+\subsubsection*{Quasi-Newton method XML format}
+
+See below for the format of a quasi-Newton method XML-type file in \texttt{OpenNN}.
+
+\begin{lstlisting}
+<QuasiNewtonMethod version="3.0">
+
+   <TrainingRateAlgorithm>
+   training_rate_algorithm_element
+   </TrainingRateAlgorithm>
+   
+   <WarningParametersNorm>real</WarningParametersNorm>
+   <WarningGradientNorm>real</WarningGradientNorm>
+   <WarningTrainingRate>real</WarningTrainingRate>
+   
+   <ErrorParametersNorm>real</ErrorParametersNorm>
+   <ErrorGradientNorm>real</ErrorGradientNorm>   
+   <ErrorTrainingRate>real</ErrorTrainingRate>
+   
+   <MinimumParametersIncrementNorm>real</MinimumParametersIncrementNorm>
+   
+   <MinimumEvaluationImprovement>real</MinimumEvaluationImprovement>
+   <EvaluationGoal>real</EvaluationGoal>
+   <GradientNormGoal>real</GradientNormGoal>
+   
+   <MaximumEpochsNumber>integer</MaximumEpochsNumber>
+   <MaximumTime>real</MaximumTime>
+   
+   <ReserveParametersHistory>boolean</ReserveParametersHistory>
+   <ReserveParametersNormHistory>boolean</ReserveParametersNormHistory>
+   
+   <ReserveEvaluationHistory>boolean</ReserveEvaluationHistory>
+   <ReserveGeneralizationEvaluationHistory>boolean</ReserveGeneralizationEvaluationHistory>
+   <ReserveGradientHistory>boolean</ReserveGradientHistory>   
+   <ReserveGradientNormHistory>boolean</ReserveGradientNormHistory>
+   <ReserveInverseHessianHistory>boolean</ReserveInverseHessianHistory>
+   
+   <ReserveTrainingDirectionHistory>boolean</ReserveTrainingDirectionHistory>
+   <ReserveTrainingDirectionNormHistory>boolean</ReserveTrainingDirectionNormHistory>
+   <ReserveTrainingRateHistory>boolean</ReserveTrainingRateHistory>
+   <ReserveElapsedTimeHistory>boolean</ReserveElapsedTimeHistory>
+   
+   <Display>boolean</Display>
+   
+   <DisplayPeriod>integer</DisplayPeriod>
+</QuasiNewtonMethod>
+\end{lstlisting}
+
+\subsubsection*{Levenberg Marquardt algorithm}
+
+The file format of this class is listed below. 
+
+\begin{lstlisting}
+<LevenbergMarquardtAlgorithm>
+   <LinearAlgebraicEquations>
+   linear_algebraic_equations_element
+   </LinearAlgebraicEquations>
+   <DampingParameter>real</DampingParameter>
+   <MinimumDampingParameter>real</MinimumDampingParameter>
+   <MaximumDampingParameter>real</MaximumDampingParameter>
+   <DampingParameterFactor>real</DampingParameterFactor>
+
+   <WarningParametersNorm>real</WarningParametersNorm>
+   <WarningGradientNorm>real</WarningGradientNorm>
+
+   <ErrorParametersNorm>real</ErrorParametersNorm>
+   <ErrorGradientNorm>real</ErrorGradientNorm>
+ 
+   <MinimumParametersIncrementNorm>real</MinimumParametersIncrementNorm>
+   <EvaluationGoal>real</EvaluationGoal>
+   <MinimumEvaluationImprovement>real</MinimumEvaluationImprovement>
+   <GradientNormGoal>real</GradientNormGoal>
+   <MaximumEpochsNumber>integer</MaximumEpochsNumber>
+   <MaximumTime>real</MaximumTime>
+   
+   <ReserveParametersHistory>boolean</ReserveParametersHistory>
+   <ReserveParametersNormHistory>boolean</ReserveParametersNormHistory>
+
+   <ReserveEvaluationHistory>boolean</ReserveEvaluationHistory>
+   <ReserveGeneralizationEvaluationHistory>boolean</ReserveGeneralizationEvaluationHistory>
+   <ReserveGradientHistory>boolean</ReserveGradientHistory>
+   <ReserveGradientNormHistory>boolean</ReserveGradientNormHistory>
+   
+   <ReserveTrainingDirectionHistory>boolean</ReserveTrainingDirectionHistory>
+   <ReserveTrainingDirectionNormHistory>boolean</ReserveTrainingDirectionNormHistory>
+   <ReserveTrainingRateHistory>boolean</ReserveTrainingRateHistory>
+   <ReserveElapsedTimeHistory>boolean</ReserveElapsedTimeHistory>
+   
+   <WarningGradientNorm>real</WarningGradientNorm>
+   <Display>boolean</Display>
+   <DisplayPeriod>integer</DisplayPeriod>
+</LevenbergMarquardtAlgorithm>   
+\end{lstlisting}
+
+\subsubsection*{Random search}
+
+The file format of this class is listed below. 
+
+\begin{lstlisting}
+<RandomSearch>
+
+   <FirstTrainingRate>double</FirstTrainingRate>
+   <TrainingRateReductionFactor>double</TrainingRateReductionFactor>
+   <TrainingRateReductionPeriod>unsigned int</TrainingRateReductionPeriod>
+   <WarningParametersNorm>double</WarningParametersNorm>
+   <WarningTrainingRate>double</WarningTrainingRate>
+   <ErrorParametersNorm>double</ErrorParametersNorm>
+   <ErrorTrainingRate>double</ErrorTrainingRate>
+   
+   <MinimumParametersIncrementNorm>double</MinimumParametersIncrementNorm>
+   <MinimumPerformanceIncrease>double</MinimumPerformanceIncrease>
+   <PerformanceGoal>double</PerformanceGoal>
+   <MaximumGeneralizationEvaluationDecreases>unsigned int</MaximumGeneralizationEvaluationDecreases>
+   <MaximumEpochsNumber>unsigned int</MaximumEpochsNumber>
+   <MaximumTime>double</MaximumTime>
+   
+   <ReserveParametersHistory>bool</ReserveParametersHistory>
+   <ReserveParametersNormHistory>bool</ReserveParametersNormHistory>
+   <ReserveEvaluationHistory>bool</ReserveEvaluationHistory>
+   <ReserveGeneralizationEvaluationHistory>bool</ReserveGeneralizationEvaluationHistory>
+   <ReserveTrainingDirectionHistory>bool</ReserveTrainingDirectionHistory>
+   <ReserveTrainingDirectionNormHistory>bool</ReserveTrainingDirectionNormHistory>
+   <ReserveTrainingRateHistory>bool</ReserveTrainingRateHistory>
+   <ReserveElapsedTimeHistory>bool</ReserveElapsedTimeHistory>
+   
+   <DisplayPeriod>unsigned int</DisplayPeriod>
+   <Display>bool</Display>
+</RandomSearch>
+
+\end{lstlisting}
+
+\subsubsection*{Evolutionary algorithm}
+
+The next listing shows the format of an evolutionary algorithm data file in \texttt{OpenNN}. 
+It is of XML-type. 
+
+\begin{lstlisting}
+<EvolutionaryAlgorithm>
+
+   Training operators
+
+   <FitnessAssignmentMethod>string</FitnessAssignmentMethod>
+   <SelectionMethod>string</SelectionMethod>
+   <RecombinationMethod>string</RecombinationMethod>
+   <MutationMethod>string</MutationMethod>
+      
+   Training parameters
+   
+   <PopulationSize>integer</PopulationSize>
+   <Elitism>boolean</Elitism>
+   <SelectivePressure>real</SelectivePressure>
+   <RecombinationSize>real</RecombinationSize>
+   <MutationRate>real</MutationRate>
+   <MutationRange>real</MutationRange>
+   
+   Stopping criteria
+   
+   <EvaluationGoal>real</EvaluationGoal>
+   <MeanEvaluationGoal>real</MeanEvaluationGoal>
+   <StandardDeviationEvaluationGoal>real</StandardDeviationEvaluationGoal>
+   
+   <MaximumGenerationsNumber>real</MaximumGenerationsNumber>
+   <MaximumTime>real</MaximumTime>
+      
+   Training history
+   
+   <ReservePopulationHistory>boolean</ReservePopulationHistory>
+   <ReserveMeanNormHistory>boolean</ReserveMeanNormHistory>
+   <ReserveStandardDeviationNormHistory>boolean</ReserveStandardDeviationNormHistory>
+   <ReserveBestNormHistory>boolean</ReserveBestNormHistory>
+   
+   <ReserveMeanEvaluationHistory>boolean</ReserveMeanEvaluationHistory>
+   <ReserveStandardDeviationEvaluationHistory>boolean</ReserveStandardDeviationEvaluationHistory>
+   <ReserveBestEvaluationHistory>boolean</ReserveBestEvaluationHistory>
+      
+   <Display>boolean</Display>
+   <DisplayPeriod>integer</DisplayPeriod>
+   
+</EvolutionaryAlgorithm>
+\end{lstlisting}
+
+
+\subsubsection*{Training strategy}
+
+The XML format of a training strategy class is listed below.
+It might contain up to three training algorithms. 
+
+\begin{lstlisting}
+<TrainingStrategy>
+
+   <InitializationTrainingAlgorithm>
+   initialization_training_algorithm_element
+   </InitializationTrainingAlgorithm>
+   <MainTrainingAlgorithm>
+   main_training_algorithm_element
+   </MainTrainingAlgorithm>
+   <RefinementTrainingAlgorithm>
+   refinement_training_algorithm_element
+   </RefinementTrainingAlgorithm>
+
+   <InitializationTrainingAlgorithmFlag>boolean</InitializationTrainingAlgorithmFlag>
+   <MainTrainingAlgorithmFlag>boolean</MainTrainingAlgorithmFlag>
+   <RefinementTrainingAlgorithmFlag>boolean</RefinementTrainingAlgorithmFlag>
+       
+   <Display>boolean</Display>
+</TrainingStrategy>
+\end{lstlisting}
+

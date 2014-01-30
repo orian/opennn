@@ -1,0 +1,416 @@
+\index{NeuralNetwork class}
+
+As it has been said, \texttt{OpenNN} implements quite a general neural network in the class \lstinline"NeuralNetwork". 
+It contains a multilayer perceptron with an arbitrary number of layers of perceptrons. 
+On the other hand, it includes aditional layers for inputs scaling, outputs unscaling, outputs bouding, outputs probabilizing
+or outputs holding some other conditions. 
+This neural network can deal with a wide range of problems. 
+Finally this class includes independent parameters, which can be useful for some problems. 
+
+The \lstinline"NeuralNetwork" class is one of the most important in \texttt{OpenNN}, having many different members, constructors and methods. 
+
+\subsection*{Members}
+
+The \lstinline"NeuralNetwork" class contains:
+
+\begin{itemize}
+\item[-] A pointer to a multilayer perceptron.
+\item[-] A pointer to a scaling layer.
+\item[-] A pointer to an unscaling layer.
+\item[-] A pointer to a bounding layer.
+\item[-] A pointer to a probabilistic layer.
+\item[-] A pointer to a conditions layer.
+\item[-] A pointer to an inputs-outputs information object.
+\item[-] A pointer to a set of independent parameters.
+\end{itemize}
+
+All that members are declared as private, and they can only be used with their corresponding get or set methods. 
+
+\subsection*{Constructors}
+
+There are several constructors for the \lstinline"NeuralNetwork" class, with different arguments. 
+
+The default activation function for the hidden layers is the hyperbolic tangent, and for the output layer is the linear. No default information, statistics, scaling, boundary conditions or bounds are set.
+
+% Default constructor
+
+The easiest way of creating a neural object is by means of the default constructor, which creates an empty neural network. 
+
+\begin{lstlisting}
+NeuralNetwork nn;
+\end{lstlisting}
+
+% One layer constructor
+
+To construct neural network having a multilayer perceptron with, for example, $3$
+inputs and $2$ output neurons, we use the one layer constructor
+
+\begin{lstlisting}
+NeuralNetwork nn(3, 2);
+\end{lstlisting}
+
+All the parameters in the multilayer perceptron object that
+we have constructed so far are initialized with random values chosen
+from a normal distribution with mean $0$ and standard deviation $1$.
+By default, this one-layer perceptron will have linear activation function.
+
+% One hidden layer constructor
+
+To construct a neural network containing a multilayer perceptron object with, for example, $1$
+input, a single hidden layer of $3$ neurons and an output layer with
+$2$ neurons, we use the two layers constructor
+
+\begin{lstlisting}
+NeuralNetwork nn(1,6,2);
+\end{lstlisting}
+
+All the parameters here are also initialized at random. 
+By default, the hidden layer will have hyperbolic tangent activation function 
+and the output layer will have linear activation function.
+
+% Architecture constructor 
+
+In order to construct a neural network with a more complex multilayer perceptron,
+its architecture must be specified in a vector of unsigned integers. 
+For instance, to construct a multilayer
+perceptron with $1$ input, $3$ hidden layers with $2$, $4$ and $3$ neurons and
+an output layer with $1$ neuron we can write
+
+\begin{lstlisting}
+Vector<unsigned int> architecture(5);
+architecture[0] = 1;
+architecture[1] = 2;
+architecture[2] = 4;
+architecture[3] = 3;
+architecture[4] = 1;
+
+NeuralNetwork nn(architecture);
+\end{lstlisting}
+
+The network parameters here are also initialized at random. 
+
+% Independent parameters constructor
+
+The independent parameters constructor creates a neural network object without a multilayer perceptron but with a given number of independent parameters, 
+
+\begin{lstlisting}
+NeuralNetwork nn(3);
+\end{lstlisting}
+
+The above object can be used, for instance, as the basis for solving a function optimization problem not related to neural networks. 
+
+% File constructor
+
+It is possible to construct a neural network by loading its members from a XML file. 
+That is done in the following way, 
+
+\begin{lstlisting}
+NeuralNetwork nn(`neural_network.xml');
+\end{lstlisting}
+
+Please follow strictly the format of the neural network file. 
+
+% Copy constructor
+
+Finally, the copy constructor can be used to create an object by copying the members from another object, 
+
+\begin{lstlisting}
+NeuralNetwork nn1(2, 4, 3);
+NeuralNetwork nn2(&nn1);
+\end{lstlisting}
+
+\subsection*{Methods}
+
+This class implements get and set methods for each member. 
+The following sentences show the use of some of them,
+
+\begin{lstlisting}
+NeuralNetwork nn(3, 2);
+
+MultilayerPerceptronPointer* mlpp = nn.get_multilayer_perceptron_pointer();
+
+unsigned int inputs_number = mlpp.count_inputs_number();
+unsigned int outputs_number = mlpp.count_outputs_number();
+
+\end{lstlisting}
+
+% Get methods
+
+The number of parameters of the neural network above can be accessed as follows
+
+\begin{lstlisting}
+unsigned int parameters_number = nn.count_parameters_number();
+\end{lstlisting}
+
+% Initialization methods
+
+The network parameters can be initialized with a given value by using the \lstinline"initialize" method, 
+
+\begin{lstlisting}
+NeuralNetwork nn(4, 3, 2);
+
+nn.initialize(0.0);
+\end{lstlisting}
+
+% Parameters norm methods
+
+% Output methods
+
+To calculate the output \lstinline"Vector" of the network in
+response to an input \lstinline"Vector" we use the method
+\lstinline"calculate_outputs". For instance, the
+sentence
+
+\begin{lstlisting}
+Vector<double> inputs(1); 
+inputs[0] = 0.5;
+
+Vector<double> outputs = nn.calculate_outputs(inputs);
+\end{lstlisting}
+
+\noindent returns the neural network output value for an input value.
+
+% Jacobian matrix methods
+
+To calculate the Jacobian \lstinline"Matrix" of the network in
+response to an input \lstinline"Vector" we use the method  the
+method \lstinline"calculate_Jacobian". For instance,
+the sentence
+
+\begin{lstlisting}
+Matrix<double> Jacobian = nn.calculate_Jacobian(inputs);
+\end{lstlisting}
+
+\noindent returns the partial derivatives of the outputs with respect to the inputs.
+
+% Sensitivity matrix methods 
+
+% Independent parameters methods
+
+% Serialization methods
+
+We can save a neural network object to a data file by using the method \lstinline"save". For instance,
+
+\begin{lstlisting}
+NeuralNetwork nn;
+
+nn.save(`neural_network.xml');
+\end{lstlisting}
+
+\noindent saves the neural network object to the file \lstinline"neural_network.xml".
+
+We can also load a neural network object from a data file by
+using the method  \lstinline"load". Indeed, the sentence
+
+\begin{lstlisting}
+nn.load(`neural_network.xml');
+\end{lstlisting}
+
+\noindent loads the neural network object from the file \lstinline"neural_network.xml".
+
+\subsection*{XML formats}
+
+\subsubsection*{Multilayer perceptron}
+
+The format of a XML multilayer perceptron element is the following,
+
+\begin{lstlisting}
+<MultilayerPerceptron>
+   <Architecture>vector</Architecture>
+   <Parameters>vector</Parameters>
+   <ActivationFunctions>vector</ActivationFunctions>
+   <Display>bool</Display>
+</MultilayerPerceptron>
+\end{lstlisting}
+
+\subsubsection*{Scaling layer}
+
+The format of a XML scaling layer element is the following,
+
+\begin{lstlisting}
+<ScalingLayer>
+   <Minimums>vector</Minimums>
+   <Maximums>vector</Maximums>
+   <Means>vector</Means>
+   <StandardDeviations>vector</StandardDeviations>
+   <ScalingMethod>string</ScalingMethod>
+   <Display>bool</Display>
+</ScalingLayer>
+\end{lstlisting}
+
+\subsubsection*{Unscaling layer}
+
+The format of a XML unscaling layer element is the following,
+
+\begin{lstlisting}
+<UnscalingLayer>
+   <Minimums>vector</Minimums>
+   <Maximums>vector</Maximums>
+   <Means>vector</Means>
+   <StandardDeviations>vector</StandardDeviations>
+   <UnscalingMethod>string</UnscalingMethod>
+   <Display>bool</Display>
+</UnscalingLayer>
+\end{lstlisting}
+
+\subsubsection*{Bounding layer}
+
+The format of a XML bounding layer element is the following,
+
+\begin{lstlisting}
+<BoundingLayer>
+   <LowerBounds>vector</LowerBounds>
+   <UpperBounds>vector</UpperBounds>
+   <Display>bool</Display>
+</BoundingLayer>
+\end{lstlisting}
+
+
+\subsubsection*{Probabilistic layer}
+
+The format of a XML probabilistic layer element is the following,
+
+\begin{lstlisting}
+<ProbabilisticLayer>
+   <ProbabilisticNeuronsNumber>integer</ProbabilisticNeuronsNumber>
+   <ProbabilisticMethod>string</ProbabilisticMethod>
+   <Display>bool</Display>
+</ProbabilisticLayer>
+\end{lstlisting}
+
+
+\subsubsection*{Conditions layer}
+
+The format of a XML conditions layer element is the following,
+
+\begin{lstlisting}
+<ConditionsLayer>
+   <InputsNumber>integer</InputsNumber>
+   <ConditionsNeuronsNumber>integer</ConditionsNeuronsNumber>
+   <ConditionsMethod>string</ConditionsMethod>
+   <Display>bool</Display>
+</ConditionsLayer>
+\end{lstlisting}
+
+\subsubsection*{Inputs-outputs information}
+
+\begin{lstlisting}
+<InputsOutputsInformation>
+   <InputsName>
+      <InputName Index="1">string</InputName>
+      ...
+      <InputName Index="N">string</InputName>   
+   </InputsName>
+   <InputsUnits>
+      <InputUnits Index="1">string</InputUnits>
+      ...
+      <InputUnits Index="N">string</InputUnits>   
+   </InputsUnits>
+   <InputsDescription>
+      <InputDescription Index="1">string</InputDescription>
+      ...
+      <InputDescription Index="N">string</InputDescription>   
+   </InputsDescription>
+   <OutputsName>
+      <OutputName Index="1">string</OutputName>
+      ...
+      <OutputName Index="N">string</OutputName>   
+   </OutputsName>
+   <OutputsUnits>
+      <OutputUnits Index="1">string</OutputUnits>
+      ...
+      <OutputUnits Index="N">string</OutputUnits>   
+   </OutputsUnits>
+   <OutputsDescription>
+      <OutputDescription Index="1">string</OutputDescription>
+      ...
+      <OutputDescription Index="M">string</OutputDescription>   
+   </OutputsDescription>
+</InputsOutputsInformation>
+\end{lstlisting}
+
+\subsubsection*{Independent parameters}
+
+The format of a XML independent parameters element is the following,
+
+\begin{lstlisting}
+<IndependentParameters>
+   <Parameters>vector</Parameters>
+   <Names> 
+      <Name Index="1">string</Name>
+      ...
+      <Name Index="NIP">string</Name>   
+   </Names> 
+   <Units> 
+      <Unit Index="1">string</Unit>
+      ...
+      <Unit Index="NIP">string</Unit>   
+   </Units> 
+   <Descriptions> 
+      <Description Index="1">string</Description>
+      ...
+      <Description Index="NIP">string</Description>   
+   </Units> 
+   <Minimums>vector</Minimums>
+   <Maximums>vector</Maximums>
+   <Means>vector</Means>
+   <StandardDeviations>vector</StandardDeviations>
+   <LowerBounds>vector</LowerBounds>
+   <UpperBounds>vector</UpperBounds>
+   <ScalingMethod>string</ScalingMethod>
+   <ScalingFlag>boolean</ScalingFlag>
+   <BoundingFlag>boolean</BoundingFlag>
+   <DisplayRangeWarning>bool</DisplayRangeWarning>
+   <Display>bool</Display>
+</IndependentParameters>
+\end{lstlisting}
+
+
+\subsubsection*{Neural network}
+
+Finally, the format of a XML independent parameters element is the following,
+
+\begin{lstlisting}
+<NeuralNetwork>
+   <MultilayerPerceptron>
+   multilayer_perceptron_element
+   </MultilayerPerceptron>
+   <ScalingLayer>
+   scaling_layer_element
+   </ScalingLayer>
+   <UnscalingLayer>
+   unscaling_layer_element
+   </UnscalingLayer>
+   <BoundingLayer>
+   bounding_layer_element
+   </BoundingLayer>
+   <ProbabilisticLayer>
+   probabilistic_layer_element
+   </ProbabilisticLayer>
+   <ConditionsLayer>
+   conditions_layer_element
+   </ConditionsLayer>
+   <MultilayerPerceptronFlag>
+   bool
+   </MultilayerPerceptronFlag>
+   <ScalingLayerFlag>
+   bool
+   </ScalingLayerFlag>
+   <UnscalingLayerFlag>
+   bool
+   </UnscalingLayerFlag>
+   <BoundingLayerFlag>
+   bool
+   </BoundingLayerFlag>
+   <ProbabilisticLayerFlag>
+   bool
+   </ProbabilisticLayerFlag>
+   <ConditionsLayerFlag>
+   bool
+   </ConditionsLayerFlag>
+   <Display>
+   bool
+   </Display>
+</NeuralNetwork>
+\end{lstlisting}
+

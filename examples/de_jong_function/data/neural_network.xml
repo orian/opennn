@@ -1,0 +1,28 @@
+<NeuralNetwork>
+    <IndependentParameters>
+        <Parameters>0 0</Parameters>
+        <Names>
+            <Name Index="1">x1</Name>
+            <Name Index="2">x2</Name>
+        </Names>
+        <Units>
+            <Unit Index="1"></Unit>
+            <Unit Index="2"></Unit>
+        </Units>
+        <Descriptions>
+            <Description Index="1"></Description>
+            <Description Index="2"></Description>
+        </Descriptions>
+        <Minimums>-5.12 -5.12</Minimums>
+        <Maximums>5.12 5.12</Maximums>
+        <Means>0 0</Means>
+        <StandardDeviations>1 1</StandardDeviations>
+        <LowerBounds>-1e+099 -1e+099</LowerBounds>
+        <UpperBounds>1e+099 1e+099</UpperBounds>
+        <ScalingMethod>MinimumMaximum</ScalingMethod>
+        <BoundingMethod>NoBounding</BoundingMethod>
+        <DisplayRangeWarning>32</DisplayRangeWarning>
+        <Display>1</Display>
+    </IndependentParameters>
+    <Display>1</Display>
+</NeuralNetwork>

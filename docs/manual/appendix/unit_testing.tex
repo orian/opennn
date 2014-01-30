@@ -1,0 +1,72 @@
+\section*{The unit testing development pattern}
+
+Unit testing is the process of creating integrated tests into a source code, and running those tests every time it is to be built. In that way, the build process checks not only for syntax errors, but for semantic errors as well. 
+
+In that regard, unit testing is generally considered a development pattern, in which the tests would be written even before the actual code. If tests are written first, they:
+
+\begin{itemize}
+\item[-] Describe what the code is supposed to do in concrete, verifiable terms.
+\item[-] Provide examples of code use rather than just  academic descriptions. 
+\item[-] Provide a way to verify when the code is finished (when all the tests run correctly). 
+\end{itemize}
+
+\section*{Related code}
+
+There exist several available frameworks for incorporating test cases in C++ code, such as CppUnit or Cpp test. 
+However, for portability reasons, \texttt{OpenNN} comes with a simple unit testing utility class for handing automated tests. 
+Also, every classes and methods have test classes and methods associated. 
+
+\subsubsection*{The UnitTesting class in OpenNN}
+
+\texttt{OpenNN} includes the \lstinline"UnitTesting" abstract class to provide some simple mechanisms to build test cases and test suites.
+
+\subsubsection*{Constructor}
+
+Unit testing is to be performed on classes and methods. Therefore the \lstinline"UnitTesting" class is abstract and it can't be instantiated. Concrete test classes must be derived here. 
+
+\subsubsection*{Members}
+
+The \lstinline"UnitTesting" class has the following members:
+
+\begin{itemize}
+\item[-] The counted number of tests.
+\item[-] The counted number of passed tests.
+\item[-] The counted number of failed tests.
+\item[-] The output message. 
+\end{itemize}
+
+That members can be accessed or modified using get and set methods, respectively. 
+
+\subsubsection*{Methods}
+
+Derived classes must implement the pure virtual \lstinline"run_test_case" method, which includes all testing methods. The use of this method is as follows:
+
+\begin{lstlisting}
+TestMockClass tmc;
+tmc.run_test_case();
+\end{lstlisting}
+
+The \lstinline"assert_true" and \lstinline"assert_false" methods are used to prove if some condition is satisfied or not, respectively. If the result is correct, the counter of passed tests is increased by one; otherwise the counter of failed tests is increased by one, 
+
+\begin{lstlisting}
+unsigned int a = 0;
+unsigned int b = 0;
+
+TestMockClass tmc;
+tmc.assert_true(a == b, "Increase tests passed count");
+tmc.assert_false(a == b, "Increase tests failed count");
+\end{lstlisting}
+
+Finally, the \lstinline"print_results" method prints the testing outcome,
+
+\begin{lstlisting}
+TestMockClass tmc;
+tmc.run_test_case();
+tmc.print_results();
+\end{lstlisting}
+
+\subsubsection*{The unit testing classes}
+
+Every single class in \texttt{OpenNN} has a test class associated, and every single method of that class has also a test method associated. 
+
+On the other hand, a test suite of all the classes distributed within \texttt{OpenNN} can be found in the folder \lstinline"AllTests".

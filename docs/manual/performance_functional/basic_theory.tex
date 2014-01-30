@@ -1,0 +1,98 @@
+
+\subsection*{Objective functional}
+
+The objective is the most important term in the performance functional expression. It defines the task that the neural
+network is required to accomplish.
+
+For data modeling applications, such as function regression or pattern recognition, the sum squared error is the reference objective functional. It measures the diffence between the outputs from a neural network and the targets in a data set.  
+Some related objective functionals here are the normalized squared error or the Minkowski error. 
+
+Applications in which the neural network learns from a mathematical model require other objective functionals. 
+For instance, we can talk about minimum final time or desired trajectory optimal control problems. 
+That two performance terms are called in \texttt{OpenNN} independent parameters error and solutions error, respectively.
+
+\subsection*{Regularization functional}
+
+A problem is called well-possed if its solution meets
+existence, uniqueness and stability. A solution is said to be stable when
+small changes in the independent variable led to
+small changes in the dependent variable.
+Otherwise the problem is said to be ill-possed. 
+
+An approach for ill-possed problems is to control the effective complexity of the neural network
+\cite{Tikhonov1977}. This can be achieved by using a regularization term into the performance functional.  
+
+One of the simplest forms of regularization term consists on the norm of the neural parameters vector \cite{Bishop1995}. 
+Adding that term to the objective functional will cause the neural network to have
+smaller weights and biases, and this will force its response to be
+smoother.
+
+Regularization can be used in problems which learn from a data set. 
+Function regression or pattern recognition problems with noisy data sets are common applications.  
+It is also useful in optimal control problems which aim to save control action. 
+More information of regularization theory for neural networks can be found in \cite{Girosi1995} and \cite{Chen2002}.
+
+\subsection*{Constraints functional}
+
+A variational problem for a neural network can be
+specified by a set of constraints, which are equalities or
+inequalities that the solution must
+satisfy. Such constraints are expressed as
+functionals. 
+
+Here the aim is to find a solution which makes all the constraints to be satisfied and the objective functional to be an extremum.
+
+Constraints are required in many optimal control or optimal shape design problems. 
+For instance, we can talk about lenght, area or volume constraints.
+That type of performance term is called in \texttt{OpenNN} final solutions error.
+
+\subsection*{Performance functional}
+
+The performance measure is a functional of the neural network which can take the following forms:
+
+\begin{eqnarray}\nonumber
+\text{performance functional} &=& \text{Functional[neural network]},\\\nonumber
+\text{performance functional} &=& \text{Functional[neural network, data set]},\\\nonumber
+\text{performance functional} &=& \text{Functional[neural network, mathematical model]},\\\nonumber 
+\text{performance functional} &=& \text{Functional[neural network, mathematical model, data set]}.
+\end{eqnarray}
+
+
+In order to perform a particular task a neural network must
+be associated a performance functional, which depends on the variational
+problem at hand. The learning problem 
+is thus formulated in terms of the minimization of the performance
+functional.
+
+The performance functional defines the task that the neural
+network is required to accomplish and provides a measure of the
+quality of the representation that the neural network is required to
+learn. In this way, the choice of a suitable performance functional
+depends on the particular application.
+
+The learning problem can then be stated as to find a neural network for which the performance functional 
+takes on a minimum or a maximum value. This is a variational problem. 
+
+In the context of neural network, the variational problems are 
+can be treated as a function optimization problem. 
+The variational approach looks at the performance as being a functional of the function represented by the neural network.
+The optimization approach looks at the performance as being a function of the parameters in the neural network.  
+
+Then, a performance function can be visualized as a hypersurface,
+with the neural network parameters as coordinates, see Figure
+\ref{PerformanceFunctionFigure}.
+
+The performance function evaluates the performance of the neural network by looking at its parameters. 
+More complex calculations allow to obtain some partial derivatives of the performance with respect to the parameters.
+The first partial derivatives are arranged in the gradient vector. The second partial derivatives are arranged in the Hessian matrix. 
+
+When the desired output of the neural network for a given
+input is known, the gradient and Hessian can usually be found
+analytically using back-propagation. In some other circumstances
+exact evaluation of that quantities is not possible and numerical
+differentiation must be used.
+
+\begin{eqnarray}\nonumber
+\text{performance functional} =  \text{objective term} + \text{regularization term} + \text{constraints term}
+\end{eqnarray}
+

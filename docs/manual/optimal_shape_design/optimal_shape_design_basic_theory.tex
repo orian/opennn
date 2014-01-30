@@ -1,0 +1,122 @@
+Optimal shape design is a very interesting field both mathematically
+and for industrial applications. The goal here is to computerize the
+design process and therefore shorten the time it takes to design or
+improve some existing design. In an optimal shape design process one
+wishes to optimize a criteria involving the solution of some
+mathematical model with respect to its domain of definition
+\cite{Mohammadi2004}. The detailed study of this subject is at the
+interface of variational calculus and numerical analysis.
+
+%For instance the design of a harbor which minimizes the waves
+%coming from far can be done at little cost by standard
+%optimization methods once the numerical simulation of Helmholtz
+%equation is mastered.
+%
+%Weight reduction in car engine, aircraft structures, etc
+%Electromagnetically optimal shapes, such as in stealth airplanes
+%Wave canceling fore bulbe in boat design Drag reduction for
+%airplanes,cars and boats. An example of an optimal shape design
+%problem could be the design of flow aerofoil sections.
+
+%Optimal Shape Design is concerned with the optimization of some
+%performance criterion dependent (besides the constraints of the
+%problem) on the physical form of some region (device).
+
+%Optimal Shape Design has developed over the years, from the
+%abstract field of calculus of variations to applications in
+%structure mechanics and fluid mechanics becoming now a valuable
+%tool for the design optimization of airplanes. Weight reduction,
+%stress reinforcement, drag reduction and even noise reduction can
+%be obtained. The field is said to have started with Hadamard[8]
+%who gave the first formula to evaluate the change due to a
+%boundary modification of the domain of a partial differential
+%equation.
+
+In order to properly define an optimal shape design problem the
+following concepts are needed:
+
+\begin{enumerate}
+\item Mathematical model.
+\item Neural network.
+\item Performance functional. 
+\item Training strategy.
+\end{enumerate}
+
+\subsection*{Mathematical model}
+\index{mathematical model}
+\index{shape variable}
+\index{state variable}
+\index{state equation}
+
+The mathematical model or state equation is a well-formed formula which involves the
+physical form of the device to be optimized. 
+It contains shape variables and state variables. 
+
+A mathematical model might be described by algebraic equations, ordinary differential equations or partial differential equations. 
+
+\subsection*{Neural network}
+\index{shape constraint}
+\index{boundary condition}
+\index{lower and upper bounds} 
+
+A neural network is used to represent the shape variables. 
+Optimal shape design problems are usually defined by constraints on the shape function. 
+Two important types of shape constraints are boundary conditions and lower and upper bounds. 
+
+\subsection*{Performance functional}
+\index{state constraint}
+\index{admissible shape}
+\index{admissible state}
+
+The performance functional of an optimal shape design problem always includes an objective term.
+It usually includes a constraints term,  
+
+\begin{eqnarray}\nonumber
+\text{Performance functional = objective term + constraints term}. 
+\end{eqnarray}
+
+
+An optimal shape design problem might also be specified by a set of
+constraints on the state variables of the
+device.
+
+State constraints are conditions that the solution to the problem
+must satisfy. This type of constraints vary according to the problem
+at hand.
+
+In this way, a design which satisfies all the shape and state
+constraints is called an admissible shape.
+
+Similarly, a state which satisfies the constraints is called an
+admissible state.
+
+The performance criterion expresses how well a given design does the
+activity for which it has been built.
+
+
+Optimal shape design problems solved in practice are, as a rule,
+multi-criterion problems. This property is
+typical when optimizing the device as a whole, considering, for
+example, weight, operational reliability, costs, etc. It would be
+desirable to create a device that has extreme values for each of
+these properties. However, by virtue of contradictory of separate
+criteria, it is impossible to create devices for which each of them
+equals its extreme value.
+
+
+\subsection*{Trainining strategy}
+
+The performance functional for optimal shape design problems might contain up to three terms: 
+objective, regularization and constraints. 
+On the other hand, in most of the cases, it cannot be computed analitycally. 
+That makes that a single training algorithm might not fully converge if the solution is far away from the optimal one. 
+
+Therefore, when solving optimal shape design problems, it is recommended to use an initialization training algorithm before the main training process. 
+The form of the training strategy is therefore as follows:
+
+\begin{eqnarray}\nonumber
+\text{Training strategy: initialization training algorithm, main training algorithm}. 
+\end{eqnarray}
+
+The initialization training algorithm is usually a zero order algorithm, such as random search or the evolutionary algorithm;
+the main training algorithm might be a first order algorithm, such as conjugate gradient or the quasi-Newton method. 

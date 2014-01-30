@@ -1,0 +1,16 @@
+\index{namespace}
+\index{OpenNN namespace}
+
+Each set of definitions in the \texttt{OpenNN} library is `wrapped'
+in the namespace \lstinline"OpenNN". In this way, if some other
+definition has an identical name, but is in a different namespace,
+then there is no conflict.
+
+The \lstinline"using" directive makes a namespace available
+throughout the file where it is written \cite{Eckel2000}. For the
+\lstinline"OpenNN" namespace the following sentence can be written:
+
+\begin{lstlisting}
+using namespace OpenNN;
+\end{lstlisting}
+

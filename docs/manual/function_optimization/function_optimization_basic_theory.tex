@@ -1,0 +1,71 @@
+\index{global minimum condition}
+\index{minimal argument} 
+\index{minimization}
+\index{maximal argument}
+\index{maximization} 
+\index{global minimum}
+\index{local minimum}
+\index{unimodal function}
+\index{multimodal function}
+\index{local minimum condition}
+
+The variational problem is formulated in terms of finding a function
+which is an extremal argument of some performance functional. On the
+other hand, the function optimization problem is formulated in terms
+of finding a vector which is an extremal argument of some performance
+function.
+
+While neural networks naturally leads to the solution of
+variational problems, \texttt{OpenNN} provides a workaround for function
+optimization problems by means of the independent parameters. 
+
+Function optimization refers to the study of problems in which the
+aim is to minimize or maximize a real function. In this way, the
+performance function defines the optimization problem itself.
+
+The formulation of a function optimization problem requires:
+
+\begin{itemize}
+\item[-] A neural network.
+\item[-] A performance functional.
+\item[-] A training strategy.
+\end{itemize}
+
+\subsection*{Neural network}
+\index{unconstrained function optimization problem}
+\index{number of variables}
+\index{domain, objective function}
+\index{image, objective function}
+
+The independent parameters of a neural network spans a vector space to represent the possible solutions of a function optimization problem.
+
+\subsection*{Performance functional}
+
+The function to be optimized is called the performance function. The
+domain of the objective function for a function optimization problem
+is the set of independent parameteres, and the image of that function
+is the set of real numbers. The number of variables in the objective function
+is the number of independent parameters. 
+
+A function optimization problem can be specified by a set of
+constraints, which are equalities or inequalities that the solution
+must satisfy. Such constraints are expressed as functions. 
+
+Thus, the
+constrained function optimization problem can be formulated so as to find a vector 
+ such that the constrainst functions are zero 
+and for which the performance function takes on a minimum value.
+
+In other words, the constrained function optimization problem
+consists of finding an argument which makes all the constraints to
+be satisfied and the objective function to be an extremum. The
+integer $l$ is known as the number of constraints in the function
+optimization problem.
+
+\subsection*{Training strategy}
+
+The training strategy is the solving strategy
+ for the optimization problem. 
+If possible, the quasi-Newton method should be applied here. 
+If that fails, the evolutionary algorithm can be used. 
+
