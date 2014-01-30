@@ -1,13 +1,19 @@
 /****************************************************************************************************************/
 /*                                                                                                              */
-/*   OpenNN: Open Neural Networks Library                                                                       */
-/*   www.intelnics.com/opennn                                                                                   */
+/*   OpenNN: Open Neural Networks Library
+ */
+/*   www.intelnics.com/opennn
+ */
 /*                                                                                                              */
-/*   I N S T A N C E S   C L A S S   H E A D E R                                                                */
-/*                                                                                                              */ 
-/*   Roberto Lopez                                                                                              */ 
-/*   Intelnics - The artificial intelligence company                                                            */
-/*   robertolopez@intelnics.com                                                                                 */
+/*   I N S T A N C E S   C L A S S   H E A D E R
+ */
+/*                                                                                                              */
+/*   Roberto Lopez
+ */
+/*   Intelnics - The artificial intelligence company
+ */
+/*   robertolopez@intelnics.com
+ */
 /*                                                                                                              */
 /****************************************************************************************************************/
 
@@ -32,189 +38,188 @@
 #include "vector.h"
 #include "matrix.h"
 
-// TinyXml includes
+// TinyXml includes#include
 
-#include "../tinyxml2/tinyxml2.h"
+#include "tinyxml2_ext.h"
 
+#include "tinyxml2_ext.h"
 
-namespace OpenNN
-{
+namespace OpenNN {
 
-/// This class is used to store information about the instances of a data set. 
-/// Instances in a data set can be used for training, generalization and testing.    
+/// This class is used to store information about the instances of a data set.
+/// Instances in a data set can be used for training, generalization and
+/// testing.
 
-class Instances
-{
+class Instances {
 
-public:  
+ public:
 
-   // DEFAULT CONSTRUCTOR
+  // DEFAULT CONSTRUCTOR
 
-   explicit Instances(void);
+  explicit Instances(void);
 
-   // INSTANCES NUMBER CONSTRUCTOR
+  // INSTANCES NUMBER CONSTRUCTOR
 
-   explicit Instances(const unsigned&);
+  explicit Instances(const unsigned&);
 
-   // XML CONSTRUCTOR
+  // XML CONSTRUCTOR
 
-   explicit Instances(const tinyxml2::XMLDocument&);
+  explicit Instances(const tinyxml2::XMLDocument&);
 
+  // COPY CONSTRUCTOR
 
-   // COPY CONSTRUCTOR
+  Instances(const Instances&);
 
-   Instances(const Instances&);
+  // DESTRUCTOR
 
+  virtual ~Instances(void);
 
-   // DESTRUCTOR
+  // ASSIGNMENT OPERATOR
 
-   virtual ~Instances(void);
+  Instances& operator=(const Instances&);
 
-   // ASSIGNMENT OPERATOR
+  // EQUAL TO OPERATOR
 
-   Instances& operator = (const Instances&);
+  bool operator==(const Instances&) const;
 
-   // EQUAL TO OPERATOR
+  // ENUMERATIONS
 
-   bool operator == (const Instances&) const;
+  /// This enumeration represents the possible uses of an instance
+  /// (no use, training, generalization or testing).
 
-   // ENUMERATIONS
+  enum Use {
+    Unused,
+    Training,
+    Generalization,
+    Testing
+  };
 
-   /// This enumeration represents the possible uses of an instance
-   /// (no use, training, generalization or testing).
+  /// This is an enumeration of the available methods for dividing the instances
+  /// into training, generalization and testing subsets.
 
-   enum Use{Unused, Training, Generalization, Testing};
+  enum SplittingMethod {
+    Sequential,
+    Random
+  };
 
-   /// This is an enumeration of the available methods for dividing the instances
-   /// into training, generalization and testing subsets.
+  // STRUCTURES
 
-   enum SplittingMethod{Sequential, Random};
+  ///
+  /// This structure contains the information of a single instance,
+  /// which is only its use (training, generalization, testing or unused).
+  ///
 
-   // STRUCTURES
+  struct Item {
+    /// Default constructor.
 
-   ///
-   /// This structure contains the information of a single instance,
-   /// which is only its use (training, generalization, testing or unused).
-   ///
+    Item(void) { use = Training; }
 
-   struct Item
-   {
-       /// Default constructor.
+    /// Use constructor.
 
-       Item(void)
-       {
-           use = Training;
-       }
+    Item(const Use& new_use) { use = new_use; }
 
-       /// Use constructor.
+    /// Destructor.
 
-       Item(const Use& new_use)
-       {
-           use = new_use;
-       }
+    virtual ~Item(void) {}
 
-       /// Destructor.
+    /// Use of an instance (training, generalization, testing or unused).
 
-       virtual ~Item(void)
-       {
-       }
+    Use use;
+  };
 
-       /// Use of an instance (training, generalization, testing or unused).
+  // METHODS
 
-       Use use;
-   };
+  static SplittingMethod get_splitting_method(const std::string&);
 
+  /// Returns the number of instances in the data set.
 
-   // METHODS
+  inline unsigned get_instances_number(void) const { return (items.size()); }
 
-   static SplittingMethod get_splitting_method(const std::string&);
+  // Instances methods
 
-   /// Returns the number of instances in the data set.
+  Vector<Use> arrange_uses(void) const;
+  Vector<std::string> write_uses(void) const;
+  Vector<std::string> write_abbreviated_uses(void) const;
 
-   inline unsigned get_instances_number(void) const
-   {
-      return(items.size());
-   }
+  const Use& get_use(const unsigned&) const;
+  std::string write_use(const unsigned&) const;
 
-   // Instances methods
+  unsigned count_training_instances_number(void) const;
+  unsigned count_generalization_instances_number(void) const;
+  unsigned count_testing_instances_number(void) const;
+  unsigned count_unused_instances_number(void) const;
+  unsigned count_used_instances_number(void) const;
 
-   Vector<Use> arrange_uses(void) const;
-   Vector<std::string> write_uses(void) const;
-   Vector<std::string> write_abbreviated_uses(void) const;
+  Vector<unsigned> count_uses(void) const;
 
-   const Use& get_use(const unsigned&) const;
-   std::string write_use(const unsigned&) const;
+  Vector<unsigned> arrange_training_indices(void) const;
+  Vector<unsigned> arrange_generalization_indices(void) const;
+  Vector<unsigned> arrange_testing_indices(void) const;
 
-   unsigned count_training_instances_number(void) const;
-   unsigned count_generalization_instances_number(void) const;
-   unsigned count_testing_instances_number(void) const;
-   unsigned count_unused_instances_number(void) const;
-   unsigned count_used_instances_number(void) const;
+  const bool& get_display(void) const;
 
-   Vector<unsigned> count_uses(void) const;
+  // Set methods
 
-   Vector<unsigned> arrange_training_indices(void) const;
-   Vector<unsigned> arrange_generalization_indices(void) const;
-   Vector<unsigned> arrange_testing_indices(void) const;
+  void set(void);
+  void set(const unsigned&);
+  void set(const tinyxml2::XMLDocument&);
 
-   const bool& get_display(void) const;
+  void set_default(void);
 
-   // Set methods
+  // Data methods
 
-   void set(void);
-   void set(const unsigned&);
-   void set(const tinyxml2::XMLDocument&);
+  void set_instances_number(const unsigned&);
 
-   void set_default(void);
+  // Instances methods
 
-   // Data methods
+  void set_uses(const Vector<Use>&);
+  void set_uses(const Vector<std::string>&);
 
-   void set_instances_number(const unsigned&);
+  void set_use(const unsigned&, const Use&);
+  void set_use(const unsigned&, const std::string&);
 
-   // Instances methods
+  void set_training(void);
+  void set_generalization(void);
+  void set_testing(void);
 
-   void set_uses(const Vector<Use>&);
-   void set_uses(const Vector<std::string>&);
+  void set_display(const bool&);
 
-   void set_use(const unsigned&, const Use&);
-   void set_use(const unsigned&, const std::string&);
+  // Splitting methods
 
-   void set_training(void);
-   void set_generalization(void);
-   void set_testing(void);
+  void split_sequential_indices(const double& training_ratio = 0.6,
+                                const double& generalization_ratio = 0.2,
+                                const double& testing_ratio = 0.2);
 
-   void set_display(const bool&);
+  void split_random_indices(const double& training_ratio = 0.6,
+                            const double& generalization_ratio = 0.2,
+                            const double& testing_ratio = 0.2);
 
-   // Splitting methods
+  void split_instances(const SplittingMethod& splitting_method = Random,
+                       const double& training_ratio = 0.6,
+                       const double& generalization_ratio = 0.2,
+                       const double& testing_ratio = 0.2);
 
-   void split_sequential_indices(const double& training_ratio = 0.6, const double& generalization_ratio = 0.2, const double& testing_ratio = 0.2);
+  Vector<double> calculate_uses_percentage(void) const;
 
-   void split_random_indices(const double& training_ratio = 0.6, const double& generalization_ratio = 0.2, const double& testing_ratio = 0.2);
+  // Serialization methods
 
-   void split_instances(const SplittingMethod& splitting_method = Random, const double& training_ratio = 0.6, const double& generalization_ratio = 0.2, const double& testing_ratio = 0.2);
+  std::string to_string(void) const;
 
-   Vector<double> calculate_uses_percentage(void) const;
+  tinyxml2::XMLDocument* to_XML(void) const;
+  void from_XML(const tinyxml2::XMLDocument&);
 
-   // Serialization methods
+ private:
 
-   std::string to_string(void) const;
+  // MEMBERS
 
-   tinyxml2::XMLDocument* to_XML(void) const;
-   void from_XML(const tinyxml2::XMLDocument&);
+  /// Uses of instances (none, training, generalization or testing).
 
-private:
+  Vector<Item> items;
 
-   // MEMBERS
+  /// Display messages to screen.
 
-   /// Uses of instances (none, training, generalization or testing).
-
-   Vector<Item> items;
-
-   /// Display messages to screen.
-   
-   bool display;
+  bool display;
 };
-
 }
 
 #endif
@@ -235,4 +240,3 @@ private:
 // You should have received a copy of the GNU Lesser General Public
 // License along with this library; if not, write to the Free Software
 // Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
-

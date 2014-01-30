@@ -1,19 +1,24 @@
 /****************************************************************************************************************/
 /*                                                                                                              */
-/*   OpenNN: Open Neural Networks Library                                                                       */
-/*   www.intelnics.com/opennn                                                                                   */
+/*   OpenNN: Open Neural Networks Library
+ */
+/*   www.intelnics.com/opennn
+ */
 /*                                                                                                              */
-/*   O P E N   N E U R A L   N E T W O R K S   L I B R A R Y                                                    */
-/*                                                                                                              */ 
-/*   Roberto Lopez                                                                                              */ 
-/*   Intelnics - The artificial intelligence company                                                            */
-/*   robertolopez@intelnics.com                                                                                 */
+/*   O P E N   N E U R A L   N E T W O R K S   L I B R A R Y
+ */
+/*                                                                                                              */
+/*   Roberto Lopez
+ */
+/*   Intelnics - The artificial intelligence company
+ */
+/*   robertolopez@intelnics.com
+ */
 /*                                                                                                              */
 /****************************************************************************************************************/
 
 #ifndef __OPENNN_H__
 #define __OPENNN_H__
-
 
 // Data set
 
@@ -21,13 +26,11 @@
 #include "instances.h"
 #include "variables.h"
 
-
 // Mathematical model
 
 #include "mathematical_model.h"
 #include "ordinary_differential_equations.h"
 #include "plug_in.h"
-
 
 // Model selection
 
@@ -92,9 +95,11 @@
 #include "vector.h"
 #include "math.h"
 
-// TinyXml includes
+// TinyXml includes#include
 
-#include "../tinyxml2/tinyxml2.h"
+#include "tinyxml2_ext.h"
+
+#include "tinyxml2_ext.h"
 
 #endif
 
@@ -114,4 +119,3 @@
 // You should have received a copy of the GNU Lesser General Public
 // License along with this library; if not, write to the Free Software
 // Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
-

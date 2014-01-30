@@ -1,13 +1,19 @@
 /****************************************************************************************************************/
 /*                                                                                                              */
-/*   OpenNN: Open Neural Networks Library                                                                       */
-/*   www.intelnics.com/opennn                                                                                   */
+/*   OpenNN: Open Neural Networks Library
+ */
+/*   www.intelnics.com/opennn
+ */
 /*                                                                                                              */
-/*   N U M E R I C A L   I N T E G R A T I O N   C L A S S   H E A D E R                                        */
-/*                                                                                                              */ 
-/*   Roberto Lopez                                                                                              */ 
-/*   Intelnics - The artificial intelligence company                                                            */
-/*   robertolopez@intelnics.com                                                                                 */
+/*   N U M E R I C A L   I N T E G R A T I O N   C L A S S   H E A D E R
+ */
+/*                                                                                                              */
+/*   Roberto Lopez
+ */
+/*   Intelnics - The artificial intelligence company
+ */
+/*   robertolopez@intelnics.com
+ */
 /*                                                                                                              */
 /****************************************************************************************************************/
 
@@ -16,315 +22,311 @@
 
 // System includes
 
-#include<iostream>
+#include <iostream>
 
 // OpenNN includes
 
 #include "vector.h"
 
-// TinyXml includes
+// TinyXml includes#include
 
-#include "../tinyxml2/tinyxml2.h"
+#include "tinyxml2_ext.h"
 
+#include "tinyxml2_ext.h"
 
-namespace OpenNN
-{
+namespace OpenNN {
 
-/// This class contains methods for numerical integration of functions. 
+/// This class contains methods for numerical integration of functions.
 /// In particular it implements the trapezoid method and the Simpson's method.
 
-class NumericalIntegration 
-{
-   public:
+class NumericalIntegration {
+ public:
 
-   // CONSTRUCTOR
+  // CONSTRUCTOR
 
-   explicit NumericalIntegration(void);
+  explicit NumericalIntegration(void);
 
+  // DESTRUCTOR
 
-   // DESTRUCTOR
+  virtual ~NumericalIntegration(void);
 
-   virtual ~NumericalIntegration(void);
+  /// Enumeration of available methods for numerical integration.
 
-   /// Enumeration of available methods for numerical integration.
+  enum NumericalIntegrationMethod {
+    TrapezoidMethod,
+    SimpsonMethod
+  };
 
-   enum NumericalIntegrationMethod{TrapezoidMethod, SimpsonMethod};
+  // METHODS
 
-   // METHODS
+  const NumericalIntegrationMethod& get_numerical_integration_method(
+      void) const;
+  std::string write_numerical_integration_method(void) const;
 
-   const NumericalIntegrationMethod& get_numerical_integration_method(void) const;
-   std::string write_numerical_integration_method(void) const;
-   
-   const bool& get_display(void) const;
+  const bool& get_display(void) const;
 
-   void set(const NumericalIntegration&);
+  void set(const NumericalIntegration&);
 
-   void set_numerical_integration_method(const NumericalIntegrationMethod&);
-   void set_numerical_integration_method(const std::string&);
+  void set_numerical_integration_method(const NumericalIntegrationMethod&);
+  void set_numerical_integration_method(const std::string&);
 
-   void set_display(const bool&);
+  void set_display(const bool&);
 
-   void set_default(void);
- 
-   // Integration of pairs of data (x,y)
+  void set_default(void);
 
-   double calculate_trapezoid_integral(const Vector<double>&, const Vector<double>&) const;
-   double calculate_Simpson_integral(const Vector<double>&, const Vector<double>&) const;
+  // Integration of pairs of data (x,y)
 
-   double calculate_integral(const Vector<double>&, const Vector<double>&) const;
+  double calculate_trapezoid_integral(const Vector<double>&,
+                                      const Vector<double>&) const;
+  double calculate_Simpson_integral(const Vector<double>&,
+                                    const Vector<double>&) const;
 
-   // Serialization methods
+  double calculate_integral(const Vector<double>&, const Vector<double>&) const;
 
-   tinyxml2::XMLDocument* to_XML(void) const;   
-   void from_XML(const tinyxml2::XMLDocument&);   
+  // Serialization methods
 
-   // Integration of class member methods
+  tinyxml2::XMLDocument* to_XML(void) const;
+  void from_XML(const tinyxml2::XMLDocument&);
 
-   // template<class T> double calculate_trapezoid_integral
-   // (const T&, double (T::*f)(const double&) const, const double& a, const double& b, const unsigned& n) method
+  // Integration of class member methods
 
-   /// This method evaluates the integral of a function given as a class
-   /// member method using the composite trapezoid rule with n intervals.
-   /// @param t : Object constructor containing the member method to integrate.  
-   /// @param f: Pointer to the member method.
-   /// @param a: Lower integration limit. 
-   /// @param b: Upper integration limit. 
-   /// @param n: Number of intervals. 
+  // template<class T> double calculate_trapezoid_integral
+  // (const T&, double (T::*f)(const double&) const, const double& a, const
+  // double& b, const unsigned& n) method
 
-   template<class T> 
-   static double calculate_trapezoid_integral(const T& t,
-   double (T::*f)(const double&) const , const double& a, const double& b, const unsigned& n)
-   {
-      // Integration step
+  /// This method evaluates the integral of a function given as a class
+  /// member method using the composite trapezoid rule with n intervals.
+  /// @param t : Object constructor containing the member method to integrate.
+  /// @param f: Pointer to the member method.
+  /// @param a: Lower integration limit.
+  /// @param b: Upper integration limit.
+  /// @param n: Number of intervals.
 
-      const double h = (b-a)/(n-1.0);
+  template <class T>
+  static double calculate_trapezoid_integral(const T& t,
+                                             double (T::*f)(const double&) const
+                                             ,
+                                             const double& a, const double& b,
+                                             const unsigned& n) {
+    // Integration step
 
-      // Sum
+    const double h = (b - a) / (n - 1.0);
 
-      double sum = (t.*f)(a)/2.0;
+    // Sum
 
-      for(unsigned i = 1; i < n-1; i++)
-      {
-         sum += (t.*f)(a + i*h);
+    double sum = (t.*f)(a) / 2.0;
+
+    for (unsigned i = 1; i < n - 1; i++) {
+      sum += (t.*f)(a + i * h);
+    }
+
+    sum += (t.*f)(b) / 2.0;
+
+    // Trapezoidal rule
+
+    return (h * sum);
+  }
+
+  // Vector<double> calculate_trapezoid_integral
+  // (const T&, Vector<double> (T::*f)(const double&) const, const double, const
+  // double, const unsigned&) const method
+
+  /// This method evaluates the integral of a vector function given as a class
+  /// member method using the composite trapezoid rule with n intervals.
+  /// @param t : Object constructor containing the member method to integrate.
+  /// @param f: Pointer to the member method.
+  /// @param a: Lower integration limit.
+  /// @param b: Upper integration limit.
+  /// @param n: Number of intervals.
+
+  template <class T>
+  static Vector<double> calculate_trapezoid_integral(
+      const T& t, Vector<double>(T::*f)(const double&) const, const double& a,
+      const double& b, const unsigned& n) {
+    // Integration step
+
+    const double h = (b - a) / (n - 1.0);
+
+    // Sum
+
+    Vector<double> sum = (t.*f)(a) / 2.0;
+
+    for (unsigned i = 1; i < n - 1; i++) {
+      sum += (t.*f)(a + i * h);
+    }
+
+    sum += (t.*f)(b) / 2.0;
+
+    // Trapezoidal rule
+
+    return (sum * h);
+  }
+
+  // template<class T> double calculate_Simpson_integral
+  // (const T&, double (T::*f)(double), const double&, const double&, const
+  // unsigned&) const method
+
+  /// This method evaluates the integral of a function given as a class
+  /// member method using the composite Simpsons rule with n intervals.
+  /// @param t : Object constructor containing the member method to integrate.
+  /// @param f: Pointer to the member method.
+  /// @param a: Lower integration limit.
+  /// @param b: Upper integration limit.
+  /// @param n: Number of intervals.
+
+  template <class T>
+  static double calculate_Simpson_integral(const T& t,
+                                           double (T::*f)(const double&) const,
+                                           const double& a, const double& b,
+                                           const unsigned& n) {
+    const double h = (b - a) / (n - 1.0);
+
+    double sum = (t.*f)(a) / 3.0;
+
+    for (unsigned i = 1; i < n - 1; i++) {
+      if (i % 2 != 0)  // odd
+          {
+        sum += 4.0 * (t.*f)(a + i * h) / 3.0;
+      } else  // even
+          {
+        sum += 2.0 * (t.*f)(a + i * h) / 3.0;
       }
+    }
 
-      sum += (t.*f)(b)/2.0;
+    sum += (t.*f)(b) / 3.0;
 
-      // Trapezoidal rule
+    return (h * sum);
+  }
 
-      return(h*sum);
-   }
+  // Vector<double> calculate_Simpson_integral
+  // (const T&, Vector<double> (T::*f)(const double&) const , const double&,
+  // const double&, const unsigned&) const method
 
+  /// This method evaluates the integral of a vector function given as a class
+  /// member method using the composite Simpsons rule with n intervals.
+  /// @param t : Object constructor containing the member method to integrate.
+  /// @param f: Pointer to the member method.
+  /// @param a: Lower integration limit.
+  /// @param b: Upper integration limit.
+  /// @param n: Number of intervals.
 
-   // Vector<double> calculate_trapezoid_integral
-   // (const T&, Vector<double> (T::*f)(const double&) const, const double, const double, const unsigned&) const method
+  template <class T>
+  static Vector<double> calculate_Simpson_integral(
+      const T& t, Vector<double>(T::*f)(const double&) const, const double& a,
+      const double& b, const unsigned& n) {
+    const double h = (b - a) / (n - 1.0);
 
-   /// This method evaluates the integral of a vector function given as a class
-   /// member method using the composite trapezoid rule with n intervals.
-   /// @param t : Object constructor containing the member method to integrate.  
-   /// @param f: Pointer to the member method.
-   /// @param a: Lower integration limit. 
-   /// @param b: Upper integration limit. 
-   /// @param n: Number of intervals. 
+    Vector<double> sum = (t.*f)(a) / 3.0;
 
-   template<class T> 
-   static Vector<double> calculate_trapezoid_integral(const T& t, Vector<double> (T::*f)(const double&) const , const double& a, const double& b, const unsigned& n)
-   {
-      // Integration step
-
-      const double h = (b-a)/(n-1.0);
-
-      // Sum
-
-      Vector<double> sum = (t.*f)(a)/2.0;
-
-      for(unsigned i = 1; i < n-1; i++)
-      {
-         sum += (t.*f)(a + i*h);
+    for (unsigned i = 1; i < n - 1; i++) {
+      if (i % 2 != 0)  // odd
+          {
+        sum += (t.*f)(a + i * h) * 4.0 / 3.0;
+      } else  // even
+          {
+        sum += (t.*f)(a + i * h) * 2.0 / 3.0;
       }
+    }
 
-      sum += (t.*f)(b)/2.0;
+    sum += (t.*f)(b) / 3.0;
 
-      // Trapezoidal rule
+    // Simpson's rule
 
-      return(sum*h);
-   }
+    return (sum * h);
+  }
 
+  // template<class T> double calculate_integral
+  // (const T&, double (T::*f)(const double&) const, const double&, const
+  // double&, const unsigned&) const method
 
-   // template<class T> double calculate_Simpson_integral
-   // (const T&, double (T::*f)(double), const double&, const double&, const unsigned&) const method
+  /// This method evaluates the integral of a function given as a class member
+  /// method.
+  /// @param t : Object constructor containing the member method to integrate.
+  /// @param f: Pointer to the member method.
+  /// @param a: Lower integration limit.
+  /// @param b: Upper integration limit.
+  /// @param n: Number of intervals.
 
-   /// This method evaluates the integral of a function given as a class
-   /// member method using the composite Simpsons rule with n intervals. 
-   /// @param t : Object constructor containing the member method to integrate.  
-   /// @param f: Pointer to the member method.
-   /// @param a: Lower integration limit. 
-   /// @param b: Upper integration limit. 
-   /// @param n: Number of intervals. 
+  template <class T>
+  double calculate_integral(const T& t, double (T::*f)(const double&) const,
+                            const double& a, const double& b,
+                            const unsigned& n) const {
+    switch (numerical_integration_method) {
+      case TrapezoidMethod: {
+        return (calculate_trapezoid_integral(t, &T::f, a, b, n));
+      } break;
 
-   template<class T> 
-   static double calculate_Simpson_integral(const T& t, double (T::*f)(const double&) const , const double& a, const double& b, const unsigned& n)
-   {
-      const double h = (b-a)/(n-1.0);
+      case SimpsonMethod: {
+        return (calculate_Simpson_integral(t, &T::f, a, b, n));
+      } break;
 
-      double sum = (t.*f)(a)/3.0;
+      default: {
+        std::ostringstream buffer;
 
-      for(unsigned i = 1; i < n-1; i++)
-      {
-         if(i%2 != 0) // odd
-         {
-            sum += 4.0*(t.*f)(a + i*h)/3.0;
-         }
-         else // even
-         {
-            sum += 2.0*(t.*f)(a + i*h)/3.0;       
-         }
-      }
+        buffer << "OpenNN Exception: NumericalIntegration class.\n"
+               << "double calculate_integral(const T&, double (T::*f)(const "
+                  "double&) const, const double&, const double&, const "
+                  "unsigned&) const method.\n"
+               << "Unknown numerical integration method.\n";
 
-      sum += (t.*f)(b)/3.0;
+        throw std::logic_error(buffer.str());
+      } break;
+    }
+  }
 
-      return(h*sum);
-   }
+  // Vector<double> calculate_integral
+  // (const T&, Vector<double> (T::*f)(const double&) const, const double&,
+  // const double&, const unsigned&) const method
 
+  /// This method evaluates the integral of a vector function given as a class
+  /// member method with n intervals.
+  /// @param t : Object constructor containing the member method to integrate.
+  /// @param f: Pointer to the member method.
+  /// @param a: Lower integration limit.
+  /// @param b: Upper integration limit.
+  /// @param n: Number of intervals.
 
-   // Vector<double> calculate_Simpson_integral
-   // (const T&, Vector<double> (T::*f)(const double&) const , const double&, const double&, const unsigned&) const method
+  template <class T>
+  Vector<double> calculate_integral(const T& t,
+                                    Vector<double>(T::*f)(const double&) const,
+                                    const double& a, const double& b,
+                                    const unsigned& n) const {
+    switch (numerical_integration_method) {
+      case TrapezoidMethod: {
+        return (calculate_trapezoid_integral(t, &T::f, a, b, n));
+      } break;
 
-   /// This method evaluates the integral of a vector function given as a class
-   /// member method using the composite Simpsons rule with n intervals. 
-   /// @param t : Object constructor containing the member method to integrate.  
-   /// @param f: Pointer to the member method.
-   /// @param a: Lower integration limit. 
-   /// @param b: Upper integration limit. 
-   /// @param n: Number of intervals. 
+      case SimpsonMethod: {
+        return (calculate_Simpson_integral(t, &T::f, a, b, n));
+      } break;
 
-   template<class T> 
-   static Vector<double> calculate_Simpson_integral(const T& t, Vector<double> (T::*f)(const double&) const , const double& a, const double& b, const unsigned& n)
-   {
-      const double h = (b-a)/(n-1.0);
+      default: {
+        std::ostringstream buffer;
 
-      Vector<double> sum = (t.*f)(a)/3.0;
+        buffer << "OpenNN Exception: NumericalIntegration class.\n"
+               << "double calculate_integral(const T&, Vector<double> "
+                  "(T::*f)(const double&) const, const double&, const double&, "
+                  "const unsigned&) const method.\n"
+               << "Unknown numerical integration method.\n";
 
-      for(unsigned i = 1; i < n-1; i++)
-      {
-         if(i%2 != 0) // odd
-         {
-            sum += (t.*f)(a + i*h)*4.0/3.0;
-         }
-         else // even
-         {
-            sum += (t.*f)(a + i*h)*2.0/3.0;       
-         }
-      }
+        throw std::logic_error(buffer.str());
+      } break;
+    }
+  }
 
-      sum += (t.*f)(b)/3.0;
+ private:
 
-      // Simpson's rule
+  /// Numerical integration method variable.
 
-      return(sum*h);
-   }
+  NumericalIntegrationMethod numerical_integration_method;
 
+  /// Flag for displaying warning messages from this class.
 
-   // template<class T> double calculate_integral
-   // (const T&, double (T::*f)(const double&) const, const double&, const double&, const unsigned&) const method
-
-   /// This method evaluates the integral of a function given as a class member method. 
-   /// @param t : Object constructor containing the member method to integrate.  
-   /// @param f: Pointer to the member method.
-   /// @param a: Lower integration limit. 
-   /// @param b: Upper integration limit. 
-   /// @param n: Number of intervals. 
-
-   template<class T> 
-   double calculate_integral(const T& t, double (T::*f)(const double&) const , const double& a, const double& b, const unsigned& n) const
-   {
-      switch(numerical_integration_method)
-      {
-         case TrapezoidMethod:
-         {
-            return(calculate_trapezoid_integral(t, &T::f, a, b, n));
-	     }
-	     break;
-
-         case SimpsonMethod:
-         {
-            return(calculate_Simpson_integral(t, &T::f, a, b, n));
- 	     }
-	     break;
-
-         default:
-         {
-            std::ostringstream buffer;
-
-            buffer << "OpenNN Exception: NumericalIntegration class.\n"
-                   << "double calculate_integral(const T&, double (T::*f)(const double&) const, const double&, const double&, const unsigned&) const method.\n"
-                   << "Unknown numerical integration method.\n";
- 
-            throw std::logic_error(buffer.str());
-	     }
-	     break;
-      }
-   }
-
-
-   // Vector<double> calculate_integral
-   // (const T&, Vector<double> (T::*f)(const double&) const, const double&, const double&, const unsigned&) const method
-
-   /// This method evaluates the integral of a vector function given as a class member method with n intervals. 
-   /// @param t : Object constructor containing the member method to integrate.  
-   /// @param f: Pointer to the member method.
-   /// @param a: Lower integration limit. 
-   /// @param b: Upper integration limit. 
-   /// @param n: Number of intervals. 
-
-   template<class T> 
-   Vector<double> calculate_integral(const T& t, Vector<double> (T::*f)(const double&) const , const double& a, const double& b, const unsigned& n) const
-   {
-      switch(numerical_integration_method)
-      {
-         case TrapezoidMethod:
-         {
-            return(calculate_trapezoid_integral(t, &T::f, a, b, n));
-	     }
-	     break;
-
-         case SimpsonMethod:
-         {
-            return(calculate_Simpson_integral(t, &T::f, a, b, n));
- 	     }
-	     break;
-
-         default:
-         {
-            std::ostringstream buffer;
-
-            buffer << "OpenNN Exception: NumericalIntegration class.\n"
-                   << "double calculate_integral(const T&, Vector<double> (T::*f)(const double&) const, const double&, const double&, const unsigned&) const method.\n"
-                   << "Unknown numerical integration method.\n";
- 
-            throw std::logic_error(buffer.str());
-	     }
-	     break;
-      }
-   }
-
-
-private:
-
-   /// Numerical integration method variable. 
-
-   NumericalIntegrationMethod numerical_integration_method;
-
-   /// Flag for displaying warning messages from this class. 
-
-   bool display;
-
+  bool display;
 };
-
 }
 
 #endif
-
 
 // OpenNN: Open Neural Networks Library.
 // Neural Designer Copyright © 2013 Roberto López and Ismael Santana (Intelnics)

@@ -1,13 +1,19 @@
 /****************************************************************************************************************/
 /*                                                                                                              */
-/*   OpenNN: Open Neural Networks Library                                                                       */
-/*   www.intelnics.com/opennn                                                                                   */
+/*   OpenNN: Open Neural Networks Library
+ */
+/*   www.intelnics.com/opennn
+ */
 /*                                                                                                              */
-/*   B O U N D I N G   L A Y E R   C L A S S   H E A D E R                                                      */
+/*   B O U N D I N G   L A Y E R   C L A S S   H E A D E R
+ */
 /*                                                                                                              */
-/*   Roberto Lopez                                                                                              */
-/*   Intelnics - The artificial intelligence company                                                            */
-/*   robertolopez@intelnics.com                                                                                 */
+/*   Roberto Lopez
+ */
+/*   Intelnics - The artificial intelligence company
+ */
+/*   robertolopez@intelnics.com
+ */
 /*                                                                                                              */
 /****************************************************************************************************************/
 
@@ -28,139 +34,140 @@
 #include "vector.h"
 #include "matrix.h"
 
-// TinyXml includes
+// TinyXml includes#include
 
-#include "../tinyxml2/tinyxml2.h"
+#include "tinyxml2_ext.h"
 
-namespace OpenNN
-{
+namespace OpenNN {
 
-/// This class represents a layer of bounding neurons. 
-/// A bounding layer is used to ensure that variables will never fall below or above given values. 
+/// This class represents a layer of bounding neurons.
+/// A bounding layer is used to ensure that variables will never fall below or
+/// above given values.
 
-class BoundingLayer
-{
+class BoundingLayer {
 
-public:
+ public:
 
-   // DEFAULT CONSTRUCTOR
+  // DEFAULT CONSTRUCTOR
 
-   explicit BoundingLayer(void);
+  explicit BoundingLayer(void);
 
-   // BOUNDING NEURONS NUMBER CONSTRUCTOR
+  // BOUNDING NEURONS NUMBER CONSTRUCTOR
 
-   explicit BoundingLayer(const unsigned&);
+  explicit BoundingLayer(const unsigned&);
 
-   // XML CONSTRUCTOR
+  // XML CONSTRUCTOR
 
-   explicit BoundingLayer(const tinyxml2::XMLDocument&);
+  explicit BoundingLayer(const tinyxml2::XMLDocument&);
 
-   // COPY CONSTRUCTOR
+  // COPY CONSTRUCTOR
 
-   BoundingLayer(const BoundingLayer&);
+  BoundingLayer(const BoundingLayer&);
 
-   // DESTRUCTOR
+  // DESTRUCTOR
 
-   virtual ~BoundingLayer(void);
+  virtual ~BoundingLayer(void);
 
-   // ASSIGNMENT OPERATOR
+  // ASSIGNMENT OPERATOR
 
-   BoundingLayer& operator = (const BoundingLayer&);
+  BoundingLayer& operator=(const BoundingLayer&);
 
-   // EQUAL TO OPERATOR
+  // EQUAL TO OPERATOR
 
-   bool operator == (const BoundingLayer&) const;
+  bool operator==(const BoundingLayer&) const;
 
-   // ENUMERATIONS
+  // ENUMERATIONS
 
-   /// Enumeration of available methods for bounding the output variables.
+  /// Enumeration of available methods for bounding the output variables.
 
-   enum BoundingMethod{NoBounding, Boundind};
+  enum BoundingMethod {
+    NoBounding,
+    Boundind
+  };
 
-   // METHODS
+  // METHODS
 
-   bool is_empty(void) const;
+  bool is_empty(void) const;
 
-   unsigned get_bounding_neurons_number(void) const;
+  unsigned get_bounding_neurons_number(void) const;
 
-   // Variables bounds
+  // Variables bounds
 
-   const Vector<double>& get_lower_bounds(void) const;
-   double get_lower_bound(const unsigned&) const;
+  const Vector<double>& get_lower_bounds(void) const;
+  double get_lower_bound(const unsigned&) const;
 
-   const Vector<double>& get_upper_bounds(void) const;
-   double get_upper_bound(const unsigned&) const;
+  const Vector<double>& get_upper_bounds(void) const;
+  double get_upper_bound(const unsigned&) const;
 
-   Vector< Vector<double>* > get_bounds(void);
+  Vector<Vector<double>*> get_bounds(void);
 
-   // Variables bounds
+  // Variables bounds
 
-   void set(void);
-   void set(const unsigned&);
-   void set(const tinyxml2::XMLDocument&);
-   void set(const BoundingLayer&);
+  void set(void);
+  void set(const unsigned&);
+  void set(const tinyxml2::XMLDocument&);
+  void set(const BoundingLayer&);
 
-   void set_lower_bounds(const Vector<double>&);
-   void set_lower_bound(const unsigned&, const double&);
+  void set_lower_bounds(const Vector<double>&);
+  void set_lower_bound(const unsigned&, const double&);
 
-   void set_upper_bounds(const Vector<double>&);
-   void set_upper_bound(const unsigned&, const double&);
+  void set_upper_bounds(const Vector<double>&);
+  void set_upper_bound(const unsigned&, const double&);
 
-   void set_bounds(const Vector< Vector<double> >&);
+  void set_bounds(const Vector<Vector<double> >&);
 
-   void set_display(const bool&);
+  void set_display(const bool&);
 
-   void set_default(void);
+  void set_default(void);
 
-   // Pruning and growing
+  // Pruning and growing
 
-   void prune_bounding_neuron(const unsigned&);
+  void prune_bounding_neuron(const unsigned&);
 
-   // Initialization
+  // Initialization
 
-   void initialize_random(void);
+  void initialize_random(void);
 
-   // Lower and upper bounds
+  // Lower and upper bounds
 
-   Vector<double> calculate_outputs(const Vector<double>&) const;
-   Vector<double> calculate_derivative(const Vector<double>&) const;
-   Vector<double> calculate_second_derivative(const Vector<double>&) const;
+  Vector<double> calculate_outputs(const Vector<double>&) const;
+  Vector<double> calculate_derivative(const Vector<double>&) const;
+  Vector<double> calculate_second_derivative(const Vector<double>&) const;
 
-   Matrix<double> arrange_Jacobian(const Vector<double>&) const;
-   Vector< Matrix<double> > arrange_Hessian_form(const Vector<double>&) const;
+  Matrix<double> arrange_Jacobian(const Vector<double>&) const;
+  Vector<Matrix<double> > arrange_Hessian_form(const Vector<double>&) const;
 
-   // Expression methods
+  // Expression methods
 
-   std::string write_expression(const Vector<std::string>&, const Vector<std::string>&) const;
+  std::string write_expression(const Vector<std::string>&,
+                               const Vector<std::string>&) const;
 
-   // Serialization methods
+  // Serialization methods
 
-   std::string to_string(void) const;
+  std::string to_string(void) const;
 
-   tinyxml2::XMLDocument* to_XML(void) const;
-   void from_XML(const tinyxml2::XMLDocument&);
+  tinyxml2::XMLDocument* to_XML(void) const;
+  void from_XML(const tinyxml2::XMLDocument&);
 
-protected:
+ protected:
 
-   // MEMBERS
+  // MEMBERS
 
-   /// Lower bounds of output variables
+  /// Lower bounds of output variables
 
-   Vector<double> lower_bounds;
+  Vector<double> lower_bounds;
 
-   /// Upper bounds of output variables
+  /// Upper bounds of output variables
 
-   Vector<double> upper_bounds;
+  Vector<double> upper_bounds;
 
-   /// Display messages to screen. 
+  /// Display messages to screen.
 
-   bool display;
+  bool display;
 };
-
 }
 
 #endif
-
 
 // OpenNN: Open Neural Networks Library.
 // Neural Designer Copyright © 2013 Roberto López and Ismael Santana (Intelnics)
@@ -179,4 +186,3 @@ protected:
 // License along with this library; if not, write to the Free Software
 
 // Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
-

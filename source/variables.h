@@ -1,13 +1,19 @@
 /****************************************************************************************************************/
 /*                                                                                                              */
-/*   OpenNN: Open Neural Networks Library                                                                       */
-/*   www.intelnics.com/opennn                                                                                   */
+/*   OpenNN: Open Neural Networks Library
+ */
+/*   www.intelnics.com/opennn
+ */
 /*                                                                                                              */
-/*   V A R I A B L E S   C L A S S   H E A D E R                                                                */
-/*                                                                                                              */ 
-/*   Roberto Lopez                                                                                              */ 
-/*   Intelnics - The artificial intelligence company                                                            */
-/*   robertolopez@intelnics.com                                                                                 */
+/*   V A R I A B L E S   C L A S S   H E A D E R
+ */
+/*                                                                                                              */
+/*   Roberto Lopez
+ */
+/*   Intelnics - The artificial intelligence company
+ */
+/*   robertolopez@intelnics.com
+ */
 /*                                                                                                              */
 /****************************************************************************************************************/
 
@@ -32,203 +38,203 @@
 #include "vector.h"
 #include "matrix.h"
 
-// TinyXml includes
+// TinyXml includes#include
 
-#include "../tinyxml2/tinyxml2.h"
+#include "tinyxml2_ext.h"
 
-namespace OpenNN
-{
+#include "tinyxml2_ext.h"
 
-/// This class is used to store information about the variables of a data set. 
+namespace OpenNN {
+
+/// This class is used to store information about the variables of a data set.
 /// Variables in a data set can be used as inputs and targets.
-/// This class also stores information about the name, unit and description of all the variables.
+/// This class also stores information about the name, unit and description of
+/// all the variables.
 
-class Variables
-{
+class Variables {
 
-public:  
+ public:
 
-   // DEFAULT CONSTRUCTOR
+  // DEFAULT CONSTRUCTOR
 
-   explicit Variables(void);
+  explicit Variables(void);
 
-   // VARIABLES NUMBER CONSTRUCTOR
+  // VARIABLES NUMBER CONSTRUCTOR
 
-   explicit Variables(const unsigned&);
+  explicit Variables(const unsigned&);
 
-   // INPUT AND TARGET VARIABLES NUMBER
+  // INPUT AND TARGET VARIABLES NUMBER
 
-   explicit Variables(const unsigned&, const unsigned&);
+  explicit Variables(const unsigned&, const unsigned&);
 
-   // XML CONSTRUCTOR
+  // XML CONSTRUCTOR
 
-   explicit Variables(const tinyxml2::XMLDocument&);
+  explicit Variables(const tinyxml2::XMLDocument&);
 
-   // COPY CONSTRUCTOR
+  // COPY CONSTRUCTOR
 
-   Variables(const Variables&);
+  Variables(const Variables&);
 
-   // DESTRUCTOR
+  // DESTRUCTOR
 
-   virtual ~Variables(void);
+  virtual ~Variables(void);
 
-   // ASSIGNMENT OPERATOR
+  // ASSIGNMENT OPERATOR
 
-   Variables& operator = (const Variables&);
+  Variables& operator=(const Variables&);
 
-   // EQUAL TO OPERATOR
+  // EQUAL TO OPERATOR
 
-   bool operator == (const Variables&) const;
+  bool operator==(const Variables&) const;
 
-   // ENUMERATIONS
+  // ENUMERATIONS
 
-   /// This enumeration represents the possible uses of a variable (input, target or unused).
+  /// This enumeration represents the possible uses of a variable (input, target
+  /// or unused).
 
-   enum Use{Input, Target, Unused};
+  enum Use {
+    Input,
+    Target,
+    Unused
+  };
 
-   // STRUCTURES
+  // STRUCTURES
 
-   ///
-   /// This structure contains the information of a single variable.
-   ///
+  ///
+  /// This structure contains the information of a single variable.
+  ///
 
-   struct Item
-   {
-       /// Name of a variable.
+  struct Item {
+    /// Name of a variable.
 
-       std::string name;
+    std::string name;
 
-       /// Units of a variable.
+    /// Units of a variable.
 
-       std::string units;
+    std::string units;
 
-       /// Description of a variable.
+    /// Description of a variable.
 
-       std::string description;
+    std::string description;
 
-       /// Use of a variable (none, input or target).
+    /// Use of a variable (none, input or target).
 
-       Use use;
-   };
+    Use use;
+  };
 
-   // METHODS
+  // METHODS
 
-   /// Returns the total number of variables in the data set.
+  /// Returns the total number of variables in the data set.
 
-   inline unsigned get_variables_number(void) const
-   {
-      return(items.size());
-   }
+  inline unsigned get_variables_number(void) const { return (items.size()); }
 
-   unsigned count_used_variables_number(void) const;
-   unsigned count_unused_variables_number(void) const;
-   unsigned count_inputs_number(void) const;
-   unsigned count_targets_number(void) const;
+  unsigned count_used_variables_number(void) const;
+  unsigned count_unused_variables_number(void) const;
+  unsigned count_inputs_number(void) const;
+  unsigned count_targets_number(void) const;
 
-   Vector<unsigned> count_uses(void) const;
+  Vector<unsigned> count_uses(void) const;
 
-   // Variables methods
+  // Variables methods
 
-   Vector<Use> arrange_uses(void) const;
-   Vector<std::string> write_uses(void) const; 
+  Vector<Use> arrange_uses(void) const;
+  Vector<std::string> write_uses(void) const;
 
-   const Use& get_use(const unsigned&) const;
-   std::string write_use(const unsigned&) const;
+  const Use& get_use(const unsigned&) const;
+  std::string write_use(const unsigned&) const;
 
-   Vector<unsigned> arrange_inputs_indices(void) const;
-   Vector<unsigned> arrange_targets_indices(void) const;
+  Vector<unsigned> arrange_inputs_indices(void) const;
+  Vector<unsigned> arrange_targets_indices(void) const;
 
-   // Information methods
+  // Information methods
 
-   Vector<std::string> arrange_names(void) const;
-   const std::string& get_name(const unsigned&) const;
+  Vector<std::string> arrange_names(void) const;
+  const std::string& get_name(const unsigned&) const;
 
-   Vector<std::string> arrange_units(void) const;
-   const std::string& get_unit(const unsigned&) const;
+  Vector<std::string> arrange_units(void) const;
+  const std::string& get_unit(const unsigned&) const;
 
-   Vector<std::string> arrange_descriptions(void) const;
-   const std::string& get_description(const unsigned&) const;
+  Vector<std::string> arrange_descriptions(void) const;
+  const std::string& get_description(const unsigned&) const;
 
-   const bool& get_display(void) const;
+  const bool& get_display(void) const;
 
-   // Set methods
+  // Set methods
 
-   void set(void);
-   void set(const unsigned&);
-   void set(const unsigned&, const unsigned&);
-   void set(const tinyxml2::XMLDocument&);
+  void set(void);
+  void set(const unsigned&);
+  void set(const unsigned&, const unsigned&);
+  void set(const tinyxml2::XMLDocument&);
 
-   void set_default(void);
+  void set_default(void);
 
-   // Data methods
+  // Data methods
 
-   void set_variables_number(const unsigned&);
+  void set_variables_number(const unsigned&);
 
-   // Variables methods
+  // Variables methods
 
-   void set_items(const Vector<Item>&);
+  void set_items(const Vector<Item>&);
 
-   void set_uses(const Vector<Use>&); 
-   void set_uses(const Vector<std::string>&); 
+  void set_uses(const Vector<Use>&);
+  void set_uses(const Vector<std::string>&);
 
-   void set_use(const unsigned&, const Use&);
-   void set_use(const unsigned&, const std::string&);
+  void set_use(const unsigned&, const Use&);
+  void set_use(const unsigned&, const std::string&);
 
-   void set_input(void);
-   void set_target(void);
+  void set_input(void);
+  void set_target(void);
 
-   void set_default_uses(void);
+  void set_default_uses(void);
 
-   // Information methods
+  // Information methods
 
-   void set_names(const Vector<std::string>&);
-   void set_name(const unsigned&, const std::string&);
+  void set_names(const Vector<std::string>&);
+  void set_name(const unsigned&, const std::string&);
 
-   void set_units(const Vector<std::string>&);
-   void set_units(const unsigned&, const std::string&);
+  void set_units(const Vector<std::string>&);
+  void set_units(const unsigned&, const std::string&);
 
-   void set_descriptions(const Vector<std::string>&);
-   void set_description(const unsigned&, const std::string&);
+  void set_descriptions(const Vector<std::string>&);
+  void set_description(const unsigned&, const std::string&);
 
-   void set_display(const bool&);
+  void set_display(const bool&);
 
-   Matrix<std::string> arrange_information(void) const;
+  Matrix<std::string> arrange_information(void) const;
 
-   Vector<std::string> arrange_inputs_units(void) const;
-   Vector<std::string> arrange_targets_units(void) const;
+  Vector<std::string> arrange_inputs_units(void) const;
+  Vector<std::string> arrange_targets_units(void) const;
 
-   Vector<std::string> arrange_inputs_name(void) const;
-   Vector<std::string> arrange_targets_name(void) const;
+  Vector<std::string> arrange_inputs_name(void) const;
+  Vector<std::string> arrange_targets_name(void) const;
 
-   Vector<std::string> arrange_inputs_description(void) const;
-   Vector<std::string> arrange_targets_description(void) const;
+  Vector<std::string> arrange_inputs_description(void) const;
+  Vector<std::string> arrange_targets_description(void) const;
 
-   Matrix<std::string> arrange_inputs_information(void) const;
-   Matrix<std::string> arrange_targets_information(void) const;
+  Matrix<std::string> arrange_inputs_information(void) const;
+  Matrix<std::string> arrange_targets_information(void) const;
 
+  // Serialization methods
 
-   // Serialization methods
+  std::string to_string(void) const;
 
-   std::string to_string(void) const;
+  tinyxml2::XMLDocument* to_XML(void) const;
+  void from_XML(const tinyxml2::XMLDocument&);
 
-   tinyxml2::XMLDocument* to_XML(void) const;
-   void from_XML(const tinyxml2::XMLDocument&);
+ private:
 
+  // MEMBERS
 
-private:
+  /// Vector of variable items.
+  /// Each item contains the name, units, description and use of a single
+  /// variable.
 
-   // MEMBERS
+  Vector<Item> items;
 
-   /// Vector of variable items.
-   /// Each item contains the name, units, description and use of a single variable.
+  /// Display messages to screen.
 
-   Vector<Item> items;
-
-   /// Display messages to screen.
-   
-   bool display;
+  bool display;
 };
-
 }
 
 #endif

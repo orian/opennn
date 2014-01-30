@@ -1,13 +1,19 @@
 /****************************************************************************************************************/
 /*                                                                                                              */
-/*   OpenNN: Open Neural Networks Library                                                                       */
-/*   www.intelnics.com/opennn                                                                                   */
+/*   OpenNN: Open Neural Networks Library
+ */
+/*   www.intelnics.com/opennn
+ */
 /*                                                                                                              */
-/*   R O O T   M E A N   S Q U A R E D   E R R O R   C L A S S   H E A D E R                                    */
+/*   R O O T   M E A N   S Q U A R E D   E R R O R   C L A S S   H E A D E R
+ */
 /*                                                                                                              */
-/*   Roberto Lopez                                                                                              */
-/*   Intelnics - The artificial intelligence company                                                            */
-/*   robertolopez@intelnics.com                                                                                 */
+/*   Roberto Lopez
+ */
+/*   Intelnics - The artificial intelligence company
+ */
+/*   robertolopez@intelnics.com
+ */
 /*                                                                                                              */
 /****************************************************************************************************************/
 
@@ -28,79 +34,77 @@
 #include "performance_term.h"
 #include "data_set.h"
 
-// TinyXml includes
+// TinyXml includes#include
 
-#include "../tinyxml2/tinyxml2.h"
+#include "tinyxml2_ext.h"
 
-namespace OpenNN
-{
+#include "tinyxml2_ext.h"
+
+namespace OpenNN {
 
 /// This class represents the root mean squared error performance term.
-/// The root mean squared error measures the difference between the outputs from a neural network and the targets in a data set. 
+/// The root mean squared error measures the difference between the outputs from
+/// a neural network and the targets in a data set.
 /// This functional is used in data modeling problems.
 
-class RootMeanSquaredError : public PerformanceTerm
-{
+class RootMeanSquaredError : public PerformanceTerm {
 
-public:
+ public:
 
-   // DEFAULT CONSTRUCTOR
+  // DEFAULT CONSTRUCTOR
 
-   explicit RootMeanSquaredError(void);
+  explicit RootMeanSquaredError(void);
 
-   // NEURAL NETWORK CONSTRUCTOR
+  // NEURAL NETWORK CONSTRUCTOR
 
-   explicit RootMeanSquaredError(NeuralNetwork*);
+  explicit RootMeanSquaredError(NeuralNetwork*);
 
-   // DATA SET CONSTRUCTOR
+  // DATA SET CONSTRUCTOR
 
-   explicit RootMeanSquaredError(DataSet*);
+  explicit RootMeanSquaredError(DataSet*);
 
-   // GENERAL CONSTRUCTOR
+  // GENERAL CONSTRUCTOR
 
-   explicit RootMeanSquaredError(NeuralNetwork*, DataSet*);
+  explicit RootMeanSquaredError(NeuralNetwork*, DataSet*);
 
-   // XML CONSTRUCTOR
+  // XML CONSTRUCTOR
 
-   explicit RootMeanSquaredError(const tinyxml2::XMLDocument&);
+  explicit RootMeanSquaredError(const tinyxml2::XMLDocument&);
 
-   // DESTRUCTOR
+  // DESTRUCTOR
 
-   virtual ~RootMeanSquaredError(void);
+  virtual ~RootMeanSquaredError(void);
 
-   // METHODS
+  // METHODS
 
-   // Get methods
+  // Get methods
 
-   // Set methods
+  // Set methods
 
-   // Checking methods
+  // Checking methods
 
-   void check(void) const;
+  void check(void) const;
 
-   // Performance term performance methods
+  // Performance term performance methods
 
-   double calculate_performance(void) const;
-   double calculate_performance(const Vector<double>&) const;   
-   double calculate_generalization_performance(void) const;   
+  double calculate_performance(void) const;
+  double calculate_performance(const Vector<double>&) const;
+  double calculate_generalization_performance(void) const;
 
-   Vector<double> calculate_gradient(void) const;
+  Vector<double> calculate_gradient(void) const;
 
-   Matrix<double> calculate_Hessian(void) const;
+  Matrix<double> calculate_Hessian(void) const;
 
-   std::string write_performance_term_type(void) const;
+  std::string write_performance_term_type(void) const;
 
-   // Serialization methods
+  // Serialization methods
 
-   tinyxml2::XMLDocument* to_XML(void) const;   
-   void from_XML(const tinyxml2::XMLDocument&);
-
+  tinyxml2::XMLDocument* to_XML(void) const;
+  void from_XML(const tinyxml2::XMLDocument&);
 };
-
 }
 
 #endif
-
 
 // OpenNN: Open Neural Networks Library.
 // Neural Designer Copyright © 2013 Roberto López and Ismael Santana (Intelnics)

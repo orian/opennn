@@ -1,13 +1,19 @@
 /****************************************************************************************************************/
 /*                                                                                                              */
-/*   OpenNN: Open Neural Networks Library                                                                       */
-/*   www.intelnics.com/opennn                                                                                   */
+/*   OpenNN: Open Neural Networks Library
+ */
+/*   www.intelnics.com/opennn
+ */
 /*                                                                                                              */
-/*   T R A I N I N G   S T R A T E G Y   C L A S S   H E A D E R                                                */
+/*   T R A I N I N G   S T R A T E G Y   C L A S S   H E A D E R
+ */
 /*                                                                                                              */
-/*   Roberto Lopez                                                                                              */
-/*   Intelnics - The artificial intelligence company                                                            */
-/*   robertolopez@intelnics.com                                                                                 */
+/*   Roberto Lopez
+ */
+/*   Intelnics - The artificial intelligence company
+ */
+/*   robertolopez@intelnics.com
+ */
 /*                                                                                                              */
 /****************************************************************************************************************/
 
@@ -40,266 +46,278 @@
 
 #include "newton_method.h"
 
-// TinyXml includes
+// TinyXml includes#include
 
-#include "../tinyxml2/tinyxml2.h"
+#include "tinyxml2_ext.h"
 
-namespace OpenNN
-{
+#include "tinyxml2_ext.h"
 
-/// This class represents the concept of training strategy for a neural network. 
+namespace OpenNN {
+
+/// This class represents the concept of training strategy for a neural network.
 /// A training strategy is composed of three training algorithms:
 /// <ul>
 /// <li> Initialization training algorithm.
 /// <li> Main training algorithm.
 /// <li> Refinement trainining algorithm.
-/// </ul> 
-   
-class TrainingStrategy
-{
+/// </ul>
 
-public:
+class TrainingStrategy {
 
-   // DEFAULT CONSTRUCTOR
+ public:
 
-   explicit TrainingStrategy(void);
+  // DEFAULT CONSTRUCTOR
 
-   // GENERAL CONSTRUCTOR
+  explicit TrainingStrategy(void);
 
-   explicit TrainingStrategy(PerformanceFunctional*);
+  // GENERAL CONSTRUCTOR
 
-   // XML CONSTRUCTOR
+  explicit TrainingStrategy(PerformanceFunctional*);
 
-   explicit TrainingStrategy(const tinyxml2::XMLDocument&);
+  // XML CONSTRUCTOR
 
-   // FILE CONSTRUCTOR
+  explicit TrainingStrategy(const tinyxml2::XMLDocument&);
 
-   explicit TrainingStrategy(const std::string&);
+  // FILE CONSTRUCTOR
 
-   // DESTRUCTOR
+  explicit TrainingStrategy(const std::string&);
 
-   virtual ~TrainingStrategy(void);
+  // DESTRUCTOR
 
-   // ENUMERATIONS
+  virtual ~TrainingStrategy(void);
 
-    /// Enumeration of all the available types of training algorithms.
+  // ENUMERATIONS
 
-    enum InitializationType
-    {
-       NO_INITIALIZATION,
-       RANDOM_SEARCH,
-       EVOLUTIONARY_ALGORITHM,
-       USER_INITIALIZATION
-    };
+  /// Enumeration of all the available types of training algorithms.
 
-    /// Enumeration of all the available types of training algorithms.
-
-    enum MainType
-    {
-       NO_MAIN,
-       GRADIENT_DESCENT,
-       CONJUGATE_GRADIENT,
-       QUASI_NEWTON_METHOD,
-       LEVENBERG_MARQUARDT_ALGORITHM,
-       USER_MAIN
-    };
-
-    /// Enumeration of all the available types of training algorithms.
-
-    enum RefinementType
-    {
-       NO_REFINEMENT,
-       NEWTON_METHOD,
-       USER_REFINEMENT
-    };
-
-
-   // STRUCTURES 
-
-   /// This structure stores the results from the training strategy.
-   /// They are composed of the initialization, refinement and training algorithms results. 
-
-   struct Results
-   {
-        /// Default constructor.
-
-        Results(void);
-
-        /// Destructor.
-
-        virtual ~Results(void);
-
-        void save(const std::string&) const;
-
-        /// Pointer to a structure with the results from the random search training algorithm.
-
-        RandomSearch::RandomSearchResults* random_search_results_pointer;
-
-        /// Pointer to a structure with the results from the evolutionary training algorithm.
-
-        EvolutionaryAlgorithm::EvolutionaryAlgorithmResults* evolutionary_algorithm_results_pointer;
-
-        /// Pointer to a structure with the results from the gradient descent training algorithm.
-
-        GradientDescent::GradientDescentResults* gradient_descent_results_pointer;
-
-        /// Pointer to a structure with the results from the conjugate gradient training algorithm.
-
-        ConjugateGradient::ConjugateGradientResults* conjugate_gradient_results_pointer;
-
-        /// Pointer to a structure with the results from the quasi-Newton method training algorithm.
-
-        QuasiNewtonMethod::QuasiNewtonMethodResults* quasi_Newton_method_results_pointer;
-
-        /// Pointer to a structure with the results from the Levenberg-Marquardt training algorithm.
-
-        LevenbergMarquardtAlgorithm::LevenbergMarquardtAlgorithmResults* Levenberg_Marquardt_algorithm_results_pointer;
-
-        /// Pointer to a structure with results from the Newton method training algorithm.
-
-        NewtonMethod::NewtonMethodResults* Newton_method_results_pointer;
-
+  enum InitializationType {
+    NO_INITIALIZATION,
+    RANDOM_SEARCH,
+    EVOLUTIONARY_ALGORITHM,
+    USER_INITIALIZATION
   };
 
-   // METHODS
+  /// Enumeration of all the available types of training algorithms.
 
-   // Checking methods
+  enum MainType {
+    NO_MAIN,
+    GRADIENT_DESCENT,
+    CONJUGATE_GRADIENT,
+    QUASI_NEWTON_METHOD,
+    LEVENBERG_MARQUARDT_ALGORITHM,
+    USER_MAIN
+  };
 
-   void check_performance_functional(void) const;
-   void check_training_algorithms(void) const;
+  /// Enumeration of all the available types of training algorithms.
 
-   // Initialization methods
+  enum RefinementType {
+    NO_REFINEMENT,
+    NEWTON_METHOD,
+    USER_REFINEMENT
+  };
 
-   void initialize_random(void);
+  // STRUCTURES
 
-   // Get methods
+  /// This structure stores the results from the training strategy.
+  /// They are composed of the initialization, refinement and training
+  /// algorithms results.
 
-   PerformanceFunctional* get_performance_functional_pointer(void) const;
+  struct Results {
+    /// Default constructor.
 
-   bool has_performance_functional(void) const;
+    Results(void);
 
-   RandomSearch* get_random_search_pointer(void) const;
-   EvolutionaryAlgorithm* get_evolutionary_algorithm_pointer(void) const;
+    /// Destructor.
 
-   GradientDescent* get_gradient_descent_pointer(void) const;
-   ConjugateGradient* get_conjugate_gradient_pointer(void) const;
-   QuasiNewtonMethod* get_quasi_Newton_method_pointer(void) const;
-   LevenbergMarquardtAlgorithm* get_Levenberg_Marquardt_algorithm_pointer(void) const;
+    virtual ~Results(void);
 
-   NewtonMethod* get_Newton_method_pointer(void) const;
+    void save(const std::string&) const;
 
-   const InitializationType& get_initialization_type(void) const;
-   const MainType& get_main_type(void) const;
-   const RefinementType& get_refinement_type(void) const;
+    /// Pointer to a structure with the results from the random search training
+    /// algorithm.
 
-   std::string write_initialization_type(void) const;
-   std::string write_main_type(void) const;
-   std::string write_refinement_type(void) const;
+    RandomSearch::RandomSearchResults* random_search_results_pointer;
 
-   std::string write_initialization_type_text(void) const;
-   std::string write_main_type_text(void) const;
-   std::string write_refinement_type_text(void) const;
+    /// Pointer to a structure with the results from the evolutionary training
+    /// algorithm.
 
-   const bool& get_display(void) const;
+    EvolutionaryAlgorithm::EvolutionaryAlgorithmResults*
+        evolutionary_algorithm_results_pointer;
 
-   // Set methods
+    /// Pointer to a structure with the results from the gradient descent
+    /// training algorithm.
 
-   void set(void);
-   void set(PerformanceFunctional*);
-   virtual void set_default(void);
+    GradientDescent::GradientDescentResults* gradient_descent_results_pointer;
 
-   void set_performance_functional_pointer(PerformanceFunctional*);
+    /// Pointer to a structure with the results from the conjugate gradient
+    /// training algorithm.
 
-   void set_initialization_type(const InitializationType&);
-   void set_main_type(const MainType&);
-   void set_refinement_type(const RefinementType&);
+    ConjugateGradient::ConjugateGradientResults*
+        conjugate_gradient_results_pointer;
 
-   void set_initialization_type(const std::string&);
-   void set_main_type(const std::string&);
-   void set_refinement_type(const std::string&);
+    /// Pointer to a structure with the results from the quasi-Newton method
+    /// training algorithm.
 
-   void set_display(const bool&);
+    QuasiNewtonMethod::QuasiNewtonMethodResults*
+        quasi_Newton_method_results_pointer;
 
-   // Pointer methods
+    /// Pointer to a structure with the results from the Levenberg-Marquardt
+    /// training algorithm.
 
-   void destruct_initialization(void);
-   void destruct_main(void);
-   void destruct_refinement(void);
+    LevenbergMarquardtAlgorithm::LevenbergMarquardtAlgorithmResults*
+        Levenberg_Marquardt_algorithm_results_pointer;
 
-   // Training methods
+    /// Pointer to a structure with results from the Newton method training
+    /// algorithm.
 
-   // This method trains a neural network which has a performance functional associated. 
+    NewtonMethod::NewtonMethodResults* Newton_method_results_pointer;
+  };
 
-   Results perform_training(void);
+  // METHODS
 
-   // Serialization methods
+  // Checking methods
 
-   std::string to_string(void) const;
+  void check_performance_functional(void) const;
+  void check_training_algorithms(void) const;
 
-   void print(void) const;
+  // Initialization methods
 
-   tinyxml2::XMLDocument* to_XML(void) const;   
-   void from_XML(const tinyxml2::XMLDocument&);   
+  void initialize_random(void);
 
-   void save(const std::string&) const;
-   void load(const std::string&);
+  // Get methods
 
-protected:
+  PerformanceFunctional* get_performance_functional_pointer(void) const;
 
-   /// Pointer to an external performance functional object.
+  bool has_performance_functional(void) const;
 
-   PerformanceFunctional* performance_functional_pointer;
+  RandomSearch* get_random_search_pointer(void) const;
+  EvolutionaryAlgorithm* get_evolutionary_algorithm_pointer(void) const;
 
-   /// Pointer to a random search object to be used for initialization in the training strategy.
+  GradientDescent* get_gradient_descent_pointer(void) const;
+  ConjugateGradient* get_conjugate_gradient_pointer(void) const;
+  QuasiNewtonMethod* get_quasi_Newton_method_pointer(void) const;
+  LevenbergMarquardtAlgorithm* get_Levenberg_Marquardt_algorithm_pointer(
+      void) const;
 
-    RandomSearch* random_search_pointer;
+  NewtonMethod* get_Newton_method_pointer(void) const;
 
-    /// Pointer to a evolutionary training object to be used for initialization in the training strategy.
+  const InitializationType& get_initialization_type(void) const;
+  const MainType& get_main_type(void) const;
+  const RefinementType& get_refinement_type(void) const;
 
-    EvolutionaryAlgorithm* evolutionary_algorithm_pointer;
+  std::string write_initialization_type(void) const;
+  std::string write_main_type(void) const;
+  std::string write_refinement_type(void) const;
 
-    /// Pointer to a gradient descent object to be used as a main training algorithm.
+  std::string write_initialization_type_text(void) const;
+  std::string write_main_type_text(void) const;
+  std::string write_refinement_type_text(void) const;
 
-    GradientDescent* gradient_descent_pointer;
+  const bool& get_display(void) const;
 
-    /// Pointer to a conjugate gradient object to be used as a main training algorithm.
+  // Set methods
 
-    ConjugateGradient* conjugate_gradient_pointer;
+  void set(void);
+  void set(PerformanceFunctional*);
+  virtual void set_default(void);
 
-    /// Pointer to a quasi-Newton method object to be used as a main training algorithm.
+  void set_performance_functional_pointer(PerformanceFunctional*);
 
-    QuasiNewtonMethod* quasi_Newton_method_pointer;
+  void set_initialization_type(const InitializationType&);
+  void set_main_type(const MainType&);
+  void set_refinement_type(const RefinementType&);
 
-    /// Pointer to a Levenberg-Marquardt algorithm object to be used as a main training algorithm.
+  void set_initialization_type(const std::string&);
+  void set_main_type(const std::string&);
+  void set_refinement_type(const std::string&);
 
-    LevenbergMarquardtAlgorithm* Levenberg_Marquardt_algorithm_pointer;
+  void set_display(const bool&);
 
-    /// Pointer to a Newton method object to be used for refinement in the training strategy.
+  // Pointer methods
 
-    NewtonMethod* Newton_method_pointer;
+  void destruct_initialization(void);
+  void destruct_main(void);
+  void destruct_refinement(void);
 
-   /// Type of initialization training algorithm. 
+  // Training methods
 
-   InitializationType initialization_type;
+  // This method trains a neural network which has a performance functional
+  // associated.
 
-   /// Type of main training algorithm. 
+  Results perform_training(void);
 
-   MainType main_type;
+  // Serialization methods
 
-   /// Type of refinement training algorithm. 
+  std::string to_string(void) const;
 
-   RefinementType refinement_type;
+  void print(void) const;
 
-   /// Display messages to screen.
+  tinyxml2::XMLDocument* to_XML(void) const;
+  void from_XML(const tinyxml2::XMLDocument&);
 
-   bool display;
+  void save(const std::string&) const;
+  void load(const std::string&);
 
+ protected:
+
+  /// Pointer to an external performance functional object.
+
+  PerformanceFunctional* performance_functional_pointer;
+
+  /// Pointer to a random search object to be used for initialization in the
+  /// training strategy.
+
+  RandomSearch* random_search_pointer;
+
+  /// Pointer to a evolutionary training object to be used for initialization in
+  /// the training strategy.
+
+  EvolutionaryAlgorithm* evolutionary_algorithm_pointer;
+
+  /// Pointer to a gradient descent object to be used as a main training
+  /// algorithm.
+
+  GradientDescent* gradient_descent_pointer;
+
+  /// Pointer to a conjugate gradient object to be used as a main training
+  /// algorithm.
+
+  ConjugateGradient* conjugate_gradient_pointer;
+
+  /// Pointer to a quasi-Newton method object to be used as a main training
+  /// algorithm.
+
+  QuasiNewtonMethod* quasi_Newton_method_pointer;
+
+  /// Pointer to a Levenberg-Marquardt algorithm object to be used as a main
+  /// training algorithm.
+
+  LevenbergMarquardtAlgorithm* Levenberg_Marquardt_algorithm_pointer;
+
+  /// Pointer to a Newton method object to be used for refinement in the
+  /// training strategy.
+
+  NewtonMethod* Newton_method_pointer;
+
+  /// Type of initialization training algorithm.
+
+  InitializationType initialization_type;
+
+  /// Type of main training algorithm.
+
+  MainType main_type;
+
+  /// Type of refinement training algorithm.
+
+  RefinementType refinement_type;
+
+  /// Display messages to screen.
+
+  bool display;
 };
-
 }
 
 #endif
-
 
 // OpenNN: Open Neural Networks Library.
 // Neural Designer Copyright © 2013 Roberto López and Ismael Santana (Intelnics)
@@ -317,4 +335,3 @@ protected:
 // You should have received a copy of the GNU Lesser General Public
 // License along with this library; if not, write to the Free Software
 // Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
-

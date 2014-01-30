@@ -1,13 +1,19 @@
 /****************************************************************************************************************/
 /*                                                                                                              */
-/*   OpenNN: Open Neural Networks Library                                                                       */
-/*   www.intelnics.com/opennn                                                                                   */
+/*   OpenNN: Open Neural Networks Library
+ */
+/*   www.intelnics.com/opennn
+ */
 /*                                                                                                              */
-/*   T E S T I N G   A N A L Y S I S   C L A S S                                                                */
-/*                                                                                                              */ 
-/*   Roberto Lopez                                                                                              */ 
-/*   Intelnics - The artificial intelligence company                                                            */
-/*   robertolopez@intelnics.com                                                                                 */
+/*   T E S T I N G   A N A L Y S I S   C L A S S
+ */
+/*                                                                                                              */
+/*   Roberto Lopez
+ */
+/*   Intelnics - The artificial intelligence company
+ */
+/*   robertolopez@intelnics.com
+ */
 /*                                                                                                              */
 /****************************************************************************************************************/
 
@@ -15,168 +21,167 @@
 
 #include "testing_analysis.h"
 
-namespace OpenNN
-{
+namespace OpenNN {
 
 // DEFAULT CONSTRUCTOR
 
-/// Default constructor. 
-/// It creates a testing analysis object neither associated to a neural network nor to a mathematical model or a data set.
-/// By default, it constructs the function regression testing object. 
+/// Default constructor.
+/// It creates a testing analysis object neither associated to a neural network
+/// nor to a mathematical model or a data set.
+/// By default, it constructs the function regression testing object.
 
 TestingAnalysis::TestingAnalysis(void)
- : neural_network_pointer(NULL),
-   data_set_pointer(NULL),
-   mathematical_model_pointer(NULL)
-{
-   set_default();
+    : neural_network_pointer(NULL),
+      data_set_pointer(NULL),
+      mathematical_model_pointer(NULL) {
+  set_default();
 }
-
 
 // NEURAL NETWORK CONSTRUCTOR
 
-/// Neural network constructor. 
-/// It creates a testing analysis object associated to a neural network but not to a mathematical model or a data set.
-/// By default, it constructs the function regression testing object. 
+/// Neural network constructor.
+/// It creates a testing analysis object associated to a neural network but not
+/// to a mathematical model or a data set.
+/// By default, it constructs the function regression testing object.
 /// @param new_neural_network_pointer Pointer to a neural network object.
 
 TestingAnalysis::TestingAnalysis(NeuralNetwork* new_neural_network_pointer)
-: neural_network_pointer(new_neural_network_pointer),
-   data_set_pointer(NULL),
-   mathematical_model_pointer(NULL)
-{
-   set_default();
+    : neural_network_pointer(new_neural_network_pointer),
+      data_set_pointer(NULL),
+      mathematical_model_pointer(NULL) {
+  set_default();
 }
-
 
 // MATHEMATICAL MODEL CONSTRUCTOR
 
-/// Mathematical mmodel constructor. 
-/// It creates a testing analysis object not associated to a neural network, not associated to a data set, and associated to a mathematical model. 
-/// By default, it constructs the inverse problem testing object. 
-/// @param new_mathematical_model_pointer Pointer to a mathematical model object.
+/// Mathematical mmodel constructor.
+/// It creates a testing analysis object not associated to a neural network, not
+/// associated to a data set, and associated to a mathematical model.
+/// By default, it constructs the inverse problem testing object.
+/// @param new_mathematical_model_pointer Pointer to a mathematical model
+/// object.
 
-TestingAnalysis::TestingAnalysis(MathematicalModel* new_mathematical_model_pointer)
-: neural_network_pointer(NULL),
-   data_set_pointer(NULL),
-   mathematical_model_pointer(new_mathematical_model_pointer)
-{
-   set_default();
+TestingAnalysis::TestingAnalysis(
+    MathematicalModel* new_mathematical_model_pointer)
+    : neural_network_pointer(NULL),
+      data_set_pointer(NULL),
+      mathematical_model_pointer(new_mathematical_model_pointer) {
+  set_default();
 }
-
 
 // DATA SET CONSTRUCTOR
 
-/// Data set constructor. 
-/// It creates a testing analysis object not associated to a neural network, associated to a data set and not associated to a mathematical model. 
-/// By default, it constructs the function regression testing object. 
+/// Data set constructor.
+/// It creates a testing analysis object not associated to a neural network,
+/// associated to a data set and not associated to a mathematical model.
+/// By default, it constructs the function regression testing object.
 /// @param new_data_set_pointer Pointer to a data set object.
 
 TestingAnalysis::TestingAnalysis(DataSet* new_data_set_pointer)
-: neural_network_pointer(NULL),
-   data_set_pointer(new_data_set_pointer),
-   mathematical_model_pointer(NULL)
-{
-   set_default();
+    : neural_network_pointer(NULL),
+      data_set_pointer(new_data_set_pointer),
+      mathematical_model_pointer(NULL) {
+  set_default();
 }
-
 
 // NEURAL NETWORK AND MATHEMATICAL MODEL CONSTRUCTOR
 
-/// Neural network and mathematical model constructor. 
-/// It creates a testing analysis object associated to a neural network and to a mathematical model, but not to a data set.
-/// By default, it constructs the inverse problem testing object. 
+/// Neural network and mathematical model constructor.
+/// It creates a testing analysis object associated to a neural network and to a
+/// mathematical model, but not to a data set.
+/// By default, it constructs the inverse problem testing object.
 /// @param new_neural_network_pointer Pointer to a neural network object.
-/// @param new_mathematical_model_pointer Pointer to a mathematical model object.
+/// @param new_mathematical_model_pointer Pointer to a mathematical model
+/// object.
 
-TestingAnalysis::TestingAnalysis(NeuralNetwork* new_neural_network_pointer, MathematicalModel* new_mathematical_model_pointer)
- : neural_network_pointer(new_neural_network_pointer),
-   data_set_pointer(NULL),
-   mathematical_model_pointer(new_mathematical_model_pointer)
-{
-   set_default();
+TestingAnalysis::TestingAnalysis(
+    NeuralNetwork* new_neural_network_pointer,
+    MathematicalModel* new_mathematical_model_pointer)
+    : neural_network_pointer(new_neural_network_pointer),
+      data_set_pointer(NULL),
+      mathematical_model_pointer(new_mathematical_model_pointer) {
+  set_default();
 }
-
 
 // NEURAL NETWORK AND DATA SET CONSTRUCTOR
 
-/// Neural network and data set constructor. 
-/// It creates a testing analysis object associated to a neural network and to a data set.
-/// By default, it constructs the function regression testing object. 
+/// Neural network and data set constructor.
+/// It creates a testing analysis object associated to a neural network and to a
+/// data set.
+/// By default, it constructs the function regression testing object.
 /// @param new_neural_network_pointer Pointer to a neural network object.
 /// @param new_data_set_pointer Pointer to a data set object.
 
-TestingAnalysis::TestingAnalysis(NeuralNetwork* new_neural_network_pointer, DataSet* new_data_set_pointer)
- : neural_network_pointer(new_neural_network_pointer),
-   data_set_pointer(new_data_set_pointer),
-   mathematical_model_pointer(NULL)
-{
-   set_default();
+TestingAnalysis::TestingAnalysis(NeuralNetwork* new_neural_network_pointer,
+                                 DataSet* new_data_set_pointer)
+    : neural_network_pointer(new_neural_network_pointer),
+      data_set_pointer(new_data_set_pointer),
+      mathematical_model_pointer(NULL) {
+  set_default();
 }
-
 
 // NEURAL NETWORK, MATHEMATICAL MODEL AND DATA SET CONSTRUCTOR
 
-/// Neural network, mathematical model and data set constructor. 
-/// It creates a testing analysis object associated to a neural network, a mathematical model and a data set.
-/// By default, it constructs the inverse problem testing object. 
+/// Neural network, mathematical model and data set constructor.
+/// It creates a testing analysis object associated to a neural network, a
+/// mathematical model and a data set.
+/// By default, it constructs the inverse problem testing object.
 /// @param new_neural_network_pointer Pointer to a neural network object.
-/// @param new_mathematical_model_pointer Pointer to a mathematical model object.
+/// @param new_mathematical_model_pointer Pointer to a mathematical model
+/// object.
 /// @param new_data_set_pointer Pointer to a data set object.
 
-TestingAnalysis::TestingAnalysis(NeuralNetwork* new_neural_network_pointer, DataSet* new_data_set_pointer, MathematicalModel* new_mathematical_model_pointer)
- : neural_network_pointer(new_neural_network_pointer),
-   data_set_pointer(new_data_set_pointer),
-   mathematical_model_pointer(new_mathematical_model_pointer)
-{
-   set_default();
+TestingAnalysis::TestingAnalysis(
+    NeuralNetwork* new_neural_network_pointer, DataSet* new_data_set_pointer,
+    MathematicalModel* new_mathematical_model_pointer)
+    : neural_network_pointer(new_neural_network_pointer),
+      data_set_pointer(new_data_set_pointer),
+      mathematical_model_pointer(new_mathematical_model_pointer) {
+  set_default();
 }
-
 
 // XML CONSTRUCTOR
 
-/// XML constructor. 
-/// It creates a testing analysis object neither associated to a neural network nor to a mathematical model or a data set. 
+/// XML constructor.
+/// It creates a testing analysis object neither associated to a neural network
+/// nor to a mathematical model or a data set.
 /// It also loads the members of this object from a TinyXML document.
 /// @param testing_analysis_document XML document containing the member data.
 
-TestingAnalysis::TestingAnalysis(const tinyxml2::XMLDocument& testing_analysis_document)
- : neural_network_pointer(NULL),
-   data_set_pointer(NULL),
-   mathematical_model_pointer(NULL)
-{
-   set_default();
+TestingAnalysis::TestingAnalysis(
+    const tinyxml2::XMLDocument& testing_analysis_document)
+    : neural_network_pointer(NULL),
+      data_set_pointer(NULL),
+      mathematical_model_pointer(NULL) {
+  set_default();
 
-   from_XML(testing_analysis_document);
+  from_XML(testing_analysis_document);
 }
-
 
 // FILE CONSTRUCTOR
 
-/// File constructor. 
-/// It creates a testing analysis object neither associated to a neural network nor to a mathematical model or a data set. 
-/// It also loads the members of this object from XML file. 
-/// @param file_name Name of testing analysis XML file.  
+/// File constructor.
+/// It creates a testing analysis object neither associated to a neural network
+/// nor to a mathematical model or a data set.
+/// It also loads the members of this object from XML file.
+/// @param file_name Name of testing analysis XML file.
 
 TestingAnalysis::TestingAnalysis(const std::string& file_name)
- : neural_network_pointer(NULL),
-   data_set_pointer(NULL),
-   mathematical_model_pointer(NULL)
-{
-   set_default();
+    : neural_network_pointer(NULL),
+      data_set_pointer(NULL),
+      mathematical_model_pointer(NULL) {
+  set_default();
 
-   load(file_name);
+  load(file_name);
 }
 
 // DESTRUCTOR
 
-/// Destructor. 
-/// It deletes the function regression testing, pattern recognition testing, time series prediction testing and inverse problem testing objects. 
+/// Destructor.
+/// It deletes the function regression testing, pattern recognition testing,
+/// time series prediction testing and inverse problem testing objects.
 
-TestingAnalysis::~TestingAnalysis()
-{
-}
-
+TestingAnalysis::~TestingAnalysis() {}
 
 // METHODS
 
@@ -184,87 +189,77 @@ TestingAnalysis::~TestingAnalysis()
 
 /// Returns a pointer to the neural network object which is to be tested.
 
-NeuralNetwork* TestingAnalysis::get_neural_network_pointer(void) const
-{
-    #ifndef NDEBUG
+NeuralNetwork* TestingAnalysis::get_neural_network_pointer(void) const {
+#ifndef NDEBUG
 
-    if(!neural_network_pointer)
-    {
-        std::ostringstream buffer;
+  if (!neural_network_pointer) {
+    std::ostringstream buffer;
 
-        buffer << "OpenNN Exception: TestingAnalysis class.\n"
-               << "NeuralNetwork* get_neural_network_pointer(void) const method.\n"
-               << "Neural network pointer is NULL.\n";
+    buffer << "OpenNN Exception: TestingAnalysis class.\n"
+           << "NeuralNetwork* get_neural_network_pointer(void) const method.\n"
+           << "Neural network pointer is NULL.\n";
 
-        throw std::logic_error(buffer.str());
-    }
+    throw std::logic_error(buffer.str());
+  }
 
-    #endif
+#endif
 
-   return(neural_network_pointer);   
+  return (neural_network_pointer);
 }
-
 
 // DataSet* get_data_set_pointer(void) const method
 
-/// Returns a pointer to the data set object on which the neural network is tested. 
+/// Returns a pointer to the data set object on which the neural network is
+/// tested.
 
-DataSet* TestingAnalysis::get_data_set_pointer(void) const
-{
-    #ifndef NDEBUG
+DataSet* TestingAnalysis::get_data_set_pointer(void) const {
+#ifndef NDEBUG
 
-    if(!data_set_pointer)
-    {
-        std::ostringstream buffer;
+  if (!data_set_pointer) {
+    std::ostringstream buffer;
 
-        buffer << "OpenNN Exception: TestingAnalysis class.\n"
-               << "DataSet* get_data_set_pointer(void) const method.\n"
-               << "Data set pointer is NULL.\n";
+    buffer << "OpenNN Exception: TestingAnalysis class.\n"
+           << "DataSet* get_data_set_pointer(void) const method.\n"
+           << "Data set pointer is NULL.\n";
 
-        throw std::logic_error(buffer.str());
-    }
+    throw std::logic_error(buffer.str());
+  }
 
-    #endif
+#endif
 
-   return(data_set_pointer);
+  return (data_set_pointer);
 }
-
 
 // MathematicalModel* get_mathematical_model_pointer(void) const method
 
-/// Returns a pointer to the mathematical model object on which the neural network is tested. 
+/// Returns a pointer to the mathematical model object on which the neural
+/// network is tested.
 
-MathematicalModel* TestingAnalysis::get_mathematical_model_pointer(void) const
-{
-    #ifndef NDEBUG
+MathematicalModel* TestingAnalysis::get_mathematical_model_pointer(void) const {
+#ifndef NDEBUG
 
-    if(!mathematical_model_pointer)
-    {
-        std::ostringstream buffer;
+  if (!mathematical_model_pointer) {
+    std::ostringstream buffer;
 
-        buffer << "OpenNN Exception: TestingAnalysis class.\n"
-               << "MathematicalModel* get_mathematical_model_pointer(void) const method.\n"
-               << "Mathematical model pointer is NULL.\n";
+    buffer << "OpenNN Exception: TestingAnalysis class.\n"
+           << "MathematicalModel* get_mathematical_model_pointer(void) const "
+              "method.\n"
+           << "Mathematical model pointer is NULL.\n";
 
-        throw std::logic_error(buffer.str());
-    }
+    throw std::logic_error(buffer.str());
+  }
 
-    #endif
+#endif
 
-   return(mathematical_model_pointer);
+  return (mathematical_model_pointer);
 }
-
 
 // const bool& get_display(void) const method
 
 /// Returns true if messages from this class can be displayed on the screen,
 /// or false if messages from this class can't be displayed on the screen.
 
-const bool& TestingAnalysis::get_display(void) const
-{
-   return(display);     
-}
-
+const bool& TestingAnalysis::get_display(void) const { return (display); }
 
 // void set_default(void) method
 
@@ -273,57 +268,52 @@ const bool& TestingAnalysis::get_display(void) const
 /// <li> Display: True.
 /// </ul>
 
-void TestingAnalysis::set_default(void)
-{
-   display = true;
-}
-
+void TestingAnalysis::set_default(void) { display = true; }
 
 // void set_neural_network_pointer(NeuralNetwork*) method
 
 /// Sets a new neural network object to be tested.
 /// @param new_neural_network_pointer Pointer to a neural network object.
 
-void TestingAnalysis::set_neural_network_pointer(NeuralNetwork* new_neural_network_pointer)
-{
-   neural_network_pointer = new_neural_network_pointer;   
+void TestingAnalysis::set_neural_network_pointer(
+    NeuralNetwork* new_neural_network_pointer) {
+  neural_network_pointer = new_neural_network_pointer;
 }
-
 
 // void set_mathematical_model_pointer(MathematicalModel*) method
 
-/// Sets a mathematical model to be used for validating the quality of a trained neural network.
-/// @param new_mathematical_model_pointer Pointer to a mathematical model object.
+/// Sets a mathematical model to be used for validating the quality of a trained
+/// neural network.
+/// @param new_mathematical_model_pointer Pointer to a mathematical model
+/// object.
 
-void TestingAnalysis::set_mathematical_model_pointer(MathematicalModel* new_mathematical_model_pointer)
-{
-   mathematical_model_pointer = new_mathematical_model_pointer;   
+void TestingAnalysis::set_mathematical_model_pointer(
+    MathematicalModel* new_mathematical_model_pointer) {
+  mathematical_model_pointer = new_mathematical_model_pointer;
 }
-
 
 // void set_data_set_pointer(DataSet*) method
 
-/// Sets a new data set to be used for validating the quality of a trained neural network.
+/// Sets a new data set to be used for validating the quality of a trained
+/// neural network.
 /// @param new_data_set_pointer Pointer to a data set object.
 
-void TestingAnalysis::set_data_set_pointer(DataSet* new_data_set_pointer)
-{
-   data_set_pointer = new_data_set_pointer;   
+void TestingAnalysis::set_data_set_pointer(DataSet* new_data_set_pointer) {
+  data_set_pointer = new_data_set_pointer;
 }
-
 
 // void set_display(const bool&) method
 
-/// Sets a new display value. 
-/// If it is set to true messages from this class are to be displayed on the screen;
-/// if it is set to false messages from this class are not to be displayed on the screen.
+/// Sets a new display value.
+/// If it is set to true messages from this class are to be displayed on the
+/// screen;
+/// if it is set to false messages from this class are not to be displayed on
+/// the screen.
 /// @param new_display Display value.
 
-void TestingAnalysis::set_display(const bool& new_display)
-{
-   display = new_display;
+void TestingAnalysis::set_display(const bool& new_display) {
+  display = new_display;
 }
-
 
 // void check(void) const method
 
@@ -333,286 +323,306 @@ void TestingAnalysis::set_display(const bool& new_display)
 /// <li> The data set pointer is not NULL.
 /// </ul>
 
-void TestingAnalysis::check(void) const
-{
-   std::ostringstream buffer;
+void TestingAnalysis::check(void) const {
+  std::ostringstream buffer;
 
-   if(!neural_network_pointer)
-   {
-      buffer << "OpenNN Exception: TestingAnalysis class.\n"
-             << "void check(void) const method.\n"
-             << "Neural network pointer is NULL.\n";
+  if (!neural_network_pointer) {
+    buffer << "OpenNN Exception: TestingAnalysis class.\n"
+           << "void check(void) const method.\n"
+           << "Neural network pointer is NULL.\n";
 
-      throw std::logic_error(buffer.str());
-   }
+    throw std::logic_error(buffer.str());
+  }
 
-   if(!data_set_pointer)
-   {
-      buffer << "OpenNN Exception: TestingAnalysis class.\n"
-             << "void check(void) const method.\n"
-             << "Data set pointer is NULL.\n";
+  if (!data_set_pointer) {
+    buffer << "OpenNN Exception: TestingAnalysis class.\n"
+           << "void check(void) const method.\n"
+           << "Data set pointer is NULL.\n";
 
-      throw std::logic_error(buffer.str());
-   }
+    throw std::logic_error(buffer.str());
+  }
 }
-
 
 // Vector< Matrix<double> > calculate_target_output_data(void) const method
 
-/// Returns a vector of matrices with number of rows equal to number of testing instances and
+/// Returns a vector of matrices with number of rows equal to number of testing
+/// instances and
 /// number of columns equal to two (the targets value and the outputs value).
 
-Vector< Matrix<double> > TestingAnalysis::calculate_target_output_data(void) const
-{
-   // Control sentence (if debug)
+Vector<Matrix<double> > TestingAnalysis::calculate_target_output_data(
+    void) const {
+// Control sentence (if debug)
 
-   #ifndef NDEBUG
+#ifndef NDEBUG
 
-   check();
+  check();
 
-   #endif
+#endif
 
-   // Data set stuff
+  // Data set stuff
 
-   const Instances& instances = data_set_pointer->get_instances();
+  const Instances& instances = data_set_pointer->get_instances();
 
-   const unsigned testing_instances_number = instances.count_testing_instances_number();
+  const unsigned testing_instances_number =
+      instances.count_testing_instances_number();
 
-   const Matrix<double> testing_input_data = data_set_pointer->arrange_testing_input_data();
+  const Matrix<double> testing_input_data =
+      data_set_pointer->arrange_testing_input_data();
 
-   const Matrix<double> target_data = data_set_pointer->arrange_testing_target_data();
+  const Matrix<double> target_data =
+      data_set_pointer->arrange_testing_target_data();
 
-   // Neural network stuff
+  // Neural network stuff
 
-   const MultilayerPerceptron* multilayer_perceptron_pointer = neural_network_pointer->get_multilayer_perceptron_pointer();
+  const MultilayerPerceptron* multilayer_perceptron_pointer =
+      neural_network_pointer->get_multilayer_perceptron_pointer();
 
-   const unsigned outputs_number = multilayer_perceptron_pointer->get_outputs_number();
+  const unsigned outputs_number =
+      multilayer_perceptron_pointer->get_outputs_number();
 
-   const Matrix<double> output_data = neural_network_pointer->calculate_output_data(testing_input_data);
+  const Matrix<double> output_data =
+      neural_network_pointer->calculate_output_data(testing_input_data);
 
-   // Function regression testing stuff
+  // Function regression testing stuff
 
-   Vector< Matrix<double> > target_output_data(outputs_number);
+  Vector<Matrix<double> > target_output_data(outputs_number);
 
-   for(unsigned i = 0; i < outputs_number; i++)
-   {
-      target_output_data[i].set(testing_instances_number, 2);
+  for (unsigned i = 0; i < outputs_number; i++) {
+    target_output_data[i].set(testing_instances_number, 2);
 
-      target_output_data[i].set_column(0, target_data.arrange_column(i));
-      target_output_data[i].set_column(1, output_data.arrange_column(i));
-   }
+    target_output_data[i].set_column(0, target_data.arrange_column(i));
+    target_output_data[i].set_column(1, output_data.arrange_column(i));
+  }
 
-   return(target_output_data);
+  return (target_output_data);
 }
 
+// Vector< LinearRegressionParameters<double> >
+// calculate_linear_regression_parameters(void) const method
 
-
-// Vector< LinearRegressionParameters<double> > calculate_linear_regression_parameters(void) const method
-
-/// Performs a linear regression analysis between the testing instances in the data set and
+/// Performs a linear regression analysis between the testing instances in the
+/// data set and
 /// the corresponding neural network outputs.
 /// It returns all the provided parameters in a vector of vectors.
-/// The number of elements in the vector is equal to the number of output variables.
-/// The size of each element is equal to the number of regression parameters (2).
-/// In this way, each subvector contains the regression parameters intercept and slope of an output variable.
+/// The number of elements in the vector is equal to the number of output
+/// variables.
+/// The size of each element is equal to the number of regression parameters
+/// (2).
+/// In this way, each subvector contains the regression parameters intercept and
+/// slope of an output variable.
 
-Vector< LinearRegressionParameters<double> > TestingAnalysis::calculate_linear_regression_parameters(void) const
-{
-   // Control sentence (if debug)
+Vector<LinearRegressionParameters<double> >
+TestingAnalysis::calculate_linear_regression_parameters(void) const {
+// Control sentence (if debug)
 
-   #ifndef NDEBUG
+#ifndef NDEBUG
 
-   check();
+  check();
 
-   #endif
+#endif
 
-   // Data set stuff
+  // Data set stuff
 
-   const Instances& instances = data_set_pointer->get_instances();
+  const Instances& instances = data_set_pointer->get_instances();
 
-   const unsigned testing_instances_number = instances.count_testing_instances_number();
+  const unsigned testing_instances_number =
+      instances.count_testing_instances_number();
 
-   // Neural network stuff
+  // Neural network stuff
 
-   const MultilayerPerceptron* multilayer_perceptron_pointer = neural_network_pointer->get_multilayer_perceptron_pointer();
+  const MultilayerPerceptron* multilayer_perceptron_pointer =
+      neural_network_pointer->get_multilayer_perceptron_pointer();
 
-   const unsigned outputs_number = multilayer_perceptron_pointer->get_outputs_number();
+  const unsigned outputs_number =
+      multilayer_perceptron_pointer->get_outputs_number();
 
-   #ifndef NDEBUG
+#ifndef NDEBUG
 
-   std::ostringstream buffer;
+  std::ostringstream buffer;
 
-   if(testing_instances_number == 0)
-   {
-      buffer << "OpenNN Exception: TestingAnalysis class.\n"
-             << "Vector< LinearRegressionParameters<double> > calculate_linear_regression_parameters(void) const method.\n"
-             << "Number of testing instances is zero.\n";
+  if (testing_instances_number == 0) {
+    buffer << "OpenNN Exception: TestingAnalysis class.\n"
+           << "Vector< LinearRegressionParameters<double> > "
+              "calculate_linear_regression_parameters(void) const method.\n"
+           << "Number of testing instances is zero.\n";
 
-      throw std::logic_error(buffer.str());
-   }
+    throw std::logic_error(buffer.str());
+  }
 
-   #endif
+#endif
 
-   // Calculate regression parameters
+  // Calculate regression parameters
 
-   const Matrix<double> input_data = data_set_pointer->arrange_testing_input_data();
-   const Matrix<double> target_data = data_set_pointer->arrange_testing_target_data();
-   const Matrix<double> output_data = neural_network_pointer->calculate_output_data(input_data);
+  const Matrix<double> input_data =
+      data_set_pointer->arrange_testing_input_data();
+  const Matrix<double> target_data =
+      data_set_pointer->arrange_testing_target_data();
+  const Matrix<double> output_data =
+      neural_network_pointer->calculate_output_data(input_data);
 
-   Vector<double> target_variable(testing_instances_number);
-   Vector<double> output_variable(testing_instances_number);
+  Vector<double> target_variable(testing_instances_number);
+  Vector<double> output_variable(testing_instances_number);
 
-   Vector< LinearRegressionParameters<double> > linear_regression_parameters(outputs_number);
+  Vector<LinearRegressionParameters<double> > linear_regression_parameters(
+      outputs_number);
 
-   for(unsigned i = 0; i < outputs_number; i++)
-   {
-       target_variable = target_data.arrange_column(i);
-       output_variable = output_data.arrange_column(i);
+  for (unsigned i = 0; i < outputs_number; i++) {
+    target_variable = target_data.arrange_column(i);
+    output_variable = output_data.arrange_column(i);
 
-       linear_regression_parameters[i] = output_variable.calculate_linear_regression_parameters(target_variable);
-   }
+    linear_regression_parameters[i] =
+        output_variable.calculate_linear_regression_parameters(target_variable);
+  }
 
-   return(linear_regression_parameters);
+  return (linear_regression_parameters);
 }
 
+// TestingAnalysis::LinearRegressionResults
+// TestingAnalysis::perform_linear_regression_analysis(void) const
 
-// TestingAnalysis::LinearRegressionResults TestingAnalysis::perform_linear_regression_analysis(void) const
-
-/// Performs a linear regression analysis of a neural network on the testing indices of a data set.
-/// It returns a linear regression analysis results structure, which consists on:
+/// Performs a linear regression analysis of a neural network on the testing
+/// indices of a data set.
+/// It returns a linear regression analysis results structure, which consists
+/// on:
 /// <ul>
 /// <li> Linear regression parameters.
 /// <li> Scaled target and output data.
 /// </ul>
 
-TestingAnalysis::LinearRegressionResults TestingAnalysis::perform_linear_regression_analysis(void) const
-{
-   LinearRegressionResults linear_regression_results;
+TestingAnalysis::LinearRegressionResults
+TestingAnalysis::perform_linear_regression_analysis(void) const {
+  LinearRegressionResults linear_regression_results;
 
-   linear_regression_results.target_output_data = calculate_target_output_data();
-   linear_regression_results.linear_regression_parameters = calculate_linear_regression_parameters();
+  linear_regression_results.target_output_data = calculate_target_output_data();
+  linear_regression_results.linear_regression_parameters =
+      calculate_linear_regression_parameters();
 
-   return(linear_regression_results);
+  return (linear_regression_results);
 }
-
 
 // void LinearRegressionResults::save(const std::string&) const method
 
 /// Saves a linear regression analysis results structure to a data file.
 /// @param file_name Name of results data file.
 
-void TestingAnalysis::LinearRegressionResults::save(const std::string& file_name) const
-{
-   std::ofstream file(file_name.c_str());
+void TestingAnalysis::LinearRegressionResults::save(
+    const std::string& file_name) const {
+  std::ofstream file(file_name.c_str());
 
-   file << linear_regression_parameters
-        << "Target-output data:\n"
-        << target_output_data;
+  file << linear_regression_parameters << "Target-output data:\n"
+       << target_output_data;
 
-   file.close();
+  file.close();
 }
-
 
 // Matrix<double> calculate_error_data(void) const method
 
-/// Calculates the errors between the outputs from a neural network and the testing instances in a data set.
+/// Calculates the errors between the outputs from a neural network and the
+/// testing instances in a data set.
 /// It returns a vector of tree matrices:
 /// <ul>
 /// <li> Absolute error.
 /// <li> Relative error.
 /// <li> Percentage error.
 /// </ul>
-/// The number of rows in each matrix is the number of testing instances in the data set.
+/// The number of rows in each matrix is the number of testing instances in the
+/// data set.
 /// The number of columns is the number of outputs in the neural network.
 
-Vector< Matrix<double> > TestingAnalysis::calculate_error_data(void) const
-{
-   // Data set stuff
+Vector<Matrix<double> > TestingAnalysis::calculate_error_data(void) const {
+// Data set stuff
 
-   #ifndef NDEBUG
+#ifndef NDEBUG
 
-   check();
+  check();
 
-   #endif
+#endif
 
-   const unsigned testing_instances_number = data_set_pointer->get_instances().count_testing_instances_number();
+  const unsigned testing_instances_number =
+      data_set_pointer->get_instances().count_testing_instances_number();
 
-    #ifndef NDEBUG
+#ifndef NDEBUG
 
-    std::ostringstream buffer;
+  std::ostringstream buffer;
 
-    if(testing_instances_number == 0)
-    {
-       buffer << "OpenNN Exception: TestingAnalysis class.\n"
-              << "Vector< Matrix<double> > calculate_error_data(void) const.\n"
-              << "Number of testing instances is zero.\n";
+  if (testing_instances_number == 0) {
+    buffer << "OpenNN Exception: TestingAnalysis class.\n"
+           << "Vector< Matrix<double> > calculate_error_data(void) const.\n"
+           << "Number of testing instances is zero.\n";
 
-       throw std::logic_error(buffer.str());
-    }
+    throw std::logic_error(buffer.str());
+  }
 
-    #endif
+#endif
 
+  const Matrix<double> input_data =
+      data_set_pointer->arrange_testing_input_data();
 
-   const Matrix<double> input_data = data_set_pointer->arrange_testing_input_data();
+  const Matrix<double> target_data =
+      data_set_pointer->arrange_testing_target_data();
 
-   const Matrix<double> target_data = data_set_pointer->arrange_testing_target_data();
+  // Neural network stuff
 
-   // Neural network stuff
+  const Matrix<double> output_data =
+      neural_network_pointer->calculate_output_data(input_data);
 
-   const Matrix<double> output_data = neural_network_pointer->calculate_output_data(input_data);
+  const UnscalingLayer* unscaling_layer_pointer =
+      neural_network_pointer->get_unscaling_layer_pointer();
 
-   const UnscalingLayer* unscaling_layer_pointer = neural_network_pointer->get_unscaling_layer_pointer();
+#ifndef NDEBUG
 
-   #ifndef NDEBUG
+  if (!unscaling_layer_pointer) {
+    buffer << "OpenNN Exception: TestingAnalysis class.\n"
+           << "Vector< Matrix<double> > calculate_error_data(void) const.\n"
+           << "Unscaling layer is NULL.\n";
 
-   if(!unscaling_layer_pointer)
-   {
-      buffer << "OpenNN Exception: TestingAnalysis class.\n"
-             << "Vector< Matrix<double> > calculate_error_data(void) const.\n"
-             << "Unscaling layer is NULL.\n";
+    throw std::logic_error(buffer.str());
+  }
 
-      throw std::logic_error(buffer.str());
-   }
+#endif
 
-   #endif
+  const Vector<double>& outputs_minimum =
+      unscaling_layer_pointer->arrange_minimums();
+  const Vector<double>& outputs_maximum =
+      unscaling_layer_pointer->arrange_maximums();
 
-   const Vector<double>& outputs_minimum = unscaling_layer_pointer->arrange_minimums();
-   const Vector<double>& outputs_maximum = unscaling_layer_pointer->arrange_maximums();
+  const unsigned outputs_number =
+      unscaling_layer_pointer->get_unscaling_neurons_number();
 
-   const unsigned outputs_number = unscaling_layer_pointer->get_unscaling_neurons_number();
+  // Error data
 
-   // Error data
+  Vector<Matrix<double> > error_data(outputs_number);
 
-   Vector< Matrix<double> > error_data(outputs_number);
+  Vector<double> targets(testing_instances_number);
+  Vector<double> outputs(testing_instances_number);
 
-   Vector<double> targets(testing_instances_number);
-   Vector<double> outputs(testing_instances_number);
+  for (unsigned i = 0; i < outputs_number; i++) {
+    error_data[i].set(testing_instances_number, 3, 0.0);
 
-   for(unsigned i = 0; i < outputs_number; i++)
-   {
-       error_data[i].set(testing_instances_number, 3, 0.0);
+    // Absolute error
 
-       // Absolute error
+    targets = target_data.arrange_column(i);
+    outputs = output_data.arrange_column(i);
 
-       targets = target_data.arrange_column(i);
-       outputs = output_data.arrange_column(i);
+    error_data[i].set_column(0, (targets - outputs).calculate_absolute_value());
 
-       error_data[i].set_column(0, (targets - outputs).calculate_absolute_value());
+    // Relative error
 
-       // Relative error
+    error_data[i].set_column(1, (targets - outputs).calculate_absolute_value() /
+                                    (outputs_maximum[i] - outputs_minimum[i]));
 
-       error_data[i].set_column(1, (targets - outputs).calculate_absolute_value()/(outputs_maximum[i]-outputs_minimum[i]));
+    // Percentage error
 
-       // Percentage error
+    error_data[i]
+        .set_column(2, (targets - outputs).calculate_absolute_value() * 100.0 /
+                           (outputs_maximum[i] - outputs_minimum[i]));
+  }
 
-       error_data[i].set_column(2, (targets - outputs).calculate_absolute_value()*100.0/(outputs_maximum[i]-outputs_minimum[i]));
-    }
-
-   return(error_data);
+  return (error_data);
 }
 
-
-// Vector< Vector< Vector<double> > > calculate_error_data_statistics(void) const method
+// Vector< Vector< Vector<double> > > calculate_error_data_statistics(void)
+// const method
 // @todo
 
 /// Calculates the basic statistics on the error data.
@@ -623,231 +633,231 @@ Vector< Matrix<double> > TestingAnalysis::calculate_error_data(void) const
 /// <li> Standard deviation
 /// </ul>
 
-Vector< Vector< Statistics<double> > > TestingAnalysis::calculate_error_data_statistics(void) const
-{
-    // Neural network stuff
+Vector<Vector<Statistics<double> > >
+TestingAnalysis::calculate_error_data_statistics(void) const {
+  // Neural network stuff
 
-    const MultilayerPerceptron* multilayer_perceptron_pointer = neural_network_pointer->get_multilayer_perceptron_pointer();
+  const MultilayerPerceptron* multilayer_perceptron_pointer =
+      neural_network_pointer->get_multilayer_perceptron_pointer();
 
-    const unsigned outputs_number = multilayer_perceptron_pointer->get_outputs_number();
+  const unsigned outputs_number =
+      multilayer_perceptron_pointer->get_outputs_number();
 
-    // Testing analysis stuff
+  // Testing analysis stuff
 
-    Vector< Vector< Statistics<double> > > statistics(outputs_number);
+  Vector<Vector<Statistics<double> > > statistics(outputs_number);
 
-   const Vector< Matrix<double> > error_data = calculate_error_data();
+  const Vector<Matrix<double> > error_data = calculate_error_data();
 
-   for(unsigned i = 0; i < outputs_number; i++)
-   {
-       statistics[i] = error_data[i].calculate_statistics();
-   }
+  for (unsigned i = 0; i < outputs_number; i++) {
+    statistics[i] = error_data[i].calculate_statistics();
+  }
 
-   return(statistics);
+  return (statistics);
 }
 
+// Vector< Matrix<double> > calculate_error_data_statistics_matrices(void) const
+// method
 
-// Vector< Matrix<double> > calculate_error_data_statistics_matrices(void) const method
-
-/// Returns a vector of matrices with the statistics of the errors between the neural network outputs and the testing targets in the data set.
+/// Returns a vector of matrices with the statistics of the errors between the
+/// neural network outputs and the testing targets in the data set.
 /// The size of the vector is the number of output variables.
-/// The number of rows in each submatrix is three (absolute, relative and percentage errors).
-/// The number of columns in each submatrix is four (minimum, maximum, mean and standard deviation).
+/// The number of rows in each submatrix is three (absolute, relative and
+/// percentage errors).
+/// The number of columns in each submatrix is four (minimum, maximum, mean and
+/// standard deviation).
 
-Vector< Matrix<double> > TestingAnalysis::calculate_error_data_statistics_matrices(void) const
-{
-    const Vector< Vector< Statistics<double> > > error_data_statistics = calculate_error_data_statistics();
+Vector<Matrix<double> >
+TestingAnalysis::calculate_error_data_statistics_matrices(void) const {
+  const Vector<Vector<Statistics<double> > > error_data_statistics =
+      calculate_error_data_statistics();
 
-    const unsigned outputs_number = error_data_statistics.size();
+  const unsigned outputs_number = error_data_statistics.size();
 
-    Vector< Matrix<double> > statistics(outputs_number);
+  Vector<Matrix<double> > statistics(outputs_number);
 
-    for(unsigned i = 0; i < outputs_number; i++)
-    {
-        statistics[i].set(3, 4);
-        statistics[i].set_row(0, error_data_statistics[i][0].to_vector());
-        statistics[i].set_row(1, error_data_statistics[i][1].to_vector());
-        statistics[i].set_row(2, error_data_statistics[i][2].to_vector());
-    }
+  for (unsigned i = 0; i < outputs_number; i++) {
+    statistics[i].set(3, 4);
+    statistics[i].set_row(0, error_data_statistics[i][0].to_vector());
+    statistics[i].set_row(1, error_data_statistics[i][1].to_vector());
+    statistics[i].set_row(2, error_data_statistics[i][2].to_vector());
+  }
 
-    return(statistics);
+  return (statistics);
 }
 
-
-// Vector< Histogram<double> > calculate_error_data_histograms(const unsigned&) const method
+// Vector< Histogram<double> > calculate_error_data_histograms(const unsigned&)
+// const method
 
 /// Calculates histograms for the relative errors of all the output variables.
 /// The number of bins is set by the user.
 /// @param bins_number Number of bins in the histograms.
 
-Vector< Histogram<double> > TestingAnalysis::calculate_error_data_histograms(const unsigned& bins_number) const
-{
-   const Vector< Matrix<double> > error_data = calculate_error_data();
+Vector<Histogram<double> > TestingAnalysis::calculate_error_data_histograms(
+    const unsigned& bins_number) const {
+  const Vector<Matrix<double> > error_data = calculate_error_data();
 
-   const unsigned outputs_number = error_data.size();
+  const unsigned outputs_number = error_data.size();
 
-   Vector< Histogram<double> > histograms(outputs_number);
+  Vector<Histogram<double> > histograms(outputs_number);
 
-   for(unsigned i = 0; i < outputs_number; i++)
-   {
-       histograms[i] = error_data[i].arrange_column(0).calculate_histogram(bins_number);
-   }
+  for (unsigned i = 0; i < outputs_number; i++) {
+    histograms[i] =
+        error_data[i].arrange_column(0).calculate_histogram(bins_number);
+  }
 
-   return(histograms);
+  return (histograms);
 }
 
-
-// Matrix<unsigned> calculate_confusion_binary_classification(const Matrix<double>&, const Matrix<double>&) const method
+// Matrix<unsigned> calculate_confusion_binary_classification(const
+// Matrix<double>&, const Matrix<double>&) const method
 
 /// Returns the confusion matrix for a binary classification problem.
 /// @param actual_data Testing target data.
 /// @param predicted_data Testing output data.
 
-Matrix<unsigned> TestingAnalysis::calculate_confusion_binary_classification(const Matrix<double>& actual_data, const Matrix<double>& predicted_data) const
-{
-    const unsigned rows_number = actual_data.get_rows_number();
+Matrix<unsigned> TestingAnalysis::calculate_confusion_binary_classification(
+    const Matrix<double>& actual_data,
+    const Matrix<double>& predicted_data) const {
+  const unsigned rows_number = actual_data.get_rows_number();
 
-    Matrix<unsigned> confusion(2, 2, 0);
+  Matrix<unsigned> confusion(2, 2, 0);
 
-    unsigned actual_index = 0;
-    unsigned predicted_index = 0;
+  unsigned actual_index = 0;
+  unsigned predicted_index = 0;
 
-    for(unsigned i = 0; i < rows_number; i++)
-    {
-        if(actual_data[i][0] < 0.5)
-        {
-            actual_index = 0;
-        }
-        else
-        {
-            actual_index = 1;
-        }
-
-        if(predicted_data[i][0] < 0.5)
-        {
-            predicted_index = 0;
-        }
-        else
-        {
-            predicted_index = 1;
-        }
-
-        confusion[actual_index][predicted_index]++;
+  for (unsigned i = 0; i < rows_number; i++) {
+    if (actual_data[i][0] < 0.5) {
+      actual_index = 0;
+    } else {
+      actual_index = 1;
     }
 
-    return(confusion);
+    if (predicted_data[i][0] < 0.5) {
+      predicted_index = 0;
+    } else {
+      predicted_index = 1;
+    }
+
+    confusion[actual_index][predicted_index]++;
+  }
+
+  return (confusion);
 }
 
-
-// Matrix<unsigned> calculate_confusion_multiple_classification(const Matrix<double>&, const Matrix<double>&) const method
+// Matrix<unsigned> calculate_confusion_multiple_classification(const
+// Matrix<double>&, const Matrix<double>&) const method
 
 /// Returns the confusion matrix for a binary classification problem.
 /// @param actual_data Testing target data.
 /// @param predicted_data Testing output data.
 
-Matrix<unsigned> TestingAnalysis::calculate_confusion_multiple_classification(const Matrix<double>& actual_data, const Matrix<double>& predicted_data) const
-{
-    const unsigned rows_number = actual_data.get_rows_number();
-    const unsigned columns_number = actual_data.get_columns_number();
+Matrix<unsigned> TestingAnalysis::calculate_confusion_multiple_classification(
+    const Matrix<double>& actual_data,
+    const Matrix<double>& predicted_data) const {
+  const unsigned rows_number = actual_data.get_rows_number();
+  const unsigned columns_number = actual_data.get_columns_number();
 
-    Matrix<unsigned> confusion(columns_number, columns_number, 0);
+  Matrix<unsigned> confusion(columns_number, columns_number, 0);
 
-    unsigned actual_index = 0;
-    unsigned predicted_index = 0;
+  unsigned actual_index = 0;
+  unsigned predicted_index = 0;
 
-    for(unsigned i = 0; i < rows_number; i++)
-    {
-        actual_index = actual_data.arrange_row(i).calculate_maximal_index();
-        predicted_index = predicted_data.arrange_row(i).calculate_maximal_index();
+  for (unsigned i = 0; i < rows_number; i++) {
+    actual_index = actual_data.arrange_row(i).calculate_maximal_index();
+    predicted_index = predicted_data.arrange_row(i).calculate_maximal_index();
 
-        confusion[actual_index][predicted_index]++;
-    }
+    confusion[actual_index][predicted_index]++;
+  }
 
-    return(confusion);
+  return (confusion);
 }
-
 
 // Matrix<unsigned> calculate_confusion(void) const method
 
-/// Returns the confusion matrix of a neural network on the testing instances of a data set.
+/// Returns the confusion matrix of a neural network on the testing instances of
+/// a data set.
 /// If the number of outputs is one, the size of the confusion matrix is two.
-/// If the number of outputs is greater than one, the size of the confusion matrix is the number of outputs.
+/// If the number of outputs is greater than one, the size of the confusion
+/// matrix is the number of outputs.
 
-Matrix<unsigned> TestingAnalysis::calculate_confusion(void) const
-{
+Matrix<unsigned> TestingAnalysis::calculate_confusion(void) const {
 
-   #ifndef NDEBUG
+#ifndef NDEBUG
 
-    check();
+  check();
 
-   #endif
+#endif
 
-   const MultilayerPerceptron* multilayer_perceptron_pointer = neural_network_pointer->get_multilayer_perceptron_pointer();
+  const MultilayerPerceptron* multilayer_perceptron_pointer =
+      neural_network_pointer->get_multilayer_perceptron_pointer();
 
-   #ifndef NDEBUG
+#ifndef NDEBUG
 
-   if(!multilayer_perceptron_pointer)
-   {
-       std::ostringstream buffer;
+  if (!multilayer_perceptron_pointer) {
+    std::ostringstream buffer;
 
-      buffer << "OpenNN Exception: TestingAnalysis class.\n"
-             << "Matrix<unsigned> calculate_confusion(void) const method.\n"
-             << "Pointer to multilayer perceptron in neural network is NULL.\n";
+    buffer << "OpenNN Exception: TestingAnalysis class.\n"
+           << "Matrix<unsigned> calculate_confusion(void) const method.\n"
+           << "Pointer to multilayer perceptron in neural network is NULL.\n";
 
-      throw std::logic_error(buffer.str());
-   }
+    throw std::logic_error(buffer.str());
+  }
 
-   #endif
+#endif
 
-   const unsigned outputs_number = multilayer_perceptron_pointer->get_outputs_number();
+  const unsigned outputs_number =
+      multilayer_perceptron_pointer->get_outputs_number();
 
-   #ifndef NDEBUG
+#ifndef NDEBUG
 
-   const unsigned inputs_number = multilayer_perceptron_pointer->get_inputs_number();
+  const unsigned inputs_number =
+      multilayer_perceptron_pointer->get_inputs_number();
 
-   // Control sentence
+  // Control sentence
 
-   const Variables& variables = data_set_pointer->get_variables();
+  const Variables& variables = data_set_pointer->get_variables();
 
-   if(inputs_number != variables.count_inputs_number())
-   {      
-       std::ostringstream buffer;
+  if (inputs_number != variables.count_inputs_number()) {
+    std::ostringstream buffer;
 
-       buffer << "OpenNN Exception: TestingAnalysis class." << std::endl
-             << "Matrix<unsigned> calculate_confusion(void) const method." << std::endl
-             << "Number of inputs in neural network must be equal to number of inputs in data set." << std::endl;
+    buffer << "OpenNN Exception: TestingAnalysis class." << std::endl
+           << "Matrix<unsigned> calculate_confusion(void) const method."
+           << std::endl << "Number of inputs in neural network must be equal "
+                           "to number of inputs in data set." << std::endl;
 
-      throw std::logic_error(buffer.str());
-   }
+    throw std::logic_error(buffer.str());
+  }
 
-   if(outputs_number != variables.count_targets_number())
-   {
-       std::ostringstream buffer;
+  if (outputs_number != variables.count_targets_number()) {
+    std::ostringstream buffer;
 
-      buffer << "OpenNN Exception: TestingAnalysis class." << std::endl
-             << "Matrix<unsigned> calculate_confusion(void) const method." << std::endl
-             << "Number of outputs in neural network must be equal to number of targets in data set." << std::endl;
+    buffer << "OpenNN Exception: TestingAnalysis class." << std::endl
+           << "Matrix<unsigned> calculate_confusion(void) const method."
+           << std::endl << "Number of outputs in neural network must be equal "
+                           "to number of targets in data set." << std::endl;
 
-      throw std::logic_error(buffer.str());
-   }
+    throw std::logic_error(buffer.str());
+  }
 
-   #endif
+#endif
 
-    const Matrix<double> input_data = data_set_pointer->arrange_testing_input_data();
-    const Matrix<double> target_data = data_set_pointer->arrange_testing_target_data();
+  const Matrix<double> input_data =
+      data_set_pointer->arrange_testing_input_data();
+  const Matrix<double> target_data =
+      data_set_pointer->arrange_testing_target_data();
 
-    const Matrix<double> output_data = neural_network_pointer->calculate_output_data(input_data);
+  const Matrix<double> output_data =
+      neural_network_pointer->calculate_output_data(input_data);
 
-    if(outputs_number == 1)
-    {
-        return(calculate_confusion_binary_classification(target_data, output_data));
-    }
-    else
-    {
-        return(calculate_confusion_multiple_classification(target_data, output_data));
-
-    }
+  if (outputs_number == 1) {
+    return (
+        calculate_confusion_binary_classification(target_data, output_data));
+  } else {
+    return (
+        calculate_confusion_multiple_classification(target_data, output_data));
+  }
 }
-
 
 // Vector<double> calculate_binary_classification_tests(void) method
 
@@ -863,316 +873,288 @@ Matrix<unsigned> TestingAnalysis::calculate_confusion(void) const
 /// <li> Negative likelihood
 /// </ul>
 
-Vector<double> TestingAnalysis::calculate_binary_classification_tests(void) const
-{
-   // Control sentence (if debug)
+Vector<double> TestingAnalysis::calculate_binary_classification_tests(
+    void) const {
+// Control sentence (if debug)
 
-   #ifndef NDEBUG
+#ifndef NDEBUG
 
-   const MultilayerPerceptron* multilayer_perceptron_pointer = neural_network_pointer->get_multilayer_perceptron_pointer();
+  const MultilayerPerceptron* multilayer_perceptron_pointer =
+      neural_network_pointer->get_multilayer_perceptron_pointer();
 
-   const unsigned inputs_number = multilayer_perceptron_pointer->get_inputs_number();
+  const unsigned inputs_number =
+      multilayer_perceptron_pointer->get_inputs_number();
 
-   if(!data_set_pointer)
-   {
-      std::ostringstream buffer;
+  if (!data_set_pointer) {
+    std::ostringstream buffer;
 
-      buffer << "OpenNN Exception: TestingAnalysis class." << std::endl
-             << "Vector<double> calculate_binary_classification_tests(void) const." << std::endl
-             << "Data set is NULL." << std::endl;
+    buffer
+        << "OpenNN Exception: TestingAnalysis class." << std::endl
+        << "Vector<double> calculate_binary_classification_tests(void) const."
+        << std::endl << "Data set is NULL." << std::endl;
 
-      throw std::logic_error(buffer.str());
-   }
+    throw std::logic_error(buffer.str());
+  }
 
-   const Variables& variables = data_set_pointer->get_variables();
+  const Variables& variables = data_set_pointer->get_variables();
 
-   const unsigned targets_number = variables.count_targets_number();
+  const unsigned targets_number = variables.count_targets_number();
 
-   const unsigned outputs_number = multilayer_perceptron_pointer->get_outputs_number();
+  const unsigned outputs_number =
+      multilayer_perceptron_pointer->get_outputs_number();
 
-   // Control sentence
+  // Control sentence
 
-   if(inputs_number != variables.count_inputs_number())
-   {
-      std::ostringstream buffer;
+  if (inputs_number != variables.count_inputs_number()) {
+    std::ostringstream buffer;
 
-      buffer << "OpenNN Exception: TestingAnalysis class." << std::endl
-             << "Vector<double> calculate_binary_classification_tests(void) const." << std::endl
-             << "Number of inputs in neural network is not equal to number of inputs in data set." << std::endl;
+    buffer
+        << "OpenNN Exception: TestingAnalysis class." << std::endl
+        << "Vector<double> calculate_binary_classification_tests(void) const."
+        << std::endl << "Number of inputs in neural network is not equal to "
+                        "number of inputs in data set." << std::endl;
 
-      throw std::logic_error(buffer.str());
-   }
-   else if(outputs_number != 1)
-   {
-      std::ostringstream buffer;
+    throw std::logic_error(buffer.str());
+  } else if (outputs_number != 1) {
+    std::ostringstream buffer;
 
-      buffer << "OpenNN Exception: TestingAnalysis class." << std::endl
-             << "Vector<double> calculate_binary_classification_tests(void) const." << std::endl
-             << "Number of outputs in neural network must be one." << std::endl;
+    buffer
+        << "OpenNN Exception: TestingAnalysis class." << std::endl
+        << "Vector<double> calculate_binary_classification_tests(void) const."
+        << std::endl << "Number of outputs in neural network must be one."
+        << std::endl;
 
-      throw std::logic_error(buffer.str());
-   }
-   else if(targets_number != 1)
-   {
-      std::ostringstream buffer;
+    throw std::logic_error(buffer.str());
+  } else if (targets_number != 1) {
+    std::ostringstream buffer;
 
-      buffer << "OpenNN Exception: TestingAnalysis class." << std::endl
-             << "Vector<double> calculate_binary_classification_tests(void) const." << std::endl
-             << "Number of targets in data set must be one." << std::endl;
+    buffer
+        << "OpenNN Exception: TestingAnalysis class." << std::endl
+        << "Vector<double> calculate_binary_classification_tests(void) const."
+        << std::endl << "Number of targets in data set must be one."
+        << std::endl;
 
-      throw std::logic_error(buffer.str());
-   }
+    throw std::logic_error(buffer.str());
+  }
 
-   #endif
+#endif
 
-   // Confusion matrix
+  // Confusion matrix
 
-   const Matrix<unsigned> confusion = calculate_confusion();
+  const Matrix<unsigned> confusion = calculate_confusion();
 
-   const unsigned true_positive = confusion[0][0];
-   const unsigned false_positive = confusion[0][1];
-   const unsigned false_negative = confusion[1][0];
-   const unsigned true_negative = confusion[1][1];
+  const unsigned true_positive = confusion[0][0];
+  const unsigned false_positive = confusion[0][1];
+  const unsigned false_negative = confusion[1][0];
+  const unsigned true_negative = confusion[1][1];
 
-   // Classification accuracy
+  // Classification accuracy
 
-   double classification_accuracy;
+  double classification_accuracy;
 
-   if(true_positive + true_negative + false_positive + false_negative == 0)
-   {
-       classification_accuracy = 0.0;
-   }
-   else
-   {
-       classification_accuracy = (double)(true_positive + true_negative)/double(true_positive + true_negative + false_positive + false_negative);
-   }
+  if (true_positive + true_negative + false_positive + false_negative == 0) {
+    classification_accuracy = 0.0;
+  } else {
+    classification_accuracy =
+        (double)(true_positive + true_negative) /
+        double(true_positive + true_negative + false_positive + false_negative);
+  }
 
-   // Error rate
+  // Error rate
 
-   double error_rate;
+  double error_rate;
 
-   if(true_positive + true_negative + false_positive + false_negative == 0)
-   {
-       error_rate = 0.0;
-   }
-   else
-   {
-       error_rate = (double)(false_positive + false_negative)/(double)(true_positive + true_negative + false_positive + false_negative);
-   }
+  if (true_positive + true_negative + false_positive + false_negative == 0) {
+    error_rate = 0.0;
+  } else {
+    error_rate = (double)(false_positive + false_negative) /
+                 (double)(true_positive + true_negative + false_positive +
+                          false_negative);
+  }
 
-   // Sensitivity
+  // Sensitivity
 
-   double sensitivity;
+  double sensitivity;
 
-   if(true_positive + false_negative == 0)
-   {
-       sensitivity = 0.0;
-   }
-   else
-   {
-       sensitivity = (double)true_positive/(double)(true_positive + false_negative);
-   }
+  if (true_positive + false_negative == 0) {
+    sensitivity = 0.0;
+  } else {
+    sensitivity =
+        (double)true_positive / (double)(true_positive + false_negative);
+  }
 
-   // Specifity
+  // Specifity
 
-   double specifity;
+  double specifity;
 
-   if(true_negative + false_positive == 0)
-   {
-       specifity = 0.0;
-   }
-   else
-   {
-       specifity = (double)true_negative/(double)(true_negative + false_positive);
-   }
+  if (true_negative + false_positive == 0) {
+    specifity = 0.0;
+  } else {
+    specifity =
+        (double)true_negative / (double)(true_negative + false_positive);
+  }
 
-   // Positive likelihood
+  // Positive likelihood
 
-   double positive_likelihood;
+  double positive_likelihood;
 
-   if(classification_accuracy == 1.0)
-   {
-       positive_likelihood = 1.0;
-   }
-   else if(1.0 - specifity == 0.0)
-   {
-       positive_likelihood = 0.0;
-   }
-   else
-   {
-       positive_likelihood = sensitivity/(1.0 - specifity);
-   }
+  if (classification_accuracy == 1.0) {
+    positive_likelihood = 1.0;
+  } else if (1.0 - specifity == 0.0) {
+    positive_likelihood = 0.0;
+  } else {
+    positive_likelihood = sensitivity / (1.0 - specifity);
+  }
 
-   // Negative likelihood
+  // Negative likelihood
 
-   double negative_likelihood;
+  double negative_likelihood;
 
-   if(classification_accuracy == 1.0)
-   {
-       negative_likelihood = 1.0;
-   }
-   else if(1.0 - sensitivity == 0.0)
-   {
-       negative_likelihood = 0.0;
-   }
-   else
-   {
-       negative_likelihood = specifity/(1.0 - sensitivity);
-   }
+  if (classification_accuracy == 1.0) {
+    negative_likelihood = 1.0;
+  } else if (1.0 - sensitivity == 0.0) {
+    negative_likelihood = 0.0;
+  } else {
+    negative_likelihood = specifity / (1.0 - sensitivity);
+  }
 
-   // Arrange vector
+  // Arrange vector
 
-   Vector<double> binary_classification_test(6);
-   binary_classification_test[0] = classification_accuracy;
-   binary_classification_test[1] = error_rate;
-   binary_classification_test[2] = sensitivity;
-   binary_classification_test[3] = specifity;
-   binary_classification_test[4] = positive_likelihood;
-   binary_classification_test[5] = negative_likelihood;
+  Vector<double> binary_classification_test(6);
+  binary_classification_test[0] = classification_accuracy;
+  binary_classification_test[1] = error_rate;
+  binary_classification_test[2] = sensitivity;
+  binary_classification_test[3] = specifity;
+  binary_classification_test[4] = positive_likelihood;
+  binary_classification_test[5] = negative_likelihood;
 
-   return(binary_classification_test);
+  return (binary_classification_test);
 }
-
 
 // std::string to_string(void) const method
 
-/// Returns a string representation of the testing analysis object. 
+/// Returns a string representation of the testing analysis object.
 
-std::string TestingAnalysis::to_string(void) const
-{
-   std::ostringstream buffer;
+std::string TestingAnalysis::to_string(void) const {
+  std::ostringstream buffer;
 
-   buffer << "Testing analysis\n"
-          << "Display: " << display << "\n";
+  buffer << "Testing analysis\n"
+         << "Display: " << display << "\n";
 
-   return(buffer.str());
+  return (buffer.str());
 }
-
 
 // void print(void) const method
 
-/// Prints to the standard output the string representation of this testing analysis object. 
+/// Prints to the standard output the string representation of this testing
+/// analysis object.
 
-void TestingAnalysis::print(void) const
-{
-   std::cout << to_string();
-}
-
+void TestingAnalysis::print(void) const { std::cout << to_string(); }
 
 // tinyxml2::XMLDocument* to_XML(void) const method
 
-/// Serializes the testing analysis object into a XML document of the TinyXML library. 
-/// See the OpenNN manual for more information about the format of this element. 
+/// Serializes the testing analysis object into a XML document of the TinyXML
+/// library.
+/// See the OpenNN manual for more information about the format of this element.
 
-tinyxml2::XMLDocument* TestingAnalysis::to_XML(void) const
-{
-    tinyxml2::XMLDocument* document = new tinyxml2::XMLDocument;
+tinyxml2::XMLDocument* TestingAnalysis::to_XML(void) const {
+  tinyxml2::XMLDocument* document = new tinyxml2::XMLDocument;
 
-    std::ostringstream buffer;
+  std::ostringstream buffer;
 
-    // Root element
+  // Root element
 
-    tinyxml2::XMLElement* testing_analysis_element = document->NewElement("TestingAnalysis");
+  tinyxml2::XMLElement* testing_analysis_element =
+      document->NewElement("TestingAnalysis");
 
-    document->InsertFirstChild(testing_analysis_element);
+  document->InsertFirstChild(testing_analysis_element);
 
-    // Display
+  // Display
 
-    tinyxml2::XMLElement* display_element = document->NewElement("Display");
-    testing_analysis_element->LinkEndChild(display_element);
+  tinyxml2::XMLElement* display_element = document->NewElement("Display");
+  testing_analysis_element->LinkEndChild(display_element);
 
-    buffer.str("");
-    buffer << display;
+  buffer.str("");
+  buffer << display;
 
-    tinyxml2::XMLText* display_text = document->NewText(buffer.str().c_str());
-    testing_analysis_element->LinkEndChild(display_text);
+  tinyxml2::XMLText* display_text = document->NewText(buffer.str().c_str());
+  testing_analysis_element->LinkEndChild(display_text);
 
-    return(document);
+  return (document);
 }
-
 
 // void from_XML(const tinyxml2::XMLDocument&) method
 
 /// Deserializes a TinyXML document into this testing analysis object.
 /// @param document XML document containing the member data.
 
-void TestingAnalysis::from_XML(const tinyxml2::XMLDocument& document)
-{
-    std::ostringstream buffer;
+void TestingAnalysis::from_XML(const tinyxml2::XMLDocument& document) {
+  std::ostringstream buffer;
 
-    const tinyxml2::XMLElement* root_element = document.FirstChildElement("TestingAnalysis");
+  const tinyxml2::XMLElement* root_element =
+      document.FirstChildElement("TestingAnalysis");
 
-    if(!root_element)
-    {
-        buffer << "OpenNN Exception: TestingAnalysis class.\n"
-               << "void from_XML(const tinyxml2::XMLDocument&) method.\n"
-               << "Testing analysis element is NULL.\n";
+  if (!root_element) {
+    buffer << "OpenNN Exception: TestingAnalysis class.\n"
+           << "void from_XML(const tinyxml2::XMLDocument&) method.\n"
+           << "Testing analysis element is NULL.\n";
 
-        throw std::logic_error(buffer.str());
+    throw std::logic_error(buffer.str());
+  }
+
+  // Display
+
+  const tinyxml2::XMLElement* element =
+      root_element->FirstChildElement("Display");
+
+  if (element) {
+    std::string new_display_string = element->GetText();
+
+    try {
+      set_display(new_display_string != "0");
     }
-
-    // Display
-
-    const tinyxml2::XMLElement* element = root_element->FirstChildElement("Display");
-
-    if(element)
-    {
-       std::string new_display_string = element->GetText();
-
-       try
-       {
-          set_display(new_display_string != "0");
-       }
-       catch(const std::logic_error& e)
-       {
-          std::cout << e.what() << std::endl;
-       }
+    catch (const std::logic_error & e) {
+      std::cout << e.what() << std::endl;
     }
+  }
 }
-
 
 // void save(const std::string&) const method
 
 /// Saves to a XML file the members of this testing analysis object.
 /// @param file_name Name of testing analysis XML file.
 
-void TestingAnalysis::save(const std::string& file_name) const
-{
-    tinyxml2::XMLDocument* document = to_XML();
+void TestingAnalysis::save(const std::string& file_name) const {
+  tinyxml2::XMLDocument* document = to_XML();
 
-    document->SaveFile(file_name.c_str());
+  document->SaveFile(file_name.c_str());
 
-    delete document;
+  delete document;
 }
-
 
 // void load(const std::string&) method
 
 /// Loads from a XML file the members for this testing analysis object.
 /// @param file_name Name of testing analysis XML file.
 
-void TestingAnalysis::load(const std::string& file_name)
-{
-    set_default();
+void TestingAnalysis::load(const std::string& file_name) {
+  set_default();
 
-   tinyxml2::XMLDocument document;
+  tinyxml2::XMLDocument document;
 
-   if(document.LoadFile(file_name.c_str()))
-   {
-       std::ostringstream buffer;
+  if (document.LoadFile(file_name.c_str())) {
+    std::ostringstream buffer;
 
-      buffer << "OpenNN Exception: Testing analysis class.\n"
-             << "void load(const std::string&) method.\n"
-             << "Cannot load XML file " << file_name << ".\n";
+    buffer << "OpenNN Exception: Testing analysis class.\n"
+           << "void load(const std::string&) method.\n"
+           << "Cannot load XML file " << file_name << ".\n";
 
-      throw std::logic_error(buffer.str());
-   }
+    throw std::logic_error(buffer.str());
+  }
 
-   from_XML(document);
+  from_XML(document);
 }
-
 }
-
 
 // OpenNN: Open Neural Networks Library.
 // Neural Designer Copyright © 2013 Roberto López and Ismael Santana (Intelnics)

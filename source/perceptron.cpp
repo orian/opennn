@@ -1,13 +1,19 @@
 /****************************************************************************************************************/
 /*                                                                                                              */
-/*   OpenNN: Open Neural Networks Library                                                                       */
-/*   www.intelnics.com/opennn                                                                                   */
+/*   OpenNN: Open Neural Networks Library
+ */
+/*   www.intelnics.com/opennn
+ */
 /*                                                                                                              */
-/*   P E R C E P T R O N   C L A S S                                                                            */
+/*   P E R C E P T R O N   C L A S S
+ */
 /*                                                                                                              */
-/*   Roberto Lopez                                                                                              */
-/*   Intelnics - The artificial intelligence company                                                            */
-/*   robertolopez@intelnics.com                                                                                 */
+/*   Roberto Lopez
+ */
+/*   Intelnics - The artificial intelligence company
+ */
+/*   robertolopez@intelnics.com
+ */
 /*                                                                                                              */
 /****************************************************************************************************************/
 
@@ -15,414 +21,348 @@
 
 #include "perceptron.h"
 
-namespace OpenNN
-{
+namespace OpenNN {
 
-/// Default constructor. 
+/// Default constructor.
 /// It creates a perceptron object with zero inputs.
-/// The neuron's bias is initialized to zero. 
-/// This constructor also initializes the rest of class members to their default values.
-	
-Perceptron::Perceptron(void)
-{
-   set();
-}
+/// The neuron's bias is initialized to zero.
+/// This constructor also initializes the rest of class members to their default
+/// values.
 
+Perceptron::Perceptron(void) { set(); }
 
-/// Inputs number constructor. 
-/// It creates a perceptron object with a given number of inputs. 
-/// The neuron's free paramameters (bias and synaptic weights) are initialized at random with a normal 
+/// Inputs number constructor.
+/// It creates a perceptron object with a given number of inputs.
+/// The neuron's free paramameters (bias and synaptic weights) are initialized
+/// at random with a normal
 /// distribution of mean 0 and standard deviation 1.
-/// This constructor also initializes the rest of class members to their default values.
+/// This constructor also initializes the rest of class members to their default
+/// values.
 /// @param new_inputs_number Number of inputs in the neuron.
 
-Perceptron::Perceptron(const unsigned& new_inputs_number)
-{
-   set(new_inputs_number);
+Perceptron::Perceptron(const unsigned& new_inputs_number) {
+  set(new_inputs_number);
 }
 
-
-/// Inputs number and initialization constructor. 
+/// Inputs number and initialization constructor.
 /// This creates a perceptron with a given number of inputs.
-/// It also initializes the bias and synaptic weights with a given value. 
+/// It also initializes the bias and synaptic weights with a given value.
 /// @param new_inputs_number Number of inputs in the neuron.
-/// @param new_parameters_value Bias and synaptic weights initialization value. 
+/// @param new_parameters_value Bias and synaptic weights initialization value.
 
-Perceptron::Perceptron(const unsigned& new_inputs_number, const double& new_parameters_value)
-{
-   set(new_inputs_number, new_parameters_value);
+Perceptron::Perceptron(const unsigned& new_inputs_number,
+                       const double& new_parameters_value) {
+  set(new_inputs_number, new_parameters_value);
 }
 
-
-/// Copy constructor. 
-/// It creates a percdeptron object by copying its members with those for other perceptron object. 
+/// Copy constructor.
+/// It creates a percdeptron object by copying its members with those for other
+/// perceptron object.
 /// @param other_perceptron Perceptron object to be copied.
 
-Perceptron::Perceptron(const Perceptron& other_perceptron)
-{
-   set(other_perceptron);
+Perceptron::Perceptron(const Perceptron& other_perceptron) {
+  set(other_perceptron);
 }
-
 
 /// Destructor.
 /// This destructor does not delete any pointer.
 
-Perceptron::~Perceptron(void)
-{
-}
-
+Perceptron::~Perceptron(void) {}
 
 // ASSIGNMENT OPERATOR
 
-/// Assignment operator. 
+/// Assignment operator.
 /// It assigns to the current perceptron the members of an existing perceptron.
 /// @param other_perceptron Assigning perceptron object .
 
-Perceptron& Perceptron::operator=(const Perceptron& other_perceptron)
-{
-   if(this != &other_perceptron) 
-   {
-      bias = other_perceptron.bias;
-   
-      synaptic_weights = other_perceptron.synaptic_weights;
+Perceptron& Perceptron::operator=(const Perceptron& other_perceptron) {
+  if (this != &other_perceptron) {
+    bias = other_perceptron.bias;
 
-      activation_function = other_perceptron.activation_function;
+    synaptic_weights = other_perceptron.synaptic_weights;
 
-      display = other_perceptron.display;
-   }
+    activation_function = other_perceptron.activation_function;
 
-   return(*this);
+    display = other_perceptron.display;
+  }
+
+  return (*this);
 }
-
 
 // EQUAL TO OPERATOR
 
 // bool operator == (const Perceptron&) const method
 
-/// Equal to operator. 
-/// It compares this object with another object of the same class. 
-/// It returns true if the members of the two objects have the same values, and false otherwise.
+/// Equal to operator.
+/// It compares this object with another object of the same class.
+/// It returns true if the members of the two objects have the same values, and
+/// false otherwise.
 /// @ param other_perceptron Perceptron to be compared with.
 
-bool Perceptron::operator == (const Perceptron& other_perceptron) const
-{
-   if(bias == other_perceptron.bias
-   && synaptic_weights == other_perceptron.synaptic_weights
-   && activation_function == other_perceptron.activation_function
-   && display == other_perceptron.display)
-   {
-      return(true);
-   }
-   else
-   {
-      return(false);
-   }
+bool Perceptron::operator==(const Perceptron& other_perceptron) const {
+  if (bias == other_perceptron.bias &&
+      synaptic_weights == other_perceptron.synaptic_weights &&
+      activation_function == other_perceptron.activation_function &&
+      display == other_perceptron.display) {
+    return (true);
+  } else {
+    return (false);
+  }
 }
-
 
 // METHODS
 
 // const ActivationFunction& get_activation_function(void) const method
 
-/// Returns the activation function of the neuron. 
+/// Returns the activation function of the neuron.
 
-const Perceptron::ActivationFunction& Perceptron::get_activation_function(void) const 
-{
-   return(activation_function);                           
+const Perceptron::ActivationFunction& Perceptron::get_activation_function(
+    void) const {
+  return (activation_function);
 }
-
 
 // std::string write_activation_function(void) const method
 
-/// Returns a string with the name of the activation function of the neuron. 
+/// Returns a string with the name of the activation function of the neuron.
 
-std::string Perceptron::write_activation_function(void) const
-{
-   switch(activation_function)
-   {
-      case Perceptron::Logistic:   
-      {
-         return("Logistic");
-      }
-      break;
+std::string Perceptron::write_activation_function(void) const {
+  switch (activation_function) {
+    case Perceptron::Logistic: {
+      return ("Logistic");
+    } break;
 
-      case Perceptron::HyperbolicTangent:   
-      {
-         return("HyperbolicTangent");
-      }
-      break;
+    case Perceptron::HyperbolicTangent: {
+      return ("HyperbolicTangent");
+    } break;
 
-      case Perceptron::Threshold:   
-      {
-         return("Threshold");
-      }
-      break;
+    case Perceptron::Threshold: {
+      return ("Threshold");
+    } break;
 
-      case Perceptron::SymmetricThreshold:   
-      {
-         return("SymmetricThreshold");
-      }
-      break;
+    case Perceptron::SymmetricThreshold: {
+      return ("SymmetricThreshold");
+    } break;
 
-      case Perceptron::Linear:   
-      {
-         return("Linear");
-      }
-      break;
+    case Perceptron::Linear: {
+      return ("Linear");
+    } break;
 
-      default:
-      {
-         std::ostringstream buffer;
+    default: {
+      std::ostringstream buffer;
 
-         buffer << "OpenNN Exception: Perceptron class.\n" 
-                << "std::string get_activation_function(void) const method.\n"
-                << "Unknown activation function.\n";
+      buffer << "OpenNN Exception: Perceptron class.\n"
+             << "std::string get_activation_function(void) const method.\n"
+             << "Unknown activation function.\n";
 
-         throw std::logic_error(buffer.str());
-      }
-      break;
-   }
+      throw std::logic_error(buffer.str());
+    } break;
+  }
 }
-
 
 // unsigned get_inputs_number(void) const method
 
-/// Returns the number of inputs to the neuron. 
+/// Returns the number of inputs to the neuron.
 
-unsigned Perceptron::get_inputs_number(void) const
-{
-   return(synaptic_weights.size());
-}    
-
+unsigned Perceptron::get_inputs_number(void) const {
+  return (synaptic_weights.size());
+}
 
 // double get_bias(void) const method
 
 /// Returns the bias value of the neuron.
 
-const double& Perceptron::get_bias(void) const
-{
-   return(bias);
-}
-
+const double& Perceptron::get_bias(void) const { return (bias); }
 
 // Vector<double>& arrange_synaptic_weights(void)
 
 /// Returns the synaptic weight values of the neuron.
 
-const Vector<double>& Perceptron::arrange_synaptic_weights(void) const
-{
-   return(synaptic_weights);
+const Vector<double>& Perceptron::arrange_synaptic_weights(void) const {
+  return (synaptic_weights);
 }
-
 
 // double get_synaptic_weight(const unsigned&) const method
 
 /// Returns the synaptic weight value with index i of the neuron.
 /// @param synaptic_weight_index Synaptic weight index.
- 
-const double& Perceptron::get_synaptic_weight(const unsigned& synaptic_weight_index) const
-{
-   // Control sentence (if debug)
 
-   #ifndef NDEBUG 
-      
-   const unsigned inputs_number = get_inputs_number();
+const double& Perceptron::get_synaptic_weight(
+    const unsigned& synaptic_weight_index) const {
+// Control sentence (if debug)
 
-   if(synaptic_weight_index >= inputs_number)
-   {
-      std::ostringstream buffer;
+#ifndef NDEBUG
 
-	  buffer << "OpenNN Exception: Perceptron class.\n"
-                << "double get_synaptic_weight(const unsigned&) const method.\n"
-                << "Index of synaptic weight must be less than number of inputs.\n";
+  const unsigned inputs_number = get_inputs_number();
 
-      throw std::logic_error(buffer.str());
-   }
+  if (synaptic_weight_index >= inputs_number) {
+    std::ostringstream buffer;
 
-   #endif
+    buffer << "OpenNN Exception: Perceptron class.\n"
+           << "double get_synaptic_weight(const unsigned&) const method.\n"
+           << "Index of synaptic weight must be less than number of inputs.\n";
 
-   // Get single synaptic weights
+    throw std::logic_error(buffer.str());
+  }
 
-   return(synaptic_weights[synaptic_weight_index]);   
+#endif
+
+  // Get single synaptic weights
+
+  return (synaptic_weights[synaptic_weight_index]);
 }
-
 
 // const bool& get_display(void) const method
 
-/// Returns true if messages from this class are to be displayed on the screen, or false if messages 
+/// Returns true if messages from this class are to be displayed on the screen,
+/// or false if messages
 /// from this class are not to be displayed on the screen.
 
-const bool& Perceptron::get_display(void) const
-{
-   return(display);
-}
-
+const bool& Perceptron::get_display(void) const { return (display); }
 
 //  void set(void) method
 
-/// Sets the number of inputs to zero and the rest of members to their default values. 
+/// Sets the number of inputs to zero and the rest of members to their default
+/// values.
 
-void Perceptron::set(void)
-{
-   initialize_bias_normal(0.0, 0.2);
+void Perceptron::set(void) {
+  initialize_bias_normal(0.0, 0.2);
 
-   synaptic_weights.set();
+  synaptic_weights.set();
 
-   activation_function = HyperbolicTangent;
+  activation_function = HyperbolicTangent;
 
-   display = true;
+  display = true;
 }
-
 
 // void set(const unsigned&) method
 
 /// Sets a new number of inputs.
-/// It also sets the other members of this object to their defaul values. 
-/// @param new_inputs_number Number of inputs in the neuron. 
+/// It also sets the other members of this object to their defaul values.
+/// @param new_inputs_number Number of inputs in the neuron.
 
-void Perceptron::set(const unsigned& new_inputs_number)
-{
-   // Set synaptic weights
+void Perceptron::set(const unsigned& new_inputs_number) {
+  // Set synaptic weights
 
-   activation_function = HyperbolicTangent;
+  activation_function = HyperbolicTangent;
 
-   initialize_bias_normal(0.0, 0.2);
+  initialize_bias_normal(0.0, 0.2);
 
-   synaptic_weights.set(new_inputs_number);   
-   initialize_synaptic_weights_normal(0.0, 0.2);
-   
-   display = true;
+  synaptic_weights.set(new_inputs_number);
+  initialize_synaptic_weights_normal(0.0, 0.2);
+
+  display = true;
 }
-
 
 // void set(const unsigned&, const double&) method
 
-/// Sets the number of inputs to a given value and initializes the bias and the synaptic weights with a given value. 
-/// @param new_inputs_number Number of inputs in the neuron. 
-/// @param new_parameters_value Parameters initialization value.  
+/// Sets the number of inputs to a given value and initializes the bias and the
+/// synaptic weights with a given value.
+/// @param new_inputs_number Number of inputs in the neuron.
+/// @param new_parameters_value Parameters initialization value.
 
-void Perceptron::set(const unsigned& new_inputs_number, const double& new_parameters_value)
-{
-   bias = new_parameters_value;
-   synaptic_weights.set(new_inputs_number, new_parameters_value);
+void Perceptron::set(const unsigned& new_inputs_number,
+                     const double& new_parameters_value) {
+  bias = new_parameters_value;
+  synaptic_weights.set(new_inputs_number, new_parameters_value);
 
-   activation_function = HyperbolicTangent;
+  activation_function = HyperbolicTangent;
 
-   display = true;
+  display = true;
 }
-
 
 // void set(const Perceptron&)
 
-/// Sets the members of this perceptron object with those from other perceptron object. 
-/// @param other_perceptron Setting perceptron object. 
+/// Sets the members of this perceptron object with those from other perceptron
+/// object.
+/// @param other_perceptron Setting perceptron object.
 
-void Perceptron::set(const Perceptron& other_perceptron)
-{
-   bias = other_perceptron.bias;
-   
-   synaptic_weights = other_perceptron.synaptic_weights;
+void Perceptron::set(const Perceptron& other_perceptron) {
+  bias = other_perceptron.bias;
 
-   activation_function = other_perceptron.activation_function;
+  synaptic_weights = other_perceptron.synaptic_weights;
 
-   display = other_perceptron.display;
+  activation_function = other_perceptron.activation_function;
+
+  display = other_perceptron.display;
 }
-
 
 // void set_activation_function(const ActivationFunction&) method
 
-/// Sets a new activation function in the neuron. 
+/// Sets a new activation function in the neuron.
 /// @param new_activation_function Activation function.
 
-void Perceptron::set_activation_function(const Perceptron::ActivationFunction& new_activation_function)
-{
-   activation_function = new_activation_function;
+void Perceptron::set_activation_function(
+    const Perceptron::ActivationFunction& new_activation_function) {
+  activation_function = new_activation_function;
 }
-
 
 // void set_activation_function(const std::string&) method
 
-/// Sets a new activation function in the perceptron with a string containing 
+/// Sets a new activation function in the perceptron with a string containing
 /// the name of the activation function.
-/// @param new_activation_function_name String with name of activation function. 
+/// @param new_activation_function_name String with name of activation function.
 
-void Perceptron::set_activation_function(const std::string& new_activation_function_name)
-{
-   if(new_activation_function_name == "Logistic")
-   {
-      activation_function = Logistic;
-   }
-   else if(new_activation_function_name == "HyperbolicTangent")
-   {
-      activation_function = HyperbolicTangent;
-   }
-   else if(new_activation_function_name == "Threshold")
-   {
-      activation_function = Threshold;
-   }
-   else if(new_activation_function_name == "SymmetricThreshold")
-   {
-      activation_function = SymmetricThreshold;
-   }
-   else if(new_activation_function_name == "Linear")
-   {
-      activation_function = Linear;
-   }
-   else
-   {
-      std::ostringstream buffer;
+void Perceptron::set_activation_function(
+    const std::string& new_activation_function_name) {
+  if (new_activation_function_name == "Logistic") {
+    activation_function = Logistic;
+  } else if (new_activation_function_name == "HyperbolicTangent") {
+    activation_function = HyperbolicTangent;
+  } else if (new_activation_function_name == "Threshold") {
+    activation_function = Threshold;
+  } else if (new_activation_function_name == "SymmetricThreshold") {
+    activation_function = SymmetricThreshold;
+  } else if (new_activation_function_name == "Linear") {
+    activation_function = Linear;
+  } else {
+    std::ostringstream buffer;
 
-      buffer << "OpenNN Exception: Perceptron class.\n"
-             << "void set_activation_function(const std::string&) method.\n"
-   	         << "Unknown activation function: " << new_activation_function_name << ".\n";
+    buffer << "OpenNN Exception: Perceptron class.\n"
+           << "void set_activation_function(const std::string&) method.\n"
+           << "Unknown activation function: " << new_activation_function_name
+           << ".\n";
 
-      throw std::logic_error(buffer.str());
-   }
+    throw std::logic_error(buffer.str());
+  }
 }
-
 
 // void set_bias(const double&) method
 
 /// Sets a new bias value for the perceptron.
 /// @param new_bias Bias value.
- 
-void Perceptron::set_bias(const double& new_bias)
-{
-   bias = new_bias;   
-}
 
+void Perceptron::set_bias(const double& new_bias) { bias = new_bias; }
 
 // void set_synaptic_weights(const Vector<double>&) method
 
 /// This method a new set of synaptic weights for the perceptron.
 /// @param new_synaptic_weights Synaptic weight values.
- 
-void Perceptron::set_synaptic_weights(const Vector<double>& new_synaptic_weights)
-{
-   // Control sentence (if debug)
 
-   #ifndef NDEBUG 
+void Perceptron::set_synaptic_weights(
+    const Vector<double>& new_synaptic_weights) {
+// Control sentence (if debug)
 
-   const unsigned inputs_number = get_inputs_number();
+#ifndef NDEBUG
 
-   if(new_synaptic_weights.size() != inputs_number)
-   {
-      std::ostringstream buffer;
+  const unsigned inputs_number = get_inputs_number();
 
-      buffer << "OpenNN Exception: Perceptron class.\n"
-             << "void set_synaptic_weights(const Vector<double>&) method.\n"
-             << "Size of synaptic weights vector must be equal to number of inputs.\n";
+  if (new_synaptic_weights.size() != inputs_number) {
+    std::ostringstream buffer;
 
-      throw std::logic_error(buffer.str());
-   }
+    buffer << "OpenNN Exception: Perceptron class.\n"
+           << "void set_synaptic_weights(const Vector<double>&) method.\n"
+           << "Size of synaptic weights vector must be equal to number of "
+              "inputs.\n";
 
-   #endif
+    throw std::logic_error(buffer.str());
+  }
 
-   // Set synaptic weights
-   
-   synaptic_weights = new_synaptic_weights;
+#endif
+
+  // Set synaptic weights
+
+  synaptic_weights = new_synaptic_weights;
 }
-
 
 // void set_synaptic_weight(const unsigned&, const double&) method
 
@@ -430,344 +370,326 @@ void Perceptron::set_synaptic_weights(const Vector<double>& new_synaptic_weights
 /// @param synaptic_weight_index Synaptic weight index.
 /// @param new_synaptic_weight Synaptic weight value.
 
-void Perceptron::set_synaptic_weight(const unsigned& synaptic_weight_index, const double& new_synaptic_weight)
-{
-   // Control sentence (if debug)
+void Perceptron::set_synaptic_weight(const unsigned& synaptic_weight_index,
+                                     const double& new_synaptic_weight) {
+// Control sentence (if debug)
 
-   #ifndef NDEBUG 
+#ifndef NDEBUG
 
-   const unsigned inputs_number = get_inputs_number();
+  const unsigned inputs_number = get_inputs_number();
 
-   if(synaptic_weight_index >= inputs_number)
-   {
-      std::ostringstream buffer;
+  if (synaptic_weight_index >= inputs_number) {
+    std::ostringstream buffer;
 
-      buffer << "OpenNN Exception: Perceptron class.\n"
-             << "void set_synaptic_weight(const unsigned&, const double&) method.\n"
-             << "Index of synaptic weight must be less than number of inputs.\n";
+    buffer
+        << "OpenNN Exception: Perceptron class.\n"
+        << "void set_synaptic_weight(const unsigned&, const double&) method.\n"
+        << "Index of synaptic weight must be less than number of inputs.\n";
 
-      throw std::logic_error(buffer.str());
-   }
+    throw std::logic_error(buffer.str());
+  }
 
-   #endif
+#endif
 
-   // Set single synaptic weight
+  // Set single synaptic weight
 
-   synaptic_weights[synaptic_weight_index] = new_synaptic_weight;
+  synaptic_weights[synaptic_weight_index] = new_synaptic_weight;
 }
-
 
 // void set_display(const bool&) method
 
-/// Sets a new display value. 
-/// If it is set to true messages from this class are to be displayed on the screen;
-/// if it is set to false messages from this class are not to be displayed on the screen.
+/// Sets a new display value.
+/// If it is set to true messages from this class are to be displayed on the
+/// screen;
+/// if it is set to false messages from this class are not to be displayed on
+/// the screen.
 /// @param new_display Display value.
- 
-void Perceptron::set_display(const bool& new_display)
-{
-   display = new_display;   
-}
 
+void Perceptron::set_display(const bool& new_display) { display = new_display; }
 
 // void set_inputs_number(unsigned) method
 
 /// Sets a new number of inputs in the neuron.
-/// The new synaptic weights are initialized at random with a normal distribution of 
+/// The new synaptic weights are initialized at random with a normal
+/// distribution of
 /// mean 0 and standard deviation 1.
 /// @param new_inputs_number Number of inputs in the neuton.
- 
-void Perceptron::set_inputs_number(const unsigned& new_inputs_number)
-{
-   initialize_bias_normal(0.0,1.0);
 
-   synaptic_weights.set(new_inputs_number);
-   initialize_synaptic_weights_normal(0.0,1.0);
+void Perceptron::set_inputs_number(const unsigned& new_inputs_number) {
+  initialize_bias_normal(0.0, 1.0);
+
+  synaptic_weights.set(new_inputs_number);
+  initialize_synaptic_weights_normal(0.0, 1.0);
 }
-
 
 // unsigned count_parameters_number(void) const method
 
-/// Returns the number of parameters (bias and synaptic weights) in the perceptron.
+/// Returns the number of parameters (bias and synaptic weights) in the
+/// perceptron.
 
-unsigned Perceptron::count_parameters_number(void) const
-{
-   const unsigned inputs_number = get_inputs_number();
-   
-   return(1 + inputs_number);
+unsigned Perceptron::count_parameters_number(void) const {
+  const unsigned inputs_number = get_inputs_number();
+
+  return (1 + inputs_number);
 }
-
 
 // Vector<double> arrange_parameters(void) const method
 
 /// Returns the parameters (bias and synaptic weights) of the perceptron.
 
-Vector<double> Perceptron::arrange_parameters(void) const
-{
-   const unsigned parameters_number = count_parameters_number();
+Vector<double> Perceptron::arrange_parameters(void) const {
+  const unsigned parameters_number = count_parameters_number();
 
-   Vector<double> parameters(parameters_number);
+  Vector<double> parameters(parameters_number);
 
-   parameters[0] = bias;
+  parameters[0] = bias;
 
-   const unsigned inputs_number = get_inputs_number();
+  const unsigned inputs_number = get_inputs_number();
 
-   for(unsigned i = 0; i < inputs_number; i++)
-   {
-      parameters[(unsigned)1+i] = synaptic_weights[i];
-   }
+  for (unsigned i = 0; i < inputs_number; i++) {
+    parameters[(unsigned)1 + i] = synaptic_weights[i];
+  }
 
-   return(parameters); 
+  return (parameters);
 }
-
 
 // void set_parameters(const Vector<double>&) method
 
-/// This method set a new set of parameters (bias and synaptic weights) to the perceptron.
+/// This method set a new set of parameters (bias and synaptic weights) to the
+/// perceptron.
 /// @param new_parameters New set of parameters
 
-void Perceptron::set_parameters(const Vector<double>& new_parameters)
-{
-   const unsigned inputs_number = get_inputs_number();
+void Perceptron::set_parameters(const Vector<double>& new_parameters) {
+  const unsigned inputs_number = get_inputs_number();
 
-   // Control sentence (if debug)
+// Control sentence (if debug)
 
-   #ifndef NDEBUG 
+#ifndef NDEBUG
 
-   const unsigned size = new_parameters.size();
+  const unsigned size = new_parameters.size();
 
-   if(size != 1+inputs_number)
-   {
-	  std::ostringstream buffer;
+  if (size != 1 + inputs_number) {
+    std::ostringstream buffer;
 
-      buffer << "OpenNN Exception: Perceptron class.\n"
-             << "void set_parameters(const Vector<double>&) method.\n"
-             << "Size must be equal to one plus number of inputs.\n";
+    buffer << "OpenNN Exception: Perceptron class.\n"
+           << "void set_parameters(const Vector<double>&) method.\n"
+           << "Size must be equal to one plus number of inputs.\n";
 
-      throw std::logic_error(buffer.str());
-   }
+    throw std::logic_error(buffer.str());
+  }
 
-   #endif
+#endif
 
-   bias = new_parameters[0];
+  bias = new_parameters[0];
 
-   for(unsigned i = 0; i < inputs_number; i++)
-   {
-      synaptic_weights[i] = new_parameters[i+1];
-   }
+  for (unsigned i = 0; i < inputs_number; i++) {
+    synaptic_weights[i] = new_parameters[i + 1];
+  }
 }
-
 
 // void initialize_bias(const double&) method
 
-/// Initializes the bias with a given value. 
-/// @param value Initialization value. 
+/// Initializes the bias with a given value.
+/// @param value Initialization value.
 
-void Perceptron::initialize_bias(const double& value)
-{
-   bias = value;
-}
-
+void Perceptron::initialize_bias(const double& value) { bias = value; }
 
 // void initialize_bias_uniform(const double&, const double&) method
 
-/// Initializes the neuron's bias with a random value chosen from a uniform distribution.
+/// Initializes the neuron's bias with a random value chosen from a uniform
+/// distribution.
 /// @param minimum Minimum initialization value.
 /// @param maximum Maximum initialization value.
 
-void Perceptron::initialize_bias_uniform(const double& minimum, const double& maximum)
-{
-   // Control sentence (if debug)
+void Perceptron::initialize_bias_uniform(const double& minimum,
+                                         const double& maximum) {
+// Control sentence (if debug)
 
-   #ifndef NDEBUG 
+#ifndef NDEBUG
 
-   if(minimum > maximum)
-   {
-	 std::ostringstream buffer;
+  if (minimum > maximum) {
+    std::ostringstream buffer;
 
-      buffer << "OpenNN Exception: Perceptron class.\n" 
-             << "initialize_bias_uniform(const double&, const double&) method.\n"
-             << "Minimum value must be less than maximum value.\n";
+    buffer << "OpenNN Exception: Perceptron class.\n"
+           << "initialize_bias_uniform(const double&, const double&) method.\n"
+           << "Minimum value must be less than maximum value.\n";
 
-      throw std::logic_error(buffer.str());
-   }
+    throw std::logic_error(buffer.str());
+  }
 
-   #endif
+#endif
 
-   bias = calculate_random_uniform(minimum, maximum);
+  bias = calculate_random_uniform(minimum, maximum);
 }
-
 
 // void initialize_synaptic_weights(const double&) method
 
-/// Initializes all the synaptic weights of the neuron with a given value. 
-/// @param value Initialization value. 
+/// Initializes all the synaptic weights of the neuron with a given value.
+/// @param value Initialization value.
 
-void Perceptron::initialize_synaptic_weights(const double& value)
-{
-   synaptic_weights.initialize(value);
+void Perceptron::initialize_synaptic_weights(const double& value) {
+  synaptic_weights.initialize(value);
 }
-
 
 // void initialize_synaptic_weights_uniform(const double&, const double&) method
 
-/// Initializes the neuron's synaptic weights with random values chosen from an uniform distribution.
+/// Initializes the neuron's synaptic weights with random values chosen from an
+/// uniform distribution.
 /// @param minimum Minimum initialization value.
 /// @param maximum Maximum initialization value.
 
-void Perceptron::initialize_synaptic_weights_uniform(const double& minimum, const double& maximum)
-{
-   synaptic_weights.randomize_uniform(minimum, maximum);
+void Perceptron::initialize_synaptic_weights_uniform(const double& minimum,
+                                                     const double& maximum) {
+  synaptic_weights.randomize_uniform(minimum, maximum);
 }
-
 
 // void initialize_bias_normal(const double&, const double&) method
 
-/// Initializes the neuron's bias with random values chosen from a normal distribution.
+/// Initializes the neuron's bias with random values chosen from a normal
+/// distribution.
 /// @param mean Mean of normal distribution.
 /// @param standard_deviation Standard deviation of normal distribution.
 
-void Perceptron::initialize_bias_normal(const double& mean, const double& standard_deviation)
-{
-   // Control sentence (if debug)
+void Perceptron::initialize_bias_normal(const double& mean,
+                                        const double& standard_deviation) {
+// Control sentence (if debug)
 
-   #ifndef NDEBUG 
+#ifndef NDEBUG
 
-   if(standard_deviation < 0.0)
-   {
-      std::ostringstream buffer;
+  if (standard_deviation < 0.0) {
+    std::ostringstream buffer;
 
-      buffer << "OpenNN Exception: Perceptron class.\n" 
-             << "initialize_bias_normal(const double&, const double&) method.\n"
-             << "Standard deviation must be equal or greater than zero.\n";
+    buffer << "OpenNN Exception: Perceptron class.\n"
+           << "initialize_bias_normal(const double&, const double&) method.\n"
+           << "Standard deviation must be equal or greater than zero.\n";
 
-      throw std::logic_error(buffer.str());
-   }
+    throw std::logic_error(buffer.str());
+  }
 
-   #endif
+#endif
 
-   bias = calculate_random_normal(mean, standard_deviation);
+  bias = calculate_random_normal(mean, standard_deviation);
 }
-
 
 // void initialize_synaptic_weights_normal(const double&, const double&) method
 
-/// Initializes the neuron's synaptic weights with random values chosen from a normal distribution.
+/// Initializes the neuron's synaptic weights with random values chosen from a
+/// normal distribution.
 /// @param mean Mean of normal distribution.
 /// @param standard_deviation Standard deviation of normal distribution.
 
-void Perceptron::initialize_synaptic_weights_normal(const double& mean, const double& standard_deviation)
-{
-   synaptic_weights.randomize_normal(mean, standard_deviation);
+void Perceptron::initialize_synaptic_weights_normal(
+    const double& mean, const double& standard_deviation) {
+  synaptic_weights.randomize_normal(mean, standard_deviation);
 }
-
 
 // void initialize_parameters(const double&) method
 
-/// Initializes the bias and the synaptic weights with a given value. 
-/// @param value Parameters initialization value. 
+/// Initializes the bias and the synaptic weights with a given value.
+/// @param value Parameters initialization value.
 
-void Perceptron::initialize_parameters(const double& value)
-{
-   bias = value;
-   synaptic_weights.initialize(value);
+void Perceptron::initialize_parameters(const double& value) {
+  bias = value;
+  synaptic_weights.initialize(value);
 }
-
 
 // double calculate_combination(const Vector<double>&) method
 
-/// Returns the combination to the neuron for a set of inputs signals, using the dot product 
+/// Returns the combination to the neuron for a set of inputs signals, using the
+/// dot product
 /// combination function.
 /// @param inputs Set of inputs signals to the neuron.
 
-double Perceptron::calculate_combination(const Vector<double>& inputs) const
-{
-   // Control sentence (if debug)
+double Perceptron::calculate_combination(const Vector<double>& inputs) const {
+// Control sentence (if debug)
 
-   #ifndef NDEBUG 
+#ifndef NDEBUG
 
-   const unsigned inputs_number = get_inputs_number();
+  const unsigned inputs_number = get_inputs_number();
 
-   if(inputs_number == 0)
-   {
-      std::ostringstream buffer;
+  if (inputs_number == 0) {
+    std::ostringstream buffer;
 
-      buffer << "OpenNN Exception: Perceptron class.\n" 
-             << "calculate_combination(const Vector<double>&) method.\n"
-             << "Number of inputs must be greater than zero.\n";
+    buffer << "OpenNN Exception: Perceptron class.\n"
+           << "calculate_combination(const Vector<double>&) method.\n"
+           << "Number of inputs must be greater than zero.\n";
 
-      throw std::logic_error(buffer.str());
-   }
+    throw std::logic_error(buffer.str());
+  }
 
-   const unsigned inputs_size = inputs.size();
+  const unsigned inputs_size = inputs.size();
 
-   if(inputs_size != inputs_number)
-   {
-      std::ostringstream buffer;
+  if (inputs_size != inputs_number) {
+    std::ostringstream buffer;
 
-      buffer << "OpenNN Exception: Perceptron class.\n"
-             << "double calculate_combination(const Vector<double>&) method.\n"
-             << "Size of inputs (" << inputs_size << ") must be equal to number of inputs (" << inputs_number << ").\n";
+    buffer << "OpenNN Exception: Perceptron class.\n"
+           << "double calculate_combination(const Vector<double>&) method.\n"
+           << "Size of inputs (" << inputs_size
+           << ") must be equal to number of inputs (" << inputs_number
+           << ").\n";
 
-      throw std::logic_error(buffer.str());
-   }
+    throw std::logic_error(buffer.str());
+  }
 
-   #endif
+#endif
 
-   // Calculate combination
-        
-   return(bias + synaptic_weights.dot(inputs));   
+  // Calculate combination
+
+  return (bias + synaptic_weights.dot(inputs));
 }
 
+// double calculate_combination(const Vector<double>&, const Vector<double>&)
+// const method
 
-// double calculate_combination(const Vector<double>&, const Vector<double>&) const method
-
-/// Returns which would be the combination for some inputs and for a potential set of parameters. 
+/// Returns which would be the combination for some inputs and for a potential
+/// set of parameters.
 /// @param inputs Vector of inputs to the perceptron.
-/// @param parameters Potential bias and synaptic weights in the perceptron. 
+/// @param parameters Potential bias and synaptic weights in the perceptron.
 
-double Perceptron::calculate_combination(const Vector<double>& inputs, const Vector<double>& parameters) const
-{
-   // Control sentence (if debug)
+double Perceptron::calculate_combination(
+    const Vector<double>& inputs, const Vector<double>& parameters) const {
+// Control sentence (if debug)
 
-   #ifndef NDEBUG 
+#ifndef NDEBUG
 
-   std::ostringstream buffer;
+  std::ostringstream buffer;
 
-   const unsigned inputs_size = inputs.size();
-   const unsigned inputs_number = get_inputs_number();
+  const unsigned inputs_size = inputs.size();
+  const unsigned inputs_number = get_inputs_number();
 
-   if(inputs_size != inputs_number)
-   {
-      buffer << "OpenNN Exception: Perceptron class.\n" 
-             << "double calculate_combination(const Vector<double>&, const Vector<double>&) const method.\n"
-             << "Size of inputs must be equal to number of inputs.\n";
+  if (inputs_size != inputs_number) {
+    buffer << "OpenNN Exception: Perceptron class.\n"
+           << "double calculate_combination(const Vector<double>&, const "
+              "Vector<double>&) const method.\n"
+           << "Size of inputs must be equal to number of inputs.\n";
 
-      throw std::logic_error(buffer.str());
-   }
+    throw std::logic_error(buffer.str());
+  }
 
-   const unsigned parameters_size = parameters.size();
+  const unsigned parameters_size = parameters.size();
 
-   const unsigned parameters_number = count_parameters_number();
+  const unsigned parameters_number = count_parameters_number();
 
-   if(parameters_size != parameters_number)
-   {
-      buffer << "OpenNN Exception: Perceptron class.\n" 
-             << "double calculate_combination(const Vector<double>&, const Vector<double>&) const method.\n"
-             << "Size of potential parameters (" << parameters_size << ") must be equal to number of parameters (" << parameters_number << ").\n";
+  if (parameters_size != parameters_number) {
+    buffer << "OpenNN Exception: Perceptron class.\n"
+           << "double calculate_combination(const Vector<double>&, const "
+              "Vector<double>&) const method.\n"
+           << "Size of potential parameters (" << parameters_size
+           << ") must be equal to number of parameters (" << parameters_number
+           << ").\n";
 
-      throw std::logic_error(buffer.str());
-   }
+    throw std::logic_error(buffer.str());
+  }
 
-   #endif
+#endif
 
-   const double potential_bias = parameters[0];
+  const double potential_bias = parameters[0];
 
-   const Vector<double> potential_synaptic_weights = parameters.remove_element(0);
+  const Vector<double> potential_synaptic_weights =
+      parameters.remove_element(0);
 
-   return(potential_bias + potential_synaptic_weights.dot(inputs));
+  return (potential_bias + potential_synaptic_weights.dot(inputs));
 }
-
 
 // double calculate_activation(const double&) const  method
 
@@ -775,68 +697,47 @@ double Perceptron::calculate_combination(const Vector<double>& inputs, const Vec
 /// The outputs depends on the activation function used.
 /// @param combination Combination of the neuron.
 
-double Perceptron::calculate_activation(const double& combination) const
-{
-   switch(activation_function)   
-   {
-      case Perceptron::Logistic:
-      {
-         return(1.0/(1.0 + exp(-combination)));
-      }
-      break;
-                                     
-      case Perceptron::HyperbolicTangent:
-      {
-         return(1.0-2.0/(exp(2.0*combination)+1.0));   
-      }
-      break;
+double Perceptron::calculate_activation(const double& combination) const {
+  switch (activation_function) {
+    case Perceptron::Logistic: {
+      return (1.0 / (1.0 + exp(-combination)));
+    } break;
 
-      case Perceptron::Threshold:
-      {
-         if(combination < 0)
-         {
-            return(0.0);
-         }
-         else
-         {
-            return(1.0);
-         }
-      }
-      break;
+    case Perceptron::HyperbolicTangent: {
+      return (1.0 - 2.0 / (exp(2.0 * combination) + 1.0));
+    } break;
 
-      case Perceptron::SymmetricThreshold:
-      {
-         if(combination < 0)
-         {
-            return(-1.0);
-         }
-         else
-         {
-            return(1.0);
-         }
+    case Perceptron::Threshold: {
+      if (combination < 0) {
+        return (0.0);
+      } else {
+        return (1.0);
       }
-      break;
+    } break;
 
-      case Perceptron::Linear:
-      {
-         return(combination);        
+    case Perceptron::SymmetricThreshold: {
+      if (combination < 0) {
+        return (-1.0);
+      } else {
+        return (1.0);
       }
-      break;
-      
-      default:
-      {
-         std::ostringstream buffer;
+    } break;
 
-         buffer << "OpenNN Exception: Perceptron class.\n" 
-                << "double calculate_activation(const double&) const  method.\n"
-                << "Unknown activation function.\n";
+    case Perceptron::Linear: {
+      return (combination);
+    } break;
 
-         throw std::logic_error(buffer.str());
-      }
-      break;
-   }
+    default: {
+      std::ostringstream buffer;
+
+      buffer << "OpenNN Exception: Perceptron class.\n"
+             << "double calculate_activation(const double&) const  method.\n"
+             << "Unknown activation function.\n";
+
+      throw std::logic_error(buffer.str());
+    } break;
+  }
 }
-
 
 // double calculate_activation_derivative(const double&) const  method
 
@@ -844,165 +745,133 @@ double Perceptron::calculate_activation(const double& combination) const
 /// The activation derivative depends on the activation function used.
 /// @param combination Combination of the neuron.
 
-double Perceptron::calculate_activation_derivative(const double& combination) const
-{
-   switch(activation_function)   
-   {
-      case Perceptron::Logistic:
-      {
-         const double exponent = exp(-combination);
+double Perceptron::calculate_activation_derivative(
+    const double& combination) const {
+  switch (activation_function) {
+    case Perceptron::Logistic: {
+      const double exponent = exp(-combination);
 
-         return(exponent/((1.0+exponent)*(1.0+exponent)));
+      return (exponent / ((1.0 + exponent) * (1.0 + exponent)));
+    } break;
+
+    case Perceptron::HyperbolicTangent: {
+      return (1.0 - pow(tanh(combination), 2));
+    } break;
+
+    case Perceptron::Threshold: {
+      if (combination != 0.0) {
+        return (0.0);
+      } else {
+        std::ostringstream buffer;
+
+        buffer << "OpenNN Exception: Perceptron class.\n"
+               << "double calculate_activation_derivative(const double&) const "
+                  " method.\n"
+               << "Threshold activation function is not derivable.\n";
+
+        throw std::logic_error(buffer.str());
       }
-      break;
-                                     
-      case Perceptron::HyperbolicTangent:
-      {
-         return(1.0 - pow(tanh(combination), 2));
+    } break;
+
+    case Perceptron::SymmetricThreshold: {
+      if (combination != 0.0) {
+        return (0.0);
+      } else {
+        std::ostringstream buffer;
+
+        buffer << "OpenNN Exception: Perceptron class.\n"
+               << "double calculate_activation_derivative(const double&) const "
+                  " method.\n"
+               << "Symmetric threshold activation function is not derivable.\n";
+
+        throw std::logic_error(buffer.str());
       }
-      break;
+    } break;
 
-      case Perceptron::Threshold:
-      {
-         if(combination != 0.0)
-         {
-            return(0.0); 
-         }
-         else
-         {
-            std::ostringstream buffer;
+    case Perceptron::Linear: {
+      return (1.0);
+    } break;
 
-            buffer << "OpenNN Exception: Perceptron class.\n" 
-                   << "double calculate_activation_derivative(const double&) const  method.\n"
-                   << "Threshold activation function is not derivable.\n";
+    default: {
+      std::ostringstream buffer;
 
-            throw std::logic_error(buffer.str());
-         }
-      }
-      break;
+      buffer << "OpenNN Exception: Perceptron class.\n"
+             << "double calculate_activation_derivative(const double&) const  "
+                "method.\n"
+             << "Unknown activation function.\n";
 
-      case Perceptron::SymmetricThreshold:
-      {
-         if(combination != 0.0)
-         {
-            return(0.0); 
-         }
-         else
-         {
-            std::ostringstream buffer;
-
-            buffer << "OpenNN Exception: Perceptron class.\n" 
-                      << "double calculate_activation_derivative(const double&) const  method.\n"
-                      << "Symmetric threshold activation function is not derivable.\n";
-
-            throw std::logic_error(buffer.str());
-         }
-      }
-      break;
-
-      case Perceptron::Linear:
-      {
-         return(1.0);
-      }
-      break;
-
-      default:
-      {
-         std::ostringstream buffer;
-
-         buffer << "OpenNN Exception: Perceptron class.\n" 
-                << "double calculate_activation_derivative(const double&) const  method.\n"
-                << "Unknown activation function.\n";
-
-         throw std::logic_error(buffer.str());
-      }
-      break;
-   }
+      throw std::logic_error(buffer.str());
+    } break;
+  }
 }
-
 
 // double calculate_activation_second_derivative(const double&) const  method
 
 /// Returns the activation second derivative of the neuron for a combination.
-/// The second derivative of the outputs depends on the activation function used.
+/// The second derivative of the outputs depends on the activation function
+/// used.
 /// @param combination Combination of the neuron.
 
-double Perceptron::calculate_activation_second_derivative(const double& combination) const
-{
-   switch(activation_function)   
-   {
-      case Perceptron::Logistic:
-      {
-         const double exponent = exp(combination);
+double Perceptron::calculate_activation_second_derivative(
+    const double& combination) const {
+  switch (activation_function) {
+    case Perceptron::Logistic: {
+      const double exponent = exp(combination);
 
-         return(-exponent*(exponent-1.0)/((exponent+1.0)*(exponent+1.0)*(exponent+1.0)));
+      return (-exponent * (exponent - 1.0) /
+              ((exponent + 1.0) * (exponent + 1.0) * (exponent + 1.0)));
+    } break;
+
+    case Perceptron::HyperbolicTangent: {
+      return (-2.0 * tanh(combination) * (1.0 - pow(tanh(combination), 2)));
+    } break;
+
+    case Perceptron::Threshold: {
+      if (combination != 0.0) {
+        return (0.0);
+      } else {
+        std::ostringstream buffer;
+
+        buffer << "OpenNN Exception: Perceptron class.\n"
+               << "double calculate_activation_second_derivative(const "
+                  "double&) const  method.\n"
+               << "Threshold activation function is not derivable.\n";
+
+        throw std::logic_error(buffer.str());
       }
-      break;
-                                     
-      case Perceptron::HyperbolicTangent:
-      {
-         return(-2.0*tanh(combination)*(1.0 - pow(tanh(combination),2)));
+    } break;
+
+    case Perceptron::SymmetricThreshold: {
+      if (combination != 0.0) {
+        return (0.0);
+      } else {
+        std::ostringstream buffer;
+
+        buffer << "OpenNN Exception: Perceptron class.\n"
+               << "double calculate_activation_second_derivative(const "
+                  "double&) const  method.\n"
+               << "Symmetric threshold activation function is not derivable.\n";
+
+        throw std::logic_error(buffer.str());
       }
-      break;
+    } break;
 
-      case Perceptron::Threshold:
-      {
-         if(combination != 0.0)
-         {
-            return(0.0); 
-         }
-         else
-         {
-            std::ostringstream buffer;
+    case Perceptron::Linear: {
+      return (0.0);
+    } break;
 
-            buffer << "OpenNN Exception: Perceptron class.\n" 
-                   << "double calculate_activation_second_derivative(const double&) const  method.\n"
-                   << "Threshold activation function is not derivable.\n";
+    default: {
+      std::ostringstream buffer;
 
-            throw std::logic_error(buffer.str());
-         }
-      }
-      break;
+      buffer << "OpenNN Exception: Perceptron class.\n"
+             << "double calculate_activation_second_derivative(const double&) "
+                "const  method.\n"
+             << "Unknown activation function.\n";
 
-      case Perceptron::SymmetricThreshold:
-      {
-         if(combination != 0.0)
-         {
-            return(0.0); 
-         }
-         else
-         {
-            std::ostringstream buffer;
-
-            buffer << "OpenNN Exception: Perceptron class.\n" 
-                   << "double calculate_activation_second_derivative(const double&) const  method.\n"
-                   << "Symmetric threshold activation function is not derivable.\n";
-
-            throw std::logic_error(buffer.str());
-         }
-      }
-      break;
-
-      case Perceptron::Linear:
-      {
-         return(0.0);        
-      }
-      break;
-
-      default:
-      {
-         std::ostringstream buffer;
-
-         buffer << "OpenNN Exception: Perceptron class.\n" 
-                << "double calculate_activation_second_derivative(const double&) const  method.\n"
-                << "Unknown activation function.\n";
-
-         throw std::logic_error(buffer.str());
-      }
-      break;
-   }
+      throw std::logic_error(buffer.str());
+    } break;
+  }
 }
-
 
 // double calculate_output(const Vector<double>&) const method
 
@@ -1010,445 +879,439 @@ double Perceptron::calculate_activation_second_derivative(const double& combinat
 /// The output depends on the activation function used.
 /// @param inputs Set of input signals to the neuron.
 
-double Perceptron::calculate_output(const Vector<double>& inputs) const
-{
-   // Control sentence (if debug)
+double Perceptron::calculate_output(const Vector<double>& inputs) const {
+// Control sentence (if debug)
 
-   #ifndef NDEBUG 
+#ifndef NDEBUG
 
-   const unsigned size = inputs.size();
-   const unsigned inputs_number = get_inputs_number();
+  const unsigned size = inputs.size();
+  const unsigned inputs_number = get_inputs_number();
 
-   if(size != inputs_number)
-   {
-      std::ostringstream buffer;
+  if (size != inputs_number) {
+    std::ostringstream buffer;
 
-      buffer << "OpenNN Exception: Perceptron class.\n" 
-             << "double calculate_output(const Vector<double>&) const method.\n"
-             << "Size must be equal to number of inputs.\n";
+    buffer << "OpenNN Exception: Perceptron class.\n"
+           << "double calculate_output(const Vector<double>&) const method.\n"
+           << "Size must be equal to number of inputs.\n";
 
-      throw std::logic_error(buffer.str());
-   }
+    throw std::logic_error(buffer.str());
+  }
 
-   #endif
+#endif
 
-   // Calculate outputs 
+  // Calculate outputs
 
-   return(calculate_activation(calculate_combination(inputs)));  
+  return (calculate_activation(calculate_combination(inputs)));
 }
 
-
-// double calculate_output(const Vector<double>&, const Vector<double>&) const method
+// double calculate_output(const Vector<double>&, const Vector<double>&) const
+// method
 
 /// Returns the output from the neuron for a set of inputs.
 /// The output depends on the activation function used.
 /// @param inputs Set of inputs signals to the neuron.
-/// @param parameters Set of potential bias and synaptic weights in the perceptron. 
+/// @param parameters Set of potential bias and synaptic weights in the
+/// perceptron.
 
-double Perceptron::calculate_output(const Vector<double>& inputs, const Vector<double>& parameters) const
-{
-   // Control sentence (if debug)
+double Perceptron::calculate_output(const Vector<double>& inputs,
+                                    const Vector<double>& parameters) const {
+// Control sentence (if debug)
 
-   #ifndef NDEBUG 
+#ifndef NDEBUG
 
-   const unsigned inputs_size = inputs.size();
-   const unsigned inputs_number = get_inputs_number();
+  const unsigned inputs_size = inputs.size();
+  const unsigned inputs_number = get_inputs_number();
 
-   if(inputs_size != inputs_number)
-   {
-      std::ostringstream buffer;
+  if (inputs_size != inputs_number) {
+    std::ostringstream buffer;
 
-      buffer << "OpenNN Exception: Perceptron class.\n" 
-             << "double calculate_output(const Vector<double>&, const Vector<double>&) const method.\n"
-             << "Size of inputs must be equal to number of inputs.\n";
+    buffer << "OpenNN Exception: Perceptron class.\n"
+           << "double calculate_output(const Vector<double>&, const "
+              "Vector<double>&) const method.\n"
+           << "Size of inputs must be equal to number of inputs.\n";
 
-      throw std::logic_error(buffer.str());
-   }
+    throw std::logic_error(buffer.str());
+  }
 
-   const unsigned parameters_size = parameters.size();
+  const unsigned parameters_size = parameters.size();
 
-   const unsigned parameters_number = count_parameters_number();
+  const unsigned parameters_number = count_parameters_number();
 
-   if(parameters_size != parameters_number)
-   {
-      std::ostringstream buffer;
+  if (parameters_size != parameters_number) {
+    std::ostringstream buffer;
 
-      buffer << "OpenNN Exception: Perceptron class.\n" 
-             << "double calculate_output(const Vector<double>&, const Vector<double>&) const method.\n"
-             << "Size of potential parameters (" << parameters_size << ") must be equal to number of parameters (" << parameters_number << ").\n";
+    buffer << "OpenNN Exception: Perceptron class.\n"
+           << "double calculate_output(const Vector<double>&, const "
+              "Vector<double>&) const method.\n"
+           << "Size of potential parameters (" << parameters_size
+           << ") must be equal to number of parameters (" << parameters_number
+           << ").\n";
 
-      throw std::logic_error(buffer.str());
-   }
+    throw std::logic_error(buffer.str());
+  }
 
-   #endif
+#endif
 
-   return(calculate_activation(calculate_combination(inputs, parameters)));
+  return (calculate_activation(calculate_combination(inputs, parameters)));
 }
-
 
 // Vector<double> calculate_gradient(const Vector<double>&) const method
 
-/// Returns the partial derivatives of the outputs with respect to the inputs. 
-/// @param inputs Vector of inputs to the perceptron. 
+/// Returns the partial derivatives of the outputs with respect to the inputs.
+/// @param inputs Vector of inputs to the perceptron.
 
-Vector<double> Perceptron::calculate_gradient(const Vector<double>& inputs) const
-{
-   // Control sentence (if debug)
+Vector<double> Perceptron::calculate_gradient(
+    const Vector<double>& inputs) const {
+// Control sentence (if debug)
 
-   #ifndef NDEBUG 
+#ifndef NDEBUG
 
-   const unsigned size = inputs.size();
-   const unsigned inputs_number = get_inputs_number();
+  const unsigned size = inputs.size();
+  const unsigned inputs_number = get_inputs_number();
 
-   if(size != inputs_number)
-   {
-      std::ostringstream buffer;
+  if (size != inputs_number) {
+    std::ostringstream buffer;
 
-      buffer << "OpenNN Exception: Perceptron class.\n" 
-             << "Vector<double> calculate_gradient(const Vector<double>&) const method.\n"
-             << "Size must be equal to number of inputs.\n";
+    buffer << "OpenNN Exception: Perceptron class.\n"
+           << "Vector<double> calculate_gradient(const Vector<double>&) const "
+              "method.\n"
+           << "Size must be equal to number of inputs.\n";
 
-      throw std::logic_error(buffer.str());
-   }
+    throw std::logic_error(buffer.str());
+  }
 
-   #endif
+#endif
 
-   // Calculate gradient
+  // Calculate gradient
 
-   const double combination = calculate_combination(inputs);
+  const double combination = calculate_combination(inputs);
 
-   const double activation_derivative = calculate_activation_derivative(combination);
+  const double activation_derivative =
+      calculate_activation_derivative(combination);
 
-   return(synaptic_weights*activation_derivative);
+  return (synaptic_weights * activation_derivative);
 }
 
+// Vector<double> calculate_gradient(const Vector<double>&, const
+// Vector<double>&) const method
 
-// Vector<double> calculate_gradient(const Vector<double>&, const Vector<double>&) const method
-
-/// Returns the partial derivatives of the outputs with respect to a given set of  parameters
+/// Returns the partial derivatives of the outputs with respect to a given set
+/// of  parameters
 /// and at a given inputs point.
 /// @param inputs Vector of inputs to the perceptron.
 /// @param parameters Vector of potential parameters for the perceptron.
 
-Vector<double> Perceptron::calculate_gradient(const Vector<double>& inputs, const Vector<double>& parameters) const
-{
-   const unsigned inputs_number = get_inputs_number();
+Vector<double> Perceptron::calculate_gradient(
+    const Vector<double>& inputs, const Vector<double>& parameters) const {
+  const unsigned inputs_number = get_inputs_number();
 
-   // Control sentence (if debug)
+// Control sentence (if debug)
 
-   #ifndef NDEBUG 
+#ifndef NDEBUG
 
-   const unsigned size = inputs.size();
+  const unsigned size = inputs.size();
 
-   if(size != inputs_number)
-   {
-      std::ostringstream buffer;
+  if (size != inputs_number) {
+    std::ostringstream buffer;
 
-      buffer << "OpenNN Exception: Perceptron class.\n" 
-             << "double calculate_gradient(const Vector<double>&, const Vector<double>&) const method.\n"
-             << "Size must be equal to number of inputs.\n";
+    buffer << "OpenNN Exception: Perceptron class.\n"
+           << "double calculate_gradient(const Vector<double>&, const "
+              "Vector<double>&) const method.\n"
+           << "Size must be equal to number of inputs.\n";
 
-      throw std::logic_error(buffer.str());
-   }
+    throw std::logic_error(buffer.str());
+  }
 
-   #endif
+#endif
 
-   // Calculate parameters gradient
+  // Calculate parameters gradient
 
-   const double combination = calculate_combination(inputs, parameters);
+  const double combination = calculate_combination(inputs, parameters);
 
-   const double activation_derivative = calculate_activation_derivative(combination);
+  const double activation_derivative =
+      calculate_activation_derivative(combination);
 
-   Vector<double> gradient(1+inputs_number);
+  Vector<double> gradient(1 + inputs_number);
 
-   // Bias
+  // Bias
 
-   gradient[0] = activation_derivative;
+  gradient[0] = activation_derivative;
 
-   // Synaptic weights
+  // Synaptic weights
 
-   for(unsigned i = 1; i < 1+inputs_number; i++)
-   {
-      gradient[i] = inputs[i-1]*activation_derivative;
-   }
+  for (unsigned i = 1; i < 1 + inputs_number; i++) {
+    gradient[i] = inputs[i - 1] * activation_derivative;
+  }
 
-   return(gradient);
+  return (gradient);
 }
 
+// Vector<double> calculate_combination_gradient(const Vector<double>&) const
+// method
 
-// Vector<double> calculate_combination_gradient(const Vector<double>&) const method
+/// Returns the partial derivatives of the combination with respect to the
+/// inputs.
 
-/// Returns the partial derivatives of the combination with respect to the inputs.  
-
-Vector<double> Perceptron::calculate_combination_gradient(const Vector<double>&) const
-{
-   return(synaptic_weights);
+Vector<double> Perceptron::calculate_combination_gradient(
+    const Vector<double>&) const {
+  return (synaptic_weights);
 }
 
+// Vector<double> calculate_combination_gradient(const Vector<double>&, const
+// Vector<double>&) const method
 
-// Vector<double> calculate_combination_gradient(const Vector<double>&, const Vector<double>&) const method
+/// Returns the partial derivatives of the combination with respect to the
+/// parameters at some inputs point.
+/// @param inputs Vector of inputs to the perceptron.
 
-/// Returns the partial derivatives of the combination with respect to the parameters at some inputs point. 
-/// @param inputs Vector of inputs to the perceptron. 
+Vector<double> Perceptron::calculate_combination_gradient(
+    const Vector<double>& inputs, const Vector<double>&) const {
+  const unsigned inputs_number = get_inputs_number();
 
-Vector<double> Perceptron::calculate_combination_gradient(const Vector<double>& inputs, const Vector<double>&) const
-{   
-   const unsigned inputs_number = get_inputs_number();
+// Control sentence (if debug)
 
-   // Control sentence (if debug)
+#ifndef NDEBUG
 
-   #ifndef NDEBUG 
+  const unsigned size = inputs.size();
 
-   const unsigned size = inputs.size();
+  if (size != inputs_number) {
+    std::ostringstream buffer;
 
-   if(size != inputs_number)
-   {
-      std::ostringstream buffer;
+    buffer << "OpenNN Exception: Perceptron class.\n"
+           << "double calculate_combination_gradient(const Vector<double>&, "
+              "const Vector<double>&) const method.\n"
+           << "Size must be equal to number of inputs.\n";
 
-      buffer << "OpenNN Exception: Perceptron class.\n" 
-             << "double calculate_combination_gradient(const Vector<double>&, const Vector<double>&) const method.\n"
-             << "Size must be equal to number of inputs.\n";
+    throw std::logic_error(buffer.str());
+  }
 
-      throw std::logic_error(buffer.str());
-   }
+#endif
 
-   #endif
+  // Calculate combination gradient
 
-   // Calculate combination gradient
+  Vector<double> combination_gradient(1 + inputs_number);
 
-   Vector<double> combination_gradient(1+inputs_number);
+  // Bias
 
-   // Bias
+  combination_gradient[0] = 1.0;
 
-   combination_gradient[0] = 1.0;
+  // Synaptic weights
 
-   // Synaptic weights
+  for (unsigned i = 1; i < 1 + inputs_number; i++) {
+    combination_gradient[i] = inputs[i - 1];
+  }
 
-   for(unsigned i = 1; i < 1+inputs_number; i++)
-   {
-      combination_gradient[i] = inputs[i-1];
-   }
-
-   return(combination_gradient);
+  return (combination_gradient);
 }
-
 
 // Matrix<double> calculate_Hessian(const Vector<double>&) const method
 
-/// Returns the second partial derivatives of the outputs with respect to the inputs. 
-/// @param inputs Vector of inputs to the perceptron. 
+/// Returns the second partial derivatives of the outputs with respect to the
+/// inputs.
+/// @param inputs Vector of inputs to the perceptron.
 
-Matrix<double> Perceptron::calculate_Hessian(const Vector<double>& inputs) const
-{   
-   // Control sentence (if debug)
+Matrix<double> Perceptron::calculate_Hessian(
+    const Vector<double>& inputs) const {
+// Control sentence (if debug)
 
-   #ifndef NDEBUG 
+#ifndef NDEBUG
 
-   const unsigned inputs_number = get_inputs_number();
-   const unsigned inputs_size = inputs.size();
+  const unsigned inputs_number = get_inputs_number();
+  const unsigned inputs_size = inputs.size();
 
-   if(inputs_size != inputs_number)
-   {
-      std::ostringstream buffer;
+  if (inputs_size != inputs_number) {
+    std::ostringstream buffer;
 
-      buffer << "OpenNN Exception: Perceptron class.\n" 
-             << "Matrix<double> calculate_Hessian(const Vector<double>&) const method.\n"
-             << "Size of inputs must be equal to number of inputs.\n";
+    buffer << "OpenNN Exception: Perceptron class.\n"
+           << "Matrix<double> calculate_Hessian(const Vector<double>&) const "
+              "method.\n"
+           << "Size of inputs must be equal to number of inputs.\n";
 
-      throw std::logic_error(buffer.str());
-   }
+    throw std::logic_error(buffer.str());
+  }
 
-   #endif
+#endif
 
-   const double combination = calculate_combination(inputs);
-   const double activation_second_derivative = calculate_activation_second_derivative(combination);
+  const double combination = calculate_combination(inputs);
+  const double activation_second_derivative =
+      calculate_activation_second_derivative(combination);
 
-   return(synaptic_weights.direct(synaptic_weights)*activation_second_derivative);
+  return (synaptic_weights.direct(synaptic_weights) *
+          activation_second_derivative);
 }
 
+// Matrix<double> calculate_Hessian(const Vector<double>&, const
+// Vector<double>&) const method
 
-// Matrix<double> calculate_Hessian(const Vector<double>&, const Vector<double>&) const method
-
-/// This method retuns the second derivatives of the outputs with respect to a given set of parameters,
+/// This method retuns the second derivatives of the outputs with respect to a
+/// given set of parameters,
 /// at some inputs point.
 /// This is called the Hessian of the outputs parameters function.
 /// @param inputs Input vector.
 /// @param parameters Potential parameters vector.
 
-Matrix<double> Perceptron::calculate_Hessian(const Vector<double>& inputs, const Vector<double>& parameters) const
-{
-   // Control sentence (if debug)
+Matrix<double> Perceptron::calculate_Hessian(
+    const Vector<double>& inputs, const Vector<double>& parameters) const {
+// Control sentence (if debug)
 
-   #ifndef NDEBUG 
+#ifndef NDEBUG
 
-   const unsigned inputs_size = inputs.size();
-   const unsigned inputs_number = get_inputs_number();
+  const unsigned inputs_size = inputs.size();
+  const unsigned inputs_number = get_inputs_number();
 
-   if(inputs_size != inputs_number)
-   {
-      std::ostringstream buffer;
+  if (inputs_size != inputs_number) {
+    std::ostringstream buffer;
 
-      buffer << "OpenNN Exception: Perceptron class.\n" 
-             << "Matrix<double> calculate_Hessian(const Vector<double>&, const Vector<double>&) const method.\n"
-             << "Size of inputs must be equal to number of inputs.\n";
+    buffer << "OpenNN Exception: Perceptron class.\n"
+           << "Matrix<double> calculate_Hessian(const Vector<double>&, const "
+              "Vector<double>&) const method.\n"
+           << "Size of inputs must be equal to number of inputs.\n";
 
-      throw std::logic_error(buffer.str());
-   }
+    throw std::logic_error(buffer.str());
+  }
 
-   #endif
+#endif
 
-   const double combination = calculate_combination(inputs, parameters);
-   const double activation_second_derivative = calculate_activation_second_derivative(combination);
+  const double combination = calculate_combination(inputs, parameters);
+  const double activation_second_derivative =
+      calculate_activation_second_derivative(combination);
 
-   const unsigned parameters_number = count_parameters_number();
+  const unsigned parameters_number = count_parameters_number();
 
-   Matrix<double> Hessian(parameters_number, parameters_number);
+  Matrix<double> Hessian(parameters_number, parameters_number);
 
-   // Bias - bias derivative
+  // Bias - bias derivative
 
-   Hessian[0][0] = activation_second_derivative;
+  Hessian[0][0] = activation_second_derivative;
 
-   // Bias - synaptic weight derivative
+  // Bias - synaptic weight derivative
 
-   for(unsigned i = 1; i < parameters_number; i++)
-   {
-      Hessian[0][i] = activation_second_derivative*inputs[i-1];
-   }
+  for (unsigned i = 1; i < parameters_number; i++) {
+    Hessian[0][i] = activation_second_derivative * inputs[i - 1];
+  }
 
-   // Synaptic weight -synaptic weight derivative
+  // Synaptic weight -synaptic weight derivative
 
-   for(unsigned i = 1; i < parameters_number; i++)
-   {
-      for(unsigned j = 1; j < parameters_number; j++)
-      {
-         Hessian[i][j] = activation_second_derivative*inputs[i-1]*inputs[j-1];
-      }
-   }
+  for (unsigned i = 1; i < parameters_number; i++) {
+    for (unsigned j = 1; j < parameters_number; j++) {
+      Hessian[i][j] =
+          activation_second_derivative * inputs[i - 1] * inputs[j - 1];
+    }
+  }
 
-   // Hessian symmetry
+  // Hessian symmetry
 
-   for(unsigned i = 0; i < parameters_number; i++)
-   {
-      for(unsigned j = 0; j < i; j++)
-      {
-         Hessian[i][j] = Hessian[j][i];
-      }
-   }
-   
-   return(Hessian);
+  for (unsigned i = 0; i < parameters_number; i++) {
+    for (unsigned j = 0; j < i; j++) {
+      Hessian[i][j] = Hessian[j][i];
+    }
+  }
+
+  return (Hessian);
 }
 
+// Matrix<double> calculate_combination_Hessian(const Vector<double>&) const
+// method
 
-// Matrix<double> calculate_combination_Hessian(const Vector<double>&) const method
+/// This method retuns the second derivatives of the combination with respect to
+/// the inputs.
 
-/// This method retuns the second derivatives of the combination with respect to the inputs. 
+Matrix<double> Perceptron::calculate_combination_Hessian(
+    const Vector<double>&) const {
+  const unsigned inputs_number = get_inputs_number();
 
-Matrix<double> Perceptron::calculate_combination_Hessian(const Vector<double>&) const
-{
-   const unsigned inputs_number = get_inputs_number();
+  const Matrix<double> combination_Hessian(inputs_number, inputs_number, 0.0);
 
-   const Matrix<double> combination_Hessian(inputs_number, inputs_number, 0.0); 
-
-   return(combination_Hessian);   
+  return (combination_Hessian);
 }
 
+// Matrix<double> calculate_combination_Hessian(const Vector<double>&, const
+// Vector<double>&) const method
 
-// Matrix<double> calculate_combination_Hessian(const Vector<double>&, const Vector<double>&) const method
-
-/// Returns the second derivatives of the combination with respect to the parameters.
+/// Returns the second derivatives of the combination with respect to the
+/// parameters.
 /// The Hessian matrix of the combination parameters function is always
 /// a squared matrix of size the number of parameters and zero values.
 
-Matrix<double> Perceptron::calculate_combination_Hessian(const Vector<double>&, const Vector<double>&) const
-{
-   const unsigned parameters_number = count_parameters_number();
+Matrix<double> Perceptron::calculate_combination_Hessian(
+    const Vector<double>&, const Vector<double>&) const {
+  const unsigned parameters_number = count_parameters_number();
 
-   const Matrix<double> Hessian(parameters_number, parameters_number, 0.0);
+  const Matrix<double> Hessian(parameters_number, parameters_number, 0.0);
 
-   return(Hessian);   
+  return (Hessian);
 }
-
 
 // void grow_input(void) method
 
-/// Makes the perceptron to have one more input. 
-/// The corresponding synaptic weight is initialized to zero. 
+/// Makes the perceptron to have one more input.
+/// The corresponding synaptic weight is initialized to zero.
 
-void Perceptron::grow_input(void)
-{
-   synaptic_weights.push_back(0.0);
-}
-
+void Perceptron::grow_input(void) { synaptic_weights.push_back(0.0); }
 
 // void prune_input(const unsigned&) method
 
 /// This method removes a given input from the neuron.
-/// @param index Index of input to be removed. 
+/// @param index Index of input to be removed.
 
-void Perceptron::prune_input(const unsigned& index)
-{
-    // Control sentence (if debug)
+void Perceptron::prune_input(const unsigned& index) {
+// Control sentence (if debug)
 
-    #ifndef NDEBUG
+#ifndef NDEBUG
 
-    const unsigned inputs_number = get_inputs_number();
+  const unsigned inputs_number = get_inputs_number();
 
-    if(index >= inputs_number)
-    {
-       std::ostringstream buffer;
+  if (index >= inputs_number) {
+    std::ostringstream buffer;
 
-       buffer << "OpenNN Exception: Perceptron class.\n"
-              << "void prune_input(const unsigned&) method.\n"
-              << "Index of input is equal or greater than number of inputs.\n";
+    buffer << "OpenNN Exception: Perceptron class.\n"
+           << "void prune_input(const unsigned&) method.\n"
+           << "Index of input is equal or greater than number of inputs.\n";
 
-       throw std::logic_error(buffer.str());
+    throw std::logic_error(buffer.str());
+  }
+
+#endif
+
+  synaptic_weights.erase(synaptic_weights.begin() + index);
+}
+
+// std::string write_expression(const Vector<std::string>&, const std::string&)
+// const method
+
+/// Returns a string with the mathematical expression represented by the
+/// perceptron.
+/// @param inputs_name Name of input variables to the neuron.
+/// @param output_name Name of output variable from the neuron.
+
+std::string Perceptron::write_expression(const Vector<std::string>& inputs_name,
+                                         const std::string& output_name) const {
+  const unsigned inputs_number = get_inputs_number();
+
+  std::string activation_function_name = write_activation_function();
+
+  std::ostringstream buffer;
+
+  buffer << output_name << "=" << activation_function_name << "(" << bias
+         << "\n";
+
+  for (unsigned i = 0; i < inputs_number; i++) {
+    if (synaptic_weights[i] >= 0) {
+      buffer << "+";
     }
 
-    #endif
+    buffer << synaptic_weights[i] << "*" << inputs_name[i];
 
-   synaptic_weights.erase(synaptic_weights.begin()+index);
+    if (i != 0 && i % 4 == 0 && i != inputs_number - 1) {
+      buffer << "\n";
+    }
+  }
+
+  buffer << ");\n";
+
+  return (buffer.str());
 }
-
-
-// std::string write_expression(const Vector<std::string>&, const std::string&) const method
-
-/// Returns a string with the mathematical expression represented by the perceptron.
-/// @param inputs_name Name of input variables to the neuron. 
-/// @param output_name Name of output variable from the neuron. 
-
-std::string Perceptron::write_expression(const Vector<std::string>& inputs_name, const std::string& output_name) const
-{
-   const unsigned inputs_number = get_inputs_number();
-
-   std::string activation_function_name = write_activation_function();
-
-   std::ostringstream buffer;
-
-   buffer << output_name << "=" << activation_function_name << "("
-          << bias << "\n";
-
-   for(unsigned i = 0; i < inputs_number; i++)
-   {
-      if(synaptic_weights[i] >= 0)
-      {
-         buffer << "+";	     
-      }
-
-      buffer << synaptic_weights[i] << "*" << inputs_name[i];
-
-      if(i != 0 && i%4 == 0 && i != inputs_number-1)
-      {
-            buffer << "\n";
-      }
-   }
-
-   buffer << ");\n";
-
-   return(buffer.str());
 }
-
-}
-
 
 // OpenNN: Open Neural Networks Library.
 // Neural Designer Copyright © 2013 Roberto López and Ismael Santana (Intelnics)

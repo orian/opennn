@@ -1,13 +1,19 @@
 /****************************************************************************************************************/
 /*                                                                                                              */
-/*   OpenNN: Open Neural Networks Library                                                                       */
-/*   www.intelnics.com/opennn                                                                                   */
+/*   OpenNN: Open Neural Networks Library
+ */
+/*   www.intelnics.com/opennn
+ */
 /*                                                                                                              */
-/*   I N V E R S E   S U M   S Q U A R E D   E R R O R   C L A S S   H E A D E R                                */
+/*   I N V E R S E   S U M   S Q U A R E D   E R R O R   C L A S S   H E A D E R
+ */
 /*                                                                                                              */
-/*   Roberto Lopez                                                                                              */
-/*   Intelnics - The artificial intelligence company                                                            */
-/*   robertolopez@intelnics.com                                                                                 */
+/*   Roberto Lopez
+ */
+/*   Intelnics - The artificial intelligence company
+ */
+/*   robertolopez@intelnics.com
+ */
 /*                                                                                                              */
 /****************************************************************************************************************/
 
@@ -29,90 +35,92 @@
 
 #include "performance_term.h"
 
-namespace OpenNN
-{
+namespace OpenNN {
 
-/// This class represents the concept of sum squared error for inverse problems. 
-/// It measures the difference between the outputs from a mathematical model and the targets in a data set. 
+/// This class represents the concept of sum squared error for inverse problems.
+/// It measures the difference between the outputs from a mathematical model and
+/// the targets in a data set.
 /// This performance term is used in inverse problems.
 
-class InverseSumSquaredError : public PerformanceTerm
-{
+class InverseSumSquaredError : public PerformanceTerm {
 
-public:
+ public:
 
-   // DEFAULT CONSTRUCTOR
+  // DEFAULT CONSTRUCTOR
 
-   explicit InverseSumSquaredError(void);
+  explicit InverseSumSquaredError(void);
 
-   // NEURAL NETWORK CONSTRUCTOR
+  // NEURAL NETWORK CONSTRUCTOR
 
-   explicit InverseSumSquaredError(NeuralNetwork*);
+  explicit InverseSumSquaredError(NeuralNetwork*);
 
-   // NEURAL NETWORK, MATHEMATICAL MODEL AND DATA SET CONSTRUCTOR
+  // NEURAL NETWORK, MATHEMATICAL MODEL AND DATA SET CONSTRUCTOR
 
-   explicit InverseSumSquaredError(NeuralNetwork*, MathematicalModel*, DataSet*);
+  explicit InverseSumSquaredError(NeuralNetwork*, MathematicalModel*, DataSet*);
 
-   // XML CONSTRUCTOR
+  // XML CONSTRUCTOR
 
-   explicit InverseSumSquaredError(const tinyxml2::XMLDocument&);
+  explicit InverseSumSquaredError(const tinyxml2::XMLDocument&);
 
-   // DESTRUCTOR
+  // DESTRUCTOR
 
-   virtual ~InverseSumSquaredError(void);    
+  virtual ~InverseSumSquaredError(void);
 
-   // ENUMERATIONS
+  // ENUMERATIONS
 
-   /// Enumeration of the different methods for putting the unknowns into the mathematical model. 
+  /// Enumeration of the different methods for putting the unknowns into the
+  /// mathematical model.
 
-   enum UnknownsMethod{LookUpTable, IndependentParametersValues};
+  enum UnknownsMethod {
+    LookUpTable,
+    IndependentParametersValues
+  };
 
-   // STRUCTURES
+  // STRUCTURES
 
-   // METHODS
+  // METHODS
 
-   // Get methods
+  // Get methods
 
-   const UnknownsMethod& get_unknowns_method(void) const;
-   std::string write_unknowns_method(void) const;
+  const UnknownsMethod& get_unknowns_method(void) const;
+  std::string write_unknowns_method(void) const;
 
-   // Set methods
+  // Set methods
 
-   void set_unknowns_method(const UnknownsMethod&);
-   void set_unknowns_method(const std::string&);
+  void set_unknowns_method(const UnknownsMethod&);
+  void set_unknowns_method(const std::string&);
 
-   void set_default(void);
+  void set_default(void);
 
-   // Checking methods
+  // Checking methods
 
-   void check(void) const;
+  void check(void) const;
 
-   // Objective methods
+  // Objective methods
 
-   double calculate_performance(void) const;   
-   double calculate_performance(const Vector<double>&) const;
-   double calculate_generalization_performance(void) const;
+  double calculate_performance(void) const;
+  double calculate_performance(const Vector<double>&) const;
+  double calculate_generalization_performance(void) const;
 
-   std::string write_performance_term_type(void) const;
+  std::string write_performance_term_type(void) const;
 
-   // Serialization methods
+  // Serialization methods
 
-   tinyxml2::XMLDocument* to_XML(void) const;   
-   void from_XML(const tinyxml2::XMLDocument&);   
+  tinyxml2::XMLDocument* to_XML(void) const;
+  void from_XML(const tinyxml2::XMLDocument&);
 
-private:
+ private:
 
-   // MEMBERS
+  // MEMBERS
 
-   /// Variable containing the method for putting the unknowns into the mathematical model. 
+  /// Variable containing the method for putting the unknowns into the
+  /// mathematical model.
 
-   UnknownsMethod unknowns_method;
+  UnknownsMethod unknowns_method;
 };
-
 }
 
 #endif
-
 
 // OpenNN: Open Neural Networks Library.
 // Neural Designer Copyright © 2013 Roberto López and Ismael Santana (Intelnics)

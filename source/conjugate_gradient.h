@@ -1,13 +1,19 @@
 /****************************************************************************************************************/
 /*                                                                                                              */
-/*   OpenNN: Open Neural Networks Library                                                                       */
-/*   www.intelnics.com/opennn                                                                                   */
+/*   OpenNN: Open Neural Networks Library
+ */
+/*   www.intelnics.com/opennn
+ */
 /*                                                                                                              */
-/*   C O N J U G A T E   G R A D I E N T   C L A S S   H E A D E R                                              */
+/*   C O N J U G A T E   G R A D I E N T   C L A S S   H E A D E R
+ */
 /*                                                                                                              */
-/*   Roberto Lopez                                                                                              */
-/*   Intelnics - The artificial intelligence company                                                            */
-/*   robertolopez@intelnics.com                                                                                 */
+/*   Roberto Lopez
+ */
+/*   Intelnics - The artificial intelligence company
+ */
+/*   robertolopez@intelnics.com
+ */
 /*                                                                                                              */
 /****************************************************************************************************************/
 
@@ -34,411 +40,426 @@
 #include "training_rate_algorithm.h"
 
 // TinyXml includes
+#include "tinyxml2_ext.h"
 
-#include "../tinyxml2/tinyxml2.h"
-
-namespace OpenNN
-{
+namespace OpenNN {
 
 ///
-/// This concrete class represents a conjugate gradient training algorithm for a performance functional of a neural network. 
+/// This concrete class represents a conjugate gradient training algorithm for a
+/// performance functional of a neural network.
 ///
 
-class ConjugateGradient : public TrainingAlgorithm
-{
+class ConjugateGradient : public TrainingAlgorithm {
 
-public:
+ public:
 
-   // ENUMERATIONS
+  // ENUMERATIONS
 
-   /// Enumeration of the available training operators for obtaining the training direction.
+  /// Enumeration of the available training operators for obtaining the training
+  /// direction.
 
-   enum TrainingDirectionMethod{PR, FR};
+  enum TrainingDirectionMethod {
+    PR,
+    FR
+  };
 
-   // DEFAULT CONSTRUCTOR
+  // DEFAULT CONSTRUCTOR
 
-   explicit ConjugateGradient(void); 
+  explicit ConjugateGradient(void);
 
+  // GENERAL CONSTRUCTOR
 
-   // GENERAL CONSTRUCTOR
+  explicit ConjugateGradient(PerformanceFunctional*);
 
-   explicit ConjugateGradient(PerformanceFunctional*);
+  // XML CONSTRUCTOR
 
+  explicit ConjugateGradient(const tinyxml2::XMLDocument&);
 
-   // XML CONSTRUCTOR
+  // DESTRUCTOR
 
-   explicit ConjugateGradient(const tinyxml2::XMLDocument&); 
+  virtual ~ConjugateGradient(void);
 
+  // STRUCTURES
 
-   // DESTRUCTOR
+  ///
+  /// This structure contains the conjugate gradient results.
+  ///
 
-   virtual ~ConjugateGradient(void);
+  struct ConjugateGradientResults : public TrainingAlgorithm::Results {
+    /// Default constructor.
 
+    ConjugateGradientResults(void) { conjugate_gradient_pointer = NULL; }
 
-   // STRUCTURES
+    /// Conjugate gradient constructor.
 
-   ///
-   /// This structure contains the conjugate gradient results. 
-   ///
+    ConjugateGradientResults(
+        ConjugateGradient* new_conjugate_gradient_pointer) {
+      conjugate_gradient_pointer = new_conjugate_gradient_pointer;
+    }
 
-   struct ConjugateGradientResults : public TrainingAlgorithm::Results
-   {
-       /// Default constructor.
+    /// Destructor.
 
-       ConjugateGradientResults(void)
-       {
-           conjugate_gradient_pointer = NULL;
-       }
+    virtual ~ConjugateGradientResults(void) {}
 
-       /// Conjugate gradient constructor.
+    /// Pointer to the conjugate gradient object for which the training results
+    /// are to be stored.
 
-       ConjugateGradientResults(ConjugateGradient* new_conjugate_gradient_pointer)
-       {
-           conjugate_gradient_pointer = new_conjugate_gradient_pointer;
-       }
+    ConjugateGradient* conjugate_gradient_pointer;
 
-       /// Destructor.
+    // TRAINING HISTORY
 
-       virtual ~ConjugateGradientResults(void)
-       {
-       }
+    /// History of the neural network parameters over the training iterations.
 
-       /// Pointer to the conjugate gradient object for which the training results are to be stored.
+    Vector<Vector<double> > parameters_history;
 
-      ConjugateGradient* conjugate_gradient_pointer;
+    /// History of the parameters norm over the training iterations.
 
-      // TRAINING HISTORY
+    Vector<double> parameters_norm_history;
 
-      /// History of the neural network parameters over the training iterations. 
+    /// History of the performance function performance over the training
+    /// iterations.
 
-      Vector< Vector<double> > parameters_history;
+    Vector<double> performance_history;
 
-      /// History of the parameters norm over the training iterations. 
+    /// History of the generalization performance over the training iterations.
 
-      Vector<double> parameters_norm_history;
+    Vector<double> generalization_performance_history;
 
-      /// History of the performance function performance over the training iterations. 
+    /// History of the performance function gradient over the training
+    /// iterations.
 
-      Vector<double> performance_history;
+    Vector<Vector<double> > gradient_history;
 
-      /// History of the generalization performance over the training iterations. 
+    /// History of the gradient norm over the training iterations.
 
-      Vector<double> generalization_performance_history;
+    Vector<double> gradient_norm_history;
 
-      /// History of the performance function gradient over the training iterations. 
+    /// History of the conjugate gradient training direction over the training
+    /// iterations.
 
-      Vector< Vector<double> > gradient_history;
+    Vector<Vector<double> > training_direction_history;
 
-      /// History of the gradient norm over the training iterations. 
+    /// History of the training rate over the training iterations.
 
-      Vector<double> gradient_norm_history;
+    Vector<double> training_rate_history;
 
-      /// History of the conjugate gradient training direction over the training iterations. 
+    /// History of the elapsed time over the training iterations.
 
-      Vector< Vector<double> > training_direction_history;
+    Vector<double> elapsed_time_history;
 
-      /// History of the training rate over the training iterations. 
+    // FINAL VALUES
 
-      Vector<double> training_rate_history;
+    /// Final neural network parameters vector.
 
-      /// History of the elapsed time over the training iterations. 
+    Vector<double> final_parameters;
 
-      Vector<double> elapsed_time_history;
+    /// Final neural network parameters norm.
 
-      // FINAL VALUES
+    double final_parameters_norm;
 
-      /// Final neural network parameters vector. 
+    /// Final performance function evaluation.
 
-      Vector<double> final_parameters;
+    double final_performance;
 
-      /// Final neural network parameters norm. 
+    /// Final generalization performance.
 
-      double final_parameters_norm;
+    double final_generalization_performance;
 
-      /// Final performance function evaluation.
+    /// Final performance function gradient.
 
-      double final_performance;
+    Vector<double> final_gradient;
 
-      /// Final generalization performance. 
+    /// Final gradient norm.
 
-      double final_generalization_performance;
+    double final_gradient_norm;
 
-      /// Final performance function gradient. 
+    /// Final conjugate gradient training direction.
 
-      Vector<double> final_gradient;
+    Vector<double> final_training_direction;
 
-      /// Final gradient norm. 
+    /// Final conjugate gradient training rate.
 
-      double final_gradient_norm;
+    double final_training_rate;
 
-      /// Final conjugate gradient training direction. 
+    /// Elapsed time of the training process.
 
-      Vector<double> final_training_direction;
+    double elapsed_time;
 
-      /// Final conjugate gradient training rate. 
+    /// Maximum number of training iterations.
 
-      double final_training_rate;
+    unsigned iterations_number;
 
-      /// Elapsed time of the training process. 
+    void resize_training_history(const unsigned&);
+    std::string to_string(void) const;
 
-      double elapsed_time;
+    Matrix<std::string> write_final_results(const unsigned& precision =
+                                                3) const;
+  };
 
-      /// Maximum number of training iterations.
+  // METHODS
 
-      unsigned iterations_number;
+  // Get methods
 
-      void resize_training_history(const unsigned&);
-      std::string to_string(void) const;
+  const TrainingRateAlgorithm& get_training_rate_algorithm(void) const;
+  TrainingRateAlgorithm* get_training_rate_algorithm_pointer(void);
 
-      Matrix<std::string> write_final_results(const unsigned& precision = 3) const;
-   };
+  // Training operators
 
+  const TrainingDirectionMethod& get_training_direction_method(void) const;
+  std::string write_training_direction_method(void) const;
 
-   // METHODS
+  // Training parameters
 
-   // Get methods
+  const double& get_warning_parameters_norm(void) const;
+  const double& get_warning_gradient_norm(void) const;
+  const double& get_warning_training_rate(void) const;
 
-   const TrainingRateAlgorithm& get_training_rate_algorithm(void) const;
-   TrainingRateAlgorithm* get_training_rate_algorithm_pointer(void);
+  const double& get_error_parameters_norm(void) const;
+  const double& get_error_gradient_norm(void) const;
+  const double& get_error_training_rate(void) const;
 
-   // Training operators
+  // Stopping criteria
 
-   const TrainingDirectionMethod& get_training_direction_method(void) const;
-   std::string write_training_direction_method(void) const;
+  const double& get_minimum_parameters_increment_norm(void) const;
 
-   // Training parameters
+  const double& get_minimum_performance_increase(void) const;
+  const double& get_performance_goal(void) const;
+  const unsigned& get_maximum_generalization_performance_decreases(void) const;
+  const double& get_gradient_norm_goal(void) const;
 
-   const double& get_warning_parameters_norm(void) const;
-   const double& get_warning_gradient_norm(void) const;
-   const double& get_warning_training_rate(void) const;
+  const unsigned& get_maximum_iterations_number(void) const;
+  const double& get_maximum_time(void) const;
 
-   const double& get_error_parameters_norm(void) const;
-   const double& get_error_gradient_norm(void) const;
-   const double& get_error_training_rate(void) const;
+  // Reserve training history
 
-   // Stopping criteria
+  const bool& get_reserve_parameters_history(void) const;
+  const bool& get_reserve_parameters_norm_history(void) const;
 
-   const double& get_minimum_parameters_increment_norm(void) const;
+  const bool& get_reserve_performance_history(void) const;
+  const bool& get_reserve_generalization_performance_history(void) const;
+  const bool& get_reserve_gradient_history(void) const;
+  const bool& get_reserve_gradient_norm_history(void) const;
 
-   const double& get_minimum_performance_increase(void) const;
-   const double& get_performance_goal(void) const;
-   const unsigned& get_maximum_generalization_performance_decreases(void) const;
-   const double& get_gradient_norm_goal(void) const;
+  const bool& get_reserve_training_direction_history(void) const;
+  const bool& get_reserve_training_rate_history(void) const;
+  const bool& get_reserve_elapsed_time_history(void) const;
 
-   const unsigned& get_maximum_iterations_number(void) const;
-   const double& get_maximum_time(void) const;
+  // Utilities
 
-   // Reserve training history
+  const unsigned& get_display_period(void) const;
 
-   const bool& get_reserve_parameters_history(void) const;
-   const bool& get_reserve_parameters_norm_history(void) const;
+  // Set methods
 
-   const bool& get_reserve_performance_history(void) const;
-   const bool& get_reserve_generalization_performance_history(void) const;
-   const bool& get_reserve_gradient_history(void) const;
-   const bool& get_reserve_gradient_norm_history(void) const;
+  void set_default(void);
 
-   const bool& get_reserve_training_direction_history(void) const;
-   const bool& get_reserve_training_rate_history(void) const;
-   const bool& get_reserve_elapsed_time_history(void) const;
+  void set_performance_functional_pointer(PerformanceFunctional*);
 
-   // Utilities
+  // Training operators
 
-   const unsigned& get_display_period(void) const;
+  void set_training_direction_method(const TrainingDirectionMethod&);
+  void set_training_direction_method(const std::string&);
 
-   // Set methods
+  // Training parameters
 
-   void set_default(void);
+  void set_warning_parameters_norm(const double&);
+  void set_warning_gradient_norm(const double&);
+  void set_warning_training_rate(const double&);
 
-   void set_performance_functional_pointer(PerformanceFunctional*);
+  void set_error_parameters_norm(const double&);
+  void set_error_gradient_norm(const double&);
+  void set_error_training_rate(const double&);
 
-   // Training operators
+  // Stopping criteria
 
-   void set_training_direction_method(const TrainingDirectionMethod&);
-   void set_training_direction_method(const std::string&);
+  void set_minimum_parameters_increment_norm(const double&);
 
-   // Training parameters
+  void set_performance_goal(const double&);
+  void set_minimum_performance_increase(const double&);
+  void set_maximum_generalization_performance_decreases(const unsigned&);
+  void set_gradient_norm_goal(const double&);
 
-   void set_warning_parameters_norm(const double&);
-   void set_warning_gradient_norm(const double&);
-   void set_warning_training_rate(const double&);
+  void set_maximum_iterations_number(const unsigned&);
+  void set_maximum_time(const double&);
 
-   void set_error_parameters_norm(const double&);
-   void set_error_gradient_norm(const double&);
-   void set_error_training_rate(const double&);
+  // Reserve training history
 
-   // Stopping criteria
+  void set_reserve_parameters_history(const bool&);
+  void set_reserve_parameters_norm_history(const bool&);
 
-   void set_minimum_parameters_increment_norm(const double&);
+  void set_reserve_performance_history(const bool&);
+  void set_reserve_generalization_performance_history(const bool&);
+  void set_reserve_gradient_history(const bool&);
+  void set_reserve_gradient_norm_history(const bool&);
 
-   void set_performance_goal(const double&);
-   void set_minimum_performance_increase(const double&);
-   void set_maximum_generalization_performance_decreases(const unsigned&);
-   void set_gradient_norm_goal(const double&);
+  void set_reserve_training_direction_history(const bool&);
+  void set_reserve_training_rate_history(const bool&);
+  void set_reserve_elapsed_time_history(const bool&);
 
-   void set_maximum_iterations_number(const unsigned&);
-   void set_maximum_time(const double&);
+  void set_reserve_all_training_history(const bool&);
 
-   // Reserve training history
+  // Utilities
 
-   void set_reserve_parameters_history(const bool&);
-   void set_reserve_parameters_norm_history(const bool&);
+  void set_display_period(const unsigned&);
 
-   void set_reserve_performance_history(const bool&);
-   void set_reserve_generalization_performance_history(const bool&);
-   void set_reserve_gradient_history(const bool&);
-   void set_reserve_gradient_norm_history(const bool&);
+  // Training direction methods
 
-   void set_reserve_training_direction_history(const bool&);
-   void set_reserve_training_rate_history(const bool&);
-   void set_reserve_elapsed_time_history(const bool&);
+  double calculate_PR_parameter(const Vector<double>&,
+                                const Vector<double>&) const;
+  double calculate_FR_parameter(const Vector<double>&,
+                                const Vector<double>&) const;
 
-   void set_reserve_all_training_history(const bool&);
+  Vector<double> calculate_PR_training_direction(const Vector<double>&,
+                                                 const Vector<double>&,
+                                                 const Vector<double>&) const;
+  Vector<double> calculate_FR_training_direction(const Vector<double>&,
+                                                 const Vector<double>&,
+                                                 const Vector<double>&) const;
 
-   // Utilities
+  Vector<double> calculate_gradient_descent_training_direction(
+      const Vector<double>&) const;
 
-   void set_display_period(const unsigned&);
+  Vector<double> calculate_training_direction(const Vector<double>&,
+                                              const Vector<double>&,
+                                              const Vector<double>&) const;
 
-   // Training direction methods
+  // Training methods
 
-   double calculate_PR_parameter(const Vector<double>&, const Vector<double>&) const;
-   double calculate_FR_parameter(const Vector<double>&, const Vector<double>&) const;
+  ConjugateGradientResults* perform_training(void);
 
-   Vector<double> calculate_PR_training_direction(const Vector<double>&, const Vector<double>&, const Vector<double>&) const;
-   Vector<double> calculate_FR_training_direction(const Vector<double>&, const Vector<double>&, const Vector<double>&) const;
+  std::string write_training_algorithm_type(void) const;
 
-   Vector<double> calculate_gradient_descent_training_direction(const Vector<double>&) const;
+  // Serialization methods
 
-   Vector<double> calculate_training_direction(const Vector<double>&, const Vector<double>&, const Vector<double>&) const;
+  Matrix<std::string> to_string_matrix(void) const;
 
-   // Training methods
+  tinyxml2::XMLDocument* to_XML(void) const;
+  void from_XML(const tinyxml2::XMLDocument&);
 
-   ConjugateGradientResults* perform_training(void);
+ private:
 
-   std::string write_training_algorithm_type(void) const;
+  /// Applied method for calculating the conjugate gradient direction.
 
-   // Serialization methods
+  TrainingDirectionMethod training_direction_method;
 
-   Matrix<std::string> to_string_matrix(void) const;
+  /// Training rate algorithm object for one-dimensional minimization.
 
-   tinyxml2::XMLDocument* to_XML(void) const;
-   void from_XML(const tinyxml2::XMLDocument&);
+  TrainingRateAlgorithm training_rate_algorithm;
 
-private:
+  /// Value for the parameters norm at which a warning message is written to the
+  /// screen.
 
-   /// Applied method for calculating the conjugate gradient direction.
+  double warning_parameters_norm;
 
-   TrainingDirectionMethod training_direction_method;
+  /// Value for the gradient norm at which a warning message is written to the
+  /// screen.
 
-   /// Training rate algorithm object for one-dimensional minimization. 
+  double warning_gradient_norm;
 
-   TrainingRateAlgorithm training_rate_algorithm;
+  /// Training rate value at wich a warning message is written to the screen.
 
-   /// Value for the parameters norm at which a warning message is written to the screen. 
+  double warning_training_rate;
 
-   double warning_parameters_norm;
+  /// Value for the parameters norm at which the training process is assumed to
+  /// fail.
 
-   /// Value for the gradient norm at which a warning message is written to the screen. 
+  double error_parameters_norm;
 
-   double warning_gradient_norm;   
+  /// Value for the gradient norm at which the training process is assumed to
+  /// fail.
 
-   /// Training rate value at wich a warning message is written to the screen.
+  double error_gradient_norm;
 
-   double warning_training_rate;
+  /// Training rate at wich the line minimization algorithm is assumed to be
+  /// unable to bracket a minimum.
 
-   /// Value for the parameters norm at which the training process is assumed to fail. 
-   
-   double error_parameters_norm;
+  double error_training_rate;
 
-   /// Value for the gradient norm at which the training process is assumed to fail. 
+  // STOPPING CRITERIA
 
-   double error_gradient_norm;
+  /// Norm of the parameters increment vector at which training stops.
 
-   /// Training rate at wich the line minimization algorithm is assumed to be unable to bracket a minimum.
+  double minimum_parameters_increment_norm;
 
-   double error_training_rate;
+  /// Minimum performance improvement between two successive iterations. It is
+  /// used as a stopping criterion.
 
+  double minimum_performance_increase;
 
-   // STOPPING CRITERIA
+  /// Goal value for the performance. It is used as a stopping criterion.
 
-   /// Norm of the parameters increment vector at which training stops.
+  double performance_goal;
 
-   double minimum_parameters_increment_norm;
+  /// Goal value for the norm of the objective function gradient. It is used as
+  /// a stopping criterion.
 
-   /// Minimum performance improvement between two successive iterations. It is used as a stopping criterion.
+  double gradient_norm_goal;
 
-   double minimum_performance_increase;
+  /// Maximum number of iterations at which the generalization performance
+  /// decreases.
+  /// This is an early stopping method for improving generalization.
 
-   /// Goal value for the performance. It is used as a stopping criterion.
+  unsigned maximum_generalization_performance_decreases;
 
-   double performance_goal;
+  /// Maximum number of iterations to perform_training. It is used as a stopping
+  /// criterion.
 
-   /// Goal value for the norm of the objective function gradient. It is used as a stopping criterion.
+  unsigned maximum_iterations_number;
 
-   double gradient_norm_goal;
+  /// Maximum training time. It is used as a stopping criterion.
 
-   /// Maximum number of iterations at which the generalization performance decreases.
-   /// This is an early stopping method for improving generalization.
+  double maximum_time;
 
-   unsigned maximum_generalization_performance_decreases;
+  // TRAINING HISTORY
 
-   /// Maximum number of iterations to perform_training. It is used as a stopping criterion.
+  /// True if the parameters history matrix is to be reserved, false otherwise.
 
-   unsigned maximum_iterations_number;
+  bool reserve_parameters_history;
 
-   /// Maximum training time. It is used as a stopping criterion.
+  /// True if the parameters norm history vector is to be reserved, false
+  /// otherwise.
 
-   double maximum_time;
+  bool reserve_parameters_norm_history;
 
-   // TRAINING HISTORY
+  /// True if the performance history vector is to be reserved, false otherwise.
 
-   /// True if the parameters history matrix is to be reserved, false otherwise.
+  bool reserve_performance_history;
 
-   bool reserve_parameters_history;
+  /// True if the gradient history matrix is to be reserved, false otherwise.
 
-   /// True if the parameters norm history vector is to be reserved, false otherwise.
+  bool reserve_gradient_history;
 
-   bool reserve_parameters_norm_history;
+  /// True if the gradient norm history vector is to be reserved, false
+  /// otherwise.
 
-   /// True if the performance history vector is to be reserved, false otherwise.
+  bool reserve_gradient_norm_history;
 
-   bool reserve_performance_history;
+  /// True if the training direction history matrix is to be reserved, false
+  /// otherwise.
 
-   /// True if the gradient history matrix is to be reserved, false otherwise.
+  bool reserve_training_direction_history;
 
-   bool reserve_gradient_history;
+  /// True if the training rate history vector is to be reserved, false
+  /// otherwise.
 
-   /// True if the gradient norm history vector is to be reserved, false otherwise.
+  bool reserve_training_rate_history;
 
-   bool reserve_gradient_norm_history;
+  /// True if the elapsed time history vector is to be reserved, false
+  /// otherwise.
 
-   /// True if the training direction history matrix is to be reserved, false otherwise.
-   
-   bool reserve_training_direction_history;
+  bool reserve_elapsed_time_history;
 
-   /// True if the training rate history vector is to be reserved, false otherwise.
+  /// True if the Generalization performance history vector is to be reserved,
+  /// false otherwise.
 
-   bool reserve_training_rate_history;
+  bool reserve_generalization_performance_history;
 
-   /// True if the elapsed time history vector is to be reserved, false otherwise.
+  /// Number of iterations between the training showing progress.
 
-   bool reserve_elapsed_time_history;
-
-   /// True if the Generalization performance history vector is to be reserved, false otherwise. 
-
-   bool reserve_generalization_performance_history;
-
-   /// Number of iterations between the training showing progress.
-
-   unsigned display_period;
-
-
+  unsigned display_period;
 };
-
 }
 
 #endif
-
 
 // OpenNN: Open Neural Networks Library.
 // Neural Designer Copyright © 2013 Roberto López and Ismael Santana (Intelnics)
@@ -456,4 +477,3 @@ private:
 // You should have received a copy of the GNU Lesser General Public
 // License along with this library; if not, write to the Free Software
 // Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
-

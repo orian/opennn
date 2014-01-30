@@ -1,13 +1,19 @@
 /****************************************************************************************************************/
 /*                                                                                                              */
-/*   OpenNN: Open Neural Networks Library                                                                       */
-/*   www.intelnics.com/opennn                                                                                   */
+/*   OpenNN: Open Neural Networks Library
+ */
+/*   www.intelnics.com/opennn
+ */
 /*                                                                                                              */
-/*   L I N E A R   A L G E B R A I C   E Q U A T I O N S   C L A S S   H E A D E R                              */
-/*                                                                                                              */ 
-/*   Roberto Lopez                                                                                              */ 
-/*   Intelnics - The artificial intelligence company                                                            */
-/*   robertolopez@intelnics.com                                                                                 */
+/*   L I N E A R   A L G E B R A I C   E Q U A T I O N S   C L A S S   H E A D E
+ * R                              */
+/*                                                                                                              */
+/*   Roberto Lopez
+ */
+/*   Intelnics - The artificial intelligence company
+ */
+/*   robertolopez@intelnics.com
+ */
 /*                                                                                                              */
 /****************************************************************************************************************/
 
@@ -16,59 +22,58 @@
 
 // System includes
 
-#include<iostream>
+#include <iostream>
 
 // OpenNN includes
 
 #include "vector.h"
 #include "matrix.h"
 
-namespace OpenNN
-{
+namespace OpenNN {
 
-/// This class contains methods for the solution of linear algebraic equations. 
-/// In particular it implements the Gauss-Jordan eliminiation, LU decomposition and
+/// This class contains methods for the solution of linear algebraic equations.
+/// In particular it implements the Gauss-Jordan eliminiation, LU decomposition
+/// and
 /// Cholesky decomposition methods.
 
-class LinearAlgebraicEquations 
-{
-public:
+class LinearAlgebraicEquations {
+ public:
 
-   // METHODS
+  // METHODS
 
-   // Gauss Jordan methods
+  // Gauss Jordan methods
 
-   static void perform_Gauss_Jordan_elimination(Matrix<double>&, Matrix<double>&);
-   static void perform_Gauss_Jordan_elimination(Matrix<double>&, Vector<double>&);
+  static void perform_Gauss_Jordan_elimination(Matrix<double>&,
+                                               Matrix<double>&);
+  static void perform_Gauss_Jordan_elimination(Matrix<double>&,
+                                               Vector<double>&);
 
-   static Vector<double> calculate_Gauss_Jordan_solution(Matrix<double>, const Vector<double>&);
+  static Vector<double> calculate_Gauss_Jordan_solution(Matrix<double>,
+                                                        const Vector<double>&);
 
-   // CONSTRUCTOR
+  // CONSTRUCTOR
 
-   LinearAlgebraicEquations(void);
+  LinearAlgebraicEquations(void);
 
-   // DESTRUCTOR
+  // DESTRUCTOR
 
-   ~LinearAlgebraicEquations(void);
+  ~LinearAlgebraicEquations(void);
 
-   // ASSIGNMENT OPERATOR
+  // ASSIGNMENT OPERATOR
 
-   LinearAlgebraicEquations& operator = (const LinearAlgebraicEquations&);
+  LinearAlgebraicEquations& operator=(const LinearAlgebraicEquations&);
 
-   // EQUAL TO OPERATOR
+  // EQUAL TO OPERATOR
 
-   bool operator == (const LinearAlgebraicEquations&) const;
+  bool operator==(const LinearAlgebraicEquations&) const;
 
-private:
+ private:
 
-   static void swap(double&, double&);
-
+  static void swap(double&, double&);
 };
-
 }
 
 #endif
-
 
 // OpenNN: Open Neural Networks Library.
 // Neural Designer Copyright © 2013 Roberto López and Ismael Santana (Intelnics)

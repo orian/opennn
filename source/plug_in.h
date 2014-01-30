@@ -1,13 +1,19 @@
 /****************************************************************************************************************/
 /*                                                                                                              */
-/*   OpenNN: Open Neural Networks Library                                                                       */
-/*   www.intelnics.com/opennn                                                                                   */
+/*   OpenNN: Open Neural Networks Library
+ */
+/*   www.intelnics.com/opennn
+ */
 /*                                                                                                              */
-/*   P L U G - I N   C L A S S   H E A D E R                                                                    */
+/*   P L U G - I N   C L A S S   H E A D E R
+ */
 /*                                                                                                              */
-/*   Roberto Lopez                                                                                              */ 
-/*   Intelnics - The artificial intelligence company                                                            */
-/*   robertolopez@intelnics.com                                                                                 */
+/*   Roberto Lopez
+ */
+/*   Intelnics - The artificial intelligence company
+ */
+/*   robertolopez@intelnics.com
+ */
 /*                                                                                                              */
 /****************************************************************************************************************/
 
@@ -16,10 +22,10 @@
 
 // System includes
 
-#include<fstream>
-#include<iostream>
-#include<string>
-#include<sstream>
+#include <fstream>
+#include <iostream>
+#include <string>
+#include <sstream>
 #include <time.h>
 
 // OpenNN includes
@@ -30,139 +36,138 @@
 #include "mathematical_model.h"
 #include "neural_network.h"
 
-namespace OpenNN
-{
+namespace OpenNN {
 
 ///
-/// This method represents an external mathematical model which communicates with OpenNN by means of input and output files. 
+/// This method represents an external mathematical model which communicates
+/// with OpenNN by means of input and output files.
 ///
 
-class PlugIn : public MathematicalModel
-{
+class PlugIn : public MathematicalModel {
 
-public:
+ public:
 
-   // DEFAULT CONSTRUCTOR
+  // DEFAULT CONSTRUCTOR
 
-   explicit PlugIn(void);
+  explicit PlugIn(void);
 
-   // XML CONSTRUCTOR
+  // XML CONSTRUCTOR
 
-   explicit PlugIn(const tinyxml2::XMLDocument&);
+  explicit PlugIn(const tinyxml2::XMLDocument&);
 
-   // DESTRUCTOR
+  // DESTRUCTOR
 
-   virtual ~PlugIn(void);
+  virtual ~PlugIn(void);
 
-   // ENUMERATIONS
+  // ENUMERATIONS
 
-   /// Enumeration of available methods for introducing neural network data into the input file. 
+  /// Enumeration of available methods for introducing neural network data into
+  /// the input file.
 
-   enum InputMethod{IndependentParametersInput};
+  enum InputMethod {
+    IndependentParametersInput
+  };
 
-   // ASSIGNMENT OPERATOR
+  // ASSIGNMENT OPERATOR
 
-   PlugIn& operator = (const PlugIn&);
+  PlugIn& operator=(const PlugIn&);
 
-   // EQUAL TO OPERATOR
+  // EQUAL TO OPERATOR
 
-   bool operator == (const PlugIn&) const;
+  bool operator==(const PlugIn&) const;
 
-   // METHODS
+  // METHODS
 
-   // Get methods
+  // Get methods
 
-   const InputMethod& get_input_method(void) const;
-   std::string write_input_method(void) const;
-    
-   const std::string& get_template_file_name(void) const;
-   const std::string& get_input_file_name(void) const;
+  const InputMethod& get_input_method(void) const;
+  std::string write_input_method(void) const;
 
-   const std::string& get_script_file_name(void) const;
+  const std::string& get_template_file_name(void) const;
+  const std::string& get_input_file_name(void) const;
 
-   const std::string& get_output_file_name(void) const;
+  const std::string& get_script_file_name(void) const;
 
-   const Vector<std::string>& get_input_flags(void) const;
-   const std::string& get_input_flag(const unsigned&) const;
+  const std::string& get_output_file_name(void) const;
 
-   // Set methods
+  const Vector<std::string>& get_input_flags(void) const;
+  const std::string& get_input_flag(const unsigned&) const;
 
-   void set_default(void);
+  // Set methods
 
-   void set_input_method(const InputMethod&);
-   void set_input_method(const std::string&);
+  void set_default(void);
 
-   void set_template_file_name(const std::string&);
-   void set_input_file_name(const std::string&);
+  void set_input_method(const InputMethod&);
+  void set_input_method(const std::string&);
 
-   void set_script_file_name(const std::string&);
+  void set_template_file_name(const std::string&);
+  void set_input_file_name(const std::string&);
 
-   void set_output_file_name(const std::string&);
+  void set_script_file_name(const std::string&);
 
-   void set_input_flags(const Vector<std::string>&);
+  void set_output_file_name(const std::string&);
 
-   // Plug-In methods
+  void set_input_flags(const Vector<std::string>&);
 
-   void write_input_file(const NeuralNetwork&) const;
-   void write_input_file_independent_parameters(const NeuralNetwork&) const;
+  // Plug-In methods
 
-   void run_script(void) const;
+  void write_input_file(const NeuralNetwork&) const;
+  void write_input_file_independent_parameters(const NeuralNetwork&) const;
 
-   Matrix<double> read_output_file(void) const;
+  void run_script(void) const;
 
-   Matrix<double> read_output_file_header(void) const;
+  Matrix<double> read_output_file(void) const;
 
-   Matrix<double> calculate_solutions(const NeuralNetwork&) const;
+  Matrix<double> read_output_file_header(void) const;
 
-   // Serialization methods
+  Matrix<double> calculate_solutions(const NeuralNetwork&) const;
 
-   std::string to_string(void) const;
+  // Serialization methods
 
-   tinyxml2::XMLDocument* to_XML(void) const;   
-   void from_XML(const tinyxml2::XMLDocument&);
+  std::string to_string(void) const;
 
-   //tinyxml2::XMLElement* get_output_data_XML(const Matrix<double>&) const;
+  tinyxml2::XMLDocument* to_XML(void) const;
+  void from_XML(const tinyxml2::XMLDocument&);
 
+  // tinyxml2::XMLElement* get_output_data_XML(const Matrix<double>&) const;
 
-private: 
+ private:
 
-   /// Type of data to be entered in the mathematical model. 
+  /// Type of data to be entered in the mathematical model.
 
-   InputMethod input_method;
+  InputMethod input_method;
 
-   /// Name of template file. 
+  /// Name of template file.
 
-   std::string template_file_name;
+  std::string template_file_name;
 
-   /// Name of input file.
+  /// Name of input file.
 
-   std::string input_file_name;
+  std::string input_file_name;
 
-   /// Name of script file. 
+  /// Name of script file.
 
-   std::string script_file_name;
+  std::string script_file_name;
 
-   /// Name of output file. 
+  /// Name of output file.
 
-   std::string output_file_name;
+  std::string output_file_name;
 
-   /// Vector of flags in the input file. 
+  /// Vector of flags in the input file.
 
-   Vector<std::string> input_flags;
+  Vector<std::string> input_flags;
 
-   /// Number of rows in the output file. 
+  /// Number of rows in the output file.
 
-   unsigned output_rows_number;
+  unsigned output_rows_number;
 
-   /// Number of columns in the output file. 
+  /// Number of columns in the output file.
 
-   unsigned output_columns_number;
+  unsigned output_columns_number;
 };
-
 }
 
 #endif
-
 
 // OpenNN: Open Neural Networks Library.
 // Neural Designer Copyright © 2013 Roberto López and Ismael Santana (Intelnics)

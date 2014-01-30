@@ -1,13 +1,19 @@
 /****************************************************************************************************************/
 /*                                                                                                              */
-/*   OpenNN: Open Neural Networks Library                                                                       */
-/*   www.intelnics.com/opennn                                                                                   */
+/*   OpenNN: Open Neural Networks Library
+ */
+/*   www.intelnics.com/opennn
+ */
 /*                                                                                                              */
-/*   F I N A L   S O L U T I O N S   E R R O R   C L A S S   H E A D E R                                        */
+/*   F I N A L   S O L U T I O N S   E R R O R   C L A S S   H E A D E R
+ */
 /*                                                                                                              */
-/*   Roberto Lopez                                                                                              */
-/*   Intelnics - The artificial intelligence company                                                            */
-/*   robertolopez@intelnics.com                                                                                 */
+/*   Roberto Lopez
+ */
+/*   Intelnics - The artificial intelligence company
+ */
+/*   robertolopez@intelnics.com
+ */
 /*                                                                                                              */
 /****************************************************************************************************************/
 
@@ -29,124 +35,123 @@
 
 #include "performance_term.h"
 
-// TinyXml includes
+// TinyXml includes#include
 
-#include "../tinyxml2/tinyxml2.h"
+#include "tinyxml2_ext.h"
 
-namespace OpenNN
-{
+#include "tinyxml2_ext.h"
 
-/// This class represents the final solutions error constraints functional. 
-/// The final solutions error is measured on a mathematical model. 
+namespace OpenNN {
+
+/// This class represents the final solutions error constraints functional.
+/// The final solutions error is measured on a mathematical model.
 /// This constraints functional often appears in optimal control problems.
-   
-class FinalSolutionsError : public PerformanceTerm
-{
 
-public:
+class FinalSolutionsError : public PerformanceTerm {
 
-   // DEFAULT CONSTRUCTOR
+ public:
 
-   explicit FinalSolutionsError(void);
+  // DEFAULT CONSTRUCTOR
 
-   // NEURAL NETWORK CONSTRUCTOR
+  explicit FinalSolutionsError(void);
 
-   explicit FinalSolutionsError(NeuralNetwork*);
+  // NEURAL NETWORK CONSTRUCTOR
 
-   // MATHEMATICAL MODEL CONSTRUCTOR
+  explicit FinalSolutionsError(NeuralNetwork*);
 
-   explicit FinalSolutionsError(MathematicalModel*);
+  // MATHEMATICAL MODEL CONSTRUCTOR
 
-   // NEURAL NETWORK AND MATHEMATICAL MODEL CONSTRUCTOR
+  explicit FinalSolutionsError(MathematicalModel*);
 
-   explicit FinalSolutionsError(NeuralNetwork*, MathematicalModel*);
+  // NEURAL NETWORK AND MATHEMATICAL MODEL CONSTRUCTOR
 
-   // XML CONSTRUCTOR
+  explicit FinalSolutionsError(NeuralNetwork*, MathematicalModel*);
 
-   explicit FinalSolutionsError(const tinyxml2::XMLDocument&);
+  // XML CONSTRUCTOR
 
-   // COPY CONSTRUCTOR
+  explicit FinalSolutionsError(const tinyxml2::XMLDocument&);
 
-   FinalSolutionsError(const FinalSolutionsError&);
+  // COPY CONSTRUCTOR
 
-   // DESTRUCTOR
+  FinalSolutionsError(const FinalSolutionsError&);
 
-   virtual ~FinalSolutionsError(void);
+  // DESTRUCTOR
 
-   // ASSIGNMENT OPERATOR
+  virtual ~FinalSolutionsError(void);
 
-   FinalSolutionsError& operator = (const FinalSolutionsError&);
+  // ASSIGNMENT OPERATOR
 
-   // EQUAL TO OPERATOR
+  FinalSolutionsError& operator=(const FinalSolutionsError&);
 
-   bool operator == (const FinalSolutionsError&) const;
+  // EQUAL TO OPERATOR
 
-   // METHODS
+  bool operator==(const FinalSolutionsError&) const;
 
-   // Get methods
+  // METHODS
 
-   const Vector<double>& get_final_solutions_errors_weights(void) const;
+  // Get methods
 
-   const Vector<double>& get_target_final_solutions(void) const;
+  const Vector<double>& get_final_solutions_errors_weights(void) const;
 
-   // Set methods
+  const Vector<double>& get_target_final_solutions(void) const;
 
-   void set(void);
+  // Set methods
 
-   void set(NeuralNetwork*);
-   void set(MathematicalModel*);
-   void set(NeuralNetwork*, MathematicalModel*);
+  void set(void);
 
-   void set(const FinalSolutionsError&);
+  void set(NeuralNetwork*);
+  void set(MathematicalModel*);
+  void set(NeuralNetwork*, MathematicalModel*);
 
-   void set_mathematical_model_pointer(MathematicalModel*);
+  void set(const FinalSolutionsError&);
 
-   void set_final_solutions_errors_weights(const Vector<double>&);
-   void set_final_solution_error_weight(const unsigned&, const double&);
+  void set_mathematical_model_pointer(MathematicalModel*);
 
-   void set_target_final_solutions(const Vector<double>&);
-   void set_target_final_solution(const unsigned&, const double&);
+  void set_final_solutions_errors_weights(const Vector<double>&);
+  void set_final_solution_error_weight(const unsigned&, const double&);
 
-   void set_default(void);
+  void set_target_final_solutions(const Vector<double>&);
+  void set_target_final_solution(const unsigned&, const double&);
 
-   // Checking methods
+  void set_default(void);
 
-   void check(void) const;
+  // Checking methods
 
-   // Performance term methods
+  void check(void) const;
 
-   double calculate_performance(void) const;
-   double calculate_performance(const Vector<double>&) const;
+  // Performance term methods
 
-   std::string write_performance_term_type(void) const;
+  double calculate_performance(void) const;
+  double calculate_performance(const Vector<double>&) const;
 
-   std::string write_information(void) const;
-   
-   // Serialization methods
+  std::string write_performance_term_type(void) const;
 
-   tinyxml2::XMLDocument* to_XML(void) const;   
-   void from_XML(const tinyxml2::XMLDocument&);
+  std::string write_information(void) const;
 
-private:
+  // Serialization methods
 
-   // MEMBERS
+  tinyxml2::XMLDocument* to_XML(void) const;
+  void from_XML(const tinyxml2::XMLDocument&);
 
-   /// Desired final values for the dependent variables.
-   /// The size of this vector must be equal to the number of dependent variablese in the mathematical model. 
+ private:
 
-   Vector<double> target_final_solutions;
+  // MEMBERS
 
-   /// Weight value for each error on the final solution. 
-   /// The size of this vector must be equal to the number of dependent variablese in the mathematical model. 
+  /// Desired final values for the dependent variables.
+  /// The size of this vector must be equal to the number of dependent
+  /// variablese in the mathematical model.
 
-   Vector<double> final_solutions_errors_weights;
+  Vector<double> target_final_solutions;
 
+  /// Weight value for each error on the final solution.
+  /// The size of this vector must be equal to the number of dependent
+  /// variablese in the mathematical model.
+
+  Vector<double> final_solutions_errors_weights;
 };
-
 }
 
 #endif
-
 
 // OpenNN: Open Neural Networks Library.
 // Neural Designer Copyright © 2013 Roberto López and Ismael Santana (Intelnics)

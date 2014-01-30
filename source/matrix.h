@@ -1,13 +1,19 @@
 /****************************************************************************************************************/
 /*                                                                                                              */
-/*   OpenNN: Open Neural Networks Library                                                                       */
-/*   www.intelnics.com/opennn                                                                                   */
+/*   OpenNN: Open Neural Networks Library
+ */
+/*   www.intelnics.com/opennn
+ */
 /*                                                                                                              */
-/*   M A T R I X   C O N T A I N E R                                                                            */
+/*   M A T R I X   C O N T A I N E R
+ */
 /*                                                                                                              */
-/*   Roberto Lopez                                                                                              */
-/*   Intelnics - The artificial intelligence company                                                            */
-/*   robertolopez@intelnics.com                                                                                 */
+/*   Roberto Lopez
+ */
+/*   Intelnics - The artificial intelligence company
+ */
+/*   robertolopez@intelnics.com
+ */
 /*                                                                                                              */
 /****************************************************************************************************************/
 
@@ -28,46 +34,38 @@
 
 #include "vector.h"
 
-namespace OpenNN
-{
+namespace OpenNN {
 
 /// This template class defines a matrix for general purpose use.
-/// This matrix also implements some mathematical methods which can be useful. 
+/// This matrix also implements some mathematical methods which can be useful.
 
 template <class Type>
-class Matrix 
-{
+class Matrix {
 
-public:
+ public:
 
+  // CONSTRUCTORS
 
-// CONSTRUCTORS
+  /// Default constructor. It creates a matrix with zero rows and zero columns.
 
-/// Default constructor. It creates a matrix with zero rows and zero columns.
+  explicit Matrix(void) {
+    rows_number = 0;
+    columns_number = 0;
+    data = NULL;
+  }
 
-explicit Matrix(void) 
-{
-   rows_number = 0;
-   columns_number = 0;
-   data = NULL;
-}
+  /// Constructor. It creates a matrix with n rows and m columns, containing n*m
+  /// copies of the default value for Type.
+  /// @param new_rows_number Number of rows in matrix.
+  /// @param new_columns_number Number of columns in matrix.
 
-
-/// Constructor. It creates a matrix with n rows and m columns, containing n*m copies of the default value for Type.
-/// @param new_rows_number Number of rows in matrix.
-/// @param new_columns_number Number of columns in matrix.
-
-
-explicit Matrix(const unsigned& new_rows_number, const unsigned& new_columns_number) 
-{
-   if(new_rows_number == 0 && new_columns_number == 0)
-   {
+  explicit Matrix(const unsigned& new_rows_number,
+                  const unsigned& new_columns_number) {
+    if (new_rows_number == 0 && new_columns_number == 0) {
       rows_number = 0;
       columns_number = 0;
       data = NULL;
-   }
-   else if(new_rows_number == 0)
-   {
+    } else if (new_rows_number == 0) {
       std::ostringstream buffer;
 
       buffer << "OpenNN Exception: Matrix Template.\n"
@@ -75,9 +73,7 @@ explicit Matrix(const unsigned& new_rows_number, const unsigned& new_columns_num
              << "Number of rows must be greater than zero.\n";
 
       throw std::logic_error(buffer.str());
-   }
-   else if(new_columns_number == 0)
-   {
+    } else if (new_columns_number == 0) {
       std::ostringstream buffer;
 
       buffer << "OpenNN Exception: Matrix Template.\n"
@@ -85,115 +81,98 @@ explicit Matrix(const unsigned& new_rows_number, const unsigned& new_columns_num
              << "Number of columns must be greater than zero.\n";
 
       throw std::logic_error(buffer.str());
-   }
-   else
-   {
+    } else {
       rows_number = new_rows_number;
       columns_number = new_columns_number;
 
-      data = new Type*[rows_number];
-      data[0] = new Type[rows_number*columns_number];
+      data = new Type* [rows_number];
+      data[0] = new Type[rows_number * columns_number];
 
-      for(unsigned i = 1; i < rows_number; i++)
-      {
-         data[i] = data[i-1] + columns_number;
+      for (unsigned i = 1; i < rows_number; i++) {
+        data[i] = data[i - 1] + columns_number;
       }
-   }
-}
+    }
+  }
 
+  /// Constructor. It creates a matrix with n rows and m columns, containing n*m
+  /// copies of the type value of Type.
+  /// @param new_rows_number Number of rows in matrix.
+  /// @param new_columns_number Number of columns in matrix.
+  /// @param type Value of Type.
 
-/// Constructor. It creates a matrix with n rows and m columns, containing n*m copies of the type value of Type. 
-/// @param new_rows_number Number of rows in matrix.
-/// @param new_columns_number Number of columns in matrix.
-/// @param type Value of Type.
-
-explicit Matrix(const unsigned& new_rows_number, const unsigned& new_columns_number, const Type& type) 
-{
-   if(new_rows_number == 0 && new_columns_number == 0)
-   {
+  explicit Matrix(const unsigned& new_rows_number,
+                  const unsigned& new_columns_number, const Type& type) {
+    if (new_rows_number == 0 && new_columns_number == 0) {
       rows_number = 0;
       columns_number = 0;
       data = NULL;
-   }
-   else if(new_rows_number == 0)
-   {
+    } else if (new_rows_number == 0) {
       std::ostringstream buffer;
 
       buffer << "OpenNN Exception: Matrix Template.\n"
-             << "Constructor Matrix(const unsigned&, const unsigned&, const Type&).\n"
+             << "Constructor Matrix(const unsigned&, const unsigned&, const "
+                "Type&).\n"
              << "Number of rows must be greater than zero.\n";
 
       throw std::logic_error(buffer.str());
-   }
-   else if(new_columns_number == 0)
-   {
+    } else if (new_columns_number == 0) {
       std::ostringstream buffer;
 
       buffer << "OpenNN Exception: Matrix Template.\n"
-             << "Constructor Matrix(const unsigned&, const unsigned&, const Type&).\n"
+             << "Constructor Matrix(const unsigned&, const unsigned&, const "
+                "Type&).\n"
              << "Number of columns must be greater than zero.\n";
 
       throw std::logic_error(buffer.str());
-   }
-   else
-   {
+    } else {
       // Set sizes
 
       rows_number = new_rows_number;
       columns_number = new_columns_number;
 
-      data = new Type*[new_rows_number];
-      data[0] = new Type[rows_number*columns_number];
+      data = new Type* [new_rows_number];
+      data[0] = new Type[rows_number * columns_number];
 
-      for(unsigned i = 1; i < rows_number; i++)
-      {
-         data[i] = data[i-1] + columns_number;
+      for (unsigned i = 1; i < rows_number; i++) {
+        data[i] = data[i - 1] + columns_number;
       }
 
       // Initialize
 
-      for(unsigned i = 0; i < rows_number; i++)
-      {
-         for(unsigned j = 0; j < columns_number; j++)
-         {
-            data[i][j] = type;
-         }
+      for (unsigned i = 0; i < rows_number; i++) {
+        for (unsigned j = 0; j < columns_number; j++) {
+          data[i][j] = type;
+        }
       }
-   }
-}
+    }
+  }
 
+  /// File constructor. It creates a matrix which members are loaded froma a
+  /// data file.
+  /// @param file_name Name of matrix data file.
 
-/// File constructor. It creates a matrix which members are loaded froma a data file.
-/// @param file_name Name of matrix data file.
+  explicit Matrix(const std::string& file_name) {
+    rows_number = 0;
+    columns_number = 0;
+    data = NULL;
 
-explicit Matrix(const std::string& file_name)
-{
-   rows_number = 0;
-   columns_number = 0;
-   data = NULL;
+    load(file_name);
+  }
 
-   load(file_name);
-}
+  /// Copy constructor. It creates a copy of an existing matrix.
+  /// @param other_matrix Matrix to be copied.
 
+  Matrix(const Matrix& other_matrix) {
+    const unsigned new_rows_number = other_matrix.rows_number;
+    const unsigned new_columns_number = other_matrix.columns_number;
 
-/// Copy constructor. It creates a copy of an existing matrix. 
-/// @param other_matrix Matrix to be copied.
+    data = NULL;
 
-Matrix(const Matrix& other_matrix) 
-{
-   const unsigned new_rows_number = other_matrix.rows_number;
-   const unsigned new_columns_number = other_matrix.columns_number;
-
-   data = NULL;
-
-   if(new_rows_number == 0 && new_columns_number == 0)
-   {
+    if (new_rows_number == 0 && new_columns_number == 0) {
       rows_number = 0;
       columns_number = 0;
       data = NULL;
-   }
-   else if(new_rows_number == 0)
-   {
+    } else if (new_rows_number == 0) {
       std::ostringstream buffer;
 
       buffer << "OpenNN Exception: Matrix Template.\n"
@@ -201,9 +180,7 @@ Matrix(const Matrix& other_matrix)
              << "Number of rows must be greater than zero.\n";
 
       throw std::logic_error(buffer.str());
-   }
-   else if(new_columns_number == 0)
-   {
+    } else if (new_columns_number == 0) {
       std::ostringstream buffer;
 
       buffer << "OpenNN Exception: Matrix Template.\n"
@@ -211,126 +188,107 @@ Matrix(const Matrix& other_matrix)
              << "Number of columns must be greater than zero.\n";
 
       throw std::logic_error(buffer.str());
-   }
-   else
-   {
+    } else {
       rows_number = new_rows_number;
       columns_number = new_columns_number;
 
-      data = new Type*[rows_number];
-      data[0] = new Type[rows_number*columns_number];
+      data = new Type* [rows_number];
+      data[0] = new Type[rows_number * columns_number];
 
-      for(unsigned i = 1; i < rows_number; i++)
-      {
-         data[i] = data[i-1] + columns_number;
+      for (unsigned i = 1; i < rows_number; i++) {
+        data[i] = data[i - 1] + columns_number;
       }
-   }
+    }
 
-   for(unsigned i = 0; i < rows_number; i++)
-   {
-      for(unsigned j = 0; j < columns_number; j++)
-      {
-         data[i][j] = other_matrix[i][j];
+    for (unsigned i = 0; i < rows_number; i++) {
+      for (unsigned j = 0; j < columns_number; j++) {
+        data[i][j] = other_matrix[i][j];
       }
-   }
-}
+    }
+  }
 
+  // DESTRUCTOR
 
-// DESTRUCTOR
+  /// Destructor.
 
-/// Destructor. 
+  ~Matrix(void) {
+    if (data != NULL) {
+      delete[](data[0]);
+      delete[](data);
+    }
+  }
 
-~Matrix(void)
-{
-   if(data != NULL) 
-   {
-      delete[] (data[0]);
-      delete[] (data);
-   }
-}
+  // ASSIGNMENT OPERATORS
 
+  /// Assignment operator. It assigns to self a copy of an existing matrix.
+  /// @param other_matrix Matrix to be assigned.
 
-// ASSIGNMENT OPERATORS
+  inline Matrix<Type>& operator=(const Matrix<Type>& other_matrix) {
+    if (this != &other_matrix) {
+      if (rows_number != other_matrix.rows_number ||
+          columns_number != other_matrix.columns_number)  // other sizes
+          {
+        if (data != NULL) {
+          delete[](data[0]);
+          delete[](data);
+        }
 
-/// Assignment operator. It assigns to self a copy of an existing matrix.
-/// @param other_matrix Matrix to be assigned.
+        rows_number = other_matrix.rows_number;
+        columns_number = other_matrix.columns_number;
 
-inline Matrix<Type>& operator = (const Matrix<Type>& other_matrix)
-{
-   if(this != &other_matrix) 
-   {
-      if(rows_number != other_matrix.rows_number || columns_number != other_matrix.columns_number) // other sizes
-      {
-         if(data != NULL) 
-         {
-            delete[] (data[0]);
-            delete[] (data);
-         }
+        data = new Type* [rows_number];
+        data[0] = new Type[rows_number * columns_number];
 
-         rows_number = other_matrix.rows_number;
-         columns_number = other_matrix.columns_number;
-
-         data = new Type*[rows_number];
-         data[0] = new Type[rows_number*columns_number];
-
-         for(unsigned i = 1; i < rows_number; i++)
-         {
-            data[i] = data[i-1] + columns_number;
-         }
+        for (unsigned i = 1; i < rows_number; i++) {
+          data[i] = data[i - 1] + columns_number;
+        }
       }
 
-      for(unsigned i = 0; i < rows_number; i++)
-      {
-         for(unsigned j = 0; j < columns_number; j++)
-         {
-            data[i][j] = other_matrix[i][j];
-         }
+      for (unsigned i = 0; i < rows_number; i++) {
+        for (unsigned j = 0; j < columns_number; j++) {
+          data[i][j] = other_matrix[i][j];
+        }
       }
-   }
+    }
 
-   return(*this);
-}
+    return (*this);
+  }
 
+  // REFERENCE OPERATORS
 
-// REFERENCE OPERATORS
+  /// Reference operator.
 
-/// Reference operator.  
+  inline Type* operator[](const unsigned& i) {
+// Control sentence (if debug)
 
-inline Type* operator [] (const unsigned& i)
-{
-   // Control sentence (if debug)
+#ifndef NDEBUG
 
-   #ifndef NDEBUG 
-
-   if(i >= rows_number)
-   {
+    if (i >= rows_number) {
       std::ostringstream buffer;
 
       buffer << "OpenNN Exception: Matrix Template.\n"
              << "operator [] (unsigned).\n"
-             << "Row index (" << i << ") must be less than number of rows (" << rows_number << ").\n";
+             << "Row index (" << i << ") must be less than number of rows ("
+             << rows_number << ").\n";
 
       throw std::logic_error(buffer.str());
-   }
+    }
 
-   #endif
+#endif
 
-   // Return matrix element
+    // Return matrix element
 
-   return(data[i]);
-}
+    return (data[i]);
+  }
 
+  /// Reference operator.
 
-/// Reference operator.  
+  inline const Type* operator[](const unsigned& i) const {
+// Control sentence (if debug)
 
-inline const Type* operator [] (const unsigned& i) const
-{
-   // Control sentence (if debug)
+#ifndef NDEBUG
 
-   #ifndef NDEBUG 
-   
-   if(i >= rows_number)
-   {
+    if (i >= rows_number) {
       std::ostringstream buffer;
 
       buffer << "OpenNN Exception: Matrix Template.\n"
@@ -338,1204 +296,1045 @@ inline const Type* operator [] (const unsigned& i) const
              << "Row index must be less than number of rows.\n";
 
       throw std::logic_error(buffer.str());
-   }
+    }
 
-   #endif
+#endif
 
-   // Return matrix element
+    // Return matrix element
 
-   return(data[i]);
-}
+    return (data[i]);
+  }
 
+  // bool operator == (const Matrix<Type>&) const
 
-// bool operator == (const Matrix<Type>&) const
+  /// Equivalent relational operator between this matrix and other matrix.
+  /// It produces true if all the elements of the two matrices are equal, and
+  /// false otherwise.
+  /// @param other_matrix Matrix to be compared with.
 
-/// Equivalent relational operator between this matrix and other matrix.
-/// It produces true if all the elements of the two matrices are equal, and false otherwise.
-/// @param other_matrix Matrix to be compared with.
+  inline bool operator==(const Matrix<Type>& other_matrix) const {
+// Control sentence (if debug)
 
-inline bool operator == (const Matrix<Type>& other_matrix) const
-{       
-   // Control sentence (if debug)      
-       
-   #ifndef NDEBUG 
+#ifndef NDEBUG
 
-   const unsigned other_rows_number = other_matrix.get_rows_number();
-   const unsigned other_columns_number = other_matrix.get_columns_number();
+    const unsigned other_rows_number = other_matrix.get_rows_number();
+    const unsigned other_columns_number = other_matrix.get_columns_number();
 
-   if(other_rows_number != rows_number)
-   {
+    if (other_rows_number != rows_number) {
       std::ostringstream buffer;
 
-      buffer << "OpenNN Exception: Matrix Template.\n" 
+      buffer << "OpenNN Exception: Matrix Template.\n"
              << "bool operator == (const Matrix<Type>&) const.\n"
              << "Both numbers of rows must be the same.\n";
 
       throw std::logic_error(buffer.str());
-   }
-   else if(other_columns_number != columns_number)
-   {
+    } else if (other_columns_number != columns_number) {
       std::ostringstream buffer;
 
-      buffer << "OpenNN Exception: Matrix Template.\n" 
+      buffer << "OpenNN Exception: Matrix Template.\n"
              << "bool operator == (const Matrix<Type>&) const.\n"
              << "Both numbers of columns must be the same.\n";
 
       throw std::logic_error(buffer.str());
-   }
-      
-   #endif
+    }
 
-   for(unsigned i = 0; i < rows_number; i++)
-   {
-      for(unsigned j = 0; j < columns_number; j++)
-      {
-         if(data[i][j] != other_matrix[i][j])
-         {
-            return(false);
-         }     
+#endif
+
+    for (unsigned i = 0; i < rows_number; i++) {
+      for (unsigned j = 0; j < columns_number; j++) {
+        if (data[i][j] != other_matrix[i][j]) {
+          return (false);
+        }
       }
-   }
-   
-   return(true);
-}
+    }
 
+    return (true);
+  }
 
-// bool operator == (const Type&)
+  // bool operator == (const Type&)
 
-/// Equivalent relational operator between this matrix and a Type value.
-/// It produces true if all the elements of this matrix are equal to the Type value, and false otherwise.
-/// @param value Type value to be compared with.
+  /// Equivalent relational operator between this matrix and a Type value.
+  /// It produces true if all the elements of this matrix are equal to the Type
+  /// value, and false otherwise.
+  /// @param value Type value to be compared with.
 
-inline bool operator == (const Type& value) const
-{       
-   for(unsigned i = 0; i < rows_number; i++)
-   {
-      for(unsigned j = 0; j < columns_number; j++)
-      {
-         if(data[i][j] != value)
-         {
-            return(false);
-         }     
+  inline bool operator==(const Type& value) const {
+    for (unsigned i = 0; i < rows_number; i++) {
+      for (unsigned j = 0; j < columns_number; j++) {
+        if (data[i][j] != value) {
+          return (false);
+        }
       }
-   }
-   
-   return(true);
-}
+    }
 
+    return (true);
+  }
 
-// bool operator != (const Matrix<Type>&)
+  // bool operator != (const Matrix<Type>&)
 
-/// Not equivalent relational operator between this matrix and other matrix.
-/// It produces true if the two matrices have any not equal element, and false otherwise.
-/// @param other_matrix Matrix to be compared with.
+  /// Not equivalent relational operator between this matrix and other matrix.
+  /// It produces true if the two matrices have any not equal element, and false
+  /// otherwise.
+  /// @param other_matrix Matrix to be compared with.
 
-inline bool operator != (const Matrix<Type>& other_matrix) const
-{       
-   // Control sentence (if debug)      
-       
-   #ifndef NDEBUG 
+  inline bool operator!=(const Matrix<Type>& other_matrix) const {
+// Control sentence (if debug)
 
-   const unsigned other_rows_number = other_matrix.get_rows_number();
-   const unsigned other_columns_number = other_matrix.get_columns_number();
+#ifndef NDEBUG
 
-   if(other_rows_number != rows_number)
-   {
+    const unsigned other_rows_number = other_matrix.get_rows_number();
+    const unsigned other_columns_number = other_matrix.get_columns_number();
+
+    if (other_rows_number != rows_number) {
       std::ostringstream buffer;
 
-      buffer << "OpenNN Exception: Matrix Template.\n" 
+      buffer << "OpenNN Exception: Matrix Template.\n"
              << "bool operator != (const Matrix<Type>&) const.\n"
              << "Both numbers of rows must be the same.\n";
 
       throw std::logic_error(buffer.str());
-   }
-   else if(other_columns_number != columns_number)
-   {
+    } else if (other_columns_number != columns_number) {
       std::ostringstream buffer;
 
-      buffer << "OpenNN Exception: Matrix Template.\n" 
+      buffer << "OpenNN Exception: Matrix Template.\n"
              << "bool operator != (const Matrix<Type>&) const.\n"
              << "Both numbers of columns must be the same.\n";
 
       throw std::logic_error(buffer.str());
-   }
-      
-   #endif
+    }
 
-   for(unsigned i = 0; i < rows_number; i++)
-   {
-      for(unsigned j = 0; j < columns_number; j++)
-      {
-         if(data[i][j] != other_matrix[i][j])
-        {
-            return(true);
-        }     
+#endif
+
+    for (unsigned i = 0; i < rows_number; i++) {
+      for (unsigned j = 0; j < columns_number; j++) {
+        if (data[i][j] != other_matrix[i][j]) {
+          return (true);
+        }
       }
-   }
+    }
 
-   return(false);
-}
+    return (false);
+  }
 
+  // bool operator != (const Type&) const
 
-// bool operator != (const Type&) const
+  /// Not equivalent relational operator between this matrix and a Type value.
+  /// It produces true if some element of this matrix is not equal to the Type
+  /// value, and false otherwise.
+  /// @param value Type value to be compared with.
 
-/// Not equivalent relational operator between this matrix and a Type value.
-/// It produces true if some element of this matrix is not equal to the Type value, and false otherwise.
-/// @param value Type value to be compared with.
+  inline bool operator!=(const Type& value) const {
+    // Control sentence (if debug)
 
-inline bool operator != (const Type& value) const
-{            
-   // Control sentence (if debug)      
-       
-   for(unsigned i = 0; i < rows_number; i++)
-   {
-      for(unsigned j = 0; j < columns_number; j++)
-      {
-         if(data[i][j] != value)
-         {
-            return(true);
-         }     
+    for (unsigned i = 0; i < rows_number; i++) {
+      for (unsigned j = 0; j < columns_number; j++) {
+        if (data[i][j] != value) {
+          return (true);
+        }
       }
-   }
+    }
 
-   return(false);
-}
+    return (false);
+  }
 
+  // bool operator > (const Matrix<Type>&) const
 
-// bool operator > (const Matrix<Type>&) const
+  /// Greater than relational operator between this matrix and other vector.
+  /// It produces true if all the elements of this matrix are greater than the
+  /// corresponding elements of the other matrix,
+  /// and false otherwise.
+  /// @param other_matrix matrix to be compared with.
 
-/// Greater than relational operator between this matrix and other vector.
-/// It produces true if all the elements of this matrix are greater than the corresponding elements of the other matrix,
-/// and false otherwise.
-/// @param other_matrix matrix to be compared with.
+  inline bool operator>(const Matrix<Type>& other_matrix) const {
+// Control sentence (if debug)
 
-inline bool operator > (const Matrix<Type>& other_matrix) const
-{       
-   // Control sentence (if debug)      
-       
-   #ifndef NDEBUG 
+#ifndef NDEBUG
 
-   const unsigned other_rows_number = other_matrix.get_rows_number();
-   const unsigned other_columns_number = other_matrix.get_columns_number();
+    const unsigned other_rows_number = other_matrix.get_rows_number();
+    const unsigned other_columns_number = other_matrix.get_columns_number();
 
-   if(other_rows_number != rows_number)
-   {
+    if (other_rows_number != rows_number) {
       std::ostringstream buffer;
 
-      buffer << "OpenNN Exception: Matrix Template.\n" 
+      buffer << "OpenNN Exception: Matrix Template.\n"
              << "bool operator > (const Matrix<Type>&) const.\n"
              << "Both numbers of rows must be the same.\n";
 
       throw std::logic_error(buffer.str());
-   }
-   else if(other_columns_number != columns_number)
-   {
+    } else if (other_columns_number != columns_number) {
       std::ostringstream buffer;
 
-      buffer << "OpenNN Exception: Matrix Template.\n" 
+      buffer << "OpenNN Exception: Matrix Template.\n"
              << "bool operator > (const Matrix<Type>&) const.\n"
              << "Both numbers of columns must be the same.\n";
 
       throw std::logic_error(buffer.str());
-   }
-      
-   #endif
+    }
 
-   for(unsigned i = 0; i < rows_number; i++)
-   {
-      for(unsigned j = 0; j < rows_number; j++)
-      {
-         if(data[i][j] <= other_matrix[i][j])
-          {
-            return(false);
-         }     
+#endif
+
+    for (unsigned i = 0; i < rows_number; i++) {
+      for (unsigned j = 0; j < rows_number; j++) {
+        if (data[i][j] <= other_matrix[i][j]) {
+          return (false);
+        }
       }
-   }
-   
-   return(true);
-}
+    }
 
+    return (true);
+  }
 
-// bool operator > (const Type&) const
+  // bool operator > (const Type&) const
 
-/// Greater than relational operator between this matrix and a Type value.
-/// It produces true if all the elements of this matrix are greater than the Type value, and false otherwise.
-/// @param value Type value to be compared with.
+  /// Greater than relational operator between this matrix and a Type value.
+  /// It produces true if all the elements of this matrix are greater than the
+  /// Type value, and false otherwise.
+  /// @param value Type value to be compared with.
 
-inline bool operator > (const Type& value) const
-{       
-   for(unsigned i = 0; i < rows_number; i++)
-   {
-      for(unsigned j = 0; j < rows_number; j++)
-      {
-         if(data[i][j] <= value)
-          {
-            return(false);
-         }     
+  inline bool operator>(const Type& value) const {
+    for (unsigned i = 0; i < rows_number; i++) {
+      for (unsigned j = 0; j < rows_number; j++) {
+        if (data[i][j] <= value) {
+          return (false);
+        }
       }
-   }
-   
-   return(true);
-}
+    }
 
+    return (true);
+  }
 
-// bool operator < (const Matrix<Type>&) const
+  // bool operator < (const Matrix<Type>&) const
 
-/// Less than relational operator between this matrix and other matrix.
-/// It produces true if all the elements of this matrix are less than the corresponding elements of the other matrix,
-/// and false otherwise.
-/// @param other_matrix Matrix to be compared with.
+  /// Less than relational operator between this matrix and other matrix.
+  /// It produces true if all the elements of this matrix are less than the
+  /// corresponding elements of the other matrix,
+  /// and false otherwise.
+  /// @param other_matrix Matrix to be compared with.
 
-inline bool operator < (const Matrix<Type>& other_matrix) const
-{       
-   // Control sentence (if debug)      
-       
-   #ifndef NDEBUG 
+  inline bool operator<(const Matrix<Type>& other_matrix) const {
+// Control sentence (if debug)
 
-   const unsigned other_rows_number = other_matrix.get_rows_number();
-   const unsigned other_columns_number = other_matrix.get_columns_number();
+#ifndef NDEBUG
 
-   if(other_rows_number != rows_number)
-   {
+    const unsigned other_rows_number = other_matrix.get_rows_number();
+    const unsigned other_columns_number = other_matrix.get_columns_number();
+
+    if (other_rows_number != rows_number) {
       std::ostringstream buffer;
 
-      buffer << "OpenNN Exception: Matrix Template.\n" 
+      buffer << "OpenNN Exception: Matrix Template.\n"
              << "bool operator < (const Matrix<Type>&) const.\n"
              << "Both numbers of rows must be the same.\n";
 
       throw std::logic_error(buffer.str());
-   }
-   else if(other_columns_number != columns_number)
-   {
+    } else if (other_columns_number != columns_number) {
       std::ostringstream buffer;
 
-      buffer << "OpenNN Exception: Matrix Template.\n" 
+      buffer << "OpenNN Exception: Matrix Template.\n"
              << "bool operator < (const Matrix<Type>&) const.\n"
              << "Both numbers of columns must be the same.\n";
 
       throw std::logic_error(buffer.str());
-   }
+    }
 
-   #endif
+#endif
 
-   for(unsigned i = 0; i < rows_number; i++)
-   {
-      for(unsigned j = 0; j < columns_number; j++)
-      {
-         if(data[i][j] >= other_matrix[i][j])
-         {
-           return(false);
-         }      
+    for (unsigned i = 0; i < rows_number; i++) {
+      for (unsigned j = 0; j < columns_number; j++) {
+        if (data[i][j] >= other_matrix[i][j]) {
+          return (false);
+        }
       }
-   }
+    }
 
-   return(true);
-}
+    return (true);
+  }
 
+  // bool operator < (const Type&) const
 
-// bool operator < (const Type&) const
+  /// Less than relational operator between this matrix and a Type value.
+  /// It produces true if all the elements of this matrix are less than the Type
+  /// value, and false otherwise.
+  /// @param value Type value to be compared with.
 
-/// Less than relational operator between this matrix and a Type value.
-/// It produces true if all the elements of this matrix are less than the Type value, and false otherwise.
-/// @param value Type value to be compared with.
-
-inline bool operator < (const Type& value) const
-{       
-   for(unsigned i = 0; i < rows_number; i++)
-   {
-      for(unsigned j = 0; j < columns_number; j++)
-      {
-         if(data[i][j] >= value)
-         {
-           return(false);
-         }      
+  inline bool operator<(const Type& value) const {
+    for (unsigned i = 0; i < rows_number; i++) {
+      for (unsigned j = 0; j < columns_number; j++) {
+        if (data[i][j] >= value) {
+          return (false);
+        }
       }
-   }
+    }
 
-   return(true);
-}
+    return (true);
+  }
 
+  // bool operator >= (const Matrix<Type>&) const
 
-// bool operator >= (const Matrix<Type>&) const
+  /// Greater than or equal to relational operator between this matrix and other
+  /// matrix.
+  /// It produces true if all the elements of this matrix are greater than or
+  /// equal to the corresponding elements of the
+  /// other matrix, and false otherwise.
+  /// @param other_matrix Matrix to be compared with.
 
-/// Greater than or equal to relational operator between this matrix and other matrix.
-/// It produces true if all the elements of this matrix are greater than or equal to the corresponding elements of the
-/// other matrix, and false otherwise.
-/// @param other_matrix Matrix to be compared with.
+  inline bool operator>=(const Matrix<Type>& other_matrix) const {
+// Control sentence (if debug)
 
-inline bool operator >= (const Matrix<Type>& other_matrix) const
-{       
-   // Control sentence (if debug)      
-       
-   #ifndef NDEBUG 
+#ifndef NDEBUG
 
-   const unsigned other_rows_number = other_matrix.get_rows_number();
-   const unsigned other_columns_number = other_matrix.get_columns_number();
+    const unsigned other_rows_number = other_matrix.get_rows_number();
+    const unsigned other_columns_number = other_matrix.get_columns_number();
 
-   if(other_rows_number != rows_number)
-   {
+    if (other_rows_number != rows_number) {
       std::ostringstream buffer;
 
-      buffer << "OpenNN Exception: Matrix Template.\n" 
+      buffer << "OpenNN Exception: Matrix Template.\n"
              << "bool operator >= (const Matrix<Type>&) const.\n"
              << "Both numbers of rows must be the same.\n";
 
       throw std::logic_error(buffer.str());
-   }
-   else if(other_columns_number != columns_number)
-   {
+    } else if (other_columns_number != columns_number) {
       std::ostringstream buffer;
 
-      buffer << "OpenNN Exception: Matrix Template.\n" 
+      buffer << "OpenNN Exception: Matrix Template.\n"
              << "bool operator >= (const Matrix<Type>&) const.\n"
              << "Both numbers of columns must be the same.\n";
 
       throw std::logic_error(buffer.str());
-   }
-      
-   #endif
+    }
 
-   for(unsigned i = 0; i < rows_number; i++)
-   {
-      for(unsigned j = 0; j < columns_number; j++)
-      {
-         if(data[i][j] < other_matrix[i][j])
-         {
-            return(false);
-         }     
+#endif
+
+    for (unsigned i = 0; i < rows_number; i++) {
+      for (unsigned j = 0; j < columns_number; j++) {
+        if (data[i][j] < other_matrix[i][j]) {
+          return (false);
+        }
       }
-   }
-   
-   return(true);
-}
+    }
 
+    return (true);
+  }
 
-// bool operator >= (const Type&) const
+  // bool operator >= (const Type&) const
 
-/// Greater than or equal to than relational operator between this matrix and a Type value.
-/// It produces true if all the elements of this matrix are greater than or equal to the Type value, and false otherwise.
-/// @param value Type value to be compared with.
+  /// Greater than or equal to than relational operator between this matrix and
+  /// a Type value.
+  /// It produces true if all the elements of this matrix are greater than or
+  /// equal to the Type value, and false otherwise.
+  /// @param value Type value to be compared with.
 
-inline bool operator >= (const Type& value) const
-{       
-   for(unsigned i = 0; i < rows_number; i++)
-   {
-      for(unsigned j = 0; j < columns_number; j++)
-      {
-         if(data[i][j] < value)
-         {
-            return(false);
-         }     
+  inline bool operator>=(const Type& value) const {
+    for (unsigned i = 0; i < rows_number; i++) {
+      for (unsigned j = 0; j < columns_number; j++) {
+        if (data[i][j] < value) {
+          return (false);
+        }
       }
-   }
-   
-   return(true);
-}
+    }
 
+    return (true);
+  }
 
-// bool operator <= (const Matrix<Type>&) const
+  // bool operator <= (const Matrix<Type>&) const
 
-/// Less than or equal to relational operator between this matrix and other matrix.
-/// It produces true if all the elements of this matrix are less than or equal to the corresponding elements of the
-/// other matrix, and false otherwise.
-/// @param other_matrix Matrix to be compared with.
+  /// Less than or equal to relational operator between this matrix and other
+  /// matrix.
+  /// It produces true if all the elements of this matrix are less than or equal
+  /// to the corresponding elements of the
+  /// other matrix, and false otherwise.
+  /// @param other_matrix Matrix to be compared with.
 
-inline bool operator <= (const Matrix<Type>& other_matrix) const
-{       
-   // Control sentence (if debug)      
-       
-   #ifndef NDEBUG 
+  inline bool operator<=(const Matrix<Type>& other_matrix) const {
+// Control sentence (if debug)
 
-   const unsigned other_rows_number = other_matrix.get_rows_number();
-   const unsigned other_columns_number = other_matrix.get_columns_number();
+#ifndef NDEBUG
 
-   if(other_rows_number != rows_number)
-   {
+    const unsigned other_rows_number = other_matrix.get_rows_number();
+    const unsigned other_columns_number = other_matrix.get_columns_number();
+
+    if (other_rows_number != rows_number) {
       std::ostringstream buffer;
 
-      buffer << "OpenNN Exception: Matrix Template.\n" 
+      buffer << "OpenNN Exception: Matrix Template.\n"
              << "bool operator >= (const Matrix<Type>&) const.\n"
              << "Both numbers of rows must be the same.\n";
 
       throw std::logic_error(buffer.str());
-   }
-   else if(other_columns_number != columns_number)
-   {
+    } else if (other_columns_number != columns_number) {
       std::ostringstream buffer;
 
-      buffer << "OpenNN Exception: Matrix Template.\n" 
+      buffer << "OpenNN Exception: Matrix Template.\n"
              << "bool operator >= (const Matrix<Type>&) const.\n"
              << "Both numbers of columns must be the same.\n";
 
       throw std::logic_error(buffer.str());
-   }
-      
-   #endif
+    }
 
-   for(unsigned i = 0; i < rows_number; i++)
-   {
-      for(unsigned j = 0; j < columns_number; j++)
-      {
-         if(data[i][j] > other_matrix[i][j])
-         {
-            return(false);
-         }     
+#endif
+
+    for (unsigned i = 0; i < rows_number; i++) {
+      for (unsigned j = 0; j < columns_number; j++) {
+        if (data[i][j] > other_matrix[i][j]) {
+          return (false);
+        }
       }
-   }
+    }
 
-   return(true);
-}
+    return (true);
+  }
 
+  // bool operator <= (const Type&) const
 
-// bool operator <= (const Type&) const
+  /// Less than or equal to than relational operator between this matrix and a
+  /// Type value.
+  /// It produces true if all the elements of this matrix are less than or equal
+  /// to the Type value, and false otherwise.
+  /// @param value Type value to be compared with.
 
-/// Less than or equal to than relational operator between this matrix and a Type value.
-/// It produces true if all the elements of this matrix are less than or equal to the Type value, and false otherwise.
-/// @param value Type value to be compared with.
-
-inline bool operator <= (const Type& value) const
-{       
-   for(unsigned i = 0; i < rows_number; i++)
-   {
-      for(unsigned j = 0; j < columns_number; j++)
-      {
-         if(data[i][j] > value)
-          {
-            return(false);
-         }     
+  inline bool operator<=(const Type& value) const {
+    for (unsigned i = 0; i < rows_number; i++) {
+      for (unsigned j = 0; j < columns_number; j++) {
+        if (data[i][j] > value) {
+          return (false);
+        }
       }
-   }
+    }
 
-   return(true);
-}
+    return (true);
+  }
 
+  // METHODS
 
-// METHODS
+  // unsigned get_rows_number(void) const method
 
-// unsigned get_rows_number(void) const method
+  /// Returns the number of rows in the matrix.
 
-/// Returns the number of rows in the matrix. 
+  const unsigned& get_rows_number(void) const { return (rows_number); }
 
-const unsigned& get_rows_number(void) const
-{
-   return(rows_number);
-}
+  // unsigned get_columns_number(void) const method
 
+  /// Returns the number of columns in the matrix.
 
-// unsigned get_columns_number(void) const method
+  const unsigned& get_columns_number(void) const { return (columns_number); }
 
-/// Returns the number of columns in the matrix. 
+  // void set(void) method
 
-const unsigned& get_columns_number(void) const
-{
-   return(columns_number);
-}
+  /// This method set the numbers of rows and columns of the matrix to zero.
 
+  void set(void) {
+    if (data != NULL) {
+      delete[](data[0]);
+      delete[](data);
+    }
 
-// void set(void) method
+    rows_number = 0;
+    columns_number = 0;
+    data = NULL;
+  }
 
-/// This method set the numbers of rows and columns of the matrix to zero. 
+  // void set(const unsigned&, const unsigned&) method
 
-void set(void)
-{
-   if(data != NULL) 
-   {
-      delete[] (data[0]);
-      delete[] (data);
-   }
+  /// This method set new numbers of rows and columns in the matrix.
+  /// @param new_rows_number Number of rows.
+  /// @param new_columns_number Number of columns.
 
-   rows_number = 0;
-   columns_number = 0;
-   data = NULL;
-}
+  void set(const unsigned& new_rows_number,
+           const unsigned& new_columns_number) {
+    // Control sentence (if debug)
 
-
-// void set(const unsigned&, const unsigned&) method
-
-/// This method set new numbers of rows and columns in the matrix. 
-/// @param new_rows_number Number of rows.
-/// @param new_columns_number Number of columns.
-
-void set(const unsigned& new_rows_number, const unsigned& new_columns_number)
-{
-   // Control sentence (if debug)
-
-   if(new_rows_number == rows_number && new_columns_number == columns_number)
-   {
+    if (new_rows_number == rows_number &&
+        new_columns_number == columns_number) {
       // do nothing
-   }
-   else if(new_rows_number == 0 && new_columns_number == 0)
-   {
+    } else if (new_rows_number == 0 && new_columns_number == 0) {
       set();
-   }
-   else if(new_rows_number == 0)
-   {
+    } else if (new_rows_number == 0) {
       std::ostringstream buffer;
 
-      buffer << "OpenNN Exception: Matrix Template.\n" 
+      buffer << "OpenNN Exception: Matrix Template.\n"
              << "void set(const unsigned&, const unsigned&) method.\n"
              << "Number of rows must be greater than zero.\n";
 
       throw std::logic_error(buffer.str());
-   }
-   else if(new_columns_number == 0)
-   {
+    } else if (new_columns_number == 0) {
       std::ostringstream buffer;
 
-      buffer << "OpenNN Exception: Matrix Template.\n" 
+      buffer << "OpenNN Exception: Matrix Template.\n"
              << "void set(const unsigned&, const unsigned&) method.\n"
              << "Number of columns must be greater than zero.\n";
 
       throw std::logic_error(buffer.str());
-   }
-   else
-   {
+    } else {
       rows_number = new_rows_number;
       columns_number = new_columns_number;
 
-      if(data != NULL) 
-      {
-         delete[] (data[0]);
-         delete[] (data);
+      if (data != NULL) {
+        delete[](data[0]);
+        delete[](data);
       }
 
-      data = new Type*[rows_number];
-      data[0] = new Type[rows_number*columns_number];
+      data = new Type* [rows_number];
+      data[0] = new Type[rows_number * columns_number];
 
-      for(unsigned i = 1; i < rows_number; i++)
-      {
-         data[i] = data[i-1] + columns_number;
+      for (unsigned i = 1; i < rows_number; i++) {
+        data[i] = data[i - 1] + columns_number;
       }
-   }
-}
+    }
+  }
 
+  // void set(const unsigned&, const unsigned&, const Type&) method
 
-// void set(const unsigned&, const unsigned&, const Type&) method
+  /// This method set new numbers of rows and columns in the matrix.
+  /// It also initializes all the matrix elements to a given value.
+  /// @param new_rows_number Number of rows.
+  /// @param new_columns_number Number of columns.
+  /// @param value Initialization value.
 
-/// This method set new numbers of rows and columns in the matrix.
-/// It also initializes all the matrix elements to a given value. 
-/// @param new_rows_number Number of rows.
-/// @param new_columns_number Number of columns.
-/// @param value Initialization value.
-
-void set(const unsigned& new_rows_number, const unsigned& new_columns_number, const Type& value)
-{
-   if(new_rows_number == 0 && new_columns_number == 0)
-   {
+  void set(const unsigned& new_rows_number, const unsigned& new_columns_number,
+           const Type& value) {
+    if (new_rows_number == 0 && new_columns_number == 0) {
       set();
-   }
-   else if(new_rows_number == 0)
-   {
+    } else if (new_rows_number == 0) {
       std::ostringstream buffer;
 
-      buffer << "OpenNN Exception: Matrix Template.\n" 
-             << "void set(const unsigned&, const unsigned&, const Type&) method.\n"
-             << "Number of rows must be greater than zero.\n";
+      buffer
+          << "OpenNN Exception: Matrix Template.\n"
+          << "void set(const unsigned&, const unsigned&, const Type&) method.\n"
+          << "Number of rows must be greater than zero.\n";
 
       throw std::logic_error(buffer.str());
-   }
-   else if(new_columns_number == 0)
-   {
+    } else if (new_columns_number == 0) {
       std::ostringstream buffer;
 
-      buffer << "OpenNN Exception: Matrix Template.\n" 
-            << "void set(const unsigned&, const unsigned&, const Type&) method.\n"
-            << "Number of columns must be greater than zero.\n";
+      buffer
+          << "OpenNN Exception: Matrix Template.\n"
+          << "void set(const unsigned&, const unsigned&, const Type&) method.\n"
+          << "Number of columns must be greater than zero.\n";
 
       throw std::logic_error(buffer.str());
-   }
-   else
-   {
+    } else {
       set(new_rows_number, new_columns_number);
-      initialize(value);     
-   }
-}
+      initialize(value);
+    }
+  }
 
+  // void set(const Matrix&) method
 
-// void set(const Matrix&) method
+  /// Sets all the members of the matrix to those of another matrix.
+  /// @param other_matrix Setting matrix.
 
-/// Sets all the members of the matrix to those of another matrix.
-/// @param other_matrix Setting matrix. 
+  void set(const Matrix& other_matrix) {}
 
-void set(const Matrix& other_matrix)
-{
-}
+  // void set(const std::string&) method
 
+  /// Sets the members of this object by loading them from a data file.
+  /// @param file_name Name of data file.
 
-// void set(const std::string&) method
+  void set(const std::string& file_name) { load(file_name); }
 
-/// Sets the members of this object by loading them from a data file. 
-/// @param file_name Name of data file.
+  // void set_identity(unsigned) method
 
-void set(const std::string& file_name)
-{
-   load(file_name);
-}
+  /// Sets the matrix to be squared, with elements equal one in the diagonal and
+  /// zero outside the diagonal.
+  /// @param new_size New number of rows and columns in this matrix.
 
+  void set_identity(const unsigned& new_size) {
+    set(new_size, new_size);
+    initialize_identity();
+  }
 
-// void set_identity(unsigned) method
+  // void set_rows_number(unsigned) method
 
-/// Sets the matrix to be squared, with elements equal one in the diagonal and zero outside the diagonal. 
-/// @param new_size New number of rows and columns in this matrix.
+  /// Sets a new number of rows in the matrix.
+  /// @param new_rows_number Number of matrix rows.
 
-void set_identity(const unsigned& new_size)
-{
-   set(new_size, new_size);
-   initialize_identity();
-}
-
-
-// void set_rows_number(unsigned) method
-
-/// Sets a new number of rows in the matrix. 
-/// @param new_rows_number Number of matrix rows. 
-
-void set_rows_number(const unsigned& new_rows_number)
-{
-   if(new_rows_number != rows_number) 
-   {
+  void set_rows_number(const unsigned& new_rows_number) {
+    if (new_rows_number != rows_number) {
       set(new_rows_number, columns_number);
-   }
-}
+    }
+  }
 
+  // void set_columns_number(unsigned) method
 
-// void set_columns_number(unsigned) method
+  /// Sets a new number of columns in the matrix.
+  /// @param new_columns_number Number of matrix columns.
 
-/// Sets a new number of columns in the matrix. 
-/// @param new_columns_number Number of matrix columns. 
-
-void set_columns_number(const unsigned& new_columns_number)
-{
-   if(new_columns_number != columns_number) 
-   {
+  void set_columns_number(const unsigned& new_columns_number) {
+    if (new_columns_number != columns_number) {
       set(rows_number, new_columns_number);
-   }   
-}
+    }
+  }
 
+  // void resize(const unsigned&, const unsigned&) method
 
-// void resize(const unsigned&, const unsigned&) method
+  /// Sets new numbers of rows and columns in the vector.
+  /// It does initialize the new matrix with the previous values.
+  /// @param new_rows_number New number of rows.
+  /// @param new_columns_number New number of columns.
 
-/// Sets new numbers of rows and columns in the vector.
-/// It does initialize the new matrix with the previous values. 
-/// @param new_rows_number New number of rows.
-/// @param new_columns_number New number of columns.
+  void resize(const unsigned& new_rows_number,
+              const unsigned& new_columns_number) {
+    // Resize
 
-void resize(const unsigned& new_rows_number, const unsigned& new_columns_number)
-{
-   // Resize
-
-   if(new_rows_number == rows_number && new_columns_number == columns_number)
-   {   
+    if (new_rows_number == rows_number &&
+        new_columns_number == columns_number) {
       // Do nothing
-   }
-   else if(new_rows_number == 0 && new_columns_number == 0)
-   {
+    } else if (new_rows_number == 0 && new_columns_number == 0) {
       rows_number = 0;
       columns_number = 0;
 
-      if(data != NULL) 
-      {
-         delete[] (data[0]);
-         delete[] (data);
+      if (data != NULL) {
+        delete[](data[0]);
+        delete[](data);
       }
 
-      data = NULL;    
-   }
-   else if(new_rows_number == 0)
-   {
+      data = NULL;
+    } else if (new_rows_number == 0) {
       std::ostringstream buffer;
 
-      buffer << "OpenNN Exception: Matrix Template.\n" 
+      buffer << "OpenNN Exception: Matrix Template.\n"
              << "void resize(const unsigned&, const unsigned&) method.\n"
              << "Number of rows must be greater than zero.\n";
 
       throw std::logic_error(buffer.str());
-   }
-   else if(new_columns_number == 0)
-   {
+    } else if (new_columns_number == 0) {
       std::ostringstream buffer;
 
-      buffer << "OpenNN Exception: Matrix Template.\n" 
+      buffer << "OpenNN Exception: Matrix Template.\n"
              << "void resize(const unsigned&, const unsigned&) method.\n"
              << "Number of columns must be greater than zero.\n";
 
       throw std::logic_error(buffer.str());
-   }
-   else
-   {
-      if(new_rows_number >= rows_number && new_columns_number >= columns_number)
-      {
-         const Matrix<Type> copy(*this);
+    } else {
+      if (new_rows_number >= rows_number &&
+          new_columns_number >= columns_number) {
+        const Matrix<Type> copy(*this);
 
-         set(new_rows_number, new_columns_number);
+        set(new_rows_number, new_columns_number);
 
-         for(unsigned i = 0; i < copy.get_rows_number(); i++)
-         {
-            for(unsigned j = 0; j < copy.get_columns_number(); j++)
-            {
-    	         data[i][j] = copy[i][j];   
-            }		 
-         } 
-      }     
-      else if(new_rows_number >= rows_number && new_columns_number <= columns_number)
-      {
-         const Matrix<Type> copy(*this);
+        for (unsigned i = 0; i < copy.get_rows_number(); i++) {
+          for (unsigned j = 0; j < copy.get_columns_number(); j++) {
+            data[i][j] = copy[i][j];
+          }
+        }
+      } else if (new_rows_number >= rows_number &&
+                 new_columns_number <= columns_number) {
+        const Matrix<Type> copy(*this);
 
-    	 set(new_rows_number, new_columns_number);
+        set(new_rows_number, new_columns_number);
 
-         for(unsigned i = 0; i < copy.get_rows_number(); i++)
-         {
-            for(unsigned j = 0; j < new_columns_number; j++)
-	         {
-               data[i][j] = copy[i][j];
-            }		 
-         }
+        for (unsigned i = 0; i < copy.get_rows_number(); i++) {
+          for (unsigned j = 0; j < new_columns_number; j++) {
+            data[i][j] = copy[i][j];
+          }
+        }
+      } else if (new_rows_number <= rows_number &&
+                 new_columns_number >= columns_number) {
+        const Matrix<Type> copy(*this);
+
+        set(new_rows_number, new_columns_number);
+
+        for (unsigned i = 0; i < new_rows_number; i++) {
+          for (unsigned j = 0; j < copy.get_columns_number(); j++) {
+            data[i][j] = copy[i][j];
+          }
+        }
+      } else if (new_rows_number <= rows_number &&
+                 new_columns_number >= columns_number) {
+        const Matrix<Type> copy(*this);
+
+        set(new_rows_number, new_columns_number);
+
+        for (unsigned i = 0; i < new_rows_number; i++) {
+          for (unsigned j = 0; j < new_columns_number; j++) {
+            data[i][j] = copy[i][j];
+          }
+        }
       }
-      else if(new_rows_number <= rows_number && new_columns_number >= columns_number)
-      {
-         const Matrix<Type> copy(*this);
+    }
+  }
 
-   	     set(new_rows_number, new_columns_number);
+  // void tuck_in(const unsigned&, const unsigned&, const Matrix<Type>&) const
+  // method
 
-         for(unsigned i = 0; i < new_rows_number; i++)
-		 {
-            for(unsigned j = 0; j < copy.get_columns_number(); j++)
-		    {
-			      data[i][j] = copy[i][j];
-            }		 
-	     }
-	  }
-	  else if(new_rows_number <= rows_number && new_columns_number >= columns_number)
-	  {
-	     const Matrix<Type> copy(*this);
+  /// Tuck in another matrix starting from a given position.
+  /// @param row_position Insertion row position.
+  /// @param column_position Insertion row position.
+  /// @param other_matrix Matrix to be inserted.
 
-         set(new_rows_number, new_columns_number);
+  void tuck_in(const unsigned& row_position, const unsigned& column_position,
+               const Matrix<Type>& other_matrix) {
+    const unsigned other_rows_number = other_matrix.get_rows_number();
+    const unsigned other_columns_number = other_matrix.get_columns_number();
 
-		 for(unsigned i = 0; i < new_rows_number; i++)
-		 {
-            for(unsigned j = 0; j < new_columns_number; j++)
-            {
-			    data[i][j] = copy[i][j];
-            }		 
-         }
-      }
-   }
-}
+// Control sentence (if debug)
 
+#ifndef NDEBUG
 
-
-// void tuck_in(const unsigned&, const unsigned&, const Matrix<Type>&) const method
-
-/// Tuck in another matrix starting from a given position.
-/// @param row_position Insertion row position.
-/// @param column_position Insertion row position.
-/// @param other_matrix Matrix to be inserted.
-
-void tuck_in(const unsigned& row_position, const unsigned& column_position, const Matrix<Type>& other_matrix)
-{
-   const unsigned other_rows_number = other_matrix.get_rows_number();
-   const unsigned other_columns_number = other_matrix.get_columns_number();
-
-   // Control sentence (if debug)            
-
-   #ifndef NDEBUG 
-
-   if(row_position + other_rows_number > rows_number)
-   {
+    if (row_position + other_rows_number > rows_number) {
       std::ostringstream buffer;
 
-      buffer << "OpenNN Exception: Matrix Template.\n" 
-             << "void tuck_in(const unsigned&, const unsigned&, const Matrix<Type>&) const method.\n"
+      buffer << "OpenNN Exception: Matrix Template.\n"
+             << "void tuck_in(const unsigned&, const unsigned&, const "
+                "Matrix<Type>&) const method.\n"
              << "Cannot tuck in matrix.\n";
 
       throw std::logic_error(buffer.str());
-   }
-
-   if(column_position + other_columns_number > columns_number)
-   {
-      std::ostringstream buffer;
-
-      buffer << "OpenNN Exception: Matrix Template.\n" 
-             << "void tuck_in(const unsigned&, const unsigned&, const Matrix<Type>&) const method.\n"
-             << "Cannot tuck in matrix.\n";
-
-      throw std::logic_error(buffer.str());
-   }
-
-   #endif
-
-   for(unsigned i = 0; i < other_rows_number; i++)
-   {
-      for(unsigned j = 0; j < other_columns_number; j++)
-      {
-         data[row_position+i][column_position+j] = other_matrix[i][j];
-	  }
-   }
-}
-
-
-// unsigned count_diagonal_elements(void) const method
-
-/// Returns the number of elements in the diagonal which are not zero.
-/// This method is only defined for square matrices.
-
-unsigned count_diagonal_elements(void) const
-{
-    #ifndef NDEBUG
-
-    if(!is_square())
-    {
-       std::ostringstream buffer;
-
-       buffer << "OpenNN Exception: Matrix Template.\n"
-              << "unsigned count_diagonal_elements(void) const method.\n"
-              << "The matrix is not square.\n";
-
-       throw std::logic_error(buffer.str());
     }
 
-    #endif
+    if (column_position + other_columns_number > columns_number) {
+      std::ostringstream buffer;
+
+      buffer << "OpenNN Exception: Matrix Template.\n"
+             << "void tuck_in(const unsigned&, const unsigned&, const "
+                "Matrix<Type>&) const method.\n"
+             << "Cannot tuck in matrix.\n";
+
+      throw std::logic_error(buffer.str());
+    }
+
+#endif
+
+    for (unsigned i = 0; i < other_rows_number; i++) {
+      for (unsigned j = 0; j < other_columns_number; j++) {
+        data[row_position + i][column_position + j] = other_matrix[i][j];
+      }
+    }
+  }
+
+  // unsigned count_diagonal_elements(void) const method
+
+  /// Returns the number of elements in the diagonal which are not zero.
+  /// This method is only defined for square matrices.
+
+  unsigned count_diagonal_elements(void) const {
+#ifndef NDEBUG
+
+    if (!is_square()) {
+      std::ostringstream buffer;
+
+      buffer << "OpenNN Exception: Matrix Template.\n"
+             << "unsigned count_diagonal_elements(void) const method.\n"
+             << "The matrix is not square.\n";
+
+      throw std::logic_error(buffer.str());
+    }
+
+#endif
 
     const unsigned rows_number = get_rows_number();
 
     unsigned count = 0;
 
-    for(unsigned i = 0; i < rows_number; i++)
-    {
-        if(data[i][i] != 0)
-        {
-            count++;
-        }
+    for (unsigned i = 0; i < rows_number; i++) {
+      if (data[i][i] != 0) {
+        count++;
+      }
     }
 
-    return(count);
-}
+    return (count);
+  }
 
+  // unsigned count_off_diagonal_elements(void) const method
 
-// unsigned count_off_diagonal_elements(void) const method
+  /// Returns the number of elements outside the diagonal which are not zero.
+  /// This method is only defined for square matrices.
 
-/// Returns the number of elements outside the diagonal which are not zero.
-/// This method is only defined for square matrices.
+  unsigned count_off_diagonal_elements(void) const {
+#ifndef NDEBUG
 
-unsigned count_off_diagonal_elements(void) const
-{
-    #ifndef NDEBUG
+    if (!is_square()) {
+      std::ostringstream buffer;
 
-    if(!is_square())
-    {
-       std::ostringstream buffer;
+      buffer << "OpenNN Exception: Matrix Template.\n"
+             << "unsigned count_off_diagonal_elements(void) const method.\n"
+             << "The matrix is not square.\n";
 
-       buffer << "OpenNN Exception: Matrix Template.\n"
-              << "unsigned count_off_diagonal_elements(void) const method.\n"
-              << "The matrix is not square.\n";
-
-       throw std::logic_error(buffer.str());
+      throw std::logic_error(buffer.str());
     }
 
-    #endif
+#endif
 
     const unsigned rows_number = get_rows_number();
     const unsigned columns_number = get_columns_number();
 
     unsigned count = 0;
 
-    for(unsigned i = 0; i < rows_number; i++)
-    {
-        for(unsigned j = 0; j < columns_number; j++)
-        {
-            if(i != j && data[i][j] != 0)
-            {
-                count++;
-            }
+    for (unsigned i = 0; i < rows_number; i++) {
+      for (unsigned j = 0; j < columns_number; j++) {
+        if (i != j && data[i][j] != 0) {
+          count++;
         }
+      }
     }
 
-    return(count);
-}
+    return (count);
+  }
 
+  // Matrix<Type> arrange_submatrix(const Vector<unsigned>&, const
+  // Vector<unsigned>&) const method
 
+  /// Returns a matrix with the values of given rows and columns from this
+  /// matrix.
+  /// @param row_indices Indices of matrix rows.
+  /// @param column_indices Indices of matrix columns.
 
-// Matrix<Type> arrange_submatrix(const Vector<unsigned>&, const Vector<unsigned>&) const method
+  Matrix<Type> arrange_submatrix(const Vector<unsigned>& row_indices,
+                                 const Vector<unsigned>& column_indices) const {
+    const unsigned row_indices_size = row_indices.size();
+    const unsigned column_indices_size = column_indices.size();
 
-/// Returns a matrix with the values of given rows and columns from this matrix. 
-/// @param row_indices Indices of matrix rows. 
-/// @param column_indices Indices of matrix columns. 
+    Matrix<Type> sub_matrix(row_indices_size, column_indices_size);
 
-Matrix<Type> arrange_submatrix(const Vector<unsigned>& row_indices, const Vector<unsigned>& column_indices) const
-{
-   const unsigned row_indices_size = row_indices.size();
-   const unsigned column_indices_size = column_indices.size();
+    unsigned row_index;
+    unsigned column_index;
 
-   Matrix<Type> sub_matrix(row_indices_size, column_indices_size);
-
-   unsigned row_index;
-   unsigned column_index;
-
-   for(unsigned i = 0; i < row_indices_size; i++)
-   {
+    for (unsigned i = 0; i < row_indices_size; i++) {
       row_index = row_indices[i];
 
-      for(unsigned j = 0; j < column_indices_size; j++)
-	  {
-         column_index = column_indices[j];
-          
-		 sub_matrix[i][j] = data[row_index][column_index];
-	  }
-   }
+      for (unsigned j = 0; j < column_indices_size; j++) {
+        column_index = column_indices[j];
 
-   return(sub_matrix);
-}
+        sub_matrix[i][j] = data[row_index][column_index];
+      }
+    }
 
+    return (sub_matrix);
+  }
 
-// Matrix<Type> arrange_submatrix_rows(const Vector<unsigned>&) const method
+  // Matrix<Type> arrange_submatrix_rows(const Vector<unsigned>&) const method
 
-/// Returns a submatrix with the values of given rows from this matrix. 
-/// @param row_indices Indices of matrix rows. 
+  /// Returns a submatrix with the values of given rows from this matrix.
+  /// @param row_indices Indices of matrix rows.
 
-Matrix<Type> arrange_submatrix_rows(const Vector<unsigned>& row_indices) const
-{
-   const unsigned row_indices_size = row_indices.size();
+  Matrix<Type> arrange_submatrix_rows(
+      const Vector<unsigned>& row_indices) const {
+    const unsigned row_indices_size = row_indices.size();
 
-   Matrix<Type> sub_matrix(row_indices_size, columns_number);
+    Matrix<Type> sub_matrix(row_indices_size, columns_number);
 
-   unsigned row_index;
+    unsigned row_index;
 
-   for(unsigned i = 0; i < row_indices_size; i++)
-   {
+    for (unsigned i = 0; i < row_indices_size; i++) {
       row_index = row_indices[i];
 
-      for(unsigned j = 0; j < columns_number; j++)
-	  {
-		 sub_matrix[i][j] = data[row_index][j];
-	  }
-   }
+      for (unsigned j = 0; j < columns_number; j++) {
+        sub_matrix[i][j] = data[row_index][j];
+      }
+    }
 
-   return(sub_matrix);
-}
+    return (sub_matrix);
+  }
 
+  // Matrix<Type> arrange_submatrix_columns(const Vector<unsigned>&) const
+  // method
 
-// Matrix<Type> arrange_submatrix_columns(const Vector<unsigned>&) const method
+  /// Returns a submatrix with the values of given columns from this matrix.
+  /// @param column_indices Indices of matrix columns.
 
-/// Returns a submatrix with the values of given columns from this matrix. 
-/// @param column_indices Indices of matrix columns. 
+  Matrix<Type> arrange_submatrix_columns(
+      const Vector<unsigned>& column_indices) const {
+    const unsigned column_indices_size = column_indices.size();
 
-Matrix<Type> arrange_submatrix_columns(const Vector<unsigned>& column_indices) const
-{
-   const unsigned column_indices_size = column_indices.size();
+    Matrix<Type> sub_matrix(rows_number, column_indices_size);
 
-   Matrix<Type> sub_matrix(rows_number, column_indices_size);
+    unsigned column_index;
 
-   unsigned column_index;
+    for (unsigned i = 0; i < rows_number; i++) {
+      for (unsigned j = 0; j < column_indices_size; j++) {
+        column_index = column_indices[j];
 
-   for(unsigned i = 0; i < rows_number; i++)
-   {
-      for(unsigned j = 0; j < column_indices_size; j++)
-	  {
-         column_index = column_indices[j];
-          
-		 sub_matrix[i][j] = data[i][column_index];
-	  }
-   }
+        sub_matrix[i][j] = data[i][column_index];
+      }
+    }
 
-   return(sub_matrix);
-}
+    return (sub_matrix);
+  }
 
+  // Vector<Type> arrange_row(const unsigned&) const method
 
-// Vector<Type> arrange_row(const unsigned&) const method
+  /// Returns the row i of the matrix.
+  /// @param i Index of row.
 
-/// Returns the row i of the matrix. 
-/// @param i Index of row.
+  Vector<Type> arrange_row(const unsigned& i) const {
+// Control sentence (if debug)
 
-Vector<Type> arrange_row(const unsigned& i) const
-{
-   // Control sentence (if debug)            
+#ifndef NDEBUG
 
-   #ifndef NDEBUG 
-
-   if(i >= rows_number)
-   {
+    if (i >= rows_number) {
       std::ostringstream buffer;
 
-      buffer << "OpenNN Exception: Matrix Template.\n" 
+      buffer << "OpenNN Exception: Matrix Template.\n"
              << "Vector<Type> arrange_row(const unsigned&) const method.\n"
-             << "Row index (" << i << ") must be less than number of rows (" << rows_number << ").\n";
+             << "Row index (" << i << ") must be less than number of rows ("
+             << rows_number << ").\n";
 
       throw std::logic_error(buffer.str());
-   }
+    }
 
-   #endif
+#endif
 
-   Vector<Type> row(columns_number);
+    Vector<Type> row(columns_number);
 
-   for(unsigned j = 0; j < columns_number; j++)
-   {
+    for (unsigned j = 0; j < columns_number; j++) {
       row[j] = data[i][j];
-   }
+    }
 
-   return(row);
-}
+    return (row);
+  }
 
+  // Vector<Type> arrange_row(const unsigned&, const Vector<unsigned>&) const
+  // method
 
-// Vector<Type> arrange_row(const unsigned&, const Vector<unsigned>&) const method
+  /// Returns the row i of the matrix, but only the elements specified by given
+  /// indices.
+  /// @param row_index Index of row.
+  /// @param column_indices Column indices of row.
 
-/// Returns the row i of the matrix, but only the elements specified by given indices. 
-/// @param row_index Index of row.
-/// @param column_indices Column indices of row.
+  Vector<Type> arrange_row(const unsigned& row_index,
+                           const Vector<unsigned>& column_indices) const {
+// Control sentence (if debug)
 
-Vector<Type> arrange_row(const unsigned& row_index, const Vector<unsigned>& column_indices) const
-{
-   // Control sentence (if debug)            
+#ifndef NDEBUG
 
-   #ifndef NDEBUG 
-
-   if(row_index >= rows_number)
-   {
+    if (row_index >= rows_number) {
       std::ostringstream buffer;
 
-      buffer << "OpenNN Exception: Matrix Template.\n" 
-             << "Vector<Type> arrange_row(const unsigned&, const Vector<unsigned>&) const method.\n"
-             << "Row index (" << row_index << ") must be less than number of rows (" << rows_number << ").\n";
+      buffer << "OpenNN Exception: Matrix Template.\n"
+             << "Vector<Type> arrange_row(const unsigned&, const "
+                "Vector<unsigned>&) const method.\n"
+             << "Row index (" << row_index
+             << ") must be less than number of rows (" << rows_number << ").\n";
 
       throw std::logic_error(buffer.str());
-   }
+    }
 
-   #endif
+#endif
 
-   const unsigned size = column_indices.size();
+    const unsigned size = column_indices.size();
 
-   Vector<Type> row(size);
+    Vector<Type> row(size);
 
-   for(unsigned i = 0; i < size; i++)
-   {
+    for (unsigned i = 0; i < size; i++) {
       row[i] = data[row_index][column_indices[i]];
-   }
+    }
 
-   return(row);
-}
+    return (row);
+  }
 
+  // Vector<Type> arrange_column(const unsigned&) const method
 
+  /// Returns the column j of the matrix.
+  /// @param j Index of column.
 
-// Vector<Type> arrange_column(const unsigned&) const method
+  Vector<Type> arrange_column(const unsigned& j) const {
+// Control sentence (if debug)
 
-/// Returns the column j of the matrix. 
-/// @param j Index of column.
+#ifndef NDEBUG
 
-Vector<Type> arrange_column(const unsigned& j) const
-{
-   // Control sentence (if debug)            
-
-   #ifndef NDEBUG 
-
-   if(j >= columns_number)
-   {
+    if (j >= columns_number) {
       std::ostringstream buffer;
 
-      buffer << "OpenNN Exception: Matrix Template.\n" 
+      buffer << "OpenNN Exception: Matrix Template.\n"
              << "Vector<Type> arrange_column(const unsigned&) const method.\n"
-             << "Column index (" << j << ") must be less than number of rows (" << columns_number << ").\n";
+             << "Column index (" << j << ") must be less than number of rows ("
+             << columns_number << ").\n";
 
       throw std::logic_error(buffer.str());
-   }
+    }
 
-   #endif
+#endif
 
-   Vector<Type> column(rows_number);
+    Vector<Type> column(rows_number);
 
-   for(unsigned i = 0; i < rows_number; i++)
-   {
+    for (unsigned i = 0; i < rows_number; i++) {
       column[i] = data[i][j];
-   }
+    }
 
-   return(column);
-}
+    return (column);
+  }
 
+  // Vector<Type> arrange_column(const unsigned&) const method
 
-// Vector<Type> arrange_column(const unsigned&) const method
+  /// Returns the column j of the matrix, but only those elements specified by
+  /// given indices.
+  /// @param column_index Index of column.
+  /// @param row_indices Row indices of column.
 
-/// Returns the column j of the matrix, but only those elements specified by given indices. 
-/// @param column_index Index of column.
-/// @param row_indices Row indices of column.
+  Vector<Type> arrange_column(const unsigned& column_index,
+                              const Vector<unsigned>& row_indices) const {
+// Control sentence (if debug)
 
-Vector<Type> arrange_column(const unsigned& column_index, const Vector<unsigned>& row_indices) const
-{
-   // Control sentence (if debug)            
+#ifndef NDEBUG
 
-   #ifndef NDEBUG 
-
-   if(column_index >= columns_number)
-   {
+    if (column_index >= columns_number) {
       std::ostringstream buffer;
 
-      buffer << "OpenNN Exception: Matrix Template.\n" 
+      buffer << "OpenNN Exception: Matrix Template.\n"
              << "Vector<Type> arrange_column(const unsigned&) const method.\n"
-             << "Column index (" << column_index << ") must be less than number of rows (" << columns_number << ").\n";
+             << "Column index (" << column_index
+             << ") must be less than number of rows (" << columns_number
+             << ").\n";
 
       throw std::logic_error(buffer.str());
-   }
+    }
 
-   #endif
+#endif
 
-   const unsigned size = row_indices.size();
+    const unsigned size = row_indices.size();
 
-   Vector<Type> column(size);
+    Vector<Type> column(size);
 
-   for(unsigned i = 0; i < size; i++)
-   {
+    for (unsigned i = 0; i < size; i++) {
       column[i] = data[row_indices[i]][column_index];
-   }
+    }
 
-   return(column);
-}
+    return (column);
+  }
 
+  // Vector<Type> get_diagonal(void) const method
 
-// Vector<Type> get_diagonal(void) const method
+  /// Returns the diagonal of the matrix.
 
-/// Returns the diagonal of the matrix. 
+  Vector<Type> get_diagonal(void) const {
+// Control sentence (if debug)
 
-Vector<Type> get_diagonal(void) const
-{
-   // Control sentence (if debug)
+#ifndef NDEBUG
 
-   #ifndef NDEBUG 
-       
-   if(rows_number != columns_number)
-   {
+    if (rows_number != columns_number) {
       std::ostringstream buffer;
 
-      buffer << "OpenNN Exception: Matrix Template.\n" 
+      buffer << "OpenNN Exception: Matrix Template.\n"
              << "Vector<Type> get_diagonal(void) const method.\n"
              << "Matrix must be squared.\n";
 
       throw std::logic_error(buffer.str());
-   }
+    }
 
-   #endif
+#endif
 
-   Vector<Type> diagonal(rows_number);
+    Vector<Type> diagonal(rows_number);
 
-   for(unsigned i = 0; i < rows_number; i++)
-   {
+    for (unsigned i = 0; i < rows_number; i++) {
       diagonal[i] = data[i][i];
-   }
+    }
 
-   return(diagonal);
-}
+    return (diagonal);
+  }
 
+  // void set_row(const unsigned&, const Vector<Type>&) const method
 
-// void set_row(const unsigned&, const Vector<Type>&) const method
+  /// Sets new values of a single row in the matrix.
+  /// @param row_index Index of row.
+  /// @param new_row New values of single row.
 
-/// Sets new values of a single row in the matrix. 
-/// @param row_index Index of row. 
-/// @param new_row New values of single row. 
+  void set_row(const unsigned& row_index, const Vector<Type>& new_row) {
+// Control sentence (if debug)
 
-void set_row(const unsigned& row_index, const Vector<Type>& new_row)
-{
-   // Control sentence (if debug)
+#ifndef NDEBUG
 
-   #ifndef NDEBUG 
-
-   if(row_index >= rows_number)
-   {
+    if (row_index >= rows_number) {
       std::ostringstream buffer;
 
       buffer << "OpenNN Exception: Matrix Template.\n"
@@ -1543,12 +1342,11 @@ void set_row(const unsigned& row_index, const Vector<Type>& new_row)
              << "Index must be less than number of rows.\n";
 
       throw std::logic_error(buffer.str());
-   }
+    }
 
-   const unsigned size = new_row.size();
+    const unsigned size = new_row.size();
 
-   if(size != columns_number)
-   {
+    if (size != columns_number) {
       std::ostringstream buffer;
 
       buffer << "OpenNN Exception: Matrix Template.\n"
@@ -1556,33 +1354,29 @@ void set_row(const unsigned& row_index, const Vector<Type>& new_row)
              << "Size must be equal to number of columns.\n";
 
       throw std::logic_error(buffer.str());
-   }
+    }
 
-   #endif
+#endif
 
-   // Set new row
+    // Set new row
 
-   for(unsigned i = 0; i < columns_number; i++)
-   {
+    for (unsigned i = 0; i < columns_number; i++) {
       data[row_index][i] = new_row[i];
-   }
-}
+    }
+  }
 
+  // void set_row(const unsigned&, const Type&) method
 
-// void set_row(const unsigned&, const Type&) method
+  /// Sets a new value of a single row in the matrix.
+  /// @param row_index Index of row.
+  /// @param value New value of single row.
 
-/// Sets a new value of a single row in the matrix. 
-/// @param row_index Index of row. 
-/// @param value New value of single row.
+  void set_row(const unsigned& row_index, const Type& value) {
+// Control sentence (if debug)
 
-void set_row(const unsigned& row_index, const Type& value) 
-{
-   // Control sentence (if debug)
+#ifndef NDEBUG
 
-   #ifndef NDEBUG 
-
-   if(row_index >= rows_number)
-   {
+    if (row_index >= rows_number) {
       std::ostringstream buffer;
 
       buffer << "OpenNN Exception: Matrix Template.\n"
@@ -1590,33 +1384,30 @@ void set_row(const unsigned& row_index, const Type& value)
              << "Index must be less than number of rows.\n";
 
       throw std::logic_error(buffer.str());
-   }
+    }
 
-   #endif
+#endif
 
-   // Set new row
+    // Set new row
 
-   for(unsigned i = 0; i < columns_number; i++)
-   {
+    for (unsigned i = 0; i < columns_number; i++) {
       data[row_index][i] = value;
-   }
-}
+    }
+  }
 
+  // void set_column(const unsigned&, const Vector<Type>&) method
 
-// void set_column(const unsigned&, const Vector<Type>&) method
+  /// Sets new values of a single column in the matrix.
+  /// @param column_index Index of column.
+  /// @param new_column New values of single column.
 
-/// Sets new values of a single column in the matrix. 
-/// @param column_index Index of column. 
-/// @param new_column New values of single column. 
+  void set_column(const unsigned& column_index,
+                  const Vector<Type>& new_column) {
+// Control sentence (if debug)
 
-void set_column(const unsigned& column_index, const Vector<Type>& new_column)
-{
-   // Control sentence (if debug)
+#ifndef NDEBUG
 
-   #ifndef NDEBUG 
-
-   if(column_index >= columns_number)
-   {
+    if (column_index >= columns_number) {
       std::ostringstream buffer;
 
       buffer << "OpenNN Exception: Matrix Template.\n"
@@ -1624,12 +1415,11 @@ void set_column(const unsigned& column_index, const Vector<Type>& new_column)
              << "Index must be less than number of columns.\n";
 
       throw std::logic_error(buffer.str());
-   }
+    }
 
-   const unsigned size = new_column.size();
+    const unsigned size = new_column.size();
 
-   if(size != rows_number)
-   {
+    if (size != rows_number) {
       std::ostringstream buffer;
 
       buffer << "OpenNN Exception: Matrix Template.\n"
@@ -1637,33 +1427,29 @@ void set_column(const unsigned& column_index, const Vector<Type>& new_column)
              << "Size must be equal to number of rows.\n";
 
       throw std::logic_error(buffer.str());
-   }
+    }
 
-   #endif
+#endif
 
-   // Set new column
+    // Set new column
 
-   for(unsigned i = 0; i < rows_number; i++)
-   {
+    for (unsigned i = 0; i < rows_number; i++) {
       data[i][column_index] = new_column[i];
-   }
-}
+    }
+  }
 
+  // void set_column(const unsigned&, const Type&) method
 
-// void set_column(const unsigned&, const Type&) method
+  /// Sets a new values of a single column in the matrix.
+  /// @param column_index Index of column.
+  /// @param value New value of single column.
 
-/// Sets a new values of a single column in the matrix. 
-/// @param column_index Index of column. 
-/// @param value New value of single column. 
+  void set_column(const unsigned& column_index, const Type& value) {
+// Control sentence (if debug)
 
-void set_column(const unsigned& column_index, const Type& value)
-{
-   // Control sentence (if debug)
+#ifndef NDEBUG
 
-   #ifndef NDEBUG 
-
-   if(column_index >= columns_number)
-   {
+    if (column_index >= columns_number) {
       std::ostringstream buffer;
 
       buffer << "OpenNN Exception: Matrix Template.\n"
@@ -1671,34 +1457,29 @@ void set_column(const unsigned& column_index, const Type& value)
              << "Index must be less than number of columns.\n";
 
       throw std::logic_error(buffer.str());
-   }
+    }
 
-   #endif
+#endif
 
-   // Set new column
+    // Set new column
 
-   for(unsigned i = 0; i < rows_number; i++)
-   {
+    for (unsigned i = 0; i < rows_number; i++) {
       data[i][column_index] = value;
-   }
-}
+    }
+  }
 
+  // void set_diagonal(const Type&) method
 
-// void set_diagonal(const Type&) method
+  /// Sets a new value for the diagonal elements in the matrix.
+  /// The matrix must be square.
+  /// @param new_diagonal New value of diagonal.
 
+  void set_diagonal(const Type& new_diagonal) {
+// Control sentence (if debug)
 
-/// Sets a new value for the diagonal elements in the matrix. 
-/// The matrix must be square. 
-/// @param new_diagonal New value of diagonal. 
+#ifndef NDEBUG
 
-void set_diagonal(const Type& new_diagonal)
-{
-   // Control sentence (if debug)
-
-   #ifndef NDEBUG 
-
-   if(rows_number != columns_number)
-   {
+    if (rows_number != columns_number) {
       std::ostringstream buffer;
 
       buffer << "OpenNN Exception: Matrix Template.\n"
@@ -1706,33 +1487,29 @@ void set_diagonal(const Type& new_diagonal)
              << "Matrix must be square.\n";
 
       throw std::logic_error(buffer.str());
-   }
+    }
 
-   #endif
+#endif
 
-   // Set new column
+    // Set new column
 
-   for(unsigned i = 0; i < rows_number; i++)
-   {
+    for (unsigned i = 0; i < rows_number; i++) {
       data[i][i] = new_diagonal;
-   }
-}
+    }
+  }
 
+  // void set_diagonal(const Vector<Type>&) method
 
-// void set_diagonal(const Vector<Type>&) method
+  /// Sets new values of the diagonal in the matrix.
+  /// The matrix must be square.
+  /// @param new_diagonal New values of diagonal.
 
-/// Sets new values of the diagonal in the matrix. 
-/// The matrix must be square. 
-/// @param new_diagonal New values of diagonal. 
+  void set_diagonal(const Vector<Type>& new_diagonal) {
+// Control sentence (if debug)
 
-void set_diagonal(const Vector<Type>& new_diagonal)
-{
-   // Control sentence (if debug)
+#ifndef NDEBUG
 
-   #ifndef NDEBUG 
-
-   if(rows_number != columns_number)
-   {
+    if (rows_number != columns_number) {
       std::ostringstream buffer;
 
       buffer << "OpenNN Exception: Matrix Template.\n"
@@ -1740,65 +1517,63 @@ void set_diagonal(const Vector<Type>& new_diagonal)
              << "Matrix is not square.\n";
 
       throw std::logic_error(buffer.str());
-   }
+    }
 
-   const unsigned size = new_diagonal.size();
+    const unsigned size = new_diagonal.size();
 
-   if(size != rows_number)
-   {
+    if (size != rows_number) {
       std::ostringstream buffer;
 
       buffer << "OpenNN Exception: Matrix Template.\n"
              << "set_diagonal(const Vector<Type>&) const.\n"
-             << "Size of diagonal (" << size << ") is not equal to size of matrix (" << rows_number << ").\n";
+             << "Size of diagonal (" << size
+             << ") is not equal to size of matrix (" << rows_number << ").\n";
 
       throw std::logic_error(buffer.str());
-   }
+    }
 
-   #endif
+#endif
 
-   // Set new column
+    // Set new column
 
-   for(unsigned i = 0; i < rows_number; i++)
-   {
+    for (unsigned i = 0; i < rows_number; i++) {
       data[i][i] = new_diagonal[i];
-   }
-}
+    }
+  }
 
+  // void initialize_diagonal(const unsigned&, const Type&) method
 
-// void initialize_diagonal(const unsigned&, const Type&) method
+  /// Sets this matrix to be diagonal.
+  /// A diagonal matrix is a square matrix in which the entries outside the main
+  /// diagonal are all zero.
+  /// It also initializes the elements on the main diagonal to a unique given
+  /// value.
+  /// @param new_size Number of rows and colums in the matrix.
+  /// @param new_value Value of all the elements in the main diagonal.
 
-/// Sets this matrix to be diagonal. 
-/// A diagonal matrix is a square matrix in which the entries outside the main diagonal are all zero.
-/// It also initializes the elements on the main diagonal to a unique given value. 
-/// @param new_size Number of rows and colums in the matrix. 
-/// @param new_value Value of all the elements in the main diagonal. 
+  void initialize_diagonal(const unsigned& new_size, const Type& new_value) {
+    set(new_size, new_size, 0.0);
+    set_diagonal(new_value);
+  }
 
-void initialize_diagonal(const unsigned& new_size, const Type& new_value)
-{
-   set(new_size, new_size, 0.0);
-   set_diagonal(new_value);
-}
+  // void initialize_diagonal(const unsigned&, const Vector<Type>&) method
 
+  /// Sets this matrix to be diagonal.
+  /// A diagonal matrix is a square matrix in which the entries outside the main
+  /// diagonal are all zero.
+  /// It also initializes the elements on the main diagonal to given values.
+  /// @param new_size Number of rows and colums in the matrix.
+  /// @param new_values Values of the elements in the main diagonal.
 
-// void initialize_diagonal(const unsigned&, const Vector<Type>&) method
+  void initialize_diagonal(const unsigned& new_size,
+                           const Vector<Type>& new_values) {
+// Control sentence (if debug)
 
-/// Sets this matrix to be diagonal. 
-/// A diagonal matrix is a square matrix in which the entries outside the main diagonal are all zero.
-/// It also initializes the elements on the main diagonal to given values. 
-/// @param new_size Number of rows and colums in the matrix. 
-/// @param new_values Values of the elements in the main diagonal. 
+#ifndef NDEBUG
 
-void initialize_diagonal(const unsigned& new_size, const Vector<Type>& new_values)
-{
-   // Control sentence (if debug)
+    const unsigned new_values_size = new_values.size();
 
-   #ifndef NDEBUG 
-
-   const unsigned new_values_size = new_values.size();
-
-   if(new_values_size != new_size)
-   {
+    if (new_values_size != new_size) {
       std::ostringstream buffer;
 
       buffer << "OpenNN Exception: Matrix Template.\n"
@@ -1806,29 +1581,26 @@ void initialize_diagonal(const unsigned& new_size, const Vector<Type>& new_value
              << "Size of new values is not equal to size of square matrix.\n";
 
       throw std::logic_error(buffer.str());
-   }
+    }
 
-   #endif
+#endif
 
-   set(new_size, new_size, 0.0);
-   set_diagonal(new_values);
-}
+    set(new_size, new_size, 0.0);
+    set_diagonal(new_values);
+  }
 
+  // Matrix<Type> sum_diagonal(const Type&) const method
 
-// Matrix<Type> sum_diagonal(const Type&) const method
+  /// This method sums a new value to the diagonal elements in the matrix.
+  /// The matrix must be square.
+  /// @param new_summing_value New summing value.
 
-/// This method sums a new value to the diagonal elements in the matrix. 
-/// The matrix must be square. 
-/// @param new_summing_value New summing value. 
+  Matrix<Type> sum_diagonal(const Type& new_summing_value) const {
+// Control sentence (if debug)
 
-Matrix<Type> sum_diagonal(const Type& new_summing_value) const
-{
-   // Control sentence (if debug)
+#ifndef NDEBUG
 
-   #ifndef NDEBUG 
-
-   if(rows_number != columns_number)
-   {
+    if (rows_number != columns_number) {
       std::ostringstream buffer;
 
       buffer << "OpenNN Exception: Matrix Template.\n"
@@ -1836,35 +1608,31 @@ Matrix<Type> sum_diagonal(const Type& new_summing_value) const
              << "Matrix must be square.\n";
 
       throw std::logic_error(buffer.str());
-   }
+    }
 
-   #endif
+#endif
 
-   Matrix<Type> sum(*this);
+    Matrix<Type> sum(*this);
 
-   for(unsigned i = 0; i < rows_number; i++)
-   {
+    for (unsigned i = 0; i < rows_number; i++) {
       sum[i][i] += new_summing_value;
-   }
+    }
 
-   return(sum);
-}
+    return (sum);
+  }
 
+  // Matrix<Type> sum_diagonal(const Vector<Type>&) const method
 
-// Matrix<Type> sum_diagonal(const Vector<Type>&) const method
+  /// This method sums new values to the diagonal in the matrix.
+  /// The matrix must be square.
+  /// @param new_summing_values Vector of summing values.
 
-/// This method sums new values to the diagonal in the matrix. 
-/// The matrix must be square. 
-/// @param new_summing_values Vector of summing values. 
+  Matrix<Type> sum_diagonal(const Vector<Type>& new_summing_values) const {
+// Control sentence (if debug)
 
-Matrix<Type> sum_diagonal(const Vector<Type>& new_summing_values) const
-{
-   // Control sentence (if debug)
+#ifndef NDEBUG
 
-   #ifndef NDEBUG 
-
-   if(rows_number != columns_number)
-   {
+    if (rows_number != columns_number) {
       std::ostringstream buffer;
 
       buffer << "OpenNN Exception: Matrix Template.\n"
@@ -1872,12 +1640,11 @@ Matrix<Type> sum_diagonal(const Vector<Type>& new_summing_values) const
              << "Matrix must be square.\n";
 
       throw std::logic_error(buffer.str());
-   }
+    }
 
-   const unsigned size = new_summing_values.size();
+    const unsigned size = new_summing_values.size();
 
-   if(size != rows_number)
-   {
+    if (size != rows_number) {
       std::ostringstream buffer;
 
       buffer << "OpenNN Exception: Matrix Template.\n"
@@ -1885,36 +1652,34 @@ Matrix<Type> sum_diagonal(const Vector<Type>& new_summing_values) const
              << "Size must be equal to number of rows.\n";
 
       throw std::logic_error(buffer.str());
-   }
+    }
 
-   #endif
+#endif
 
-   Matrix<Type> sum(*this);
+    Matrix<Type> sum(*this);
 
-   for(unsigned i = 0; i < rows_number; i++)
-   {
+    for (unsigned i = 0; i < rows_number; i++) {
       data[i][i] += new_summing_values[i];
-   }
+    }
 
-   return(sum);
-}
+    return (sum);
+  }
 
+  // void append_row(const Vector<Type>&) const method
 
-// void append_row(const Vector<Type>&) const method
+  /// This method appends a new row to the matrix.
+  /// The size of the row vector must be equal to the number of columns of the
+  /// matrix.
+  /// Note that resizing is necessary here and therefore this method can be very
+  /// inefficient.
+  /// @param new_row Row to be appended.
 
-/// This method appends a new row to the matrix. 
-/// The size of the row vector must be equal to the number of columns of the matrix.
-/// Note that resizing is necessary here and therefore this method can be very inefficient. 
-/// @param new_row Row to be appended.
+  void append_row(const Vector<Type>& new_row) {
+#ifndef NDEBUG
 
-void append_row(const Vector<Type>& new_row)
-{
-   #ifndef NDEBUG 
+    const unsigned size = new_row.size();
 
-   const unsigned size = new_row.size();
-
-   if(size != columns_number)
-   {
+    if (size != columns_number) {
       std::ostringstream buffer;
 
       buffer << "OpenNN Exception: Matrix Template.\n"
@@ -1922,31 +1687,30 @@ void append_row(const Vector<Type>& new_row)
              << "Size must be equal to number of columns.\n";
 
       throw std::logic_error(buffer.str());
-   }
+    }
 
-   #endif
+#endif
 
-   resize(rows_number+1, columns_number);
+    resize(rows_number + 1, columns_number);
 
-   set_row(rows_number-1, new_row);
-}
+    set_row(rows_number - 1, new_row);
+  }
 
+  // void append_column(const Vector<Type>&) const method
 
-// void append_column(const Vector<Type>&) const method
+  /// This method appends a new column to the matrix.
+  /// The size of the column vector must be equal to the number of rows of the
+  /// matrix.
+  /// Note that resizing is necessary here and therefore this method can be very
+  /// inefficient.
+  /// @param new_column Column to be appended.
 
-/// This method appends a new column to the matrix. 
-/// The size of the column vector must be equal to the number of rows of the matrix.
-/// Note that resizing is necessary here and therefore this method can be very inefficient. 
-/// @param new_column Column to be appended.
+  void append_column(const Vector<Type>& new_column) {
+#ifndef NDEBUG
 
-void append_column(const Vector<Type>& new_column) 
-{
-   #ifndef NDEBUG 
+    const unsigned size = new_column.size();
 
-   const unsigned size = new_column.size();
-
-   if(size != columns_number)
-   {
+    if (size != columns_number) {
       std::ostringstream buffer;
 
       buffer << "OpenNN Exception: Matrix Template.\n"
@@ -1954,28 +1718,26 @@ void append_column(const Vector<Type>& new_column)
              << "Size must be equal to number of columns.\n";
 
       throw std::logic_error(buffer.str());
-   }
+    }
 
-   #endif
+#endif
 
-   resize(rows_number, columns_number+1);
+    resize(rows_number, columns_number + 1);
 
-   set_column(columns_number-1, new_column);
-}
+    set_column(columns_number - 1, new_column);
+  }
 
+  // void subtract_row(const unsigned&) const method
 
-// void subtract_row(const unsigned&) const method
+  /// This method removes the row with given index.
+  /// Note that resizing is here necessary and this method can be very
+  /// inefficient.
+  /// @param row_index Index of row to be removed.
 
-/// This method removes the row with given index. 
-/// Note that resizing is here necessary and this method can be very inefficient. 
-/// @param row_index Index of row to be removed. 
+  void subtract_row(const unsigned& row_index) {
+#ifndef NDEBUG
 
-void subtract_row(const unsigned& row_index) 
-{
-   #ifndef NDEBUG 
-
-   if(row_index >= rows_number)
-   {
+    if (row_index >= rows_number) {
       std::ostringstream buffer;
 
       buffer << "OpenNN Exception: Matrix Template.\n"
@@ -1983,9 +1745,7 @@ void subtract_row(const unsigned& row_index)
              << "Index of row must be less than number of rows.\n";
 
       throw std::logic_error(buffer.str());
-   }
-   else if(rows_number < 2)
-   {
+    } else if (rows_number < 2) {
       std::ostringstream buffer;
 
       buffer << "OpenNN Exception: Matrix Template.\n"
@@ -1993,44 +1753,38 @@ void subtract_row(const unsigned& row_index)
              << "Number of rows must be equal or greater than two.\n";
 
       throw std::logic_error(buffer.str());
-   }
+    }
 
-   #endif
+#endif
 
-   Matrix<Type> new_matrix(rows_number-1, columns_number);
+    Matrix<Type> new_matrix(rows_number - 1, columns_number);
 
-   for(unsigned i = 0; i < row_index; i++)
-   {
-      for(unsigned j = 0; j < columns_number; j++)
-      {
+    for (unsigned i = 0; i < row_index; i++) {
+      for (unsigned j = 0; j < columns_number; j++) {
         new_matrix[i][j] = data[i][j];
       }
-   }
+    }
 
-   for(unsigned i = row_index+1; i < rows_number; i++)
-   {
-      for(unsigned j = 0; j < columns_number; j++)
-      {
-         new_matrix[i-1][j] = data[i][j];
+    for (unsigned i = row_index + 1; i < rows_number; i++) {
+      for (unsigned j = 0; j < columns_number; j++) {
+        new_matrix[i - 1][j] = data[i][j];
       }
-   }
+    }
 
-   *this = new_matrix;
-}
+    *this = new_matrix;
+  }
 
+  // void subtract_column(unsigned) method
 
-// void subtract_column(unsigned) method
+  /// This method removes the column with given index.
+  /// Note that resizing is here necessary and this method can be very
+  /// inefficient.
+  /// @param column_index Index of column to be removed.
 
-/// This method removes the column with given index. 
-/// Note that resizing is here necessary and this method can be very inefficient. 
-/// @param column_index Index of column to be removed. 
+  void subtract_column(const unsigned& column_index) {
+#ifndef NDEBUG
 
-void subtract_column(const unsigned& column_index)
-{
-   #ifndef NDEBUG 
-
-   if(column_index >= columns_number)
-   {
+    if (column_index >= columns_number) {
       std::ostringstream buffer;
 
       buffer << "OpenNN Exception: Matrix Template.\n"
@@ -2038,9 +1792,7 @@ void subtract_column(const unsigned& column_index)
              << "Index of column must be less than number of columns.\n";
 
       throw std::logic_error(buffer.str());
-   }
-   else if(columns_number < 2)
-   {
+    } else if (columns_number < 2) {
       std::ostringstream buffer;
 
       buffer << "OpenNN Exception: Matrix Template.\n"
@@ -2048,3266 +1800,3001 @@ void subtract_column(const unsigned& column_index)
              << "Number of columns must be equal or greater than two.\n";
 
       throw std::logic_error(buffer.str());
-   }
+    }
 
-   #endif
+#endif
 
-   Matrix<Type> new_matrix(rows_number, columns_number-1);
+    Matrix<Type> new_matrix(rows_number, columns_number - 1);
 
-   for(unsigned i = 0; i < rows_number; i++)
-   {
-      for(unsigned j = 0; j < column_index; j++)
-      {
+    for (unsigned i = 0; i < rows_number; i++) {
+      for (unsigned j = 0; j < column_index; j++) {
         new_matrix[i][j] = data[i][j];
       }
-   }
+    }
 
-   for(unsigned i = 0; i < rows_number; i++)
-   {
-      for(unsigned j = column_index+1; j < columns_number; j++)
-      {
-         new_matrix[i][j-1] = data[i][j];
+    for (unsigned i = 0; i < rows_number; i++) {
+      for (unsigned j = column_index + 1; j < columns_number; j++) {
+        new_matrix[i][j - 1] = data[i][j];
       }
-   }
+    }
 
-   *this = new_matrix;
-}
+    *this = new_matrix;
+  }
 
+  // Matrix<Type> assemble_rows(const Matrix<Type>&) const method
 
-// Matrix<Type> assemble_rows(const Matrix<Type>&) const method
+  /// Assemble two matrices.
+  /// @param other_matrix matrix to be get_assembled to this matrix.
 
-/// Assemble two matrices.
-/// @param other_matrix matrix to be get_assembled to this matrix.
+  Matrix<Type> assemble_rows(const Matrix<Type>& other_matrix) const {
+#ifndef NDEBUG
 
-Matrix<Type> assemble_rows(const Matrix<Type>& other_matrix) const
-{
-   #ifndef NDEBUG
+    const unsigned other_columns_number = other_matrix.get_columns_number();
 
-   const unsigned other_columns_number = other_matrix.get_columns_number();
+    if (other_columns_number != columns_number) {
+      std::ostringstream buffer;
 
-   if(other_columns_number != columns_number)
-   {
+      buffer
+          << "OpenNN Exception: Matrix Template.\n"
+          << "Matrix<Type> assemble_rows(const Matrix<Type>&) const method.\n"
+          << "Number of columns of other matrix (" << other_columns_number
+          << ") must be equal to number of columns of this matrix ("
+          << columns_number << ").\n";
+
+      throw std::logic_error(buffer.str());
+    }
+
+#endif
+
+    const unsigned other_rows_number = other_matrix.get_rows_number();
+
+    Matrix<Type> assembly(rows_number + other_rows_number, columns_number);
+
+    for (unsigned i = 0; i < rows_number; i++) {
+      for (unsigned j = 0; j < columns_number; j++) {
+        assembly[i][j] = data[i][j];
+      }
+    }
+
+    for (unsigned i = 0; i < other_rows_number; i++) {
+      for (unsigned j = 0; j < columns_number; j++) {
+        assembly[rows_number + i][j] = other_matrix[i][j];
+      }
+    }
+
+    return (assembly);
+  }
+
+  // Matrix<Type> assemble_columns(const Matrix<Type>&) const method
+
+  /// Assemble two matrices.
+  /// @param other_matrix matrix to be get_assemblyd to this matrix.
+
+  Matrix<Type> assemble_columns(const Matrix<Type>& other_matrix) const {
+#ifndef NDEBUG
+
+    const unsigned other_rows_number = other_matrix.get_rows_number();
+
+    if (other_rows_number != rows_number) {
       std::ostringstream buffer;
 
       buffer << "OpenNN Exception: Matrix Template.\n"
-             << "Matrix<Type> assemble_rows(const Matrix<Type>&) const method.\n"
-             << "Number of columns of other matrix (" << other_columns_number << ") must be equal to number of columns of this matrix (" << columns_number << ").\n";
+             << "Matrix<Type> assemble_columns(const Matrix<Type>&) const "
+                "method.\n"
+             << "Number of rows of other matrix (" << other_rows_number
+             << ") must be equal to number of rows of this matrix ("
+             << rows_number << ").\n";
 
       throw std::logic_error(buffer.str());
-   }
+    }
 
-   #endif
+#endif
 
-   const unsigned other_rows_number = other_matrix.get_rows_number();
+    const unsigned other_columns_number = other_matrix.get_columns_number();
 
-   Matrix<Type> assembly(rows_number + other_rows_number, columns_number);
+    Matrix<Type> assembly(rows_number, columns_number + other_columns_number);
 
-   for(unsigned i = 0; i < rows_number; i++)
-   {
-      for(unsigned j = 0; j < columns_number; j++)
-      {
-         assembly[i][j] = data[i][j];
+    for (unsigned i = 0; i < rows_number; i++) {
+      for (unsigned j = 0; j < columns_number; j++) {
+        assembly[i][j] = data[i][j];
       }
-   }
-
-   for(unsigned i = 0; i < other_rows_number; i++)
-   {
-      for(unsigned j = 0; j < columns_number; j++)
-      {
-         assembly[rows_number+i][j] = other_matrix[i][j];
+      for (unsigned j = 0; j < other_columns_number; j++) {
+        assembly[i][columns_number + j] = other_matrix[i][j];
       }
-   }
+    }
 
-   return(assembly);
-}
+    return (assembly);
+  }
 
+  // void initialize(const Type&) const method
 
-// Matrix<Type> assemble_columns(const Matrix<Type>&) const method
+  /// Initializes all the elements of the matrix with a given value.
+  /// @param value Type value.
 
-/// Assemble two matrices.
-/// @param other_matrix matrix to be get_assemblyd to this matrix. 
+  void initialize(const Type& value) const {
+    for (unsigned i = 0; i < rows_number; i++) {
+      for (unsigned j = 0; j < columns_number; j++) {
+        data[i][j] = value;
+      }
+    }
+  }
 
-Matrix<Type> assemble_columns(const Matrix<Type>& other_matrix) const
-{
-   #ifndef NDEBUG 
+  // void randomize_uniform(void) const method
 
-   const unsigned other_rows_number = other_matrix.get_rows_number();
+  /// Initializes all the elements in the matrix with random values comprised
+  /// between -1 and 1.
 
-   if(other_rows_number != rows_number)
-   {
+  void randomize_uniform(void) const {
+    for (unsigned i = 0; i < rows_number; i++) {
+      for (unsigned j = 0; j < columns_number; j++) {
+        data[i][j] = calculate_random_uniform(-1.0, 1.0);
+      }
+    }
+  }
+
+  // void randomize_uniform(const double&, const double&) const method
+
+  /// Initializes all the elements in the matrix with random values comprised
+  /// between a minimum and a maximum
+  /// values.
+  /// @param minimum Minimum possible value.
+  /// @param maximum Maximum possible value.
+
+  void randomize_uniform(const double& minimum, double maximum) const {
+// Control sentence (if debug)
+
+#ifndef NDEBUG
+
+    if (minimum > maximum) {
       std::ostringstream buffer;
 
       buffer << "OpenNN Exception: Matrix Template.\n"
-             << "Matrix<Type> assemble_columns(const Matrix<Type>&) const method.\n"
-             << "Number of rows of other matrix (" << other_rows_number << ") must be equal to number of rows of this matrix (" << rows_number << ").\n";
-
-      throw std::logic_error(buffer.str());
-   }
-
-   #endif
-	
-   const unsigned other_columns_number = other_matrix.get_columns_number();
-
-   Matrix<Type> assembly(rows_number, columns_number + other_columns_number);
-
-   for(unsigned i = 0; i < rows_number; i++)
-   {
-      for(unsigned j = 0; j < columns_number; j++)   
-	  {
-         assembly[i][j] = data[i][j];
-	  }
-	  for(unsigned j = 0; j < other_columns_number; j++)
-	  {
-         assembly[i][columns_number+j] = other_matrix[i][j];
-	  }
-   }
-
-   return(assembly);
-}
-
-
-// void initialize(const Type&) const method
-
-/// Initializes all the elements of the matrix with a given value.
-/// @param value Type value.
-
-void initialize(const Type& value) const
-{
-   for(unsigned i = 0; i < rows_number; i++)
-   {
-      for(unsigned j = 0; j < columns_number; j++)
-      {
-         data[i][j] = value;
-      }
-   }
-}
-
-
-// void randomize_uniform(void) const method
-
-/// Initializes all the elements in the matrix with random values comprised between -1 and 1.
-
-void randomize_uniform(void) const
-{
-   for(unsigned i = 0; i < rows_number; i++)
-   {
-      for(unsigned j = 0; j < columns_number; j++)
-      {
-         data[i][j] =  calculate_random_uniform(-1.0, 1.0);
-      }
-   }
-}
-
-
-// void randomize_uniform(const double&, const double&) const method
-
-/// Initializes all the elements in the matrix with random values comprised between a minimum and a maximum
-/// values.
-/// @param minimum Minimum possible value. 
-/// @param maximum Maximum possible value. 
-
-void randomize_uniform(const double& minimum, double maximum) const
-{
-   // Control sentence (if debug)
-
-   #ifndef NDEBUG 
-
-   if(minimum > maximum)
-   {
-      std::ostringstream buffer;
-
-      buffer << "OpenNN Exception: Matrix Template.\n" 
-             << "void randomize_uniform(const double&, const double&) const method.\n"
+             << "void randomize_uniform(const double&, const double&) const "
+                "method.\n"
              << "Minimum value must be less or equal than maximum value.\n";
 
       throw std::logic_error(buffer.str());
-   }
+    }
 
-   #endif
+#endif
 
-   for(unsigned i = 0; i < rows_number; i++)
-   {
-      for(unsigned j = 0; j < columns_number; j++)
-      {
-         data[i][j] = calculate_random_uniform(minimum, maximum);
+    for (unsigned i = 0; i < rows_number; i++) {
+      for (unsigned j = 0; j < columns_number; j++) {
+        data[i][j] = calculate_random_uniform(minimum, maximum);
       }
-   }
-}
+    }
+  }
 
+  // void randomize_uniform(const Matrix<double>&, const Matrix<double>&) const
+  // method
 
-// void randomize_uniform(const Matrix<double>&, const Matrix<double>&) const method
+  /// Initializes all the elements in the matrix with random values comprised
+  /// between a minimum and a maximum
+  /// values for each element.
+  /// @param minimum Minimum possible values.
+  /// @param maximum Maximum possible values.
 
-/// Initializes all the elements in the matrix with random values comprised between a minimum and a maximum
-/// values for each element.
-/// @param minimum Minimum possible values. 
-/// @param maximum Maximum possible values. 
+  void randomize_uniform(const Matrix<double>& minimum,
+                         const Matrix<double>& maximum) const {
+// Control sentence (if debug)
 
-void randomize_uniform(const Matrix<double>& minimum, const Matrix<double>& maximum) const 
-{
-   // Control sentence (if debug)
+#ifndef NDEBUG
 
-   #ifndef NDEBUG 
-
-   if(minimum > maximum)
-   {
+    if (minimum > maximum) {
       std::ostringstream buffer;
 
-      buffer << "OpenNN Exception: Matrix Template.\n" 
-             << "void randomize_uniform(const Matrix<double>&, const Matrix<double>&) const method.\n"
-             << "Minimum values must be less or equal than their respective maximum values.\n";
+      buffer << "OpenNN Exception: Matrix Template.\n"
+             << "void randomize_uniform(const Matrix<double>&, const "
+                "Matrix<double>&) const method.\n"
+             << "Minimum values must be less or equal than their respective "
+                "maximum values.\n";
 
       throw std::logic_error(buffer.str());
-   }
+    }
 
-   #endif
+#endif
 
-   for(unsigned i = 0; i < rows_number; i++)
-   {
-      for(unsigned j = 0; j < columns_number; j++)
-      {
-         data[i][j] = calculate_random_uniform(minimum[i][j], maximum[i][j]);
+    for (unsigned i = 0; i < rows_number; i++) {
+      for (unsigned j = 0; j < columns_number; j++) {
+        data[i][j] = calculate_random_uniform(minimum[i][j], maximum[i][j]);
       }
-   }
-}
+    }
+  }
 
+  // void randomize_normal(void) const method
 
-// void randomize_normal(void) const method
+  /// Assigns random values to each element in the matrix, taken from a normal
+  /// distribution with
+  /// mean 0 and standard deviation 1.
 
-/// Assigns random values to each element in the matrix, taken from a normal distribution with
-/// mean 0 and standard deviation 1. 
-
-void randomize_normal(void) const
-{
-   for(unsigned i = 0; i < rows_number; i++)
-   {
-      for(unsigned j = 0; j < columns_number; j++)
-      {
-         data[i][j] = calculate_random_normal(0.0, 1.0);
+  void randomize_normal(void) const {
+    for (unsigned i = 0; i < rows_number; i++) {
+      for (unsigned j = 0; j < columns_number; j++) {
+        data[i][j] = calculate_random_normal(0.0, 1.0);
       }
-   }
-}
+    }
+  }
 
+  // void randomize_normal(const double&, const double&) const method
 
-// void randomize_normal(const double&, const double&) const method
+  /// Assigns random values to each element in the matrix, taken from a normal
+  /// distribution with
+  /// a given mean and a given standard deviation.
+  /// @param mean Mean value of uniform distribution.
+  /// @param standard_deviation Standard deviation value of uniform
+  /// distribution.
 
-/// Assigns random values to each element in the matrix, taken from a normal distribution with
-/// a given mean and a given standard deviation. 
-/// @param mean Mean value of uniform distribution.  
-/// @param standard_deviation Standard deviation value of uniform distribution.
+  void randomize_normal(const double& mean, double standard_deviation) const {
+// Control sentence (if debug)
 
-void randomize_normal(const double& mean, double standard_deviation) const
-{
-   // Control sentence (if debug)
+#ifndef NDEBUG
 
-   #ifndef NDEBUG 
-
-   if(standard_deviation < 0.0)
-   {
+    if (standard_deviation < 0.0) {
       std::ostringstream buffer;
 
-      buffer << "OpenNN Exception: Matrix Template.\n" 
-             << "void randomize_normal(const double&, const double&) const method.\n"
+      buffer << "OpenNN Exception: Matrix Template.\n"
+             << "void randomize_normal(const double&, const double&) const "
+                "method.\n"
              << "Standard deviation must be equal or greater than zero.\n";
 
       throw std::logic_error(buffer.str());
-   }
+    }
 
-   #endif
+#endif
 
-   for(unsigned i = 0; i < rows_number; i++)
-   {
-      for(unsigned j = 0; j < columns_number; j++)
-      {
-         data[i][j] = calculate_random_normal(mean, standard_deviation);
+    for (unsigned i = 0; i < rows_number; i++) {
+      for (unsigned j = 0; j < columns_number; j++) {
+        data[i][j] = calculate_random_normal(mean, standard_deviation);
       }
-   }
-}
+    }
+  }
 
+  // void randomize_normal(const Matrix<double>&, const Matrix<double>&) const
+  // method
 
-// void randomize_normal(const Matrix<double>&, const Matrix<double>&) const method
+  /// Assigns random values to each element in the vector, taken from normal
+  /// distributions with
+  /// given means and standard deviations for each element.
+  /// @param mean Mean values of uniform distributions.
+  /// @param standard_deviation Standard deviation values of uniform
+  /// distributions.
 
-/// Assigns random values to each element in the vector, taken from normal distributions with
-/// given means and standard deviations for each element. 
-/// @param mean Mean values of uniform distributions.  
-/// @param standard_deviation Standard deviation values of uniform distributions.
+  void randomize_normal(const Matrix<double>& mean,
+                        const Matrix<double>& standard_deviation) const {
+// Control sentence (if debug)
 
-void randomize_normal(const Matrix<double>& mean, const Matrix<double>& standard_deviation) const
-{
-   // Control sentence (if debug)
+#ifndef NDEBUG
 
-   #ifndef NDEBUG 
-
-   if(standard_deviation < 0.0)
-   { 
+    if (standard_deviation < 0.0) {
       std::ostringstream buffer;
 
-      buffer << "OpenNN Exception: Matrix Template.\n" 
-             << "void randomize_normal(const Matrix<double>&, const Matrix<double>&) const method.\n"
+      buffer << "OpenNN Exception: Matrix Template.\n"
+             << "void randomize_normal(const Matrix<double>&, const "
+                "Matrix<double>&) const method.\n"
              << "Standard deviations must be equal or greater than zero.\n";
 
       throw std::logic_error(buffer.str());
-   }
+    }
 
-   #endif
+#endif
 
-   for(unsigned i = 0; i < rows_number; i++)
-   {
-      for(unsigned j = 0; j < columns_number; j++)
-      {
-         data[i][j] = calculate_random_uniform(mean[i][j], standard_deviation[i][j]);
+    for (unsigned i = 0; i < rows_number; i++) {
+      for (unsigned j = 0; j < columns_number; j++) {
+        data[i][j] =
+            calculate_random_uniform(mean[i][j], standard_deviation[i][j]);
       }
-   }
-}
+    }
+  }
 
+  // void initialize_identity(void) const method
 
-// void initialize_identity(void) const method
+  /// Sets the diagonal elements in the matrix with ones and the rest elements
+  /// with zeros. The matrix
+  /// must be square.
 
-/// Sets the diagonal elements in the matrix with ones and the rest elements with zeros. The matrix 
-/// must be square. 
+  void initialize_identity(void) const {
+// Control sentence (if debug)
 
-void initialize_identity(void) const
-{
-   // Control sentence (if debug)
+#ifndef NDEBUG
 
-   #ifndef NDEBUG 
-   
-   if(rows_number != columns_number)
-   {
+    if (rows_number != columns_number) {
       std::ostringstream buffer;
 
       std::cout << "OpenNN Exception: Matrix Template.\n"
                 << "initialize_identity(void) const method.\n"
                 << "Matrix must be square.\n";
-      
+
       throw std::logic_error(buffer.str());
-   }
+    }
 
-   #endif
+#endif
 
-   for(unsigned i = 0; i < rows_number; i++)
-   {
-      for(unsigned j = 0; j < columns_number; j++)
-      {
-         if(i==j)
-         {
-            data[i][j] = 1;
-         }
-         else
-         {
-            data[i][j] = 0;      
-         }
+    for (unsigned i = 0; i < rows_number; i++) {
+      for (unsigned j = 0; j < columns_number; j++) {
+        if (i == j) {
+          data[i][j] = 1;
+        } else {
+          data[i][j] = 0;
+        }
       }
-   }
-}
+    }
+  }
 
+  // void initialize_diagonal(const Type&) const method
 
-// void initialize_diagonal(const Type&) const method
+  /// Sets the diagonal elements in the matrix with ones and the rest elements
+  /// with a given value.
+  /// The matrix must be square.
 
-/// Sets the diagonal elements in the matrix with ones and the rest elements with a given value. 
-/// The matrix must be square. 
+  void initialize_diagonal(const Type& value) const {
+// Control sentence (if debug)
 
-void initialize_diagonal(const Type& value) const
-{
-   // Control sentence (if debug)
+#ifndef NDEBUG
 
-   #ifndef NDEBUG 
-   
-   if(rows_number != columns_number)
-   {
+    if (rows_number != columns_number) {
       std::ostringstream buffer;
 
       std::cout << "OpenNN Exception: Matrix Template.\n"
                 << "initialize_diagonal(const Type&) const method.\n"
                 << "Matrix must be square.\n";
-      
+
       throw std::logic_error(buffer.str());
-   }
+    }
 
-   #endif
+#endif
 
-   for(unsigned i = 0; i < rows_number; i++)
-   {
-      for(unsigned j = 0; j < columns_number; j++)
-      {
-         if(i==j)
-         {
-            data[i][j] = value;
-         }
-         else
-         {
-            data[i][j] = 0;      
-         }
+    for (unsigned i = 0; i < rows_number; i++) {
+      for (unsigned j = 0; j < columns_number; j++) {
+        if (i == j) {
+          data[i][j] = value;
+        } else {
+          data[i][j] = 0;
+        }
       }
-   }
-}
+    }
+  }
 
+  // Type calculate_sum(void) const method
 
-// Type calculate_sum(void) const method
+  /// Returns the sum of all the elements in the matrix.
 
-/// Returns the sum of all the elements in the matrix.
-
-Type calculate_sum(void) const
-{
+  Type calculate_sum(void) const {
     const unsigned rows_number = get_rows_number();
     const unsigned columns_number = get_columns_number();
 
-   Type sum = 0;
+    Type sum = 0;
 
-   for(unsigned i = 0; i < rows_number; i++)
-   {
-       for(unsigned j = 0; j < columns_number; j++)
-       {
-            sum += data[i][j];
-       }
-   }
+    for (unsigned i = 0; i < rows_number; i++) {
+      for (unsigned j = 0; j < columns_number; j++) {
+        sum += data[i][j];
+      }
+    }
 
-   return(sum);
-}
+    return (sum);
+  }
 
+  // double calculate_trace(void) const method
 
-// double calculate_trace(void) const method
+  /// Returns the trace of the matrix, which is defined to be the sum of the
+  /// main diagonal elements.
+  /// The matrix must be square.
 
-/// Returns the trace of the matrix, which is defined to be the sum of the main diagonal elements. 
-/// The matrix must be square. 
+  double calculate_trace(void) const {
+// Control sentence (if debug)
 
-double calculate_trace(void) const
-{
-   // Control sentence (if debug)
+#ifndef NDEBUG
 
-   #ifndef NDEBUG 
-
-   if(!this->is_square())
-   {
+    if (!this->is_square()) {
       std::ostringstream buffer;
 
       buffer << "OpenNN Exception: Matrix template.\n"
-             << "double calculate_trace(void) const method.\n" 
+             << "double calculate_trace(void) const method.\n"
              << "Matrix is not square.\n";
 
       throw std::logic_error(buffer.str());
-   }
+    }
 
-   #endif
+#endif
 
-   double trace = 0.0;
+    double trace = 0.0;
 
-   for(unsigned i = 0; i < rows_number; i++)
-   {
+    for (unsigned i = 0; i < rows_number; i++) {
       trace += data[i][i];
-   }
+    }
 
-   return(trace);
-}
+    return (trace);
+  }
 
+  // Vector<double> calculate_mean(void) const method
 
-// Vector<double> calculate_mean(void) const method
+  /// Returns a vector with the mean values of all the matrix columns.
+  /// The size is equal to the number of columns in the matrix.
 
-/// Returns a vector with the mean values of all the matrix columns. 
-/// The size is equal to the number of columns in the matrix. 
+  Vector<double> calculate_mean(void) const {
+// Control sentence (if debug)
 
-Vector<double> calculate_mean(void) const
-{
-   // Control sentence (if debug)
+#ifndef NDEBUG
 
-   #ifndef NDEBUG 
-
-   if(rows_number == 0)
-   {
+    if (rows_number == 0) {
       std::ostringstream buffer;
 
       buffer << "OpenNN Exception: Matrix template.\n"
-             << "Vector<double> calculate_mean(void) const method.\n" 
+             << "Vector<double> calculate_mean(void) const method.\n"
              << "Number of rows must be greater than one.\n";
 
       throw std::logic_error(buffer.str());
-   }
+    }
 
-   #endif
+#endif
 
-   // Mean 
+    // Mean
 
-   Vector<double> mean(columns_number, 0.0);
+    Vector<double> mean(columns_number, 0.0);
 
-   for(unsigned j = 0; j < columns_number; j++)
-   {
-      for(unsigned i = 0; i < rows_number; i++)
-      {
-         mean[j] += data[i][j];
+    for (unsigned j = 0; j < columns_number; j++) {
+      for (unsigned i = 0; i < rows_number; i++) {
+        mean[j] += data[i][j];
       }
 
       mean[j] /= (double)rows_number;
-   }
+    }
 
-   return(mean);
-}
+    return (mean);
+  }
 
+  // Vector<double> calculate_mean(const Vector<unsigned>&) const method
 
-// Vector<double> calculate_mean(const Vector<unsigned>&) const method
+  /// Returns a vector with the mean values of given columns.
+  /// The size of the vector is equal to the size of the column indices vector.
+  /// @param column_indices Indices of columns.
 
-/// Returns a vector with the mean values of given columns. 
-/// The size of the vector is equal to the size of the column indices vector. 
-/// @param column_indices Indices of columns.  
+  Vector<double> calculate_mean(const Vector<unsigned>& column_indices) const {
+    const unsigned column_indices_size = column_indices.size();
 
-Vector<double> calculate_mean(const Vector<unsigned>& column_indices) const
-{
-   const unsigned column_indices_size = column_indices.size();
+    unsigned column_index;
 
-   unsigned column_index;
+    // Mean
 
-   // Mean 
+    Vector<double> mean(column_indices_size, 0.0);
 
-   Vector<double> mean(column_indices_size, 0.0);
-
-   for(unsigned j = 0; j < column_indices_size; j++)
-   {
+    for (unsigned j = 0; j < column_indices_size; j++) {
       column_index = column_indices[j];
 
-      for(unsigned i = 0; i < rows_number; i++)
-      {
-         mean[j] += data[i][column_index];
+      for (unsigned i = 0; i < rows_number; i++) {
+        mean[j] += data[i][column_index];
       }
 
       mean[j] /= (double)rows_number;
-   }
+    }
 
-   return(mean);
-}
+    return (mean);
+  }
 
+  // Vector<double> calculate_mean(const Vector<unsigned>&, const
+  // Vector<unsigned>&) const method
 
-// Vector<double> calculate_mean(const Vector<unsigned>&, const Vector<unsigned>&) const method
+  /// Returns a vector with the mean values of given columns for given rows.
+  /// The size of the vector is equal to the size of the column indices vector.
+  /// @param row_indices Indices of rows.
+  /// @param column_indices Indices of columns.
 
-/// Returns a vector with the mean values of given columns for given rows. 
-/// The size of the vector is equal to the size of the column indices vector. 
-/// @param row_indices Indices of rows.  
-/// @param column_indices Indices of columns.  
+  Vector<double> calculate_mean(const Vector<unsigned>& row_indices,
+                                const Vector<unsigned>& column_indices) const {
+    const unsigned row_indices_size = row_indices.size();
+    const unsigned column_indices_size = column_indices.size();
 
-Vector<double> calculate_mean(const Vector<unsigned>& row_indices, const Vector<unsigned>& column_indices) const
-{
-   const unsigned row_indices_size = row_indices.size();
-   const unsigned column_indices_size = column_indices.size();
+// Control sentence (if debug)
 
-   // Control sentence (if debug)
+#ifndef NDEBUG
 
-   #ifndef NDEBUG 
+    // Rows check
 
-   // Rows check
-
-   if(row_indices_size > rows_number)
-   {
+    if (row_indices_size > rows_number) {
       std::ostringstream buffer;
 
-	  buffer << "OpenNN Exception: Matrix template.\n"
-             << "Vector<double> calculate_mean(const Vector<unsigned>&, const Vector<unsigned>&) const method.\n" 
-             << "Size of row indices (" << row_indices_size << ") is greater than number of rows (" << rows_number << ").\n";
+      buffer << "OpenNN Exception: Matrix template.\n"
+             << "Vector<double> calculate_mean(const Vector<unsigned>&, const "
+                "Vector<unsigned>&) const method.\n"
+             << "Size of row indices (" << row_indices_size
+             << ") is greater than number of rows (" << rows_number << ").\n";
 
       throw std::logic_error(buffer.str());
-   }
+    }
 
-   for(unsigned i = 0; i < row_indices_size; i++)
-   {
-      if(row_indices[i] >= rows_number)
-	  {
-         std::ostringstream buffer;
+    for (unsigned i = 0; i < row_indices_size; i++) {
+      if (row_indices[i] >= rows_number) {
+        std::ostringstream buffer;
 
-   	     buffer << "OpenNN Exception: Matrix template.\n"
-                << "Vector<double> calculate_mean(const Vector<unsigned>&, const Vector<unsigned>&) const method.\n" 
-                << "Row index " << i << " must be less than rows number.\n";
+        buffer << "OpenNN Exception: Matrix template.\n"
+               << "Vector<double> calculate_mean(const Vector<unsigned>&, "
+                  "const Vector<unsigned>&) const method.\n"
+               << "Row index " << i << " must be less than rows number.\n";
 
-         throw std::logic_error(buffer.str());
-	  }  
-   }
+        throw std::logic_error(buffer.str());
+      }
+    }
 
-   if(row_indices_size == 0)
-   {
+    if (row_indices_size == 0) {
       std::ostringstream buffer;
 
-	  buffer << "OpenNN Exception: Matrix template.\n"
-             << "Vector<double> calculate_mean(const Vector<unsigned>&, const Vector<unsigned>&) const method.\n" 
+      buffer << "OpenNN Exception: Matrix template.\n"
+             << "Vector<double> calculate_mean(const Vector<unsigned>&, const "
+                "Vector<unsigned>&) const method.\n"
              << "Size of row indices must be greater than zero.\n";
 
       throw std::logic_error(buffer.str());
-   }
+    }
 
-   // Columns check
+    // Columns check
 
-   if(column_indices_size > columns_number)
-   {
+    if (column_indices_size > columns_number) {
       std::ostringstream buffer;
 
-	  buffer << "OpenNN Exception: Matrix template.\n"
-             << "Vector<double> calculate_mean(const Vector<unsigned>&, const Vector<unsigned>&) const method.\n" 
-             << "Column indices size must be equal or less than columns number.\n";
+      buffer
+          << "OpenNN Exception: Matrix template.\n"
+          << "Vector<double> calculate_mean(const Vector<unsigned>&, const "
+             "Vector<unsigned>&) const method.\n"
+          << "Column indices size must be equal or less than columns number.\n";
 
       throw std::logic_error(buffer.str());
-   }
+    }
 
-   for(unsigned i = 0; i < column_indices_size; i++)
-   {
-      if(column_indices[i] >= columns_number)
-	  {
-         std::ostringstream buffer;
+    for (unsigned i = 0; i < column_indices_size; i++) {
+      if (column_indices[i] >= columns_number) {
+        std::ostringstream buffer;
 
-   	     buffer << "OpenNN Exception: Matrix template.\n"
-                << "Vector<double> calculate_mean(const Vector<unsigned>&, const Vector<unsigned>&) const method.\n" 
-                << "Column index " << i << " must be less than columns number.\n";
+        buffer << "OpenNN Exception: Matrix template.\n"
+               << "Vector<double> calculate_mean(const Vector<unsigned>&, "
+                  "const Vector<unsigned>&) const method.\n"
+               << "Column index " << i
+               << " must be less than columns number.\n";
 
-         throw std::logic_error(buffer.str());
-	  }  
-   }
+        throw std::logic_error(buffer.str());
+      }
+    }
 
-   #endif
+#endif
 
-   unsigned row_index;
-   unsigned column_index;
+    unsigned row_index;
+    unsigned column_index;
 
-   // Mean 
+    // Mean
 
-   Vector<double> mean(column_indices_size, 0.0);
+    Vector<double> mean(column_indices_size, 0.0);
 
-   for(unsigned j = 0; j < column_indices_size; j++)
-   {
-	  column_index = column_indices[j];
-	   
-      for(unsigned i = 0; i < row_indices_size; i++)
-      {
-         row_index = row_indices[i];
+    for (unsigned j = 0; j < column_indices_size; j++) {
+      column_index = column_indices[j];
 
-         mean[j] += data[row_index][column_index];
+      for (unsigned i = 0; i < row_indices_size; i++) {
+        row_index = row_indices[i];
+
+        mean[j] += data[row_index][column_index];
       }
 
       mean[j] /= (double)rows_number;
-   }
+    }
 
-   return(mean);
-}
+    return (mean);
+  }
 
+  // Vector<double> calculate_mean_standard_deviation(void) const method
 
-// Vector<double> calculate_mean_standard_deviation(void) const method
+  /// Returns a vector of vectors with the mean and standard deviation values of
+  /// all the matrix columns.
+  /// The size of the vector is two.
+  /// The size of each element is equal to the number of columns in the matrix.
 
-/// Returns a vector of vectors with the mean and standard deviation values of all the matrix columns. 
-/// The size of the vector is two.
-/// The size of each element is equal to the number of columns in the matrix. 
+  Vector<Vector<double> > calculate_mean_standard_deviation(void) const {
+// Control sentence (if debug)
 
-Vector< Vector<double> > calculate_mean_standard_deviation(void) const
-{
-   // Control sentence (if debug)
+#ifndef NDEBUG
 
-   #ifndef NDEBUG 
-
-   if(rows_number == 0)
-   {
+    if (rows_number == 0) {
       std::ostringstream buffer;
 
       buffer << "OpenNN Exception: Matrix template.\n"
-             << "Vector<double> calculate_mean_standard_deviation(void) const method.\n" 
+             << "Vector<double> calculate_mean_standard_deviation(void) const "
+                "method.\n"
              << "Number of rows must be greater than one.\n";
 
       throw std::logic_error(buffer.str());
-   }
+    }
 
-   #endif
+#endif
 
-   // Mean 
+    // Mean
 
-   Vector<double> mean(columns_number, 0.0);
-   Vector<double> standard_deviation(columns_number, 0.0);
+    Vector<double> mean(columns_number, 0.0);
+    Vector<double> standard_deviation(columns_number, 0.0);
 
-   for(unsigned i = 0; i < columns_number; i++)
-   {
+    for (unsigned i = 0; i < columns_number; i++) {
       mean[i] = this->arrange_column(i).calculate_mean();
-      standard_deviation[i] = this->arrange_column(i).calculate_standard_deviation();
+      standard_deviation[i] =
+          this->arrange_column(i).calculate_standard_deviation();
+    }
 
-   }
+    // Mean and standard deviation of data
 
-   // Mean and standard deviation of data
+    Vector<Vector<double> > mean_standard_deviation(2);
 
-   Vector< Vector<double> > mean_standard_deviation(2);
+    mean_standard_deviation[0] = mean;
+    mean_standard_deviation[1] = standard_deviation;
 
-   mean_standard_deviation[0] = mean;
-   mean_standard_deviation[1] = standard_deviation;
+    return (mean_standard_deviation);
+  }
 
-   return(mean_standard_deviation);
-}
+  // Vector<double> calculate_mean_standard_deviation(const Vector<unsigned>&)
+  // const method
 
+  /// Returns a vector of vectors with the mean and standard deviation values of
+  /// given columns.
+  /// The size of the vector is two.
+  /// The size of each element is equal to the size of the column indices
+  /// vector.
+  /// @param column_indices Indices of columns.
 
-// Vector<double> calculate_mean_standard_deviation(const Vector<unsigned>&) const method
+  Vector<Vector<double> > calculate_mean_standard_deviation(
+      const Vector<unsigned>& column_indices) const {
+    const unsigned column_indices_size = column_indices.size();
 
-/// Returns a vector of vectors with the mean and standard deviation values of given columns. 
-/// The size of the vector is two.
-/// The size of each element is equal to the size of the column indices vector. 
-/// @param column_indices Indices of columns.  
+    Vector<double> mean(column_indices_size);
+    Vector<double> standard_deviation(column_indices_size);
 
-Vector< Vector<double> > calculate_mean_standard_deviation(const Vector<unsigned>& column_indices) const
-{
-   const unsigned column_indices_size = column_indices.size();
+    unsigned column_index;
 
-   Vector<double> mean(column_indices_size);
-   Vector<double> standard_deviation(column_indices_size);
+    Vector<double> column(rows_number);
 
-   unsigned column_index;
-
-   Vector<double> column(rows_number);
-
-   for(unsigned i = 0; i < column_indices_size; i++)
-   {
+    for (unsigned i = 0; i < column_indices_size; i++) {
       column_index = column_indices[i];
 
       column = this->arrange_column(column_index);
 
       mean[i] = column.calculate_mean();
       standard_deviation[i] = column.calculate_standard_deviation();
-   }
+    }
 
-   // Mean and standard deviation
+    // Mean and standard deviation
 
-   Vector< Vector<double> > mean_standard_deviation(2);
+    Vector<Vector<double> > mean_standard_deviation(2);
 
-   mean_standard_deviation[0] = mean;
-   mean_standard_deviation[1] = standard_deviation;
+    mean_standard_deviation[0] = mean;
+    mean_standard_deviation[1] = standard_deviation;
 
-   return(mean_standard_deviation);
-}
+    return (mean_standard_deviation);
+  }
 
+  // Vector<double> calculate_mean_standard_deviation(const Vector<unsigned>&,
+  // const Vector<unsigned>&) const method
 
-// Vector<double> calculate_mean_standard_deviation(const Vector<unsigned>&, const Vector<unsigned>&) const method
+  /// Returns a vector of vectors with the mean and standard deviation values of
+  /// given columns for given rows.
+  /// The size of the vector is two.
+  /// The size of each element is equal to the size of the column indices
+  /// vector.
+  /// @param row_indices Indices of rows.
+  /// @param column_indices Indices of columns.
 
-/// Returns a vector of vectors with the mean and standard deviation values of given columns for given rows. 
-/// The size of the vector is two.
-/// The size of each element is equal to the size of the column indices vector. 
-/// @param row_indices Indices of rows.  
-/// @param column_indices Indices of columns.  
-
-Vector< Vector<double> > calculate_mean_standard_deviation(const Vector<unsigned>& row_indices, const Vector<unsigned>& column_indices) const
-{
-   const unsigned row_indices_size = row_indices.size();
-   const unsigned column_indices_size = column_indices.size();
-
-   // Control sentence (if debug)
-
-   #ifndef NDEBUG 
-
-   // Rows check
-
-   if(row_indices_size > rows_number)
-   {
-      std::ostringstream buffer;
-
-	  buffer << "OpenNN Exception: Matrix template.\n"
-             << "Vector<double> calculate_mean_standard_deviation(const Vector<unsigned>&, const Vector<unsigned>&) const method.\n" 
-             << "Row indices size must be equal or less than rows number.\n";
-
-      throw std::logic_error(buffer.str());
-   }
-
-   for(unsigned i = 0; i < row_indices_size; i++)
-   {
-      if(row_indices[i] >= rows_number)
-	  {
-         std::ostringstream buffer;
-
-   	     buffer << "OpenNN Exception: Matrix template.\n"
-                << "Vector<double> calculate_mean_standard_deviation(const Vector<unsigned>&, const Vector<unsigned>&) const method.\n" 
-                << "Row index " << i << " must be less than rows number.\n";
-
-         throw std::logic_error(buffer.str());
-	  }  
-   }
-
-   if(row_indices_size == 0)
-   {
-      std::ostringstream buffer;
-
-	  buffer << "OpenNN Exception: Matrix template.\n"
-             << "Vector<double> calculate_mean_standard_deviation(const Vector<unsigned>&, const Vector<unsigned>&) const method.\n" 
-             << "Size of row indices must be greater than zero.\n";
-
-      throw std::logic_error(buffer.str());
-   }
-
-   // Columns check
-
-   if(column_indices_size > columns_number)
-   {
-      std::ostringstream buffer;
-
-	  buffer << "OpenNN Exception: Matrix template.\n"
-             << "Vector<double> calculate_mean_standard_deviation(const Vector<unsigned>&, const Vector<unsigned>&) const method.\n" 
-             << "Column indices size must be equal or less than columns number.\n";
-
-      throw std::logic_error(buffer.str());
-   }
-
-   for(unsigned i = 0; i < column_indices_size; i++)
-   {
-      if(column_indices[i] >= columns_number)
-	  {
-         std::ostringstream buffer;
-
-   	     buffer << "OpenNN Exception: Matrix template.\n"
-                << "Vector<double> calculate_mean_standard_deviation(const Vector<unsigned>&, const Vector<unsigned>&) const method.\n" 
-                << "Column index " << i << " must be less than columns number.\n";
-
-         throw std::logic_error(buffer.str());
-	  }  
-   }
-
-   #endif
-
-   unsigned row_index;
-   unsigned column_index;
-
-   // Mean 
-
-   Vector<double> mean(column_indices_size, 0.0);
-
-   for(unsigned j = 0; j < column_indices_size; j++)
-   {
-	  column_index = column_indices[j];
-	   
-	  mean[j] = 0.0;    
-
-      for(unsigned i = 0; i < row_indices_size; i++)
-      {
-         row_index = row_indices[i];
-
-         mean[j] += data[row_index][column_index];
-      }
-
-      mean[j] /= (double)rows_number;
-   }
-
-   // Standard deviation
-
-   Vector<double> standard_deviation(column_indices_size, 0.0);
-
-   for(unsigned j = 0; j < column_indices_size; j++)
-   {
-	  column_index = column_indices[j];
-   
-      standard_deviation[j] = 0.0;
-
-      for(unsigned i = 0; i < row_indices_size; i++)
-      {
-         row_index = row_indices[i];
-
-         standard_deviation[j] += (data[row_index][column_index] - mean[j])*(data[row_index][column_index] - mean[j]);
-      }
-
-      standard_deviation[j] = sqrt(standard_deviation[j]/(rows_number-1.0));
-   }
-
-   // Mean and standard deviation
-
-   Vector< Vector<double> > mean_standard_deviation(2);
-
-   mean_standard_deviation[0] = mean;
-   mean_standard_deviation[1] = standard_deviation;
-
-   return(mean_standard_deviation);
-}
-
-
-// Type calculate_minimum(void) const method
-
-/// Returns the minimum value from all elements in the matrix.
-
-Type calculate_minimum(void) const
-{
-   Type minimum = 1.0e99;
-
-   for(unsigned i = 0; i < rows_number; i++)
-   {
-      for(unsigned j = 0; j < columns_number; j++)
-      {
-         if(data[i][j] < minimum)
-         {
-            minimum = data[i][j];
-         }
-      }
-   }
-
-   return(minimum);
-}
-
-
-// Type calculate_maximum(void) const method
-
-/// Returns the maximum value from all elements in the matrix.
-
-Type calculate_maximum(void) const
-{
-   Type maximum = -1.0e99;
-
-   for(unsigned i = 0; i < rows_number; i++)
-   {
-      for(unsigned j = 0; j < columns_number; j++)
-      {
-         if(data[i][j] > maximum)
-         {
-            maximum = data[i][j];
-         }
-      }
-   }
-
-   return(maximum);
-}
-
-
-// Vector< Vector<Type> > calculate_minimum_maximum(void) const method
-
-/// Returns a vector of vectors with the minimum and maximum values of all the matrix columns. 
-/// The size of the vector is two.
-/// The size of each element is equal to the number of columns in the matrix. 
-
-Vector< Vector<Type> > calculate_minimum_maximum(void) const
-{
-   Vector< Vector<Type> > minimum_maximum(2);
-
-   Vector<Type> minimum(columns_number,  1.0e99);
-   Vector<Type> maximum(columns_number, -1.0e99);
-
-   for(unsigned j = 0; j < columns_number; j++)
-   {
-      for(unsigned i = 0; i < rows_number; i++)
-      {    
-         if(data[i][j] < minimum[j])
-         {
-            minimum[j] = data[i][j];
-         }
-
-         if(data[i][j] > maximum[j])
-         {
-            maximum[j] = data[i][j];
-         }
-      }
-   }
-
-   // Minimum and maximum
-
-   minimum_maximum[0] = minimum;
-   minimum_maximum[1] = maximum;
-
-   return(minimum_maximum);
-}
-
-
-// Vector<double> calculate_minimum_maximum(const Vector<unsigned>&) const method
-
-/// Returns a vector of vectors with the minimum and maximum values of given columns. 
-/// The size of the vector is two.
-/// The size of each element is equal to the size of the column indices vector. 
-/// @param column_indices Indices of columns.  
-
-Vector< Vector<Type> > calculate_minimum_maximum(const Vector<unsigned>& column_indices) const
-{
-   const unsigned column_indices_size = column_indices.size();
-
-   #ifndef NDEBUG 
-
-   for(unsigned i = 0; i < column_indices_size; i++)
-   {      
-      if(column_indices[i] >= columns_number)
-      {
-         std::ostringstream buffer;
-
-         buffer << "OpenNN Exception: Matrix template." 
-                << "Vector<Type> calculate_minimum_maximum(const Vector<unsigned>&) const method.\n" 
-                << "Index of column must be less than number of columns.\n";
-
-         throw std::logic_error(buffer.str());
-      }
-   }   
-
-   #endif
-
-   unsigned column_index;
-
-   Vector<Type> minimum(column_indices_size,  1.0e99);
-   Vector<Type> maximum(column_indices_size, -1.0e99);
-
-   for(unsigned j = 0; j < column_indices_size; j++)
-   {
-      column_index = column_indices[j];
-
-      for(unsigned i = 0; i < rows_number; i++)
-      {    
-         if(data[i][column_index] < minimum[j])
-         {
-            minimum[j] = data[i][column_index];
-         }
-
-         if(data[i][column_index] > maximum[j])
-         {
-            maximum[j] = data[i][column_index];
-         }
-      }
-   }
-
-   // Minimum and maximum
-
-   Vector< Vector<Type> > minimum_maximum(2);
-
-   minimum_maximum[0] = minimum;
-   minimum_maximum[1] = maximum;
-
-   return(minimum_maximum);
-}
-
-
-// Vector<double> calculate_minimum_maximum(const Vector<unsigned>&, const Vector<unsigned>&) const method
-
-/// Returns a vector of vectors with the minimum and maximum values of given columns for given rows. 
-/// The size of the vector is two.
-/// The size of each element is equal to the size of the column indices vector. 
-/// @param row_indices Indices of rows.  
-/// @param column_indices Indices of columns.  
-
-Vector< Vector<Type> > calculate_minimum_maximum(const Vector<unsigned>& row_indices, const Vector<unsigned>& column_indices) const
-{
-   const unsigned row_indices_size = row_indices.size();
-   const unsigned column_indices_size = column_indices.size();
-
-   Vector<Type> minimum(column_indices_size,  1.0e99);
-   Vector<Type> maximum(column_indices_size, -1.0e99);
-
-   unsigned row_index;
-   unsigned column_index;
-
-   for(unsigned j = 0; j < column_indices_size; j++)
-   {
-      column_index = column_indices[j];
-
-      for(unsigned i = 0; i < row_indices_size; i++)
-      {    
-         row_index = row_indices[i];
-
-         if(data[row_index][column_index] < minimum[j])
-         {
-            minimum[j] = data[row_index][column_index];
-         }
-
-         if(data[row_index][column_index] > maximum[j])
-         {
-            maximum[j] = data[row_index][column_index];
-         }
-      }
-   }
-
-   // Minimum and maximum
-
-   Vector< Vector<Type> > minimum_maximum(2);
-
-   minimum_maximum[0] = minimum;
-   minimum_maximum[1] = maximum;
-
-   return(minimum_maximum);
-}
-
-
-// Vector< Statistics<Type> > calculate_statistics(void) const method
-
-/// Returns the basic statistics of the columns. 
-/// The format is a vector of statistics structures.
-/// The size of that vector is equal to the number of columns in this matrix.
-
-Vector< Statistics<Type> > calculate_statistics(void) const
-{
-   // Control sentence (if debug)
-
-   #ifndef NDEBUG 
-
-   if(rows_number == 0)
-   {
-      std::ostringstream buffer;
-
-      buffer << "OpenNN Exception: Matrix template.\n"
-             << "Vector< Statistics<double> > calculate_statistics(void) const method.\n"
-             << "Number of rows must be greater than one.\n";
-
-      throw std::logic_error(buffer.str());
-   }
-
-   #endif
-
-   Vector< Statistics<Type> > statistics(columns_number);
-
-   Vector<Type> column(rows_number);
-
-   for(unsigned i = 0; i < columns_number; i++)
-   {
-      column = arrange_column(i);
-
-      statistics[i] = column.calculate_statistics();
-   }
-
-   return(statistics);
-}
-
-
-// Vector< Statistics<Type> > calculate_statistics(const Vector<unsigned>&, const Vector<unsigned>&) const method
-
-/// Returns the basic statistics of given columns for given rows.
-/// The format is a vector of statistics structures.
-/// The size of that vector is equal to the number of given columns.
-/// @param row_indices Indices of the rows for which the statistics are to be computed.
-/// @param column_indices Indices of the columns for which the statistics are to be computed.
-
-Vector< Statistics<Type> > calculate_statistics(const Vector<unsigned>& row_indices, const Vector<unsigned>& column_indices) const
-{
+  Vector<Vector<double> > calculate_mean_standard_deviation(
+      const Vector<unsigned>& row_indices,
+      const Vector<unsigned>& column_indices) const {
     const unsigned row_indices_size = row_indices.size();
     const unsigned column_indices_size = column_indices.size();
 
-    Vector< Statistics<Type> > statistics(column_indices_size);
+// Control sentence (if debug)
+
+#ifndef NDEBUG
+
+    // Rows check
+
+    if (row_indices_size > rows_number) {
+      std::ostringstream buffer;
+
+      buffer << "OpenNN Exception: Matrix template.\n"
+             << "Vector<double> calculate_mean_standard_deviation(const "
+                "Vector<unsigned>&, const Vector<unsigned>&) const method.\n"
+             << "Row indices size must be equal or less than rows number.\n";
+
+      throw std::logic_error(buffer.str());
+    }
+
+    for (unsigned i = 0; i < row_indices_size; i++) {
+      if (row_indices[i] >= rows_number) {
+        std::ostringstream buffer;
+
+        buffer << "OpenNN Exception: Matrix template.\n"
+               << "Vector<double> calculate_mean_standard_deviation(const "
+                  "Vector<unsigned>&, const Vector<unsigned>&) const method.\n"
+               << "Row index " << i << " must be less than rows number.\n";
+
+        throw std::logic_error(buffer.str());
+      }
+    }
+
+    if (row_indices_size == 0) {
+      std::ostringstream buffer;
+
+      buffer << "OpenNN Exception: Matrix template.\n"
+             << "Vector<double> calculate_mean_standard_deviation(const "
+                "Vector<unsigned>&, const Vector<unsigned>&) const method.\n"
+             << "Size of row indices must be greater than zero.\n";
+
+      throw std::logic_error(buffer.str());
+    }
+
+    // Columns check
+
+    if (column_indices_size > columns_number) {
+      std::ostringstream buffer;
+
+      buffer
+          << "OpenNN Exception: Matrix template.\n"
+          << "Vector<double> calculate_mean_standard_deviation(const "
+             "Vector<unsigned>&, const Vector<unsigned>&) const method.\n"
+          << "Column indices size must be equal or less than columns number.\n";
+
+      throw std::logic_error(buffer.str());
+    }
+
+    for (unsigned i = 0; i < column_indices_size; i++) {
+      if (column_indices[i] >= columns_number) {
+        std::ostringstream buffer;
+
+        buffer << "OpenNN Exception: Matrix template.\n"
+               << "Vector<double> calculate_mean_standard_deviation(const "
+                  "Vector<unsigned>&, const Vector<unsigned>&) const method.\n"
+               << "Column index " << i
+               << " must be less than columns number.\n";
+
+        throw std::logic_error(buffer.str());
+      }
+    }
+
+#endif
+
+    unsigned row_index;
+    unsigned column_index;
+
+    // Mean
+
+    Vector<double> mean(column_indices_size, 0.0);
+
+    for (unsigned j = 0; j < column_indices_size; j++) {
+      column_index = column_indices[j];
+
+      mean[j] = 0.0;
+
+      for (unsigned i = 0; i < row_indices_size; i++) {
+        row_index = row_indices[i];
+
+        mean[j] += data[row_index][column_index];
+      }
+
+      mean[j] /= (double)rows_number;
+    }
+
+    // Standard deviation
+
+    Vector<double> standard_deviation(column_indices_size, 0.0);
+
+    for (unsigned j = 0; j < column_indices_size; j++) {
+      column_index = column_indices[j];
+
+      standard_deviation[j] = 0.0;
+
+      for (unsigned i = 0; i < row_indices_size; i++) {
+        row_index = row_indices[i];
+
+        standard_deviation[j] += (data[row_index][column_index] - mean[j]) *
+                                 (data[row_index][column_index] - mean[j]);
+      }
+
+      standard_deviation[j] = sqrt(standard_deviation[j] / (rows_number - 1.0));
+    }
+
+    // Mean and standard deviation
+
+    Vector<Vector<double> > mean_standard_deviation(2);
+
+    mean_standard_deviation[0] = mean;
+    mean_standard_deviation[1] = standard_deviation;
+
+    return (mean_standard_deviation);
+  }
+
+  // Type calculate_minimum(void) const method
+
+  /// Returns the minimum value from all elements in the matrix.
+
+  Type calculate_minimum(void) const {
+    Type minimum = 1.0e99;
+
+    for (unsigned i = 0; i < rows_number; i++) {
+      for (unsigned j = 0; j < columns_number; j++) {
+        if (data[i][j] < minimum) {
+          minimum = data[i][j];
+        }
+      }
+    }
+
+    return (minimum);
+  }
+
+  // Type calculate_maximum(void) const method
+
+  /// Returns the maximum value from all elements in the matrix.
+
+  Type calculate_maximum(void) const {
+    Type maximum = -1.0e99;
+
+    for (unsigned i = 0; i < rows_number; i++) {
+      for (unsigned j = 0; j < columns_number; j++) {
+        if (data[i][j] > maximum) {
+          maximum = data[i][j];
+        }
+      }
+    }
+
+    return (maximum);
+  }
+
+  // Vector< Vector<Type> > calculate_minimum_maximum(void) const method
+
+  /// Returns a vector of vectors with the minimum and maximum values of all the
+  /// matrix columns.
+  /// The size of the vector is two.
+  /// The size of each element is equal to the number of columns in the matrix.
+
+  Vector<Vector<Type> > calculate_minimum_maximum(void) const {
+    Vector<Vector<Type> > minimum_maximum(2);
+
+    Vector<Type> minimum(columns_number, 1.0e99);
+    Vector<Type> maximum(columns_number, -1.0e99);
+
+    for (unsigned j = 0; j < columns_number; j++) {
+      for (unsigned i = 0; i < rows_number; i++) {
+        if (data[i][j] < minimum[j]) {
+          minimum[j] = data[i][j];
+        }
+
+        if (data[i][j] > maximum[j]) {
+          maximum[j] = data[i][j];
+        }
+      }
+    }
+
+    // Minimum and maximum
+
+    minimum_maximum[0] = minimum;
+    minimum_maximum[1] = maximum;
+
+    return (minimum_maximum);
+  }
+
+  // Vector<double> calculate_minimum_maximum(const Vector<unsigned>&) const
+  // method
+
+  /// Returns a vector of vectors with the minimum and maximum values of given
+  /// columns.
+  /// The size of the vector is two.
+  /// The size of each element is equal to the size of the column indices
+  /// vector.
+  /// @param column_indices Indices of columns.
+
+  Vector<Vector<Type> > calculate_minimum_maximum(
+      const Vector<unsigned>& column_indices) const {
+    const unsigned column_indices_size = column_indices.size();
+
+#ifndef NDEBUG
+
+    for (unsigned i = 0; i < column_indices_size; i++) {
+      if (column_indices[i] >= columns_number) {
+        std::ostringstream buffer;
+
+        buffer << "OpenNN Exception: Matrix template."
+               << "Vector<Type> calculate_minimum_maximum(const "
+                  "Vector<unsigned>&) const method.\n"
+               << "Index of column must be less than number of columns.\n";
+
+        throw std::logic_error(buffer.str());
+      }
+    }
+
+#endif
+
+    unsigned column_index;
+
+    Vector<Type> minimum(column_indices_size, 1.0e99);
+    Vector<Type> maximum(column_indices_size, -1.0e99);
+
+    for (unsigned j = 0; j < column_indices_size; j++) {
+      column_index = column_indices[j];
+
+      for (unsigned i = 0; i < rows_number; i++) {
+        if (data[i][column_index] < minimum[j]) {
+          minimum[j] = data[i][column_index];
+        }
+
+        if (data[i][column_index] > maximum[j]) {
+          maximum[j] = data[i][column_index];
+        }
+      }
+    }
+
+    // Minimum and maximum
+
+    Vector<Vector<Type> > minimum_maximum(2);
+
+    minimum_maximum[0] = minimum;
+    minimum_maximum[1] = maximum;
+
+    return (minimum_maximum);
+  }
+
+  // Vector<double> calculate_minimum_maximum(const Vector<unsigned>&, const
+  // Vector<unsigned>&) const method
+
+  /// Returns a vector of vectors with the minimum and maximum values of given
+  /// columns for given rows.
+  /// The size of the vector is two.
+  /// The size of each element is equal to the size of the column indices
+  /// vector.
+  /// @param row_indices Indices of rows.
+  /// @param column_indices Indices of columns.
+
+  Vector<Vector<Type> > calculate_minimum_maximum(
+      const Vector<unsigned>& row_indices,
+      const Vector<unsigned>& column_indices) const {
+    const unsigned row_indices_size = row_indices.size();
+    const unsigned column_indices_size = column_indices.size();
+
+    Vector<Type> minimum(column_indices_size, 1.0e99);
+    Vector<Type> maximum(column_indices_size, -1.0e99);
+
+    unsigned row_index;
+    unsigned column_index;
+
+    for (unsigned j = 0; j < column_indices_size; j++) {
+      column_index = column_indices[j];
+
+      for (unsigned i = 0; i < row_indices_size; i++) {
+        row_index = row_indices[i];
+
+        if (data[row_index][column_index] < minimum[j]) {
+          minimum[j] = data[row_index][column_index];
+        }
+
+        if (data[row_index][column_index] > maximum[j]) {
+          maximum[j] = data[row_index][column_index];
+        }
+      }
+    }
+
+    // Minimum and maximum
+
+    Vector<Vector<Type> > minimum_maximum(2);
+
+    minimum_maximum[0] = minimum;
+    minimum_maximum[1] = maximum;
+
+    return (minimum_maximum);
+  }
+
+  // Vector< Statistics<Type> > calculate_statistics(void) const method
+
+  /// Returns the basic statistics of the columns.
+  /// The format is a vector of statistics structures.
+  /// The size of that vector is equal to the number of columns in this matrix.
+
+  Vector<Statistics<Type> > calculate_statistics(void) const {
+// Control sentence (if debug)
+
+#ifndef NDEBUG
+
+    if (rows_number == 0) {
+      std::ostringstream buffer;
+
+      buffer << "OpenNN Exception: Matrix template.\n"
+             << "Vector< Statistics<double> > calculate_statistics(void) const "
+                "method.\n"
+             << "Number of rows must be greater than one.\n";
+
+      throw std::logic_error(buffer.str());
+    }
+
+#endif
+
+    Vector<Statistics<Type> > statistics(columns_number);
+
+    Vector<Type> column(rows_number);
+
+    for (unsigned i = 0; i < columns_number; i++) {
+      column = arrange_column(i);
+
+      statistics[i] = column.calculate_statistics();
+    }
+
+    return (statistics);
+  }
+
+  // Vector< Statistics<Type> > calculate_statistics(const Vector<unsigned>&,
+  // const Vector<unsigned>&) const method
+
+  /// Returns the basic statistics of given columns for given rows.
+  /// The format is a vector of statistics structures.
+  /// The size of that vector is equal to the number of given columns.
+  /// @param row_indices Indices of the rows for which the statistics are to be
+  /// computed.
+  /// @param column_indices Indices of the columns for which the statistics are
+  /// to be computed.
+
+  Vector<Statistics<Type> > calculate_statistics(
+      const Vector<unsigned>& row_indices,
+      const Vector<unsigned>& column_indices) const {
+    const unsigned row_indices_size = row_indices.size();
+    const unsigned column_indices_size = column_indices.size();
+
+    Vector<Statistics<Type> > statistics(column_indices_size);
 
     unsigned index;
 
     Vector<Type> column(row_indices_size);
 
-    for(unsigned i = 0; i < column_indices_size; i++)
-    {
-        index = column_indices[i];
+    for (unsigned i = 0; i < column_indices_size; i++) {
+      index = column_indices[i];
 
-        column = arrange_column(index, row_indices);
+      column = arrange_column(index, row_indices);
 
-        statistics[i] = column.calculate_statistics();
+      statistics[i] = column.calculate_statistics();
     }
 
     return statistics;
-}
+  }
 
+  // Vector< Statistics<Type> > calculate_rows_statistics(const
+  // Vector<unsigned>&) const method
 
-// Vector< Statistics<Type> > calculate_rows_statistics(const Vector<unsigned>&) const method
+  /// Returns the basic statistics of all the columns for given rows.
+  /// The format is a vector of statistics structures.
+  /// The size of that vector is equal to the number of columns in this matrix.
+  /// @param row_indices Indices of the rows for which the statistics are to be
+  /// computed.
 
-/// Returns the basic statistics of all the columns for given rows.
-/// The format is a vector of statistics structures.
-/// The size of that vector is equal to the number of columns in this matrix.
-/// @param row_indices Indices of the rows for which the statistics are to be computed.
-
-Vector< Statistics<Type> > calculate_rows_statistics(const Vector<unsigned>& row_indices) const
-{
+  Vector<Statistics<Type> > calculate_rows_statistics(
+      const Vector<unsigned>& row_indices) const {
     const unsigned row_indices_size = row_indices.size();
 
-    Vector< Statistics<Type> > statistics(columns_number);
+    Vector<Statistics<Type> > statistics(columns_number);
 
     Vector<Type> column(row_indices_size);
 
-    for(unsigned i = 0; i < columns_number; i++)
-    {
-        column = arrange_column(i, row_indices);
+    for (unsigned i = 0; i < columns_number; i++) {
+      column = arrange_column(i, row_indices);
 
-        statistics[i] = column.calculate_statistics();
+      statistics[i] = column.calculate_statistics();
     }
 
     return statistics;
-}
+  }
 
+  // Vector< Statistics<Type> > calculate_columns_statistics(const
+  // Vector<unsigned>&) const method
 
-// Vector< Statistics<Type> > calculate_columns_statistics(const Vector<unsigned>&) const method
+  /// Returns the basic statistics of given columns.
+  /// The format is a vector of statistics structures.
+  /// The size of that vector is equal to the number of given columns.
+  /// @param column_indices Indices of the columns for which the statistics are
+  /// to be computed.
 
-/// Returns the basic statistics of given columns.
-/// The format is a vector of statistics structures.
-/// The size of that vector is equal to the number of given columns.
-/// @param column_indices Indices of the columns for which the statistics are to be computed.
-
-Vector< Statistics<Type> > calculate_columns_statistics(const Vector<unsigned>& column_indices) const
-{
+  Vector<Statistics<Type> > calculate_columns_statistics(
+      const Vector<unsigned>& column_indices) const {
     const unsigned column_indices_size = column_indices.size();
 
-    Vector< Statistics<Type> > statistics(column_indices_size);
+    Vector<Statistics<Type> > statistics(column_indices_size);
 
     unsigned index;
     Vector<Type> column(rows_number);
 
-    for(unsigned i = 0; i < column_indices_size; i++)
-    {
-        index = column_indices[i];
+    for (unsigned i = 0; i < column_indices_size; i++) {
+      index = column_indices[i];
 
-        column = arrange_column(index);
+      column = arrange_column(index);
 
-        statistics[i] = column.calculate_statistics();
+      statistics[i] = column.calculate_statistics();
     }
 
     return statistics;
-}
+  }
 
+  // Vector<Histogram<Type> > calculate_histograms(const unsigned&) const method
 
-// Vector<Histogram<Type> > calculate_histograms(const unsigned&) const method
+  /// Calculates a histogram for each column, each having a given number of
+  /// bins.
+  /// It returns a vector of vectors of vectors.
+  /// The size of the main vector is the number of columns.
+  /// Each subvector contains the frequencies and centers of that colums.
+  /// @param bins_number Number of bins for each histogram.
 
-/// Calculates a histogram for each column, each having a given number of bins.
-/// It returns a vector of vectors of vectors.
-/// The size of the main vector is the number of columns. 
-/// Each subvector contains the frequencies and centers of that colums.
-/// @param bins_number Number of bins for each histogram.  
+  Vector<Histogram<Type> > calculate_histograms(const unsigned& bins_number =
+                                                    10) const {
+    Vector<Histogram<Type> > histograms(columns_number);
 
-Vector< Histogram<Type> > calculate_histograms(const unsigned& bins_number = 10) const
-{
-   Vector< Histogram<Type> > histograms(columns_number);
+    Vector<Type> column(rows_number);
 
-   Vector<Type> column(rows_number);
-
-   for(unsigned i = 0; i < columns_number; i++)
-   {
+    for (unsigned i = 0; i < columns_number; i++) {
       column = arrange_column(i);
 
       histograms[i] = column.calculate_histogram(bins_number);
-   }
+    }
 
-   return(histograms);
-}
+    return (histograms);
+  }
 
+  // void scale_mean_standard_deviation(const Vector< Statistics<Type> >&)
+  // method
 
-// void scale_mean_standard_deviation(const Vector< Statistics<Type> >&) method
+  /// Scales the matrix elements with the mean and standard deviation method.
+  /// It updates the data in the matrix.
+  /// @param statistics Vector of statistics structures conatining the mean and
+  /// standard deviation values for the scaling.
+  /// The size of that vector must be equal to the number of columns in this
+  /// matrix.
 
-/// Scales the matrix elements with the mean and standard deviation method.
-/// It updates the data in the matrix.
-/// @param statistics Vector of statistics structures conatining the mean and standard deviation values for the scaling.
-/// The size of that vector must be equal to the number of columns in this matrix.
+  void scale_mean_standard_deviation(
+      const Vector<Statistics<Type> >& statistics) {
+#ifndef NDEBUG
 
-void scale_mean_standard_deviation(const Vector< Statistics<Type> >& statistics)
-{
-   #ifndef NDEBUG 
+    const unsigned size = statistics.size();
 
-   const unsigned size = statistics.size();
-
-   if(size != columns_number)
-   {
+    if (size != columns_number) {
       std::ostringstream buffer;
 
-      buffer << "OpenNN Exception: Matrix template." 
-             << "void scale_mean_standard_deviation(const Vector< Statistics<Type> >&) const method.\n"
-             << "Size of statistics vector must be equal to number of columns.\n";
+      buffer
+          << "OpenNN Exception: Matrix template."
+          << "void scale_mean_standard_deviation(const Vector< "
+             "Statistics<Type> >&) const method.\n"
+          << "Size of statistics vector must be equal to number of columns.\n";
 
       throw std::logic_error(buffer.str());
-   }
+    }
 
-   #endif
+#endif
 
-   // Rescale data
+    // Rescale data
 
-   for(unsigned j = 0; j < columns_number; j++)
-   {
-      if(statistics[j].standard_deviation < 1e-99)
-      {
-         // Do nothing
+    for (unsigned j = 0; j < columns_number; j++) {
+      if (statistics[j].standard_deviation < 1e-99) {
+        // Do nothing
+      } else {
+        for (unsigned i = 0; i < rows_number; i++) {
+          data[i][j] = (data[i][j] - statistics[j].mean) /
+                       statistics[j].standard_deviation;
+        }
       }
-      else
-      {
-         for(unsigned i = 0; i < rows_number; i++)
-         {
-            data[i][j] = (data[i][j] - statistics[j].mean)/statistics[j].standard_deviation;
-         }
-      }
-   }
-}
+    }
+  }
 
+  // Vector< Statistics<Type> > scale_mean_standard_deviation(void) method
 
-// Vector< Statistics<Type> > scale_mean_standard_deviation(void) method
+  /// Scales the data using the mean and standard deviation method and
+  /// the mean and standard deviation values calculated from the matrix.
+  /// It also returns the statistics of all the columns.
 
-/// Scales the data using the mean and standard deviation method and
-/// the mean and standard deviation values calculated from the matrix.
-/// It also returns the statistics of all the columns.
-
-Vector< Statistics<Type> > scale_mean_standard_deviation(void)
-{
-    const Vector< Statistics<Type> > statistics = calculate_statistics();
+  Vector<Statistics<Type> > scale_mean_standard_deviation(void) {
+    const Vector<Statistics<Type> > statistics = calculate_statistics();
 
     scale_mean_standard_deviation(statistics);
 
-    return(statistics);
-}
+    return (statistics);
+  }
 
+  // void scale_rows_mean_standard_deviation(const Vector< Statistics<Type> >&,
+  // const Vector<unsigned>&) const
 
-// void scale_rows_mean_standard_deviation(const Vector< Statistics<Type> >&, const Vector<unsigned>&) const
+  /// Scales given rows from the matrix using the mean and standard deviation
+  /// method.
+  /// @param statistics Vector of statistics for all the columns.
+  /// @param row_indices Indices of rows to be scaled.
 
-/// Scales given rows from the matrix using the mean and standard deviation method.
-/// @param statistics Vector of statistics for all the columns.
-/// @param row_indices Indices of rows to be scaled.
+  void scale_rows_mean_standard_deviation(
+      const Vector<Statistics<Type> >& statistics,
+      const Vector<unsigned>& row_indices) const {
+// Control sentence (if debug)
 
-void scale_rows_mean_standard_deviation(const Vector< Statistics<Type> >& statistics, const Vector<unsigned>& row_indices) const
-{
-    // Control sentence (if debug)
-
-    #ifndef NDEBUG
+#ifndef NDEBUG
 
     const unsigned statistics_size = statistics.size();
 
-    if(statistics_size != columns_number)
-    {
-       std::ostringstream buffer;
+    if (statistics_size != columns_number) {
+      std::ostringstream buffer;
 
-       buffer << "OpenNN Exception: DataSet class.\n"
-              << "void scale_rows_mean_standard_deviation(const Vector< Statistics<Type> >&, const Vector<unsigned>&) method.\n"
-              << "Size of statistics must be equal to number of columns.\n";
+      buffer << "OpenNN Exception: DataSet class.\n"
+             << "void scale_rows_mean_standard_deviation(const Vector< "
+                "Statistics<Type> >&, const Vector<unsigned>&) method.\n"
+             << "Size of statistics must be equal to number of columns.\n";
 
-       throw std::logic_error(buffer.str());
+      throw std::logic_error(buffer.str());
     }
 
-    #endif
+#endif
 
     unsigned row_index;
 
     // Scale columns
 
-    for(unsigned j = 0; j < columns_number; j++)
-    {
-       if(statistics[j].standard_deviation < 1e-99)
-       {
-          // Do nothing
-       }
-       else
-       {
-          for(unsigned i = 0; i < row_indices.size(); i++)
-          {
-             row_index = row_indices[i];
+    for (unsigned j = 0; j < columns_number; j++) {
+      if (statistics[j].standard_deviation < 1e-99) {
+        // Do nothing
+      } else {
+        for (unsigned i = 0; i < row_indices.size(); i++) {
+          row_index = row_indices[i];
 
-             data[row_index][j] = (data[row_index][j] - statistics[j].mean)/statistics[j].standard_deviation;
-          }
-       }
+          data[row_index][j] = (data[row_index][j] - statistics[j].mean) /
+                               statistics[j].standard_deviation;
+        }
+      }
     }
-}
+  }
 
+  // void scale_columns_mean_standard_deviation(const Vector< Statistics<Type>
+  // >&, const Vector<unsigned>&) method
 
-// void scale_columns_mean_standard_deviation(const Vector< Statistics<Type> >&, const Vector<unsigned>&) method
+  /// Scales given columns of this matrix with the mean and standard deviation
+  /// method.
+  /// @param statistics Vector of statistics structure containing the mean and
+  /// standard deviation values for the scaling.
+  /// The size of that vector must be equal to the number of columns to be
+  /// scaled.
+  /// @param columns_indices Vector of indices with the columns to be scaled.
+  /// The size of that vector must be equal to the number of columns to be
+  /// scaled.
 
-/// Scales given columns of this matrix with the mean and standard deviation method.
-/// @param statistics Vector of statistics structure containing the mean and standard deviation values for the scaling.
-/// The size of that vector must be equal to the number of columns to be scaled.
-/// @param columns_indices Vector of indices with the columns to be scaled.
-/// The size of that vector must be equal to the number of columns to be scaled.
+  void scale_columns_mean_standard_deviation(
+      const Vector<Statistics<Type> >& statistics,
+      const Vector<unsigned>& columns_indices) {
+    const unsigned columns_indices_size = columns_indices.size();
 
-void scale_columns_mean_standard_deviation(const Vector< Statistics<Type> >& statistics, const Vector<unsigned>& columns_indices)
-{
-   const unsigned columns_indices_size = columns_indices.size();
+// Control sentence (if debug)
 
-   // Control sentence (if debug)
+#ifndef NDEBUG
 
-   #ifndef NDEBUG
+    const unsigned statistics_size = statistics.size();
 
-   const unsigned statistics_size = statistics.size();
-
-   if(statistics_size != columns_indices_size)
-   {
+    if (statistics_size != columns_indices_size) {
       std::ostringstream buffer;
 
-      buffer << "OpenNN Exception: DataSet class.\n"
-             << "void scale_columns_mean_standard_deviation(const Vector< Statistics<Type> >&, const Vector<unsigned>&) method.\n"
-             << "Size of statistics must be equal to size of columns indices.\n";
+      buffer
+          << "OpenNN Exception: DataSet class.\n"
+          << "void scale_columns_mean_standard_deviation(const Vector< "
+             "Statistics<Type> >&, const Vector<unsigned>&) method.\n"
+          << "Size of statistics must be equal to size of columns indices.\n";
 
       throw std::logic_error(buffer.str());
-   }
+    }
 
-   #endif
+#endif
 
-   unsigned column_index;
+    unsigned column_index;
 
-   // Scale columns
+    // Scale columns
 
-   for(unsigned j = 0; j < columns_indices_size; j++)
-   {
-      if(statistics[j].standard_deviation < 1e-99)
-      {
-         // Do nothing
+    for (unsigned j = 0; j < columns_indices_size; j++) {
+      if (statistics[j].standard_deviation < 1e-99) {
+        // Do nothing
+      } else {
+        column_index = columns_indices[j];
+
+        for (unsigned i = 0; i < rows_number; i++) {
+          data[i][column_index] = (data[i][column_index] - statistics[j].mean) /
+                                  statistics[j].standard_deviation;
+        }
       }
-      else
-      {
-         column_index = columns_indices[j];
+    }
+  }
 
-         for(unsigned i = 0; i < rows_number; i++)
-         {
-            data[i][column_index] = (data[i][column_index] - statistics[j].mean)/statistics[j].standard_deviation;
-         }
-      }
-   }
-}
+  // void scale_rows_columns_mean_standard_deviation(const Vector<
+  // Statistics<Type> >&, const Vector<unsigned>&, const Vector<unsigned>&)
+  // const
 
+  /// @todo
 
-// void scale_rows_columns_mean_standard_deviation(const Vector< Statistics<Type> >&, const Vector<unsigned>&, const Vector<unsigned>&) const
+  void scale_rows_columns_mean_standard_deviation(
+      const Vector<Statistics<Type> >& statistics,
+      const Vector<unsigned>& row_indices,
+      const Vector<unsigned>& column_indices) const {}
 
-/// @todo
+  // void scale_minimum_maximum(const Vector< Statistics<Type> >&) method
 
-void scale_rows_columns_mean_standard_deviation(const Vector< Statistics<Type> >& statistics, const Vector<unsigned>& row_indices, const Vector<unsigned>& column_indices) const
-{
+  /// Scales the matrix columns with the minimum and maximum method.
+  /// It updates the data in the matrix.
+  /// @param statistics Vector of statistics structures containing the minimum
+  /// and maximum values for the scaling.
+  /// The size of that vector must be equal to the number of columns in this
+  /// matrix.
 
-}
+  void scale_minimum_maximum(
+      const Vector<Statistics<Type> >& statistics) const {
+#ifndef NDEBUG
 
+    const unsigned size = statistics.size();
 
-// void scale_minimum_maximum(const Vector< Statistics<Type> >&) method
-
-/// Scales the matrix columns with the minimum and maximum method.
-/// It updates the data in the matrix.
-/// @param statistics Vector of statistics structures containing the minimum and maximum values for the scaling.
-/// The size of that vector must be equal to the number of columns in this matrix.
-
-void scale_minimum_maximum(const Vector< Statistics<Type> >& statistics) const
-{
-   #ifndef NDEBUG 
-
-   const unsigned size = statistics.size();
-
-   if(size != columns_number)
-   {
+    if (size != columns_number) {
       std::ostringstream buffer;
 
-      buffer << "OpenNN Exception: Matrix template." 
-             << "void scale_minimum_maximum(const Vector< Statistics<Type> >&) const method.\n"
-             << "Size of statistics vector must be equal to number of columns.\n";
+      buffer
+          << "OpenNN Exception: Matrix template."
+          << "void scale_minimum_maximum(const Vector< Statistics<Type> >&) "
+             "const method.\n"
+          << "Size of statistics vector must be equal to number of columns.\n";
 
       throw std::logic_error(buffer.str());
-   }
+    }
 
-   #endif
+#endif
 
-   // Rescale data
+    // Rescale data
 
-   for(unsigned j = 0; j < columns_number; j++)
-   {
-      if(statistics[j].maximum - statistics[j].minimum < 1e-99)
-      {
-            // Do nothing
+    for (unsigned j = 0; j < columns_number; j++) {
+      if (statistics[j].maximum - statistics[j].minimum < 1e-99) {
+        // Do nothing
+      } else {
+        for (unsigned i = 0; i < rows_number; i++) {
+          data[i][j] = 2.0 * (data[i][j] - statistics[j].minimum) /
+                           (statistics[j].maximum - statistics[j].minimum) -
+                       1.0;
+        }
       }
-      else
-      {
-         for(unsigned i = 0; i < rows_number; i++)
-         {
-            data[i][j] = 2.0*(data[i][j] - statistics[j].minimum)/(statistics[j].maximum-statistics[j].minimum)-1.0;
-         }
-      }
-   }
-}
+    }
+  }
 
+  // Vector< Statistics<Type> > scale_minimum_maximum(void) method
 
-// Vector< Statistics<Type> > scale_minimum_maximum(void) method
+  /// Scales the data using the minimum and maximum method and
+  /// the minimum and maximum values calculated from the matrix.
+  /// It also returns the statistics of all the columns.
 
-/// Scales the data using the minimum and maximum method and
-/// the minimum and maximum values calculated from the matrix.
-/// It also returns the statistics of all the columns.
-
-Vector< Statistics<Type> > scale_minimum_maximum(void)
-{
-    const Vector< Statistics<Type> > statistics = calculate_statistics();
+  Vector<Statistics<Type> > scale_minimum_maximum(void) {
+    const Vector<Statistics<Type> > statistics = calculate_statistics();
 
     scale_minimum_maximum(statistics);
 
-    return(statistics);
-}
+    return (statistics);
+  }
 
+  // void scale_rows_minimum_maximum(const Vector< Statistics<Type> >&, const
+  // Vector<unsigned>&) const
 
-// void scale_rows_minimum_maximum(const Vector< Statistics<Type> >&, const Vector<unsigned>&) const
+  /// Scales given rows from the matrix using the minimum and maximum method.
+  /// @param statistics Vector of statistics for all the columns.
+  /// @param row_indices Indices of rows to be scaled.
 
-/// Scales given rows from the matrix using the minimum and maximum method.
-/// @param statistics Vector of statistics for all the columns.
-/// @param row_indices Indices of rows to be scaled.
-
-void scale_rows_minimum_maximum(const Vector< Statistics<Type> >& statistics, const Vector<unsigned>& row_indices) const
-{
+  void scale_rows_minimum_maximum(const Vector<Statistics<Type> >& statistics,
+                                  const Vector<unsigned>& row_indices) const {
     // Control sentence (if debug)
 
     const unsigned row_indices_size = row_indices.size();
 
-    #ifndef NDEBUG
+#ifndef NDEBUG
 
     const unsigned statistics_size = statistics.size();
 
-    if(statistics_size != columns_number)
-    {
-       std::ostringstream buffer;
+    if (statistics_size != columns_number) {
+      std::ostringstream buffer;
 
-       buffer << "OpenNN Exception: DataSet class.\n"
-              << "void scale_rows_minimum_maximum(const Vector< Statistics<Type> >&, const Vector<unsigned>&) method.\n"
-              << "Size of statistics must be equal to number of columns.\n";
+      buffer << "OpenNN Exception: DataSet class.\n"
+             << "void scale_rows_minimum_maximum(const Vector< "
+                "Statistics<Type> >&, const Vector<unsigned>&) method.\n"
+             << "Size of statistics must be equal to number of columns.\n";
 
-       throw std::logic_error(buffer.str());
+      throw std::logic_error(buffer.str());
     }
 
-    #endif
+#endif
 
     // Rescale targets data
 
     unsigned row_index;
 
-    for(unsigned j = 0; j < columns_number; j++)
-    {
-       if(statistics[j].maximum - statistics[j].minimum < 1e-99)
-       {
-          // Do nothing
-       }
-       else
-       {
-          for(unsigned i = 0; i < row_indices_size; i++)
-          {
-             row_index = row_indices[i];
+    for (unsigned j = 0; j < columns_number; j++) {
+      if (statistics[j].maximum - statistics[j].minimum < 1e-99) {
+        // Do nothing
+      } else {
+        for (unsigned i = 0; i < row_indices_size; i++) {
+          row_index = row_indices[i];
 
-             data[row_index][j] = 2.0*(data[row_index][j] - statistics[j].minimum)/(statistics[j].maximum-statistics[j].minimum) - 1.0;
-          }
-       }
+          data[row_index][j] =
+              2.0 * (data[row_index][j] - statistics[j].minimum) /
+                  (statistics[j].maximum - statistics[j].minimum) -
+              1.0;
+        }
+      }
     }
-}
+  }
 
+  // void scale_columns_minimum_maximum(const Vector< Statistics<Type> >&, const
+  // Vector<unsigned>&) const
 
-// void scale_columns_minimum_maximum(const Vector< Statistics<Type> >&, const Vector<unsigned>&) const
+  /// Scales given columns of this matrix with the minimum and maximum method.
+  /// @param statistics Vector of statistics structure containing the minimum
+  /// and maximum values for the scaling.
+  /// The size of that vector must be equal to the number of columns to be
+  /// scaled.
+  /// @param column_indices Vector of indices with the columns to be scaled.
+  /// The size of that vector must be equal to the number of columns to be
+  /// scaled.
 
-/// Scales given columns of this matrix with the minimum and maximum method.
-/// @param statistics Vector of statistics structure containing the minimum and maximum values for the scaling.
-/// The size of that vector must be equal to the number of columns to be scaled.
-/// @param column_indices Vector of indices with the columns to be scaled.
-/// The size of that vector must be equal to the number of columns to be scaled.
-
-void scale_columns_minimum_maximum(const Vector< Statistics<Type> >& statistics, const Vector<unsigned>& column_indices) const
-{
+  void scale_columns_minimum_maximum(
+      const Vector<Statistics<Type> >& statistics,
+      const Vector<unsigned>& column_indices) const {
     // Control sentence (if debug)
 
     const unsigned column_indices_size = column_indices.size();
 
-    #ifndef NDEBUG
+#ifndef NDEBUG
 
     const unsigned statistics_size = statistics.size();
 
-    if(statistics_size != column_indices_size)
-    {
-       std::ostringstream buffer;
+    if (statistics_size != column_indices_size) {
+      std::ostringstream buffer;
 
-       buffer << "OpenNN Exception: DataSet class.\n"
-              << "void scale_columns_minimum_maximum(const Vector< Statistics<Type> >&, const Vector<unsigned>&) method.\n"
-              << "Size of statistics must be equal to size of columns indices.\n";
+      buffer
+          << "OpenNN Exception: DataSet class.\n"
+          << "void scale_columns_minimum_maximum(const Vector< "
+             "Statistics<Type> >&, const Vector<unsigned>&) method.\n"
+          << "Size of statistics must be equal to size of columns indices.\n";
 
-       throw std::logic_error(buffer.str());
+      throw std::logic_error(buffer.str());
     }
 
-    #endif
+#endif
 
     unsigned column_index;
 
     // Rescale targets data
 
-    for(unsigned j = 0; j < column_indices_size; j++)
-    {
-       column_index = column_indices[j];
+    for (unsigned j = 0; j < column_indices_size; j++) {
+      column_index = column_indices[j];
 
-       if(statistics[j].maximum - statistics[j].minimum < 1e-99)
-       {
-          // Do nothing
-       }
-       else
-       {
-          for(unsigned i = 0; i < rows_number; i++)
-          {
-             data[i][column_index] = 2.0*(data[i][column_index] - statistics[j].minimum)/(statistics[j].maximum-statistics[j].minimum) - 1.0;
-          }
-       }
+      if (statistics[j].maximum - statistics[j].minimum < 1e-99) {
+        // Do nothing
+      } else {
+        for (unsigned i = 0; i < rows_number; i++) {
+          data[i][column_index] =
+              2.0 * (data[i][column_index] - statistics[j].minimum) /
+                  (statistics[j].maximum - statistics[j].minimum) -
+              1.0;
+        }
+      }
     }
-}
+  }
 
+  // void scale_rows_columns_minimum_maximum(const Vector< Statistics<Type> >&,
+  // const Vector<unsigned>&, const Vector<unsigned>&) const
 
-// void scale_rows_columns_minimum_maximum(const Vector< Statistics<Type> >&, const Vector<unsigned>&, const Vector<unsigned>&) const
+  /// @todo
 
-/// @todo
+  void scale_rows_columns_minimum_maximum(
+      const Vector<Statistics<Type> >& statistics,
+      const Vector<unsigned>& row_indices,
+      const Vector<unsigned>& column_indices) const {}
 
-void scale_rows_columns_minimum_maximum(const Vector< Statistics<Type> >& statistics, const Vector<unsigned>& row_indices, const Vector<unsigned>& column_indices) const
-{
+  // void unscale_mean_standard_deviation(const Vector< Statistics<Type> >&)
+  // method
 
-}
+  /// Unscales the matrix columns with the mean and standard deviation method.
+  /// It updates the matrix elements.
+  /// @param statistics Vector of statistics structures containing the mean and
+  /// standard deviations for the unscaling.
+  /// The size of that vector must be equal to the number of columns in this
+  /// matrix.
 
+  void unscale_mean_standard_deviation(
+      const Vector<Statistics<Type> >& statistics) {
+#ifndef NDEBUG
 
-// void unscale_mean_standard_deviation(const Vector< Statistics<Type> >&) method
+    const unsigned size = statistics.size();
 
-/// Unscales the matrix columns with the mean and standard deviation method.
-/// It updates the matrix elements.
-/// @param statistics Vector of statistics structures containing the mean and standard deviations for the unscaling.
-/// The size of that vector must be equal to the number of columns in this matrix.
-
-void unscale_mean_standard_deviation(const Vector< Statistics<Type> >& statistics)
-{
-   #ifndef NDEBUG 
-
-   const unsigned size = statistics.size();
-
-   if(size != columns_number)
-   {
+    if (size != columns_number) {
       std::ostringstream buffer;
 
-      buffer << "OpenNN Exception: Matrix template." 
-             << "void unscale_mean_standard_deviation(const Vector< Statistics<Type> >&) const method.\n"
-             << "Size of statistics vector must be equal to number of columns.\n";
+      buffer
+          << "OpenNN Exception: Matrix template."
+          << "void unscale_mean_standard_deviation(const Vector< "
+             "Statistics<Type> >&) const method.\n"
+          << "Size of statistics vector must be equal to number of columns.\n";
 
       throw std::logic_error(buffer.str());
-   }
+    }
 
-   #endif
+#endif
 
-   for(unsigned j = 0; j < columns_number; j++)
-   {
-      if(statistics[j].standard_deviation < 1e-99)
-      {
-         // Do nothing
+    for (unsigned j = 0; j < columns_number; j++) {
+      if (statistics[j].standard_deviation < 1e-99) {
+        // Do nothing
+      } else {
+        for (unsigned i = 0; i < rows_number; i++) {
+          data[i][j] = data[i][j] * statistics[j].standard_deviation +
+                       statistics[j].mean;
+        }
       }
-      else
-      {
-         for(unsigned i = 0; i < rows_number; i++)
-         {
-            data[i][j] = data[i][j]*statistics[j].standard_deviation + statistics[j].mean;
-         }
-      }
-   }
-}
+    }
+  }
 
+  // void unscale_rows_mean_standard_deviation(const Vector< Statistics<Type>
+  // >&, const Vector<unsigned>&) method
 
-// void unscale_rows_mean_standard_deviation(const Vector< Statistics<Type> >&, const Vector<unsigned>&) method
-
-/// Unscales given rows using the mean and standard deviation method.
-/// @param statistics Vector of statistics structures for all the columns.
-/// The size of this vector must be equal to the number of columns.
-/// @param row_indices Indices of rows to be unscaled.
-///
-void unscale_rows_mean_standard_deviation(const Vector< Statistics<Type> >& statistics, const Vector<unsigned>& row_indices)
-{
+  /// Unscales given rows using the mean and standard deviation method.
+  /// @param statistics Vector of statistics structures for all the columns.
+  /// The size of this vector must be equal to the number of columns.
+  /// @param row_indices Indices of rows to be unscaled.
+  ///
+  void unscale_rows_mean_standard_deviation(
+      const Vector<Statistics<Type> >& statistics,
+      const Vector<unsigned>& row_indices) {
     unsigned row_index;
 
     // Unscale columns
 
-    for(unsigned j = 0;  j < columns_number; j++)
-    {
-       if(statistics[j].standard_deviation < 1e-99)
-       {
-          // Do nothing
-       }
-       else
-       {
-          for(unsigned i = 0; i < rows_number; i++)
-          {
-             row_index = row_indices[i];
+    for (unsigned j = 0; j < columns_number; j++) {
+      if (statistics[j].standard_deviation < 1e-99) {
+        // Do nothing
+      } else {
+        for (unsigned i = 0; i < rows_number; i++) {
+          row_index = row_indices[i];
 
-             data[row_index][j] = data[row_index][j]*statistics[j].standard_deviation + statistics[j].mean;
-          }
-       }
+          data[row_index][j] =
+              data[row_index][j] * statistics[j].standard_deviation +
+              statistics[j].mean;
+        }
+      }
     }
-}
+  }
 
+  // void unscale_columns_mean_standard_deviation(const Vector< Statistics<Type>
+  // >&, const Vector<unsigned>&) method
 
-// void unscale_columns_mean_standard_deviation(const Vector< Statistics<Type> >&, const Vector<unsigned>&) method
+  /// Scales given columns of this matrix with the mean and standard deviation
+  /// method.
+  /// @param statistics Vector of statistics structure containing the mean and
+  /// standard deviation values for the scaling.
+  /// The size of that vector must be equal to the number of columns in the
+  /// matrix.
+  /// @param column_indices Vector of indices with the columns to be scaled.
+  /// The size of that vector must be equal to the number of columns to be
+  /// scaled.
 
-/// Scales given columns of this matrix with the mean and standard deviation method.
-/// @param statistics Vector of statistics structure containing the mean and standard deviation values for the scaling.
-/// The size of that vector must be equal to the number of columns in the matrix.
-/// @param column_indices Vector of indices with the columns to be scaled.
-/// The size of that vector must be equal to the number of columns to be scaled.
-
-void unscale_columns_mean_standard_deviation(const Vector< Statistics<Type> >& statistics, const Vector<unsigned>& column_indices)
-{
-   unsigned column_index;
-
-   // Unscale columns
-
-   for(unsigned j = 0;  j < column_indices.size(); j++)
-   {
-      column_index = column_indices[j];
-
-      if(statistics[column_index].standard_deviation < 1e-99)
-      {
-         // Do nothing
-      }
-      else
-      {
-         for(unsigned i = 0; i < rows_number; i++)
-         {
-            data[i][column_index] = data[i][column_index]*statistics[column_index].standard_deviation + statistics[column_index].mean;
-         }
-      }
-   }
-}
-
-
-// void unscale_rows_columns_mean_standard_deviation(const Vector< Statistics<Type> >&, const Vector<unsigned>&) method
-
-/// @todo
-
-void unscale_rows_columns_mean_standard_deviation(const Vector< Statistics<Type> >& statistics, const Vector<unsigned>& row_indices, const Vector<unsigned>& column_indices)
-{
-}
-
-
-// void unscale_minimum_maximum(const Vector< Statistics<Type> >&) method
-
-/// Unscales the matrix columns with the minimum and maximum method.
-/// @param statistics Vector of statistics which contains the minimum and maximum scaling values.
-/// The size of that vector must be equal to the number of columns in this matrix.
-
-void unscale_minimum_maximum(const Vector< Statistics<Type> >& statistics)
-{
-   #ifndef NDEBUG 
-
-   const unsigned size = statistics.size();
-
-   if(size != columns_number)
-   {
-      std::ostringstream buffer;
-
-      buffer << "OpenNN Exception: Matrix template." 
-             << "void unscale_minimum_maximum(const Vector< Statistics<Type> >&) method.\n"
-             << "Size of minimum vector must be equal to number of columns.\n";
-
-      throw std::logic_error(buffer.str());
-   }
-
-   #endif
-
-   for(unsigned j = 0; j < columns_number; j++)
-   {
-      if(statistics[j].maximum - statistics[j].minimum < 1e-99)
-      {
-         std::cout << "OpenNN Warning: Matrix template.\n"
-                   << "void unscale_minimum_maximum(const Vector< Statistics<Type> >&) const method.\n"
-                   << "Minimum and maximum values of column " << j << " are equal.\n"
-                   << "Those columns won't be unscaled.\n";
-
-         // Do nothing
-      }
-      else
-      {
-         for(unsigned i = 0; i < rows_number; i++)
-         {
-            data[i][j] = 0.5*(data[i][j] + 1.0)*(statistics[j].maximum-statistics[j].minimum) + statistics[j].minimum;
-         }
-      }
-   }
-}
-
-
-// void unscale_rows_minimum_maximum(const Vector< Statistics<Type> >&, const Vector<unsigned>&) method
-
-/// Unscales given rows using the minimum and maximum method.
-/// @param statistics Vector of statistics structures for all the columns.
-/// The size of this vector must be equal to the number of columns.
-/// @param row_indices Indices of rows to be unscaled.
-
-void unscale_rows_minimum_maximum(const Vector< Statistics<Type> >& statistics, const Vector<unsigned>& row_indices)
-{
-    unsigned row_index;
-
-    // Unscale rows
-
-    for(unsigned j = 0; j < columns_number; j++)
-    {
-       if(statistics[j].maximum - statistics[j].minimum < 1e-99)
-       {
-          // Do nothing
-       }
-       else
-       {
-          for(unsigned i = 0; i < rows_number; i++)
-          {
-              row_index = row_indices[i];
-
-             data[row_index][j] = 0.5*(data[row_index][j] + 1.0)*(statistics[j].maximum-statistics[j].minimum)
-             + statistics[j].minimum;
-          }
-       }
-    }
-}
-
-
-// void unscale_columns_minimum_maximum(const Vector< Statistics<Type> >&, const Vector<unsigned>&) method
-
-/// Unscales given columns in the matrix with the minimum and maximum method.
-/// @param statistics Vector of statistics structures containing the minimum and maximum values for the unscaling.
-/// The size of that vector must be equal to the number of columns in the matrix.
-/// @param column_indices Vector of indices of the columns to be unscaled.
-/// The size of that vector must be equal to the number of columns to be unscaled.
-
-void unscale_columns_minimum_maximum(const Vector< Statistics<Type> >& statistics, const Vector<unsigned>& column_indices)
-{
+  void unscale_columns_mean_standard_deviation(
+      const Vector<Statistics<Type> >& statistics,
+      const Vector<unsigned>& column_indices) {
     unsigned column_index;
 
     // Unscale columns
 
-    for(unsigned j = 0; j < column_indices.size(); j++)
-    {
-        column_index = column_indices[j];
+    for (unsigned j = 0; j < column_indices.size(); j++) {
+      column_index = column_indices[j];
 
-       if(statistics[column_index].maximum - statistics[column_index].minimum < 1e-99)
-       {
-          // Do nothing
-       }
-       else
-       {
-          for(unsigned i = 0; i < rows_number; i++)
-          {
-             data[i][column_index] = 0.5*(data[i][column_index] + 1.0)*(statistics[column_index].maximum-statistics[column_index].minimum)
-             + statistics[column_index].minimum;
-          }
-       }
+      if (statistics[column_index].standard_deviation < 1e-99) {
+        // Do nothing
+      } else {
+        for (unsigned i = 0; i < rows_number; i++) {
+          data[i][column_index] =
+              data[i][column_index] *
+                  statistics[column_index].standard_deviation +
+              statistics[column_index].mean;
+        }
+      }
     }
-}
+  }
 
+  // void unscale_rows_columns_mean_standard_deviation(const Vector<
+  // Statistics<Type> >&, const Vector<unsigned>&) method
 
-// void unscale_rows_columns_minimum_maximum(const Vector< Statistics<Type> >&, const Vector<unsigned>&) method
+  /// @todo
 
-/// @todo
+  void unscale_rows_columns_mean_standard_deviation(
+      const Vector<Statistics<Type> >& statistics,
+      const Vector<unsigned>& row_indices,
+      const Vector<unsigned>& column_indices) {}
 
-void unscale_rows_columns_minimum_maximum(const Vector< Statistics<Type> >& statistics, const Vector<unsigned>& row_indices, const Vector<unsigned>& column_indices)
-{
-}
+  // void unscale_minimum_maximum(const Vector< Statistics<Type> >&) method
 
+  /// Unscales the matrix columns with the minimum and maximum method.
+  /// @param statistics Vector of statistics which contains the minimum and
+  /// maximum scaling values.
+  /// The size of that vector must be equal to the number of columns in this
+  /// matrix.
 
-// Vector<unsigned> calculate_minimal_indices(void) const method
+  void unscale_minimum_maximum(const Vector<Statistics<Type> >& statistics) {
+#ifndef NDEBUG
 
-/// Returns the row and column indices corresponding to the entry with minimum value. 
+    const unsigned size = statistics.size();
 
-Vector<unsigned> calculate_minimal_indices(void) const
-{
-   Type minimum = data[0][0];
-   Vector<unsigned> minimal_indices(2, 0);
-
-   for(unsigned i = 0; i < rows_number; i++)
-   {
-      for(unsigned j = 0; j < columns_number; j++)
-      {
-         if(data[i][j] < minimum)
-         {
-            minimum = data[i][j];
-            minimal_indices[0] = i;
-            minimal_indices[1] = j;
-		 }
-      }
-   }
-   
-   return(minimal_indices);
-}
-
-
-// Vector<unsigned> calculate_maximal_indices(void) const method
-
-/// Returns the row and column indices corresponding to the entry with maximum value. 
-
-Vector<unsigned> calculate_maximal_indices(void) const
-{
-   Type maximum = data[0][0];
-
-   Vector<unsigned> maximal_indices(2, 0);
-
-   for(unsigned i = 0; i < rows_number; i++)
-   {
-      for(unsigned j = 0; j < columns_number; j++)
-      {
-         if(data[i][j] > maximum)
-         {
-            maximum = data[i][j];
-            maximal_indices[0] = i;
-            maximal_indices[1] = j;
-		 }
-      }
-   }
-   
-   return(maximal_indices);
-}
-
-
-// Vector< Vector<unsigned> > calculate_minimal_maximal_indices(void) const method
-
-/// Returns the row and column indices corresponding to the entries with minimum and maximum values. 
-/// The format is a vector of two vectors.
-/// Each subvector also has two elements. 
-/// The first vector contains the minimal indices, and the second vector contains the maximal indices.  
-
-Vector< Vector<unsigned> > calculate_minimal_maximal_indices(void) const
-{
-   Type minimum = data[0][0];
-   Type maximum = data[0][0];
-
-   Vector<unsigned> minimal_indices(2, 0);
-   Vector<unsigned> maximal_indices(2, 0);
-
-   for(unsigned i = 0; i < rows_number; i++)
-   {
-      for(unsigned j = 0; j < columns_number; j++)
-      {
-         if(data[i][j] < minimum)
-         {
-            minimum = data[i][j];
-            minimal_indices[0] = i;
-            minimal_indices[1] = j;
-		 }
-
-         if(data[i][j] > maximum)
-         {
-            maximum = data[i][j];
-            maximal_indices[0] = i;
-            maximal_indices[1] = j;
-		 }
-      }
-   }
-
-   Vector< Vector<unsigned> > minimal_maximal_indices(2);
-   minimal_maximal_indices[0] = minimal_indices;
-   minimal_maximal_indices[1] = maximal_indices;
-   
-   return(minimal_maximal_indices);
-}
-
-
-// double calculate_sum_squared_error(const Matrix<double>&) const method
-
-/// Returns the sum squared error between the elements of this matrix and the elements of another matrix. 
-/// @param other_matrix Other matrix. 
-
-double calculate_sum_squared_error(const Matrix<double>& other_matrix) const
-{
-   // Control sentence (if debug)
-
-   #ifndef NDEBUG 
-
-   const unsigned other_rows_number = other_matrix.get_rows_number();
-
-   if(other_rows_number != rows_number)
-   {
+    if (size != columns_number) {
       std::ostringstream buffer;
 
-      buffer << "OpenNN Exception: Matrix Template.\n" 
-             << "double calculate_sum_squared_error(const Matrix<double>&) const method.\n"
+      buffer << "OpenNN Exception: Matrix template."
+             << "void unscale_minimum_maximum(const Vector< Statistics<Type> "
+                ">&) method.\n"
+             << "Size of minimum vector must be equal to number of columns.\n";
+
+      throw std::logic_error(buffer.str());
+    }
+
+#endif
+
+    for (unsigned j = 0; j < columns_number; j++) {
+      if (statistics[j].maximum - statistics[j].minimum < 1e-99) {
+        std::cout << "OpenNN Warning: Matrix template.\n"
+                  << "void unscale_minimum_maximum(const Vector< "
+                     "Statistics<Type> >&) const method.\n"
+                  << "Minimum and maximum values of column " << j
+                  << " are equal.\n"
+                  << "Those columns won't be unscaled.\n";
+
+        // Do nothing
+      } else {
+        for (unsigned i = 0; i < rows_number; i++) {
+          data[i][j] = 0.5 * (data[i][j] + 1.0) *
+                           (statistics[j].maximum - statistics[j].minimum) +
+                       statistics[j].minimum;
+        }
+      }
+    }
+  }
+
+  // void unscale_rows_minimum_maximum(const Vector< Statistics<Type> >&, const
+  // Vector<unsigned>&) method
+
+  /// Unscales given rows using the minimum and maximum method.
+  /// @param statistics Vector of statistics structures for all the columns.
+  /// The size of this vector must be equal to the number of columns.
+  /// @param row_indices Indices of rows to be unscaled.
+
+  void unscale_rows_minimum_maximum(const Vector<Statistics<Type> >& statistics,
+                                    const Vector<unsigned>& row_indices) {
+    unsigned row_index;
+
+    // Unscale rows
+
+    for (unsigned j = 0; j < columns_number; j++) {
+      if (statistics[j].maximum - statistics[j].minimum < 1e-99) {
+        // Do nothing
+      } else {
+        for (unsigned i = 0; i < rows_number; i++) {
+          row_index = row_indices[i];
+
+          data[row_index][j] =
+              0.5 * (data[row_index][j] + 1.0) *
+                  (statistics[j].maximum - statistics[j].minimum) +
+              statistics[j].minimum;
+        }
+      }
+    }
+  }
+
+  // void unscale_columns_minimum_maximum(const Vector< Statistics<Type> >&,
+  // const Vector<unsigned>&) method
+
+  /// Unscales given columns in the matrix with the minimum and maximum method.
+  /// @param statistics Vector of statistics structures containing the minimum
+  /// and maximum values for the unscaling.
+  /// The size of that vector must be equal to the number of columns in the
+  /// matrix.
+  /// @param column_indices Vector of indices of the columns to be unscaled.
+  /// The size of that vector must be equal to the number of columns to be
+  /// unscaled.
+
+  void unscale_columns_minimum_maximum(
+      const Vector<Statistics<Type> >& statistics,
+      const Vector<unsigned>& column_indices) {
+    unsigned column_index;
+
+    // Unscale columns
+
+    for (unsigned j = 0; j < column_indices.size(); j++) {
+      column_index = column_indices[j];
+
+      if (statistics[column_index].maximum - statistics[column_index].minimum <
+          1e-99) {
+        // Do nothing
+      } else {
+        for (unsigned i = 0; i < rows_number; i++) {
+          data[i][column_index] = 0.5 * (data[i][column_index] + 1.0) *
+                                      (statistics[column_index].maximum -
+                                       statistics[column_index].minimum) +
+                                  statistics[column_index].minimum;
+        }
+      }
+    }
+  }
+
+  // void unscale_rows_columns_minimum_maximum(const Vector< Statistics<Type>
+  // >&, const Vector<unsigned>&) method
+
+  /// @todo
+
+  void unscale_rows_columns_minimum_maximum(
+      const Vector<Statistics<Type> >& statistics,
+      const Vector<unsigned>& row_indices,
+      const Vector<unsigned>& column_indices) {}
+
+  // Vector<unsigned> calculate_minimal_indices(void) const method
+
+  /// Returns the row and column indices corresponding to the entry with minimum
+  /// value.
+
+  Vector<unsigned> calculate_minimal_indices(void) const {
+    Type minimum = data[0][0];
+    Vector<unsigned> minimal_indices(2, 0);
+
+    for (unsigned i = 0; i < rows_number; i++) {
+      for (unsigned j = 0; j < columns_number; j++) {
+        if (data[i][j] < minimum) {
+          minimum = data[i][j];
+          minimal_indices[0] = i;
+          minimal_indices[1] = j;
+        }
+      }
+    }
+
+    return (minimal_indices);
+  }
+
+  // Vector<unsigned> calculate_maximal_indices(void) const method
+
+  /// Returns the row and column indices corresponding to the entry with maximum
+  /// value.
+
+  Vector<unsigned> calculate_maximal_indices(void) const {
+    Type maximum = data[0][0];
+
+    Vector<unsigned> maximal_indices(2, 0);
+
+    for (unsigned i = 0; i < rows_number; i++) {
+      for (unsigned j = 0; j < columns_number; j++) {
+        if (data[i][j] > maximum) {
+          maximum = data[i][j];
+          maximal_indices[0] = i;
+          maximal_indices[1] = j;
+        }
+      }
+    }
+
+    return (maximal_indices);
+  }
+
+  // Vector< Vector<unsigned> > calculate_minimal_maximal_indices(void) const
+  // method
+
+  /// Returns the row and column indices corresponding to the entries with
+  /// minimum and maximum values.
+  /// The format is a vector of two vectors.
+  /// Each subvector also has two elements.
+  /// The first vector contains the minimal indices, and the second vector
+  /// contains the maximal indices.
+
+  Vector<Vector<unsigned> > calculate_minimal_maximal_indices(void) const {
+    Type minimum = data[0][0];
+    Type maximum = data[0][0];
+
+    Vector<unsigned> minimal_indices(2, 0);
+    Vector<unsigned> maximal_indices(2, 0);
+
+    for (unsigned i = 0; i < rows_number; i++) {
+      for (unsigned j = 0; j < columns_number; j++) {
+        if (data[i][j] < minimum) {
+          minimum = data[i][j];
+          minimal_indices[0] = i;
+          minimal_indices[1] = j;
+        }
+
+        if (data[i][j] > maximum) {
+          maximum = data[i][j];
+          maximal_indices[0] = i;
+          maximal_indices[1] = j;
+        }
+      }
+    }
+
+    Vector<Vector<unsigned> > minimal_maximal_indices(2);
+    minimal_maximal_indices[0] = minimal_indices;
+    minimal_maximal_indices[1] = maximal_indices;
+
+    return (minimal_maximal_indices);
+  }
+
+  // double calculate_sum_squared_error(const Matrix<double>&) const method
+
+  /// Returns the sum squared error between the elements of this matrix and the
+  /// elements of another matrix.
+  /// @param other_matrix Other matrix.
+
+  double calculate_sum_squared_error(const Matrix<double>& other_matrix) const {
+// Control sentence (if debug)
+
+#ifndef NDEBUG
+
+    const unsigned other_rows_number = other_matrix.get_rows_number();
+
+    if (other_rows_number != rows_number) {
+      std::ostringstream buffer;
+
+      buffer << "OpenNN Exception: Matrix Template.\n"
+             << "double calculate_sum_squared_error(const Matrix<double>&) "
+                "const method.\n"
              << "Other number of rows must be equal to this number of rows.\n";
 
       throw std::logic_error(buffer.str());
-   }
+    }
 
-   const unsigned other_columns_number = other_matrix.get_columns_number();
+    const unsigned other_columns_number = other_matrix.get_columns_number();
 
-   if(other_columns_number != columns_number)
-   {
+    if (other_columns_number != columns_number) {
       std::ostringstream buffer;
 
-      buffer << "OpenNN Exception: Matrix Template.\n" 
-             << "double calculate_sum_squared_error(const Matrix<double>&) const method.\n"
-             << "Other number of columns must be equal to this number of columns.\n";
+      buffer << "OpenNN Exception: Matrix Template.\n"
+             << "double calculate_sum_squared_error(const Matrix<double>&) "
+                "const method.\n"
+             << "Other number of columns must be equal to this number of "
+                "columns.\n";
 
       throw std::logic_error(buffer.str());
-   }
+    }
 
-   #endif
+#endif
 
-   double sum_squared_error = 0.0;
+    double sum_squared_error = 0.0;
 
-   for(unsigned i = 0; i < rows_number; i++)
-   {
-      for(unsigned j = 0; j < columns_number; j++)
-	  {
-         sum_squared_error += (data[i][j] - other_matrix[i][j])*(data[i][j] - other_matrix[i][j]);
-	  }
-   }
+    for (unsigned i = 0; i < rows_number; i++) {
+      for (unsigned j = 0; j < columns_number; j++) {
+        sum_squared_error += (data[i][j] - other_matrix[i][j]) *
+                             (data[i][j] - other_matrix[i][j]);
+      }
+    }
 
-   return(sum_squared_error);
-}
+    return (sum_squared_error);
+  }
 
+  // double calculate_sum_squared_error(const Vector<double>&) const method
 
-// double calculate_sum_squared_error(const Vector<double>&) const method
+  /// This method retuns the sum squared error between the elements of this
+  /// matrix and the elements of a vector, by columns.
+  /// The size of the vector must be equal to the number of columns of this
+  /// matrix.
+  /// @param vector Vector to be compared to this matrix.
 
-/// This method retuns the sum squared error between the elements of this matrix and the elements of a vector, by columns.
-/// The size of the vector must be equal to the number of columns of this matrix.
-/// @param vector Vector to be compared to this matrix. 
+  double calculate_sum_squared_error(const Vector<double>& vector) const {
+// Control sentence (if debug)
 
-double calculate_sum_squared_error(const Vector<double>& vector) const
-{
-   // Control sentence (if debug)
+#ifndef NDEBUG
 
-   #ifndef NDEBUG 
+    const unsigned size = vector.size();
 
-   const unsigned size = vector.size();
-
-   if(size != columns_number)
-   {
+    if (size != columns_number) {
       std::ostringstream buffer;
 
-      buffer << "OpenNN Exception: Matrix Template.\n" 
-             << "double calculate_sum_squared_error(const Vector<double>&) const method.\n"
+      buffer << "OpenNN Exception: Matrix Template.\n"
+             << "double calculate_sum_squared_error(const Vector<double>&) "
+                "const method.\n"
              << "Size must be equal to number of columns.\n";
 
       throw std::logic_error(buffer.str());
-   }
+    }
 
-   #endif
+#endif
 
-   double sum_squared_error = 0.0;
+    double sum_squared_error = 0.0;
 
-   for(unsigned i = 0; i < rows_number; i++)
-   {
-      for(unsigned j = 0; j < columns_number; j++)
-	  {
-         sum_squared_error += (data[i][j] - vector[j])*(data[i][j] - vector[j]);
-	  }
-   }
+    for (unsigned i = 0; i < rows_number; i++) {
+      for (unsigned j = 0; j < columns_number; j++) {
+        sum_squared_error +=
+            (data[i][j] - vector[j]) * (data[i][j] - vector[j]);
+      }
+    }
 
-   return(sum_squared_error);
-}
+    return (sum_squared_error);
+  }
 
+  // Vector<double> calculate_rows_norm(void) const method
 
-// Vector<double> calculate_rows_norm(void) const method
+  /// Returns a vector with the norm of each row.
+  /// The size of that vector is the number of rows.
 
-/// Returns a vector with the norm of each row. 
-/// The size of that vector is the number of rows. 
+  Vector<double> calculate_rows_norm(void) const {
+    Vector<Type> rows_norm(rows_number, 0.0);
 
-Vector<double> calculate_rows_norm(void) const
-{
-   Vector<Type> rows_norm(rows_number, 0.0);
-
-   for(unsigned i = 0; i < rows_number; i++)
-   {
-      for(unsigned j = 0; j < columns_number; j++)
-      {
-	     rows_norm[i] += data[i][j]*data[i][j];
-      }     
+    for (unsigned i = 0; i < rows_number; i++) {
+      for (unsigned j = 0; j < columns_number; j++) {
+        rows_norm[i] += data[i][j] * data[i][j];
+      }
 
       rows_norm[i] = sqrt(rows_norm[i]);
-   }
+    }
 
-   return(rows_norm);
-}
+    return (rows_norm);
+  }
 
+  // Matrix<Type> calculate_absolute_value(void) const method
 
-// Matrix<Type> calculate_absolute_value(void) const method
+  /// Returns a matrix with the absolute values of this matrix.
 
-/// Returns a matrix with the absolute values of this matrix. 
+  Matrix<Type> calculate_absolute_value(void) const {
+    Matrix<Type> absolute_value(rows_number, columns_number);
 
-Matrix<Type> calculate_absolute_value(void) const
-{
-   Matrix<Type> absolute_value(rows_number, columns_number);
+    for (unsigned i = 0; i < rows_number; i++) {
+      for (unsigned j = 0; j < columns_number; j++) {
+        if (data[i][j] > 0) {
+          absolute_value[i][j] = data[i][j];
+        } else {
+          absolute_value[i][j] = -data[i][j];
+        }
+      }
+    }
 
-   for(unsigned i = 0; i < rows_number; i++)
-   {
-      for(unsigned j = 0; j < columns_number; j++)
-      {
-         if(data[i][j] > 0)
-         {
-	        absolute_value[i][j] = data[i][j];
-	     }
-	     else
-         {
-            absolute_value[i][j] = -data[i][j];
-         }
-      }     
-   }
+    return (absolute_value);
+  }
 
-   return(absolute_value);
-}
+  // Matrix<Type> calculate_transpose(void) const method
 
+  /// Returns the transpose of the matrix.
 
+  Matrix<Type> calculate_transpose(void) const {
+    Matrix<Type> transpose(columns_number, rows_number);
 
-// Matrix<Type> calculate_transpose(void) const method
+    for (unsigned i = 0; i < columns_number; i++) {
+      for (unsigned j = 0; j < rows_number; j++) {
+        transpose[i][j] = data[j][i];
+      }
+    }
 
-/// Returns the transpose of the matrix. 
+    return (transpose);
+  }
 
-Matrix<Type> calculate_transpose(void) const
-{
-   Matrix<Type> transpose(columns_number, rows_number);
+  // Type calculate_determinant(void) const method
 
-   for(unsigned i = 0; i < columns_number; i++)
-   {
-      for(unsigned j = 0; j < rows_number; j++)
-      {
-         transpose[i][j] = data[j][i];
-      }     
-   }
+  /// Returns the determinant of a square matrix.
 
-   return(transpose);
-}
+  Type calculate_determinant(void) const {
+// Control sentence (if debug)
 
+#ifndef NDEBUG
 
-// Type calculate_determinant(void) const method
-
-/// Returns the determinant of a square matrix. 
-
-Type calculate_determinant(void) const
-{ 
-   // Control sentence (if debug)
-
-   #ifndef NDEBUG 
-
-   if(rows_number != columns_number)
-   {
+    if (rows_number != columns_number) {
       std::ostringstream buffer;
 
       buffer << "OpenNN Exception: Matrix Template.\n"
              << "calculate_determinant(void) const method.\n"
              << "Matrix must be square.\n";
-      
+
       throw std::logic_error(buffer.str());
-   }
+    }
 
-   #endif
+#endif
 
-   Type determinant = 0;
-   
-   if(rows_number == 0)
-   {
+    Type determinant = 0;
+
+    if (rows_number == 0) {
       std::ostringstream buffer;
 
       buffer << "OpenNN Exception: Matrix Template.\n"
              << "calculate_determinant(void) const method.\n"
              << "Size of matrix is zero.\n";
-      
+
       throw std::logic_error(buffer.str());
-   }
-   else if(rows_number == 1)
-   {
-      determinant = data[0][0];                   
-   }
-   else if(rows_number == 2)
-   {
-      determinant = data[0][0]*data[1][1] - data[1][0]*data[0][1];
-   }
-   else
-   {
+    } else if (rows_number == 1) {
+      determinant = data[0][0];
+    } else if (rows_number == 2) {
+      determinant = data[0][0] * data[1][1] - data[1][0] * data[0][1];
+    } else {
       int sign;
 
-      for(unsigned row_index = 0; row_index < rows_number; row_index++) 
-      {
-         // Calculate sub data
- 
-         Matrix<Type> sub_matrix(rows_number-1, columns_number-1);     
-     
-         for(unsigned i = 1; i < rows_number; i++) 
-         {
-            unsigned j2 = 0;
-      
-            for(unsigned j = 0; j < columns_number; j++) 
-            {
-               if(j == row_index)
-               {
-                  continue;
-               }
+      for (unsigned row_index = 0; row_index < rows_number; row_index++) {
+        // Calculate sub data
 
-               sub_matrix[i-1][j2] = data[i][j];
+        Matrix<Type> sub_matrix(rows_number - 1, columns_number - 1);
 
-               j2++;
+        for (unsigned i = 1; i < rows_number; i++) {
+          unsigned j2 = 0;
+
+          for (unsigned j = 0; j < columns_number; j++) {
+            if (j == row_index) {
+              continue;
             }
-         }
 
-         //sign = (unsigned)(pow(-1.0, row_index+2.0));
-       
-         sign = static_cast<int>( (((row_index + 2) % 2) == 0) ? 1 : -1 );
+            sub_matrix[i - 1][j2] = data[i][j];
 
-         determinant += sign*data[0][row_index]*sub_matrix.calculate_determinant();    
+            j2++;
+          }
+        }
+
+        // sign = (unsigned)(pow(-1.0, row_index+2.0));
+
+        sign = static_cast<int>((((row_index + 2) % 2) == 0) ? 1 : -1);
+
+        determinant +=
+            sign * data[0][row_index] * sub_matrix.calculate_determinant();
       }
-   }
-     
-   return(determinant);
-}
+    }
 
+    return (determinant);
+  }
 
-// Matrix<Type> calculate_cofactor(void) const method
+  // Matrix<Type> calculate_cofactor(void) const method
 
-/// Returns the cofactor matrix.
+  /// Returns the cofactor matrix.
 
-Matrix<Type> calculate_cofactor(void) const
-{
-   Matrix<double> cofactor(rows_number, columns_number);
-                  
-   Matrix<double> c(rows_number-1, columns_number-1);
+  Matrix<Type> calculate_cofactor(void) const {
+    Matrix<double> cofactor(rows_number, columns_number);
 
-   for(unsigned j = 0; j < rows_number; j++) 
-   {
-      for(unsigned i = 0; i < rows_number; i++) 
-      {
-         // Form the adjoint a[i][j]
+    Matrix<double> c(rows_number - 1, columns_number - 1);
 
-         unsigned i1 = 0;
+    for (unsigned j = 0; j < rows_number; j++) {
+      for (unsigned i = 0; i < rows_number; i++) {
+        // Form the adjoint a[i][j]
 
-         for(unsigned ii = 0; ii < rows_number; ii++) 
-         {
-            if(ii == i)
-            {
-               continue;
+        unsigned i1 = 0;
+
+        for (unsigned ii = 0; ii < rows_number; ii++) {
+          if (ii == i) {
+            continue;
+          }
+
+          unsigned j1 = 0;
+
+          for (unsigned jj = 0; jj < rows_number; jj++) {
+            if (jj == j) {
+              continue;
             }
-            
-            unsigned j1 = 0;
 
-            for(unsigned jj = 0; jj < rows_number; jj++) 
-            {
-               if(jj == j)
-               {
-                  continue;
-               }
+            c[i1][j1] = data[ii][jj];
+            j1++;
+          }
+          i1++;
+        }
 
-               c[i1][j1] = data[ii][jj];
-               j1++;
-            }
-            i1++;
-         }
+        const double determinant = c.calculate_determinant();
 
-         const double determinant = c.calculate_determinant();
-
-         cofactor[i][j] = static_cast<Type>((((i + j) % 2) == 0) ? 1 : -1)*determinant;
-         //cofactor[i][j] = pow(-1.0, i+j+2.0)*determinant;
+        cofactor[i][j] =
+            static_cast<Type>((((i + j) % 2) == 0) ? 1 : -1) * determinant;
+        // cofactor[i][j] = pow(-1.0, i+j+2.0)*determinant;
       }
-   }
+    }
 
-   return(cofactor);
-}
+    return (cofactor);
+  }
 
+  // Matrix<Type> calculate_inverse(void) const method
 
-// Matrix<Type> calculate_inverse(void) const method
+  /// Returns the inverse of a square matrix.
+  /// An error message is printed if the matrix is singular.
 
-/// Returns the inverse of a square matrix.
-/// An error message is printed if the matrix is singular.
+  Matrix<Type> calculate_inverse(void) const {
+// Control sentence (if debug)
 
-Matrix<Type> calculate_inverse(void) const
-{
-   // Control sentence (if debug)
+#ifndef NDEBUG
 
-   #ifndef NDEBUG 
-   
-   if(rows_number != columns_number)
-   {
+    if (rows_number != columns_number) {
       std::ostringstream buffer;
 
       buffer << "OpenNN Exception: Matrix Template.\n"
              << "calculate_inverse(void) const method.\n"
              << "Matrix must be square.\n";
-      
+
       throw std::logic_error(buffer.str());
-   }
+    }
 
-   #endif
+#endif
 
-   const double determinant = calculate_determinant();
+    const double determinant = calculate_determinant();
 
-   if(determinant == 0.0)
-   {
+    if (determinant == 0.0) {
       std::ostringstream buffer;
 
       buffer << "OpenNN Exception: Matrix Template.\n"
              << "calculate_inverse(void) const method.\n"
              << "Matrix is singular.\n";
-      
+
       throw std::logic_error(buffer.str());
-   }
-   
-   // Calculate cofactor matrix
-   
-   const Matrix<double> cofactor = calculate_cofactor();
+    }
 
-   // Adjoint matrix is the transpose of cofactor matrix
+    // Calculate cofactor matrix
 
-   const Matrix<double> adjoint = cofactor.calculate_transpose();
-   
-   // Inverse matrix is adjoint matrix divided by matrix determinant
+    const Matrix<double> cofactor = calculate_cofactor();
 
-   const Matrix<double> inverse = adjoint/determinant;
+    // Adjoint matrix is the transpose of cofactor matrix
 
-   return(inverse);
-}
+    const Matrix<double> adjoint = cofactor.calculate_transpose();
 
+    // Inverse matrix is adjoint matrix divided by matrix determinant
 
-// Matrix<Type> operator + (const Type&) const method
+    const Matrix<double> inverse = adjoint / determinant;
 
-/// Sum matrix+scalar arithmetic operator. 
-/// @param scalar Scalar value to be added to this matrix.
+    return (inverse);
+  }
 
-inline Matrix<Type> operator + (const Type& scalar) const
-{
-   Matrix<Type> sum(rows_number, columns_number);
+  // Matrix<Type> operator + (const Type&) const method
 
-   for(unsigned i = 0; i < rows_number; i++)
-   {
-      for(unsigned j = 0; j < columns_number; j++)
-      {
-         sum[i][j] = data[i][j] + scalar;    
-      }     
-   }
+  /// Sum matrix+scalar arithmetic operator.
+  /// @param scalar Scalar value to be added to this matrix.
 
-   return(sum);
-}
+  inline Matrix<Type> operator+(const Type& scalar) const {
+    Matrix<Type> sum(rows_number, columns_number);
 
+    for (unsigned i = 0; i < rows_number; i++) {
+      for (unsigned j = 0; j < columns_number; j++) {
+        sum[i][j] = data[i][j] + scalar;
+      }
+    }
 
-// Matrix<Type> operator + (const Vector<Type>&) const method
+    return (sum);
+  }
 
-/// Sum matrix+vector arithmetic operator. 
-/// @param vector Vector to be added to this matrix.
+  // Matrix<Type> operator + (const Vector<Type>&) const method
 
-inline Matrix<Type> operator + (const Vector<Type>& vector) const
-{
-   // Control sentence (if debug)
+  /// Sum matrix+vector arithmetic operator.
+  /// @param vector Vector to be added to this matrix.
 
-   #ifndef NDEBUG 
+  inline Matrix<Type> operator+(const Vector<Type>& vector) const {
+// Control sentence (if debug)
 
-   const unsigned size = vector.size();    
-       
-   if(size != rows_number)
-   {
+#ifndef NDEBUG
+
+    const unsigned size = vector.size();
+
+    if (size != rows_number) {
       std::ostringstream buffer;
 
-      buffer << "OpenNN Exception: Matrix Template.\n" 
+      buffer << "OpenNN Exception: Matrix Template.\n"
              << "Matrix<Type> operator + (const Vector<Type>&) const.\n"
              << "Size of vector must be equal to number of rows.\n";
 
       throw std::logic_error(buffer.str());
-   }
+    }
 
-   #endif
+#endif
 
-   Matrix<Type> sum(rows_number, columns_number);
+    Matrix<Type> sum(rows_number, columns_number);
 
-   for(unsigned i = 0; i < rows_number; i++)
-   {
-      for(unsigned j = 0; j < columns_number; j++)
-      {
-         sum[i][j] = data[i][j] + vector[i];    
-      }     
-   }
+    for (unsigned i = 0; i < rows_number; i++) {
+      for (unsigned j = 0; j < columns_number; j++) {
+        sum[i][j] = data[i][j] + vector[i];
+      }
+    }
 
-   return(sum);
-}
+    return (sum);
+  }
 
+  // Matrix<Type> operator + (const Matrix<Type>&) const method
 
-// Matrix<Type> operator + (const Matrix<Type>&) const method
+  /// Sum matrix+matrix arithmetic operator.
+  /// @param other_matrix Matrix to be added to this vector.
 
-/// Sum matrix+matrix arithmetic operator. 
-/// @param other_matrix Matrix to be added to this vector.
+  inline Matrix<Type> operator+(const Matrix<Type>& other_matrix) const {
+// Control sentence (if debug)
 
-inline Matrix<Type> operator + (const Matrix<Type>& other_matrix) const
-{
-   // Control sentence (if debug)
+#ifndef NDEBUG
 
-   #ifndef NDEBUG 
+    const unsigned other_rows_number = other_matrix.get_rows_number();
+    const unsigned other_columns_number = other_matrix.get_columns_number();
 
-   const unsigned other_rows_number = other_matrix.get_rows_number();    
-   const unsigned other_columns_number = other_matrix.get_columns_number();    
-       
-   if(other_rows_number != rows_number || other_columns_number != columns_number)
-   {
+    if (other_rows_number != rows_number ||
+        other_columns_number != columns_number) {
       std::ostringstream buffer;
 
-      buffer << "OpenNN Exception: Matrix Template.\n" 
+      buffer << "OpenNN Exception: Matrix Template.\n"
              << "Matrix<Type> operator + (const Matrix<Type>&) const.\n"
-             << "Sizes of other matrix (" << other_rows_number << "," << other_columns_number << ") must be the same than sizes of this matrix (" << rows_number << "," << columns_number << ").\n";
+             << "Sizes of other matrix (" << other_rows_number << ","
+             << other_columns_number
+             << ") must be the same than sizes of this matrix (" << rows_number
+             << "," << columns_number << ").\n";
 
       throw std::logic_error(buffer.str());
-   }
+    }
 
-   #endif
+#endif
 
-   Matrix<Type> sum(rows_number, columns_number);
+    Matrix<Type> sum(rows_number, columns_number);
 
-   for(unsigned i = 0; i < rows_number; i++)
-   {
-      for(unsigned j = 0; j < columns_number; j++)
-      {
-         sum[i][j] = data[i][j] + other_matrix[i][j];    
-      }     
-   }
+    for (unsigned i = 0; i < rows_number; i++) {
+      for (unsigned j = 0; j < columns_number; j++) {
+        sum[i][j] = data[i][j] + other_matrix[i][j];
+      }
+    }
 
-   return(sum);
-}
+    return (sum);
+  }
 
+  // Matrix<Type> operator - (const Type&) const method
 
-// Matrix<Type> operator - (const Type&) const method
+  /// Difference matrix-scalar arithmetic operator.
+  /// @param scalar Scalar value to be subtracted to this matrix.
 
-/// Difference matrix-scalar arithmetic operator. 
-/// @param scalar Scalar value to be subtracted to this matrix.
+  inline Matrix<Type> operator-(const Type& scalar) const {
+    Matrix<Type> difference(rows_number, columns_number);
 
-inline Matrix<Type> operator - (const Type& scalar) const
-{
-   Matrix<Type> difference(rows_number, columns_number);
+    for (unsigned i = 0; i < rows_number; i++) {
+      for (unsigned j = 0; j < columns_number; j++) {
+        difference[i][j] = data[i][j] - scalar;
+      }
+    }
 
-   for(unsigned i = 0; i < rows_number; i++)
-   {
-      for(unsigned j = 0; j < columns_number; j++)
-      {
-         difference[i][j] = data[i][j] - scalar;    
-      }     
-   }
+    return (difference);
+  }
 
-   return(difference);
-}
+  // Matrix<Type> operator - (const Vector<Type>&) const method
 
+  /// Sum matrix-vector arithmetic operator.
+  /// @param vector Vector to be subtracted to this matrix.
 
-// Matrix<Type> operator - (const Vector<Type>&) const method
+  inline Matrix<Type> operator-(const Vector<Type>& vector) const {
+// Control sentence (if debug)
 
-/// Sum matrix-vector arithmetic operator. 
-/// @param vector Vector to be subtracted to this matrix.
+#ifndef NDEBUG
 
-inline Matrix<Type> operator - (const Vector<Type>& vector) const
-{
-   // Control sentence (if debug)
+    const unsigned size = vector.size();
 
-   #ifndef NDEBUG 
-
-   const unsigned size = vector.size();    
-       
-   if(size != rows_number)
-   {
+    if (size != rows_number) {
       std::ostringstream buffer;
 
-      buffer << "OpenNN Exception: Matrix Template.\n" 
+      buffer << "OpenNN Exception: Matrix Template.\n"
              << "Matrix<Type> operator - (const Vector<Type>&) const.\n"
              << "Size of vector must be equal to number of rows.\n";
 
       throw std::logic_error(buffer.str());
-   }
+    }
 
-   #endif
+#endif
 
-   Matrix<Type> difference(rows_number, columns_number);
+    Matrix<Type> difference(rows_number, columns_number);
 
-   for(unsigned i = 0; i < rows_number; i++)
-   {
-      for(unsigned j = 0; j < columns_number; j++)
-      {
-         difference[i][j] = data[i][j] - vector[i];    
-      }     
-   }
+    for (unsigned i = 0; i < rows_number; i++) {
+      for (unsigned j = 0; j < columns_number; j++) {
+        difference[i][j] = data[i][j] - vector[i];
+      }
+    }
 
-   return(difference);
-}
+    return (difference);
+  }
 
+  // Matrix<Type> operator - (const Matrix<Type>&) const method
 
-// Matrix<Type> operator - (const Matrix<Type>&) const method 
+  /// Difference matrix-matrix arithmetic operator.
+  /// @param other_matrix Matrix to be subtracted to this matrix.
 
-/// Difference matrix-matrix arithmetic operator. 
-/// @param other_matrix Matrix to be subtracted to this matrix.
+  inline Matrix<Type> operator-(const Matrix<Type>& other_matrix) const {
+// Control sentence (if debug)
 
-inline Matrix<Type> operator - (const Matrix<Type>& other_matrix) const
-{
-   // Control sentence (if debug)
+#ifndef NDEBUG
 
-   #ifndef NDEBUG 
+    const unsigned other_rows_number = other_matrix.get_rows_number();
+    const unsigned other_columns_number = other_matrix.get_columns_number();
 
-   const unsigned other_rows_number = other_matrix.get_rows_number();    
-   const unsigned other_columns_number = other_matrix.get_columns_number();    
-       
-   if(other_rows_number != rows_number || other_columns_number != columns_number)
-   {
+    if (other_rows_number != rows_number ||
+        other_columns_number != columns_number) {
       std::ostringstream buffer;
 
-      buffer << "OpenNN Exception: Matrix Template.\n" 
+      buffer << "OpenNN Exception: Matrix Template.\n"
              << "Matrix<Type> operator - (const Matrix<Type>&) const method.\n"
-             << "Sizes of other matrix (" << other_rows_number << "," << other_columns_number << ") must be equal to sizes of this matrix ("<< rows_number << "," << columns_number <<").\n";
+             << "Sizes of other matrix (" << other_rows_number << ","
+             << other_columns_number
+             << ") must be equal to sizes of this matrix (" << rows_number
+             << "," << columns_number << ").\n";
 
       throw std::logic_error(buffer.str());
-   }
+    }
 
-   #endif
+#endif
 
-   Matrix<Type> difference(rows_number, columns_number);
+    Matrix<Type> difference(rows_number, columns_number);
 
-   for(unsigned i = 0; i < rows_number; i++)
-   {
-      for(unsigned j = 0; j < columns_number; j++)
-      {
-         difference[i][j] = data[i][j] - other_matrix[i][j];    
-      }     
-   }
+    for (unsigned i = 0; i < rows_number; i++) {
+      for (unsigned j = 0; j < columns_number; j++) {
+        difference[i][j] = data[i][j] - other_matrix[i][j];
+      }
+    }
 
-   return(difference);
-}
+    return (difference);
+  }
 
+  // Matrix<Type> operator * (const Type&) const method
 
-// Matrix<Type> operator * (const Type&) const method
+  /// Product matrix*scalar arithmetic operator.
+  /// @param scalar Scalar value to be multiplied to this matrix.
 
-/// Product matrix*scalar arithmetic operator. 
-/// @param scalar Scalar value to be multiplied to this matrix.
+  inline Matrix<Type> operator*(const Type& scalar) const {
+    Matrix<Type> product(rows_number, columns_number);
 
-inline Matrix<Type> operator * (const Type& scalar) const
-{
-   Matrix<Type> product(rows_number, columns_number);
+    for (unsigned i = 0; i < rows_number; i++) {
+      for (unsigned j = 0; j < columns_number; j++) {
+        product[i][j] = data[i][j] * scalar;
+      }
+    }
 
-   for(unsigned i = 0; i < rows_number; i++)
-   {
-      for(unsigned j = 0; j < columns_number; j++)
-      {
-          product[i][j] = data[i][j]*scalar;     
-      }      
-   }
+    return (product);
+  }
 
-   return(product);
-}
+  // Matrix<Type> operator * (const Vector<Type>&) const  method
 
+  /// Row by element matrix*row arithmetic operator.
+  /// @param vector vector to be multiplied to this matrix.
 
-// Matrix<Type> operator * (const Vector<Type>&) const  method
+  inline Matrix<Type> operator*(const Vector<Type>& vector) const {
+// Control sentence (if debug)
 
-/// Row by element matrix*row arithmetic operator. 
-/// @param vector vector to be multiplied to this matrix.
+#ifndef NDEBUG
 
-inline Matrix<Type> operator * (const Vector<Type>& vector) const
-{
-   // Control sentence (if debug)
+    const unsigned size = vector.size();
 
-   #ifndef NDEBUG 
-
-   const unsigned size = vector.size();    
-       
-   if(size != rows_number)
-   {
+    if (size != rows_number) {
       std::ostringstream buffer;
 
-      buffer << "OpenNN Exception: Matrix Template.\n" 
+      buffer << "OpenNN Exception: Matrix Template.\n"
              << "Matrix<Type> operator * (const Vector<Type>&) const method.\n"
-             << "Vector size (" << size << ")  must be equal to number of matrix rows (" << rows_number << ").\n";
+             << "Vector size (" << size
+             << ")  must be equal to number of matrix rows (" << rows_number
+             << ").\n";
 
       throw std::logic_error(buffer.str());
-   }
+    }
 
-   #endif
+#endif
 
-   Matrix<Type> product(rows_number, columns_number);
+    Matrix<Type> product(rows_number, columns_number);
 
-   for(unsigned i = 0; i < rows_number; i++)
-   {
-      for(unsigned j = 0; j < columns_number; j++)
-      {
-         product[i][j] = data[i][j]*vector[i];    
-      }     
-   }
+    for (unsigned i = 0; i < rows_number; i++) {
+      for (unsigned j = 0; j < columns_number; j++) {
+        product[i][j] = data[i][j] * vector[i];
+      }
+    }
 
-   return(product);
-}
+    return (product);
+  }
 
+  // Matrix<Type> operator * (const Matrix<Type>&) const  method
 
-// Matrix<Type> operator * (const Matrix<Type>&) const  method
+  /// Product matrix*matrix arithmetic operator.
+  /// @param other_matrix Matrix to be multiplied to this matrix.
 
-/// Product matrix*matrix arithmetic operator. 
-/// @param other_matrix Matrix to be multiplied to this matrix.
+  inline Matrix<Type> operator*(const Matrix<Type>& other_matrix) const {
+// Control sentence (if debug)
 
-inline Matrix<Type> operator * (const Matrix<Type>& other_matrix) const
-{
-   // Control sentence (if debug)
+#ifndef NDEBUG
 
-   #ifndef NDEBUG 
+    const unsigned other_rows_number = other_matrix.get_rows_number();
+    const unsigned other_columns_number = other_matrix.get_columns_number();
 
-   const unsigned other_rows_number = other_matrix.get_rows_number();    
-   const unsigned other_columns_number = other_matrix.get_columns_number();    
-       
-   if(other_rows_number != rows_number || other_columns_number != columns_number)
-   {
+    if (other_rows_number != rows_number ||
+        other_columns_number != columns_number) {
       std::ostringstream buffer;
 
-      buffer << "OpenNN Exception: Matrix Template.\n" 
+      buffer << "OpenNN Exception: Matrix Template.\n"
              << "Matrix<Type> operator * (const Matrix<Type>&) const method.\n"
-             << "Sizes of other matrix (" << other_rows_number << "," << other_columns_number << ") must be equal to sizes of this matrix (" << rows_number << "," << columns_number << ").\n";
+             << "Sizes of other matrix (" << other_rows_number << ","
+             << other_columns_number
+             << ") must be equal to sizes of this matrix (" << rows_number
+             << "," << columns_number << ").\n";
 
       throw std::logic_error(buffer.str());
-   }
+    }
 
-   #endif
+#endif
 
-   Matrix<Type> product(rows_number, columns_number);
+    Matrix<Type> product(rows_number, columns_number);
 
-   for(unsigned i = 0; i < rows_number; i++)
-   {
-      for(unsigned j = 0; j < columns_number; j++)
-      {
-         product[i][j] = data[i][j]*other_matrix[i][j];    
-      }     
-   }
+    for (unsigned i = 0; i < rows_number; i++) {
+      for (unsigned j = 0; j < columns_number; j++) {
+        product[i][j] = data[i][j] * other_matrix[i][j];
+      }
+    }
 
-   return(product);
-}
+    return (product);
+  }
 
+  // Matrix<Type> operator / (const Type&) const method
 
-// Matrix<Type> operator / (const Type&) const method
+  /// Cocient Matrix/scalar arithmetic operator.
+  /// @param scalar Value of scalar.
 
-/// Cocient Matrix/scalar arithmetic operator. 
-/// @param scalar Value of scalar. 
+  inline Matrix<Type> operator/(const Type& scalar) const {
+    Matrix<Type> cocient(rows_number, columns_number);
 
-inline Matrix<Type> operator / (const Type& scalar) const
-{
-   Matrix<Type> cocient(rows_number, columns_number);
+    for (unsigned i = 0; i < rows_number; i++) {
+      for (unsigned j = 0; j < columns_number; j++) {
+        cocient[i][j] = data[i][j] / scalar;
+      }
+    }
 
-   for(unsigned i = 0; i < rows_number; i++)
-   {
-      for(unsigned j = 0; j < columns_number; j++)
-      {
-         cocient[i][j] = data[i][j]/scalar;     
-      }      
-   }
+    return (cocient);
+  }
 
-   return(cocient);
-}
+  // Matrix<Type> operator / (const Vector<Type>&) const method
 
+  /// Cocient matrix/vector arithmetic operator.
+  /// @param vector Vector to be divided to this matrix.
 
-// Matrix<Type> operator / (const Vector<Type>&) const method
+  inline Matrix<Type> operator/(const Vector<Type>& vector) const {
+// Control sentence (if debug)
 
-/// Cocient matrix/vector arithmetic operator. 
-/// @param vector Vector to be divided to this matrix.
+#ifndef NDEBUG
 
-inline Matrix<Type> operator / (const Vector<Type>& vector) const
-{
-   // Control sentence (if debug)
+    const unsigned size = vector.size();
 
-   #ifndef NDEBUG 
-
-   const unsigned size = vector.size();    
-       
-   if(size != columns_number)
-   {
+    if (size != columns_number) {
       std::ostringstream buffer;
 
-      buffer << "OpenNN Exception: Matrix Template.\n" 
+      buffer << "OpenNN Exception: Matrix Template.\n"
              << "Matrix<Type> operator / (const Vector<Type>&) const.\n"
              << "Size of vector must be equal to number of columns.\n";
 
       throw std::logic_error(buffer.str());
-   }
+    }
 
-   #endif
+#endif
 
-   Matrix<Type> cocient(rows_number, columns_number);
+    Matrix<Type> cocient(rows_number, columns_number);
 
-   for(unsigned i = 0; i < rows_number; i++)
-   {
-      for(unsigned j = 0; j < columns_number; j++)
-      {
-         cocient[i][j] = data[i][j]/vector[j];    
-      }     
-   }
+    for (unsigned i = 0; i < rows_number; i++) {
+      for (unsigned j = 0; j < columns_number; j++) {
+        cocient[i][j] = data[i][j] / vector[j];
+      }
+    }
 
-   return(cocient);
-}
+    return (cocient);
+  }
 
+  // Matrix<Type> operator / (const Matrix<Type>&) const  method
 
-// Matrix<Type> operator / (const Matrix<Type>&) const  method
+  /// Cocient matrix/matrix arithmetic operator.
+  /// @param other_matrix Matrix to be divided to this vector.
 
-/// Cocient matrix/matrix arithmetic operator. 
-/// @param other_matrix Matrix to be divided to this vector.
+  inline Matrix<Type> operator/(const Matrix<Type>& other_matrix) const {
+// Control sentence (if debug)
 
-inline Matrix<Type> operator / (const Matrix<Type>& other_matrix) const
-{
-   // Control sentence (if debug)
+#ifndef NDEBUG
 
-   #ifndef NDEBUG 
+    const unsigned other_rows_number = other_matrix.get_rows_number();
+    const unsigned other_columns_number = other_matrix.get_columns_number();
 
-   const unsigned other_rows_number = other_matrix.get_rows_number();    
-   const unsigned other_columns_number = other_matrix.get_columns_number();    
-       
-   if(other_rows_number != rows_number || other_columns_number != columns_number)
-   {
+    if (other_rows_number != rows_number ||
+        other_columns_number != columns_number) {
       std::ostringstream buffer;
 
-      buffer << "OpenNN Exception: Matrix Template.\n" 
+      buffer << "OpenNN Exception: Matrix Template.\n"
              << "Matrix<Type> operator / (const Matrix<Type>&) const method.\n"
              << "Both matrix sizes must be the same.\n";
 
       throw std::logic_error(buffer.str());
-   }
+    }
 
-   #endif
+#endif
 
-   Matrix<Type> cocient(rows_number, columns_number);
+    Matrix<Type> cocient(rows_number, columns_number);
 
-   for(unsigned i = 0; i < rows_number; i++)
-   {
-      for(unsigned j = 0; j < columns_number; j++)
-      {
-         cocient[i][j] = data[i][j]/other_matrix[i][j];    
-      }     
-   }
-
-   return(cocient);
-}
-
-
-// void operator += (const Type&)
-
-/// Scalar sum and assignment operator.
-/// @param value Scalar value to be added to this matrix.
-
-inline void operator += (const Type& value) 
-{         
-   for(unsigned i = 0; i < rows_number; i++)
-   {
-      for(unsigned j = 0; j < columns_number; j++)
-      {
-         data[i][j] += value;
+    for (unsigned i = 0; i < rows_number; i++) {
+      for (unsigned j = 0; j < columns_number; j++) {
+        cocient[i][j] = data[i][j] / other_matrix[i][j];
       }
-   }
-}
+    }
 
+    return (cocient);
+  }
 
-// void operator += (const Matrix<Type>&)
+  // void operator += (const Type&)
 
-/// Matrix sum and assignment operator.
-/// @param other_matrix Matrix to be added to this matrix.
+  /// Scalar sum and assignment operator.
+  /// @param value Scalar value to be added to this matrix.
 
-inline void operator += (const Matrix<Type>& other_matrix)
-{       
-   // Control sentence (if debug)            
+  inline void operator+=(const Type& value) {
+    for (unsigned i = 0; i < rows_number; i++) {
+      for (unsigned j = 0; j < columns_number; j++) {
+        data[i][j] += value;
+      }
+    }
+  }
 
-   #ifndef NDEBUG 
+  // void operator += (const Matrix<Type>&)
 
-   const unsigned other_rows_number = other_matrix.get_rows_number();
+  /// Matrix sum and assignment operator.
+  /// @param other_matrix Matrix to be added to this matrix.
 
-   if(other_rows_number != rows_number)
-   {
+  inline void operator+=(const Matrix<Type>& other_matrix) {
+// Control sentence (if debug)
+
+#ifndef NDEBUG
+
+    const unsigned other_rows_number = other_matrix.get_rows_number();
+
+    if (other_rows_number != rows_number) {
       std::ostringstream buffer;
 
-      buffer << "OpenNN Exception: Matrix Template.\n" 
+      buffer << "OpenNN Exception: Matrix Template.\n"
              << "void operator += (const Matrix<Type>&).\n"
              << "Both numbers of rows must be the same.\n";
 
       throw std::logic_error(buffer.str());
-   }
+    }
 
-   const unsigned other_columns_number = other_matrix.get_columns_number();
+    const unsigned other_columns_number = other_matrix.get_columns_number();
 
-   if(other_columns_number != columns_number)
-   {
+    if (other_columns_number != columns_number) {
       std::ostringstream buffer;
 
-      buffer << "OpenNN Exception: Matrix Template.\n" 
+      buffer << "OpenNN Exception: Matrix Template.\n"
              << "void operator += (const Matrix<Type>&).\n"
              << "Both numbers of columns must be the same.\n";
 
       throw std::logic_error(buffer.str());
-   }
+    }
 
-   #endif
-  
-   for(unsigned i = 0; i < rows_number; i++)
-   {
-      for(unsigned j = 0; j < columns_number; j++)
-      {
-         data[i][j] += other_matrix[i][j];
-	  }
-   }
-}
+#endif
 
+    for (unsigned i = 0; i < rows_number; i++) {
+      for (unsigned j = 0; j < columns_number; j++) {
+        data[i][j] += other_matrix[i][j];
+      }
+    }
+  }
 
-// void operator -= (const Type&)
+  // void operator -= (const Type&)
 
-/// Scalar rest and assignment operator.
-/// @param value Scalar value to be subtracted to this matrix.
+  /// Scalar rest and assignment operator.
+  /// @param value Scalar value to be subtracted to this matrix.
 
-inline void operator -= (const Type& value)
-{         
-   for(unsigned i = 0; i < rows_number; i++)
-   {
-      for(unsigned j = 0; j < columns_number; j++)
-      {
-         data[i][j] -= value;
-	  }
-   }
-}
+  inline void operator-=(const Type& value) {
+    for (unsigned i = 0; i < rows_number; i++) {
+      for (unsigned j = 0; j < columns_number; j++) {
+        data[i][j] -= value;
+      }
+    }
+  }
 
+  // void operator -= (const Matrix<Type>&)
 
-// void operator -= (const Matrix<Type>&)
+  /// Matrix rest and assignment operator.
+  /// @param other_matrix Matrix to be subtracted to this matrix.
 
-/// Matrix rest and assignment operator.
-/// @param other_matrix Matrix to be subtracted to this matrix.
+  inline void operator-=(const Matrix<Type>& other_matrix) {
+// Control sentence (if debug)
 
-inline void operator -= (const Matrix<Type>& other_matrix)
-{       
-   // Control sentence (if debug)            
+#ifndef NDEBUG
 
-   #ifndef NDEBUG 
+    const unsigned other_rows_number = other_matrix.get_rows_number();
 
-   const unsigned other_rows_number = other_matrix.get_rows_number();
-
-   if(other_rows_number != rows_number)
-   {
+    if (other_rows_number != rows_number) {
       std::ostringstream buffer;
 
-      buffer << "OpenNN Exception: Matrix Template.\n" 
+      buffer << "OpenNN Exception: Matrix Template.\n"
              << "void operator -= (const Matrix<Type>&).\n"
              << "Both numbers of rows must be the same.\n";
 
       throw std::logic_error(buffer.str());
-   }
+    }
 
-   const unsigned other_columns_number = other_matrix.get_columns_number();
+    const unsigned other_columns_number = other_matrix.get_columns_number();
 
-   if(other_columns_number != columns_number)
-   {
+    if (other_columns_number != columns_number) {
       std::ostringstream buffer;
 
-      buffer << "OpenNN Exception: Matrix Template.\n" 
+      buffer << "OpenNN Exception: Matrix Template.\n"
              << "void operator -= (const Matrix<Type>&).\n"
              << "Both numbers of columns must be the same.\n";
 
       throw std::logic_error(buffer.str());
-   }
+    }
 
-   #endif
-  
-   for(unsigned i = 0; i < rows_number; i++)
-   {
-      for(unsigned j = 0; j < columns_number; j++)
-      {
-         data[i][j] -= other_matrix[i][j];
+#endif
+
+    for (unsigned i = 0; i < rows_number; i++) {
+      for (unsigned j = 0; j < columns_number; j++) {
+        data[i][j] -= other_matrix[i][j];
       }
-   }
-}
+    }
+  }
 
+  // void operator *= (const Type&)
 
-// void operator *= (const Type&)
+  /// Scalar product and assignment operator.
+  /// @param value Scalar value to be multiplied to this matrix.
 
-/// Scalar product and assignment operator.
-/// @param value Scalar value to be multiplied to this matrix.
+  inline void operator*=(const Type& value) {
+    for (unsigned i = 0; i < rows_number; i++) {
+      for (unsigned j = 0; j < columns_number; j++) {
+        data[i][j] *= value;
+      }
+    }
+  }
 
-inline void operator *= (const Type& value)
-{         
-   for(unsigned i = 0; i < rows_number; i++)
-   {
-      for(unsigned j = 0; j < columns_number; j++)
-      {
-         data[i][j] *= value;
-	  }
-   }
-}
+  // void operator *= (const Matrix<Type>&)
 
+  /// Matrix product and assignment operator.
+  /// @param other_matrix Matrix to be multiplied to this matrix.
 
-// void operator *= (const Matrix<Type>&) 
+  inline void operator*=(const Matrix<Type>& other_matrix) {
+// Control sentence (if debug)
 
-/// Matrix product and assignment operator.
-/// @param other_matrix Matrix to be multiplied to this matrix.
+#ifndef NDEBUG
 
-inline void operator *= (const Matrix<Type>& other_matrix)
-{       
-   // Control sentence (if debug)            
+    const unsigned other_rows_number = other_matrix.get_rows_number();
 
-   #ifndef NDEBUG 
+    const unsigned rows_number = this->get_rows_number();
 
-   const unsigned other_rows_number = other_matrix.get_rows_number();
-
-   const unsigned rows_number = this->get_rows_number();
-
-   if(other_rows_number != rows_number)
-   {
+    if (other_rows_number != rows_number) {
       std::ostringstream buffer;
 
-      buffer << "OpenNN Exception: Matrix Template.\n" 
+      buffer << "OpenNN Exception: Matrix Template.\n"
              << "void operator *= (const Matrix<Type>&).\n"
-             << "The number of rows in the other matrix (" << other_rows_number << ")"
-             << " is not equal to the number of rows in this matrix (" << rows_number << ").\n";
+             << "The number of rows in the other matrix (" << other_rows_number
+             << ")"
+             << " is not equal to the number of rows in this matrix ("
+             << rows_number << ").\n";
 
       throw std::logic_error(buffer.str());
-   }
+    }
 
-   #endif
-  
-   for(unsigned i = 0; i < rows_number; i++)
-   {
-      for(unsigned j = 0; j < columns_number; j++)
-      {
-         data[i][j] *= other_matrix[i][j];
+#endif
+
+    for (unsigned i = 0; i < rows_number; i++) {
+      for (unsigned j = 0; j < columns_number; j++) {
+        data[i][j] *= other_matrix[i][j];
       }
-   }
-}
+    }
+  }
 
+  // void operator /= (const Type&)
 
-// void operator /= (const Type&) 
+  /// Scalar division and assignment operator.
+  /// @param value Scalar value to be divided to this matrix.
 
-/// Scalar division and assignment operator.
-/// @param value Scalar value to be divided to this matrix.
+  inline void operator/=(const Type& value) {
+    for (unsigned i = 0; i < rows_number; i++) {
+      for (unsigned j = 0; j < columns_number; j++) {
+        data[i][j] /= value;
+      }
+    }
+  }
 
-inline void operator /= (const Type& value)
-{         
-   for(unsigned i = 0; i < rows_number; i++)
-   {
-      for(unsigned j = 0; j < columns_number; j++)
-      {
-         data[i][j] /= value;
-	  }
-   }
-}
+  // void operator /= (const Matrix<Type>&)
 
+  /// Matrix division and assignment operator.
+  /// @param other_matrix Matrix to be divided to this matrix.
 
-// void operator /= (const Matrix<Type>&)
+  inline void operator/=(const Matrix<Type>& other_matrix) {
+// Control sentence (if debug)
 
-/// Matrix division and assignment operator.
-/// @param other_matrix Matrix to be divided to this matrix.
+#ifndef NDEBUG
 
-inline void operator /= (const Matrix<Type>& other_matrix)
-{       
-   // Control sentence (if debug)            
+    const unsigned other_rows_number = other_matrix.get_rows_number();
 
-   #ifndef NDEBUG 
-
-   const unsigned other_rows_number = other_matrix.get_rows_number();
-
-   if(other_rows_number != rows_number)
-   {
+    if (other_rows_number != rows_number) {
       std::ostringstream buffer;
 
-      buffer << "OpenNN Exception: Matrix Template.\n" 
+      buffer << "OpenNN Exception: Matrix Template.\n"
              << "void operator /= (const Matrix<Type>&).\n"
              << "Both numbers of rows must be the same.\n";
 
       throw std::logic_error(buffer.str());
-   }
+    }
 
-   const unsigned other_columns_number = other_matrix.get_columns_number();
+    const unsigned other_columns_number = other_matrix.get_columns_number();
 
-   if(other_columns_number != columns_number)
-   {
+    if (other_columns_number != columns_number) {
       std::ostringstream buffer;
 
-      buffer << "OpenNN Exception: Matrix Template.\n" 
+      buffer << "OpenNN Exception: Matrix Template.\n"
              << "void operator /= (const Matrix<Type>&).\n"
              << "Both numbers of columns must be the same.\n";
 
       throw std::logic_error(buffer.str());
-   }
+    }
 
-   #endif
-  
-   for(unsigned i = 0; i < rows_number; i++)
-   {
-      for(unsigned j = 0; j < columns_number; j++)
-      {
-         data[i][j] /= other_matrix[i][j];
+#endif
+
+    for (unsigned i = 0; i < rows_number; i++) {
+      for (unsigned j = 0; j < columns_number; j++) {
+        data[i][j] /= other_matrix[i][j];
       }
-   }
-}
+    }
+  }
 
+  // Vector<Type> dot(const Vector<Type>&) const method
 
-// Vector<Type> dot(const Vector<Type>&) const method
+  /// Returns the dot product of this matrix with a vector.
+  /// The size of the vector must be equal to the number of columns of the
+  /// matrix.
+  /// @param vector Vector to be multiplied to this matrix.
 
-/// Returns the dot product of this matrix with a vector.
-/// The size of the vector must be equal to the number of columns of the matrix.
-/// @param vector Vector to be multiplied to this matrix.
+  Vector<Type> dot(const Vector<Type>& vector) const {
+// Control sentence (if debug)
 
-Vector<Type> dot(const Vector<Type>& vector) const
-{
-   // Control sentence (if debug)
+#ifndef NDEBUG
 
-   #ifndef NDEBUG 
-       
-   const unsigned size = vector.size();
+    const unsigned size = vector.size();
 
-   if(size != columns_number)
-   {
+    if (size != columns_number) {
       std::ostringstream buffer;
 
-      buffer << "OpenNN Exception: Matrix Template.\n" 
+      buffer << "OpenNN Exception: Matrix Template.\n"
              << "Vector<Type> dot(const Vector<Type>&) const method.\n"
              << "Vector size must be equal to matrix number of columns.\n";
 
       throw std::logic_error(buffer.str());
-   }
+    }
 
-   #endif
+#endif
 
-   // Calculate matrix-vector poduct   
-      
-   Vector<Type> product(rows_number);
+    // Calculate matrix-vector poduct
 
-   for(unsigned i = 0; i < rows_number; i++)
-   {     
-      product[i] = 0;      
+    Vector<Type> product(rows_number);
 
-      for(unsigned j = 0; j < columns_number; j++)
-      {
-         product[i] += vector[j]*data[i][j];
+    for (unsigned i = 0; i < rows_number; i++) {
+      product[i] = 0;
+
+      for (unsigned j = 0; j < columns_number; j++) {
+        product[i] += vector[j] * data[i][j];
       }
-   }
+    }
 
-   return(product);
-}
+    return (product);
+  }
 
+  // Matrix<Type> dot(const Matrix<Type>&) const method
 
-// Matrix<Type> dot(const Matrix<Type>&) const method
+  /// Returns the dot product of this matrix with another matrix.
+  ///
+  /// @param other_matrix Matrix to be multiplied to this matrix.
 
-/// Returns the dot product of this matrix with another matrix. 
-///
-/// @param other_matrix Matrix to be multiplied to this matrix.
+  Matrix<Type> dot(const Matrix<Type>& other_matrix) const {
+    const unsigned other_columns_number = other_matrix.get_columns_number();
 
-Matrix<Type> dot(const Matrix<Type>& other_matrix) const
-{
-   const unsigned other_columns_number = other_matrix.get_columns_number();
+// Control sentence (if debug)
 
-   // Control sentence (if debug)
+#ifndef NDEBUG
 
-   #ifndef NDEBUG 
-       
-   const unsigned other_rows_number = other_matrix.get_rows_number();
+    const unsigned other_rows_number = other_matrix.get_rows_number();
 
-   if(other_rows_number != columns_number)
-   {
+    if (other_rows_number != columns_number) {
       std::ostringstream buffer;
 
-      buffer << "OpenNN Exception: Matrix Template.\n" 
+      buffer << "OpenNN Exception: Matrix Template.\n"
              << "Matrix<Type> dot(const Matrix<Type>&) const method.\n"
-             << "The number of rows of the other matrix (" << other_rows_number << ") must be equal to the number of columns of this matrix (" << columns_number << ").\n";
+             << "The number of rows of the other matrix (" << other_rows_number
+             << ") must be equal to the number of columns of this matrix ("
+             << columns_number << ").\n";
 
       throw std::logic_error(buffer.str());
-   }
+    }
 
-   #endif
+#endif
 
-   Matrix<Type> product(rows_number, other_columns_number, 0.0);
+    Matrix<Type> product(rows_number, other_columns_number, 0.0);
 
-   for(unsigned i = 0; i < rows_number; i++)
-   {
-      for(unsigned j = 0; j < other_columns_number; j++)
-      { 
-         for(unsigned k = 0; k < columns_number; k++)
-         {
-             product[i][j] += data[i][k]*other_matrix[k][j];
-         }
+    for (unsigned i = 0; i < rows_number; i++) {
+      for (unsigned j = 0; j < other_columns_number; j++) {
+        for (unsigned k = 0; k < columns_number; k++) {
+          product[i][j] += data[i][k] * other_matrix[k][j];
+        }
       }
-   }
+    }
 
-   return(product);
-}
+    return (product);
+  }
 
+  // Matrix<Type> direct(const Matrix<Type>&) const method
 
-// Matrix<Type> direct(const Matrix<Type>&) const method 
+  /// Calculates the direct product of this matrix with another matrix.
+  /// This product is also known as the Kronecker product.
+  /// @param other_matrix Second product term.
+  /// @todo
 
-/// Calculates the direct product of this matrix with another matrix. 
-/// This product is also known as the Kronecker product. 
-/// @param other_matrix Second product term. 
-/// @todo
+  Matrix<Type> direct(const Matrix<Type>& other_matrix) const {
+    const unsigned other_rows_number = other_matrix.get_rows_number();
+    const unsigned other_columns_number = other_matrix.get_columns_number();
 
-Matrix<Type> direct(const Matrix<Type>& other_matrix) const
-{
-   const unsigned other_rows_number = other_matrix.get_rows_number();   
-   const unsigned other_columns_number = other_matrix.get_columns_number();   
+    const Matrix<Type> direct(rows_number * other_rows_number,
+                              columns_number * other_columns_number);
 
-   const Matrix<Type> direct(rows_number*other_rows_number, columns_number*other_columns_number);
+    return (direct);
+  }
 
-   return(direct);
-}
+  // bool empty(void) const method
 
-// bool empty(void) const method
+  /// Returns true if number of rows and columns is zero.
 
-/// Returns true if number of rows and columns is zero.
+  bool empty(void) const {
+    if (rows_number == 0 && columns_number == 0) {
+      return (true);
+    } else {
+      return (false);
+    }
+  }
 
-bool empty(void) const
-{
-   if(rows_number == 0 && columns_number == 0)
-   {
-      return(true);
-   }
-   else
-   {
-      return(false);
-   }
+  // bool is_square(void) const method
 
-}
+  /// Returns true if this matrix is square.
+  /// A square matrix has the same numbers of rows and columns.
 
+  bool is_square(void) const {
+    if (rows_number == columns_number) {
+      return (true);
+    } else {
+      return (false);
+    }
+  }
 
-// bool is_square(void) const method
+  // bool is_symmetric(void) const method
 
-/// Returns true if this matrix is square.
-/// A square matrix has the same numbers of rows and columns.
+  /// Returns true if this matrix is symmetric.
+  /// A symmetric matrix is a squared matrix which is equal to its transpose.
 
-bool is_square(void) const
-{
-   if(rows_number == columns_number)
-   {
-      return(true);
-   }
-   else
-   {
-      return(false);
-   }
+  bool is_symmetric(void) const {
+// Control sentence (if debug)
 
-}
+#ifndef NDEBUG
 
-
-// bool is_symmetric(void) const method
-
-/// Returns true if this matrix is symmetric.
-/// A symmetric matrix is a squared matrix which is equal to its transpose.
-
-bool is_symmetric(void) const
-{
-   // Control sentence (if debug)
-
-   #ifndef NDEBUG 
-       
-   if(rows_number != columns_number)
-   {
+    if (rows_number != columns_number) {
       std::ostringstream buffer;
 
-      buffer << "OpenNN Exception: Matrix Template.\n" 
+      buffer << "OpenNN Exception: Matrix Template.\n"
              << "bool is_symmetric(void) const method.\n"
              << "Matrix must be squared.\n";
 
       throw std::logic_error(buffer.str());
-   }
+    }
 
-   #endif
+#endif
 
-   const Matrix<Type> transpose = calculate_transpose();
+    const Matrix<Type> transpose = calculate_transpose();
 
-   if((*this) == transpose)
-   {
-       return(true);
-   }
-   else
-   {
-       return(false);
-   }
-}
+    if ((*this) == transpose) {
+      return (true);
+    } else {
+      return (false);
+    }
+  }
 
+  // bool is_antisymmetric(void) const method
 
-// bool is_antisymmetric(void) const method
+  /// Returns true if this matrix is antysymmetric.
+  /// A symmetric matrix is a squared matrix which its opposed is equal to its
+  /// transpose.
 
-/// Returns true if this matrix is antysymmetric.
-/// A symmetric matrix is a squared matrix which its opposed is equal to its transpose.
+  bool is_antisymmetric(void) const {
+// Control sentence (if debug)
 
-bool is_antisymmetric(void) const
-{
-   // Control sentence (if debug)
+#ifndef NDEBUG
 
-   #ifndef NDEBUG 
-       
-   if(rows_number != columns_number)
-   {
+    if (rows_number != columns_number) {
       std::ostringstream buffer;
 
-      buffer << "OpenNN Exception: Matrix Template.\n" 
+      buffer << "OpenNN Exception: Matrix Template.\n"
              << "bool is_antisymmetric(void) const method.\n"
              << "Matrix must be squared.\n";
 
       throw std::logic_error(buffer.str());
-   }
+    }
 
-   #endif
+#endif
 
-   const Matrix<Type> transpose = calculate_transpose();
+    const Matrix<Type> transpose = calculate_transpose();
 
-   if((*this) == transpose*(-1))
-   {
-       return(true);
-   }
-   else
-   {
-       return(false);
-   }
-}
+    if ((*this) == transpose * (-1)) {
+      return (true);
+    } else {
+      return (false);
+    }
+  }
 
+  // bool is_diagonal(void) const method
 
-// bool is_diagonal(void) const method
+  /// Returns true if this matrix is diagonal.
+  /// A diagonal matrix is which the entries outside the main diagonal are zero.
 
-/// Returns true if this matrix is diagonal.
-/// A diagonal matrix is which the entries outside the main diagonal are zero.
+  bool is_diagonal(void) const {
+// Control sentence (if debug)
 
-bool is_diagonal(void) const
-{
-   // Control sentence (if debug)
+#ifndef NDEBUG
 
-   #ifndef NDEBUG 
-       
-   if(rows_number != columns_number)
-   {
+    if (rows_number != columns_number) {
       std::ostringstream buffer;
 
-      buffer << "OpenNN Exception: Matrix Template.\n" 
+      buffer << "OpenNN Exception: Matrix Template.\n"
              << "bool is_diagonal(void) const method.\n"
              << "Matrix must be squared.\n";
 
       throw std::logic_error(buffer.str());
-   }
+    }
 
-   #endif
+#endif
 
-   for(unsigned i = 0; i < rows_number; i++)
-   {
-      for(unsigned j = 0; j < columns_number; j++)
-      {
-         if(i != j && data[i][j] != 0)
-         {
-            return(false);
-         }
+    for (unsigned i = 0; i < rows_number; i++) {
+      for (unsigned j = 0; j < columns_number; j++) {
+        if (i != j && data[i][j] != 0) {
+          return (false);
+        }
       }
-   }
+    }
 
-   return(true);
-}
+    return (true);
+  }
 
+  // bool is_scalar(void) const method
 
-// bool is_scalar(void) const method
+  /// Returns true if this matrix is scalar.
+  /// A scalar matrix is a diagonal matrix whose diagonal elements all contain
+  /// the same scalar.
 
-/// Returns true if this matrix is scalar.
-/// A scalar matrix is a diagonal matrix whose diagonal elements all contain the same scalar. 
+  bool is_scalar(void) const {
+// Control sentence (if debug)
 
-bool is_scalar(void) const
-{
-   // Control sentence (if debug)
+#ifndef NDEBUG
 
-   #ifndef NDEBUG 
-       
-   if(rows_number != columns_number)
-   {
+    if (rows_number != columns_number) {
       std::ostringstream buffer;
 
-      buffer << "OpenNN Exception: Matrix Template.\n" 
+      buffer << "OpenNN Exception: Matrix Template.\n"
              << "bool is_scalar(void) const method.\n"
              << "Matrix must be squared.\n";
 
       throw std::logic_error(buffer.str());
-   }
+    }
 
-   #endif
+#endif
 
-   // To do
+    // To do
 
-   return(false);
-}
+    return (false);
+  }
 
+  /// Returns true if this matrix is the identity.
+  /// The identity matrix or unit matrix is a square matrix with ones on the
+  /// main diagonal and zeros elsewhere.
 
-/// Returns true if this matrix is the identity.
-/// The identity matrix or unit matrix is a square matrix with ones on the main diagonal and zeros elsewhere.
+  bool is_identity(void) const {
+// Control sentence (if debug)
 
-bool is_identity(void) const
-{
-   // Control sentence (if debug)
-       
-   #ifndef NDEBUG 
+#ifndef NDEBUG
 
-   if(rows_number != columns_number)
-   {
+    if (rows_number != columns_number) {
       std::ostringstream buffer;
 
-      buffer << "OpenNN Exception: Matrix Template.\n" 
+      buffer << "OpenNN Exception: Matrix Template.\n"
              << "bool is_unity(void) const method.\n"
              << "Matrix must be squared.\n";
 
       throw std::logic_error(buffer.str());
-   }
+    }
 
-   #endif
+#endif
 
-   for(unsigned i = 0; i < rows_number; i++)
-   {
-      for(unsigned j = 0; j < columns_number; j++)
-      {
-         if(i != j && data[i][j] != 0)
-         {
-            return(false);
-         }
-         else if(i == j && data[i][j] != 1)
-         {
-            return(false);
-         } 
+    for (unsigned i = 0; i < rows_number; i++) {
+      for (unsigned j = 0; j < columns_number; j++) {
+        if (i != j && data[i][j] != 0) {
+          return (false);
+        } else if (i == j && data[i][j] != 1) {
+          return (false);
+        }
       }
-   }
+    }
 
-   return(true);
-}
+    return (true);
+  }
 
+  // void print(void) const method
 
-// void print(void) const method
+  /// Prints to the screen in the matrix object.
 
-/// Prints to the screen in the matrix object. 
+  void print(void) const { std::cout << *this; }
 
-void print(void) const
-{
-   std::cout << *this;
-}
+  // void load(const std::string&) method
 
+  /// Loads the numbers of rows and columns and the values of the matrix from a
+  /// data file.
+  ///
+  /// @param file_name File name.
 
-// void load(const std::string&) method
+  void load(const std::string& file_name) {
+    std::ifstream file(file_name.c_str());
 
-/// Loads the numbers of rows and columns and the values of the matrix from a data file. 
-///
-/// @param file_name File name.
-
-void load(const std::string& file_name)
-{
-   std::ifstream file(file_name.c_str());
-  
-   if(!file.is_open())
-   {
+    if (!file.is_open()) {
       std::ostringstream buffer;
 
       buffer << "OpenNN Exception: Matrix template.\n"
@@ -5315,122 +4802,106 @@ void load(const std::string& file_name)
              << "Cannot open matrix data file: " << file_name << "\n";
 
       throw std::logic_error(buffer.str());
-   }
+    }
 
-   // Set matrix sizes
+    // Set matrix sizes
 
-   std::string line;
+    std::string line;
 
-   std::getline(file, line);
+    std::getline(file, line);
 
-   if(line.empty())
-   {
+    if (line.empty()) {
       set();
-   }
-   else
-   {
+    } else {
       std::istringstream buffer(line);
 
-      std::istream_iterator<std::string> it(buffer); 
-      std::istream_iterator<std::string> end; 
+      std::istream_iterator<std::string> it(buffer);
+      std::istream_iterator<std::string> end;
 
-      const std::vector<std::string> results(it, end); 
+      const std::vector<std::string> results(it, end);
 
       const unsigned new_columns_number = results.size();
 
       unsigned new_rows_number = 1;
 
-      while(file.good()) 
-      { 
-         getline(file, line);
+      while (file.good()) {
+        getline(file, line);
 
-         if(!line.empty()) 
-         {
-            new_rows_number++;      
-         }
+        if (!line.empty()) {
+          new_rows_number++;
+        }
       }
 
       set(new_rows_number, new_columns_number);
 
-      // Clear file 
+      // Clear file
 
-      file.clear(); 
-      file.seekg(0, std::ios::beg); 
+      file.clear();
+      file.seekg(0, std::ios::beg);
 
-      for(unsigned i = 0; i < rows_number; i++)
-      {
-         for(unsigned j = 0; j < columns_number; j++)
-         {
-            file >> data[i][j];
-         }     
+      for (unsigned i = 0; i < rows_number; i++) {
+        for (unsigned j = 0; j < columns_number; j++) {
+          file >> data[i][j];
+        }
       }
-   }   
+    }
 
-   // Close file
+    // Close file
 
-   file.close();
-}
+    file.close();
+  }
 
+  // void save(const std::string&) const method
 
-// void save(const std::string&) const method
+  /// Saves the numbers of rows and columns and the values of the matrix to a
+  /// data file.
+  /// @param file_name File name.
 
-/// Saves the numbers of rows and columns and the values of the matrix to a data file. 
-/// @param file_name File name.
+  void save(const std::string& file_name) const {
+    std::ofstream file(file_name.c_str());
 
-void save(const std::string& file_name) const
-{
-   std::ofstream file(file_name.c_str());
-    
-   if(!file.is_open())
-   {
+    if (!file.is_open()) {
       std::ostringstream buffer;
 
       buffer << "OpenNN Exception: Matrix template." << std::endl
              << "void save(const std::string) method." << std::endl
              << "Cannot open matrix data file." << std::endl;
 
-	  throw std::logic_error(buffer.str());
-   }
- 
-   // Write file
- 
-   for(unsigned i = 0; i < rows_number; i++)
-   {
-      for(unsigned j = 0; j < columns_number; j++)
-      {
-         file << data[i][j] << " ";
-      }     
+      throw std::logic_error(buffer.str());
+    }
+
+    // Write file
+
+    for (unsigned i = 0; i < rows_number; i++) {
+      for (unsigned j = 0; j < columns_number; j++) {
+        file << data[i][j] << " ";
+      }
 
       file << std::endl;
-   }
- 
-   // Close file
- 
-   file.close();
-}
+    }
 
+    // Close file
 
-// void parse(const std::string&) method
+    file.close();
+  }
 
-/// This method takes a string representation of a matrix and sets this matrix
-/// from that data.
-/// @param str String to be parsed.
+  // void parse(const std::string&) method
 
-void parse(const std::string& str)
-{
-   if(str.empty())
-   {
-       set();
-   }
-   else
-   {
-       // Set matrix sizes
+  /// This method takes a string representation of a matrix and sets this matrix
+  /// from that data.
+  /// @param str String to be parsed.
 
-       std::istringstream str_buffer(str);
+  void parse(const std::string& str) {
+    if (str.empty()) {
+      set();
+    } else {
+      // Set matrix sizes
 
-       std::string line;
+      std::istringstream str_buffer(str);
 
-       std::getline(str_buffer, line);
+      std::string line;
+
+      std::getline(str_buffer, line);
 
       std::istringstream line_buffer(line);
 
@@ -5443,14 +4914,12 @@ void parse(const std::string& str)
 
       unsigned new_rows_number = 1;
 
-      while(str_buffer.good())
-      {
-         getline(str_buffer, line);
+      while (str_buffer.good()) {
+        getline(str_buffer, line);
 
-         if(!line.empty())
-         {
-            new_rows_number++;
-         }
+        if (!line.empty()) {
+          new_rows_number++;
+        }
       }
 
       set(new_rows_number, new_columns_number);
@@ -5460,156 +4929,132 @@ void parse(const std::string& str)
       str_buffer.clear();
       str_buffer.seekg(0, std::ios::beg);
 
-      for(unsigned i = 0; i < rows_number; i++)
-      {
-         for(unsigned j = 0; j < columns_number; j++)
-         {
-            str_buffer >> data[i][j];
-         }
+      for (unsigned i = 0; i < rows_number; i++) {
+        for (unsigned j = 0; j < columns_number; j++) {
+          str_buffer >> data[i][j];
+        }
       }
-   }
-}
+    }
+  }
 
+  // Matrix<bool> to_boolean(void) const method
 
-// Matrix<bool> to_boolean(void) const method
+  /// Returns a matrix of boolean values.
+  /// If the elements of this matrix are less than 0.5 the boolean elements will
+  /// be false.
+  /// If the elements of this matrix are greater than 0.5 the boolean elements
+  /// will be true.
 
-/// Returns a matrix of boolean values.
-/// If the elements of this matrix are less than 0.5 the boolean elements will be false.
-/// If the elements of this matrix are greater than 0.5 the boolean elements will be true.
+  Matrix<bool> to_boolean(void) const {
+    Matrix<bool> boolean(rows_number, columns_number, false);
 
-Matrix<bool> to_boolean(void) const
-{
-   Matrix<bool> boolean(rows_number, columns_number, false);
-
-   for(unsigned i = 0; i < rows_number; i++)
-   {
-       for(unsigned j = 0; j < columns_number; j++)
-       {
-           if(data[i][j] > 0.5)
-           {
-               boolean[i][j] = true;
-           }
-       }
+    for (unsigned i = 0; i < rows_number; i++) {
+      for (unsigned j = 0; j < columns_number; j++) {
+        if (data[i][j] > 0.5) {
+          boolean[i][j] = true;
+        }
+      }
     }
 
-   return(boolean);
-}
+    return (boolean);
+  }
 
+  // std::string to_string(const std::string&) const method
 
-// std::string to_string(const std::string&) const method
+  /// Returns a string representation of this matrix.
+  /// The elements are separated by spaces.
+  /// The rows are separated by the character "\n".
 
-/// Returns a string representation of this matrix. 
-/// The elements are separated by spaces. 
-/// The rows are separated by the character "\n".
+  std::string to_string(const std::string& separator = " ") const {
+    std::ostringstream buffer;
 
-std::string to_string(const std::string& separator = " ") const
-{
-   std::ostringstream buffer;
-   
-   if(rows_number > 0 && columns_number > 0)
-   {
-       buffer << arrange_row(0).to_string(separator);
+    if (rows_number > 0 && columns_number > 0) {
+      buffer << arrange_row(0).to_string(separator);
 
-       for(unsigned i = 1; i < rows_number; i++)
-       {
-           buffer << "\n"
-                  << arrange_row(i).to_string(separator);
-       }
-   }
-
-   return(buffer.str());
-}
-
-
-// Matrix<std::string> write_string_matrix(const unsigned&) const
-
-/// Returns a new matrix in which each entry has been converted to a string. 
-
-Matrix<std::string> write_string_matrix(const unsigned precision = 3) const
-{
-   Matrix<std::string> string_matrix(rows_number, columns_number);
-
-   std::ostringstream buffer;
-
-   for(unsigned i = 0; i < rows_number; i++)
-   {
-      for(unsigned j = 0; j < columns_number; j++)
-      {
-         buffer.str("");
-         buffer << std::setprecision(precision) << (*this)[i][j];
-   
-         string_matrix[i][j] = buffer.str();
+      for (unsigned i = 1; i < rows_number; i++) {
+        buffer << "\n" << arrange_row(i).to_string(separator);
       }
-   }
+    }
 
-   return(string_matrix);
-}
+    return (buffer.str());
+  }
 
+  // Matrix<std::string> write_string_matrix(const unsigned&) const
 
-// Vector<Type> to_vector(void) const
+  /// Returns a new matrix in which each entry has been converted to a string.
 
-/// Returns a vector representation of this matrix.
-/// The size of the new vector is equal to the number of elements of this matrix. 
-/// The entries of the new vector are the entries of this matrix ordered by rows. 
+  Matrix<std::string> write_string_matrix(const unsigned precision = 3) const {
+    Matrix<std::string> string_matrix(rows_number, columns_number);
 
-Vector<Type> to_vector(void) const
-{
-   Vector<Type> vector(rows_number*columns_number);
+    std::ostringstream buffer;
 
-   unsigned index = 0;
+    for (unsigned i = 0; i < rows_number; i++) {
+      for (unsigned j = 0; j < columns_number; j++) {
+        buffer.str("");
+        buffer << std::setprecision(precision) << (*this)[i][j];
 
-   for(unsigned i = 0; i < rows_number; i++)
-   {
-      for(unsigned j = 0; j < columns_number; j++)
-      {
-         vector[index] = data[i][j];
-         index++;
+        string_matrix[i][j] = buffer.str();
       }
-   }
+    }
 
-   return(vector);
-}
+    return (string_matrix);
+  }
 
+  // Vector<Type> to_vector(void) const
 
-private:
+  /// Returns a vector representation of this matrix.
+  /// The size of the new vector is equal to the number of elements of this
+  /// matrix.
+  /// The entries of the new vector are the entries of this matrix ordered by
+  /// rows.
 
-/// Number of rows in the matrix.
+  Vector<Type> to_vector(void) const {
+    Vector<Type> vector(rows_number * columns_number);
 
-unsigned rows_number;
+    unsigned index = 0;
 
-/// Number of columns in the matrix.
+    for (unsigned i = 0; i < rows_number; i++) {
+      for (unsigned j = 0; j < columns_number; j++) {
+        vector[index] = data[i][j];
+        index++;
+      }
+    }
 
-unsigned columns_number;
+    return (vector);
+  }
 
-/// Double pointer to a Type.
+ private:
 
-Type** data;
+  /// Number of rows in the matrix.
 
+  unsigned rows_number;
+
+  /// Number of columns in the matrix.
+
+  unsigned columns_number;
+
+  /// Double pointer to a Type.
+
+  Type** data;
 };
-
-
 
 /// This method re-writes the input operator >> for the Matrix template.
 /// @param is Input stream.
 /// @param m Input matrix.
 
-template<typename Type>
-std::istream& operator >> (std::istream& is, Matrix<Type>& m)
-{
-   const unsigned rows_number = m.get_rows_number();
-   const unsigned columns_number = m.get_columns_number();
+template <typename Type>
+    std::istream& operator>>(std::istream& is, Matrix<Type>& m) {
+  const unsigned rows_number = m.get_rows_number();
+  const unsigned columns_number = m.get_columns_number();
 
-   for(unsigned i = 0; i < rows_number; i++)
-   {
-      for(unsigned j = 0; j < columns_number; j++)
-      {
-         is >> m[i][j];
-      }     
-   }
+  for (unsigned i = 0; i < rows_number; i++) {
+    for (unsigned j = 0; j < columns_number; j++) {
+      is >> m[i][j];
+    }
+  }
 
-   return(is);
+  return (is);
 }
-
 
 // Output operator
 
@@ -5617,26 +5062,21 @@ std::istream& operator >> (std::istream& is, Matrix<Type>& m)
 /// @param os Output stream.
 /// @param m Output matrix.
 
-template<typename Type>
-std::ostream& operator << (std::ostream& os, const Matrix<Type>& m)
-{
-   const unsigned rows_number = m.get_rows_number();
-   const unsigned columns_number = m.get_columns_number();
+template <typename Type>
+std::ostream& operator<<(std::ostream& os, const Matrix<Type>& m) {
+  const unsigned rows_number = m.get_rows_number();
+  const unsigned columns_number = m.get_columns_number();
 
-   if(rows_number > 0 && columns_number > 0)
-   {
-       os << m.arrange_row(0);
+  if (rows_number > 0 && columns_number > 0) {
+    os << m.arrange_row(0);
 
-       for(unsigned i = 1; i < rows_number; i++)
-       {
-           os << "\n"
-              << m.arrange_row(i);
-       }
-   }
+    for (unsigned i = 1; i < rows_number; i++) {
+      os << "\n" << m.arrange_row(i);
+    }
+  }
 
-   return(os);
+  return (os);
 }
-
 
 // Output operator
 
@@ -5644,24 +5084,19 @@ std::ostream& operator << (std::ostream& os, const Matrix<Type>& m)
 /// @param os Output stream.
 /// @param m Output matrix of vectors.
 
-template<typename Type>
-std::ostream& operator << (std::ostream& os, const Matrix< Vector<Type> >& m)
-{
-   const unsigned rows_number = m.get_rows_number();
-   const unsigned columns_number = m.get_columns_number();
-   
-   for(unsigned i = 0; i < rows_number; i++)
-   {
-      for(unsigned j = 0; j < columns_number; j++)
-      {
-         os << "subvector_" << i << "_" << j << "\n"  
-            << m[i][j] << std::endl;
-      }     
-   }
+template <typename Type>
+std::ostream& operator<<(std::ostream& os, const Matrix<Vector<Type> >& m) {
+  const unsigned rows_number = m.get_rows_number();
+  const unsigned columns_number = m.get_columns_number();
 
-   return(os);
+  for (unsigned i = 0; i < rows_number; i++) {
+    for (unsigned j = 0; j < columns_number; j++) {
+      os << "subvector_" << i << "_" << j << "\n" << m[i][j] << std::endl;
+    }
+  }
+
+  return (os);
 }
-
 
 // Output operator
 
@@ -5669,28 +5104,22 @@ std::ostream& operator << (std::ostream& os, const Matrix< Vector<Type> >& m)
 /// @param os Output stream.
 /// @param m Output matrix of matrices.
 
-template<typename Type>
-std::ostream& operator << (std::ostream& os, const Matrix< Matrix<Type> >& m)
-{
-   const unsigned rows_number = m.get_rows_number();
-   const unsigned columns_number = m.get_columns_number();
-   
-   for(unsigned i = 0; i < rows_number; i++)
-   {
-      for(unsigned j = 0; j < columns_number; j++)
-      {
-         os << "submatrix_" << i << "_" << j << "\n"  
-            << m[i][j];
-      }     
-   }
+template <typename Type>
+std::ostream& operator<<(std::ostream& os, const Matrix<Matrix<Type> >& m) {
+  const unsigned rows_number = m.get_rows_number();
+  const unsigned columns_number = m.get_columns_number();
 
-   return(os);
+  for (unsigned i = 0; i < rows_number; i++) {
+    for (unsigned j = 0; j < columns_number; j++) {
+      os << "submatrix_" << i << "_" << j << "\n" << m[i][j];
+    }
+  }
+
+  return (os);
 }
-
 }
 
 #endif
-
 
 // OpenNN: Open Neural Networks Library.
 // Neural Designer Copyright © 2013 Roberto López and Ismael Santana (Intelnics)
@@ -5708,4 +5137,3 @@ std::ostream& operator << (std::ostream& os, const Matrix< Matrix<Type> >& m)
 // You should have received a copy of the GNU Lesser General Public
 // License along with this library; if not, write to the Free Software
 // Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
-

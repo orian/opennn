@@ -1,13 +1,19 @@
 /****************************************************************************************************************/
 /*                                                                                                              */
-/*   OpenNN: Open Neural Networks Library                                                                       */
-/*   www.intelnics.com/opennn                                                                                   */
+/*   OpenNN: Open Neural Networks Library
+ */
+/*   www.intelnics.com/opennn
+ */
 /*                                                                                                              */
-/*   I N D E P E N D E N T   P A R A M E T E R S   E R R O R   C L A S S   H E A D E R                          */
+/*   I N D E P E N D E N T   P A R A M E T E R S   E R R O R   C L A S S   H E A
+ * D E R                          */
 /*                                                                                                              */
-/*   Roberto Lopez                                                                                              */
-/*   Intelnics - The artificial intelligence company                                                            */
-/*   robertolopez@intelnics.com                                                                                 */
+/*   Roberto Lopez
+ */
+/*   Intelnics - The artificial intelligence company
+ */
+/*   robertolopez@intelnics.com
+ */
 /*                                                                                                              */
 /****************************************************************************************************************/
 
@@ -29,104 +35,103 @@
 
 #include "performance_term.h"
 
-// TinyXml includes
+// TinyXml includes#include
 
-#include "../tinyxml2/tinyxml2.h"
+#include "tinyxml2_ext.h"
 
-namespace OpenNN
-{
+#include "tinyxml2_ext.h"
 
-/// This performance term measures the error between a set of independent parameteres and a set of targer parameters. 
-/// This performance term can be used in optimal control problems. 
+namespace OpenNN {
+
+/// This performance term measures the error between a set of independent
+/// parameteres and a set of targer parameters.
+/// This performance term can be used in optimal control problems.
 ///	A typical example are those problems with free final time.
 
-class IndependentParametersError : public PerformanceTerm
-{
+class IndependentParametersError : public PerformanceTerm {
 
-public:
+ public:
 
-   // DEFAULT CONSTRUCTOR
+  // DEFAULT CONSTRUCTOR
 
-   explicit IndependentParametersError(void);
+  explicit IndependentParametersError(void);
 
-   // NEURAL NETWORK CONSTRUCTOR
+  // NEURAL NETWORK CONSTRUCTOR
 
-   explicit IndependentParametersError(NeuralNetwork*);
+  explicit IndependentParametersError(NeuralNetwork*);
 
-   // XML CONSTRUCTOR
+  // XML CONSTRUCTOR
 
-   explicit IndependentParametersError(const tinyxml2::XMLDocument&);
+  explicit IndependentParametersError(const tinyxml2::XMLDocument&);
 
-   // DESTRUCTOR
+  // DESTRUCTOR
 
-   virtual ~IndependentParametersError(void);
+  virtual ~IndependentParametersError(void);
 
-   // ASSIGNMENT OPERATOR
+  // ASSIGNMENT OPERATOR
 
-   IndependentParametersError& operator = (const IndependentParametersError&);
+  IndependentParametersError& operator=(const IndependentParametersError&);
 
-   // EQUAL TO OPERATOR
+  // EQUAL TO OPERATOR
 
-   bool operator == (const IndependentParametersError&) const;
+  bool operator==(const IndependentParametersError&) const;
 
-   // METHODS
+  // METHODS
 
-   // Get methods
+  // Get methods
 
-   const Vector<double>& get_target_independent_parameters(void) const;
-   const double& get_target_independent_parameter(const unsigned&) const;
+  const Vector<double>& get_target_independent_parameters(void) const;
+  const double& get_target_independent_parameter(const unsigned&) const;
 
-   const Vector<double>& get_independent_parameters_errors_weights(void) const;
-   const double& get_independent_parameter_error_weight(const unsigned&) const;
+  const Vector<double>& get_independent_parameters_errors_weights(void) const;
+  const double& get_independent_parameter_error_weight(const unsigned&) const;
 
-   // Set methods
+  // Set methods
 
-   void set_target_independent_parameters(const Vector<double>&);
-   void set_target_independent_parameter(const unsigned&, const double&);
+  void set_target_independent_parameters(const Vector<double>&);
+  void set_target_independent_parameter(const unsigned&, const double&);
 
-   void set_independent_parameters_errors_weights(const Vector<double>&);
-   void set_independent_parameter_error_weight(const unsigned&, const double&);
+  void set_independent_parameters_errors_weights(const Vector<double>&);
+  void set_independent_parameter_error_weight(const unsigned&, const double&);
 
-   void set_default(void);
+  void set_default(void);
 
-   // Checking methods
+  // Checking methods
 
-   void check(void) const;
+  void check(void) const;
 
-   // performance methods
+  // performance methods
 
-   double calculate_performance(void) const;   
-   double calculate_performance(const Vector<double>&) const;   
+  double calculate_performance(void) const;
+  double calculate_performance(const Vector<double>&) const;
 
-   Vector<double> calculate_gradient(void) const;   
-   Matrix<double> calculate_Hessian(void) const;   
+  Vector<double> calculate_gradient(void) const;
+  Matrix<double> calculate_Hessian(void) const;
 
-   std::string write_performance_term_type(void) const;
+  std::string write_performance_term_type(void) const;
 
-   std::string write_information(void) const;
+  std::string write_information(void) const;
 
-   // Serialization methods
+  // Serialization methods
 
-   tinyxml2::XMLDocument* to_XML(void) const;   
+  tinyxml2::XMLDocument* to_XML(void) const;
 
-   void from_XML(const tinyxml2::XMLDocument&);
+  void from_XML(const tinyxml2::XMLDocument&);
 
-private:
+ private:
 
-   /// Desired independent parameter values. 
+  /// Desired independent parameter values.
 
-   Vector<double> target_independent_parameters;
+  Vector<double> target_independent_parameters;
 
-   /// Weight for each error between the actual independent parameters and their target values. 
+  /// Weight for each error between the actual independent parameters and their
+  /// target values.
 
-   Vector<double> independent_parameters_errors_weights;
-
+  Vector<double> independent_parameters_errors_weights;
 };
-
 }
 
 #endif
-
 
 // OpenNN: Open Neural Networks Library.
 // Neural Designer Copyright © 2013 Roberto López and Ismael Santana (Intelnics)

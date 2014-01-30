@@ -1,13 +1,19 @@
 /****************************************************************************************************************/
 /*                                                                                                              */
-/*   OpenNN: Open Neural Networks Library                                                                       */
-/*   www.intelnics.com/opennn                                                                                   */
+/*   OpenNN: Open Neural Networks Library
+ */
+/*   www.intelnics.com/opennn
+ */
 /*                                                                                                              */
-/*   O U T P U T S   I N T E G R A L S   C L A S S   H E A D E R                                                */
+/*   O U T P U T S   I N T E G R A L S   C L A S S   H E A D E R
+ */
 /*                                                                                                              */
-/*   Roberto Lopez                                                                                              */
-/*   Intelnics - The artificial intelligence company                                                            */
-/*   robertolopez@intelnics.com                                                                                 */
+/*   Roberto Lopez
+ */
+/*   Intelnics - The artificial intelligence company
+ */
+/*   robertolopez@intelnics.com
+ */
 /*                                                                                                              */
 /****************************************************************************************************************/
 
@@ -28,95 +34,94 @@
 #include "performance_term.h"
 #include "numerical_integration.h"
 
-// TinyXml includes
+// TinyXml includes#include
 
-#include "../tinyxml2/tinyxml2.h"
+#include "tinyxml2_ext.h"
 
-namespace OpenNN
-{
+#include "tinyxml2_ext.h"
 
-/// This class represents the outputs integrals performance term. 
-/// It is defined as the weighted sum of the integrals of the neural network outputs.
-/// The neural network here must have only one input. 
-/// This performance term might be used in optimal control as an objective or a regularization terms. 
+namespace OpenNN {
 
-class OutputsIntegrals : public PerformanceTerm
-{
+/// This class represents the outputs integrals performance term.
+/// It is defined as the weighted sum of the integrals of the neural network
+/// outputs.
+/// The neural network here must have only one input.
+/// This performance term might be used in optimal control as an objective or a
+/// regularization terms.
 
-public:
+class OutputsIntegrals : public PerformanceTerm {
 
-   // DEFAULT CONSTRUCTOR
+ public:
 
-   explicit OutputsIntegrals(void);
+  // DEFAULT CONSTRUCTOR
 
-   // NEURAL NETWORK CONSTRUCTOR
+  explicit OutputsIntegrals(void);
 
-   explicit OutputsIntegrals(NeuralNetwork*);
+  // NEURAL NETWORK CONSTRUCTOR
 
-   // XML CONSTRUCTOR
+  explicit OutputsIntegrals(NeuralNetwork*);
 
-   explicit OutputsIntegrals(const tinyxml2::XMLDocument&);
+  // XML CONSTRUCTOR
 
-   // DESTRUCTOR
+  explicit OutputsIntegrals(const tinyxml2::XMLDocument&);
 
-   virtual ~OutputsIntegrals(void);    
+  // DESTRUCTOR
 
-   // METHODS
+  virtual ~OutputsIntegrals(void);
 
-   // Get methods
+  // METHODS
 
-   const NumericalIntegration& get_numerical_integration(void) const;
-   NumericalIntegration* get_numerical_integration_pointer(void);
+  // Get methods
 
-   const Vector<double>& get_outputs_integrals_weights(void) const;
-   const double& get_output_integral_weight(const unsigned&) const;
+  const NumericalIntegration& get_numerical_integration(void) const;
+  NumericalIntegration* get_numerical_integration_pointer(void);
 
-   // Set methods
+  const Vector<double>& get_outputs_integrals_weights(void) const;
+  const double& get_output_integral_weight(const unsigned&) const;
 
-   void set_numerical_integration(const NumericalIntegration&);
+  // Set methods
 
-   void set_outputs_integrals_weights(const Vector<double>&);
-   void set_output_integral_weight(const unsigned&, const double&);
+  void set_numerical_integration(const NumericalIntegration&);
 
-   void set_default(void);
+  void set_outputs_integrals_weights(const Vector<double>&);
+  void set_output_integral_weight(const unsigned&, const double&);
 
-   // Checking methods
+  void set_default(void);
 
-   void check(void) const;
+  // Checking methods
 
-   // Regularization methods
+  void check(void) const;
 
-   double calculate_performance(void) const;   
-   double calculate_performance(const Vector<double>&) const;
+  // Regularization methods
 
-   Vector<double> calculate_gradient(void) const;
+  double calculate_performance(void) const;
+  double calculate_performance(const Vector<double>&) const;
 
-   Matrix<double> calculate_Hessian(void) const;
+  Vector<double> calculate_gradient(void) const;
 
-   std::string write_performance_term_type(void) const;
+  Matrix<double> calculate_Hessian(void) const;
 
-   // Serialization methods
+  std::string write_performance_term_type(void) const;
 
-   tinyxml2::XMLDocument* to_XML(void) const;   
+  // Serialization methods
 
-   void from_XML(const tinyxml2::XMLDocument&);
+  tinyxml2::XMLDocument* to_XML(void) const;
 
-private:
+  void from_XML(const tinyxml2::XMLDocument&);
 
-   /// Object for numerical integration of functions. 
+ private:
 
-   NumericalIntegration numerical_integration;
+  /// Object for numerical integration of functions.
 
-   /// Weigth for each output integral. 
+  NumericalIntegration numerical_integration;
 
-   Vector<double> outputs_integrals_weights;
+  /// Weigth for each output integral.
 
+  Vector<double> outputs_integrals_weights;
 };
-
 }
 
 #endif
-
 
 // OpenNN: Open Neural Networks Library.
 // Neural Designer Copyright © 2013 Roberto López and Ismael Santana (Intelnics)

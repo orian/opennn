@@ -1,13 +1,19 @@
 /****************************************************************************************************************/
 /*                                                                                                              */
-/*   OpenNN: Open Neural Networks Library                                                                       */
-/*   www.intelnics.com/opennn                                                                                   */
+/*   OpenNN: Open Neural Networks Library
+ */
+/*   www.intelnics.com/opennn
+ */
 /*                                                                                                              */
-/*   M E A N   S Q U A R E D   E R R O R   C L A S S                                                            */
+/*   M E A N   S Q U A R E D   E R R O R   C L A S S
+ */
 /*                                                                                                              */
-/*   Roberto Lopez                                                                                              */
-/*   Intelnics - The artificial intelligence company                                                            */
-/*   robertolopez@intelnics.com                                                                                 */
+/*   Roberto Lopez
+ */
+/*   Intelnics - The artificial intelligence company
+ */
+/*   robertolopez@intelnics.com
+ */
 /*                                                                                                              */
 /****************************************************************************************************************/
 
@@ -15,232 +21,361 @@
 
 #include "mean_squared_error.h"
 
-namespace OpenNN
-{
+namespace OpenNN {
 // DEFAULT CONSTRUCTOR
 
-/// Default constructor. 
-/// It creates a mean squared error performance term not associated to any 
+/// Default constructor.
+/// It creates a mean squared error performance term not associated to any
 /// neural network and not measured on any data set.
 /// It also initializes all the rest of class members to their default values.
 
-MeanSquaredError::MeanSquaredError(void) : PerformanceTerm()
-{
-}
-
+MeanSquaredError::MeanSquaredError(void) : PerformanceTerm() {}
 
 // NEURAL NETWORK CONSTRUCTOR
 
-/// Neural network constructor. 
-/// It creates a mean squared error performance term object associated to a 
+/// Neural network constructor.
+/// It creates a mean squared error performance term object associated to a
 /// neural network object but not measured on any data set object.
 /// It also initializes all the rest of class members to their default values.
 /// @param new_neural_network_pointer Pointer to a neural network object.
 
 MeanSquaredError::MeanSquaredError(NeuralNetwork* new_neural_network_pointer)
-: PerformanceTerm(new_neural_network_pointer)
-{
-}
-
+    : PerformanceTerm(new_neural_network_pointer) {}
 
 // DATA SET CONSTRUCTOR
 
-/// Data set constructor. 
-/// It creates a mean squared error performance term not associated to any 
+/// Data set constructor.
+/// It creates a mean squared error performance term not associated to any
 /// neural network but to be measured on a given data set object.
 /// It also initializes all the rest of class members to their default values.
 /// @param new_data_set_pointer Pointer to a data set object.
 
 MeanSquaredError::MeanSquaredError(DataSet* new_data_set_pointer)
-: PerformanceTerm(new_data_set_pointer)
-{
-}
-
+    : PerformanceTerm(new_data_set_pointer) {}
 
 // NEURAL NETWORK AND DATA SET CONSTRUCTOR
 
-/// Neural network and data set constructor. 
-/// It creates a mean squared error performance term object associated to a 
+/// Neural network and data set constructor.
+/// It creates a mean squared error performance term object associated to a
 /// neural network and measured on a data set.
 /// It also initializes all the rest of class members to their default values.
 /// @param new_neural_network_pointer Pointer to a neural network object.
 /// @param new_data_set_pointer Pointer to a data set object.
 
-MeanSquaredError::MeanSquaredError(NeuralNetwork* new_neural_network_pointer, DataSet* new_data_set_pointer)
-: PerformanceTerm(new_neural_network_pointer, new_data_set_pointer)
-{
-}
-
+MeanSquaredError::MeanSquaredError(NeuralNetwork* new_neural_network_pointer,
+                                   DataSet* new_data_set_pointer)
+    : PerformanceTerm(new_neural_network_pointer, new_data_set_pointer) {}
 
 // XML CONSTRUCTOR
 
-/// XML constructor. 
-/// It creates a mean squared error object with all pointers set to NULL. 
+/// XML constructor.
+/// It creates a mean squared error object with all pointers set to NULL.
 /// The object members are loaded by means of a XML document->
-/// Please be careful with the format of that file, which is specified in the OpenNN manual.
-/// @param mean_squared_error_document TinyXML document with the mean squared error elements.
+/// Please be careful with the format of that file, which is specified in the
+/// OpenNN manual.
+/// @param mean_squared_error_document TinyXML document with the mean squared
+/// error elements.
 
-MeanSquaredError::MeanSquaredError(const tinyxml2::XMLDocument& mean_squared_error_document)
- : PerformanceTerm(mean_squared_error_document)
-{
-}
-
+MeanSquaredError::MeanSquaredError(
+    const tinyxml2::XMLDocument& mean_squared_error_document)
+    : PerformanceTerm(mean_squared_error_document) {}
 
 // COPY CONSTRUCTOR
 
-/// Copy constructor. 
-/// It creates a copy of an existing mean squared error object. 
+/// Copy constructor.
+/// It creates a copy of an existing mean squared error object.
 /// @param other_mean_squared_error Mean squared error object to be copied.
 
-MeanSquaredError::MeanSquaredError(const MeanSquaredError& other_mean_squared_error)
-: PerformanceTerm(other_mean_squared_error)
-{
-}
-
+MeanSquaredError::MeanSquaredError(
+    const MeanSquaredError& other_mean_squared_error)
+    : PerformanceTerm(other_mean_squared_error) {}
 
 // DESTRUCTOR
 
 /// Destructor.
 
-MeanSquaredError::~MeanSquaredError(void)
-{
-}
-
+MeanSquaredError::~MeanSquaredError(void) {}
 
 // METHODS
 
 // void check(void) const method
 
-/// Checks that there are a neural network and a data set associated to the mean squared error, 
-/// and that the numbers of inputs and outputs in the neural network are equal to the numbers of inputs and targets in the data set. 
-/// If some of the above conditions is not hold, the method throws an exception. 
+/// Checks that there are a neural network and a data set associated to the mean
+/// squared error,
+/// and that the numbers of inputs and outputs in the neural network are equal
+/// to the numbers of inputs and targets in the data set.
+/// If some of the above conditions is not hold, the method throws an exception.
 
-void MeanSquaredError::check(void) const
-{
-   std::ostringstream buffer;
+void MeanSquaredError::check(void) const {
+  std::ostringstream buffer;
 
-   // Neural network stuff
+  // Neural network stuff
 
-   if(!neural_network_pointer)
-   {
-      buffer << "OpenNN Exception: MeanSquaredError class.\n"
-             << "void check(void) const method.\n"
-             << "Pointer to neural network is NULL.\n";
+  if (!neural_network_pointer) {
+    buffer << "OpenNN Exception: MeanSquaredError class.\n"
+           << "void check(void) const method.\n"
+           << "Pointer to neural network is NULL.\n";
 
-      throw std::logic_error(buffer.str());	  
-   }
+    throw std::logic_error(buffer.str());
+  }
 
-   const MultilayerPerceptron* multilayer_perceptron_pointer = neural_network_pointer->get_multilayer_perceptron_pointer();
+  const MultilayerPerceptron* multilayer_perceptron_pointer =
+      neural_network_pointer->get_multilayer_perceptron_pointer();
 
-   if(!multilayer_perceptron_pointer)
-   {
-      buffer << "OpenNN Exception: MeanSquaredError class.\n"
-             << "void check(void) const method.\n"
-             << "Pointer to multilayer perceptron is NULL.\n";
+  if (!multilayer_perceptron_pointer) {
+    buffer << "OpenNN Exception: MeanSquaredError class.\n"
+           << "void check(void) const method.\n"
+           << "Pointer to multilayer perceptron is NULL.\n";
 
-      throw std::logic_error(buffer.str());	  
-   }
+    throw std::logic_error(buffer.str());
+  }
 
-   const unsigned inputs_number = multilayer_perceptron_pointer->get_inputs_number();
-   const unsigned outputs_number = multilayer_perceptron_pointer->get_outputs_number();
+  const unsigned inputs_number =
+      multilayer_perceptron_pointer->get_inputs_number();
+  const unsigned outputs_number =
+      multilayer_perceptron_pointer->get_outputs_number();
 
-   if(inputs_number == 0)
-   {
-      buffer << "OpenNN Exception: MeanSquaredError class.\n"
-             << "void check(void) const method.\n"
-             << "Number of inputs in multilayer perceptron object is zero.\n";
+  if (inputs_number == 0) {
+    buffer << "OpenNN Exception: MeanSquaredError class.\n"
+           << "void check(void) const method.\n"
+           << "Number of inputs in multilayer perceptron object is zero.\n";
 
-      throw std::logic_error(buffer.str());	  
-   }
+    throw std::logic_error(buffer.str());
+  }
 
-   if(outputs_number == 0)
-   {
-      buffer << "OpenNN Exception: MeanSquaredError class.\n"
-             << "void check(void) const method.\n"
-             << "Number of outputs in multilayer perceptron object is zero.\n";
+  if (outputs_number == 0) {
+    buffer << "OpenNN Exception: MeanSquaredError class.\n"
+           << "void check(void) const method.\n"
+           << "Number of outputs in multilayer perceptron object is zero.\n";
 
-      throw std::logic_error(buffer.str());	  
-   }
+    throw std::logic_error(buffer.str());
+  }
 
-   // Data set stuff
+  // Data set stuff
 
-   if(!data_set_pointer)
-   {
-      buffer << "OpenNN Exception: MeanSquaredError class.\n"
-             << "void check(void) const method.\n"
-             << "Pointer to data set is NULL.\n";
+  if (!data_set_pointer) {
+    buffer << "OpenNN Exception: MeanSquaredError class.\n"
+           << "void check(void) const method.\n"
+           << "Pointer to data set is NULL.\n";
 
-      throw std::logic_error(buffer.str());	  
-   }
+    throw std::logic_error(buffer.str());
+  }
 
-   // Sum squared error stuff
+  // Sum squared error stuff
 
-   const Variables& variables = data_set_pointer->get_variables();
+  const Variables& variables = data_set_pointer->get_variables();
 
-   const unsigned data_set_inputs_number = variables.count_inputs_number();
-   const unsigned data_set_targets_number = variables.count_targets_number();
+  const unsigned data_set_inputs_number = variables.count_inputs_number();
+  const unsigned data_set_targets_number = variables.count_targets_number();
 
-   if(inputs_number != data_set_inputs_number)
-   {
-      buffer << "OpenNN Exception: MeanSquaredError class.\n"
-             << "void check(void) const method.\n"
-             << "Number of inputs in multilayer perceptron must be equal to number of inputs in data set.\n";
+  if (inputs_number != data_set_inputs_number) {
+    buffer << "OpenNN Exception: MeanSquaredError class.\n"
+           << "void check(void) const method.\n"
+           << "Number of inputs in multilayer perceptron must be equal to "
+              "number of inputs in data set.\n";
 
-      throw std::logic_error(buffer.str());	  
-   }
+    throw std::logic_error(buffer.str());
+  }
 
-   if(outputs_number != data_set_targets_number)
-   {
-      buffer << "OpenNN Exception: MeanSquaredError class.\n"
-             << "void check(void) const method.\n"
-             << "Number of outputs in multilayer perceptron must be equal to number of targets in data set.\n";
+  if (outputs_number != data_set_targets_number) {
+    buffer << "OpenNN Exception: MeanSquaredError class.\n"
+           << "void check(void) const method.\n"
+           << "Number of outputs in multilayer perceptron must be equal to "
+              "number of targets in data set.\n";
 
-      throw std::logic_error(buffer.str());
-   }
+    throw std::logic_error(buffer.str());
+  }
 }
-
 
 // double calculate_performance(void) const method
 
-/// Returns the objective value of a multilayer perceptron according to the mean squared error on 
+/// Returns the objective value of a multilayer perceptron according to the mean
+/// squared error on
 /// a data set.
 
-double MeanSquaredError::calculate_performance(void) const
-{
-   // Control sentence
+double MeanSquaredError::calculate_performance(void) const {
+// Control sentence
 
-   #ifndef NDEBUG 
+#ifndef NDEBUG
 
-   check();
+  check();
 
-   #endif
+#endif
 
-   // Neural network stuff 
+  // Neural network stuff
 
-   const MultilayerPerceptron* multilayer_perceptron_pointer = neural_network_pointer->get_multilayer_perceptron_pointer();
+  const MultilayerPerceptron* multilayer_perceptron_pointer =
+      neural_network_pointer->get_multilayer_perceptron_pointer();
 
-   const unsigned inputs_number = multilayer_perceptron_pointer->get_inputs_number();
-   const unsigned outputs_number = multilayer_perceptron_pointer->get_outputs_number();
+  const unsigned inputs_number =
+      multilayer_perceptron_pointer->get_inputs_number();
+  const unsigned outputs_number =
+      multilayer_perceptron_pointer->get_outputs_number();
 
-   // Data set stuff 
+  // Data set stuff
 
-   const Instances& instances = data_set_pointer->get_instances();
+  const Instances& instances = data_set_pointer->get_instances();
 
-   const unsigned training_instances_number = instances.count_training_instances_number();
+  const unsigned training_instances_number =
+      instances.count_training_instances_number();
 
-   // Mean squared error stuff
+  // Mean squared error stuff
 
-   Vector<double> inputs(inputs_number);
-   Vector<double> outputs(outputs_number);
-   Vector<double> targets(outputs_number);
+  Vector<double> inputs(inputs_number);
+  Vector<double> outputs(outputs_number);
+  Vector<double> targets(outputs_number);
 
-   double sum_squared_error = 0.0;
+  double sum_squared_error = 0.0;
 
-   for(unsigned i = 0; i < training_instances_number; i++)
-   {
+  for (unsigned i = 0; i < training_instances_number; i++) {
+    // Input vector
+
+    inputs = data_set_pointer->get_training_input_instance(i);
+
+    // Output vector
+
+    outputs = multilayer_perceptron_pointer->calculate_outputs(inputs);
+
+    // Target vector
+
+    targets = data_set_pointer->get_training_target_instance(i);
+
+    // Sum squared error
+
+    sum_squared_error += outputs.calculate_sum_squared_error(targets);
+  }
+
+  return (sum_squared_error / (double)training_instances_number);
+}
+
+// double calculate_performance(const Vector<double>&) const method
+
+/// Returns which would be the performance term of a neural network for an
+/// hypothetical
+/// vector of parameters. It does not set that vector of parameters to the
+/// neural network.
+/// @param parameters Vector of potential parameters for the neural network
+/// associated to the performance term.
+
+double MeanSquaredError::calculate_performance(
+    const Vector<double>& parameters) const {
+// Control sentence (if debug)
+
+#ifndef NDEBUG
+
+  check();
+
+#endif
+
+#ifndef NDEBUG
+
+  const unsigned size = parameters.size();
+
+  const unsigned parameters_number =
+      neural_network_pointer->count_parameters_number();
+
+  if (size != parameters_number) {
+    std::ostringstream buffer;
+
+    buffer
+        << "OpenNN Exception: MeanSquaredError class.\n"
+        << "double calculate_performance(const Vector<double>&) const method.\n"
+        << "Size (" << size << ") must be equal to number of parameters ("
+        << parameters_number << ").\n";
+
+    throw std::logic_error(buffer.str());
+  }
+
+#endif
+
+  // Neural network stuff
+
+  const MultilayerPerceptron* multilayer_perceptron_pointer =
+      neural_network_pointer->get_multilayer_perceptron_pointer();
+
+  const unsigned inputs_number =
+      multilayer_perceptron_pointer->get_inputs_number();
+  const unsigned outputs_number =
+      multilayer_perceptron_pointer->get_outputs_number();
+
+  // Data set stuff
+
+  const Instances& instances = data_set_pointer->get_instances();
+
+  const unsigned training_instances_number =
+      instances.count_training_instances_number();
+
+  // Mean squared error stuff
+
+  Vector<double> inputs(inputs_number);
+  Vector<double> outputs(outputs_number);
+  Vector<double> targets(outputs_number);
+
+  double sum_squared_error = 0.0;
+
+  for (unsigned i = 0; i < training_instances_number; i++) {
+    // Input vector
+
+    inputs = data_set_pointer->get_training_input_instance(i);
+
+    // Output vector
+
+    outputs =
+        multilayer_perceptron_pointer->calculate_outputs(inputs, parameters);
+
+    // Target vector
+
+    targets = data_set_pointer->get_training_target_instance(i);
+
+    // Sum squared error
+
+    sum_squared_error += outputs.calculate_sum_squared_error(targets);
+  }
+
+  return (sum_squared_error / (double)training_instances_number);
+}
+
+// double calculate_generalization_performance(void) const method
+
+/// Returns the mean squared error of the multilayer perceptron measured on the
+/// generalization instances of the
+/// data set.
+
+double MeanSquaredError::calculate_generalization_performance(void) const {
+// Control sentence (if debug)
+
+#ifndef NDEBUG
+
+  check();
+
+#endif
+
+  const MultilayerPerceptron* multilayer_perceptron_pointer =
+      neural_network_pointer->get_multilayer_perceptron_pointer();
+
+  const unsigned inputs_number =
+      multilayer_perceptron_pointer->get_inputs_number();
+  const unsigned outputs_number =
+      multilayer_perceptron_pointer->get_outputs_number();
+
+  const Instances& instances = data_set_pointer->get_instances();
+
+  const unsigned generalization_instances_number =
+      instances.count_generalization_instances_number();
+
+  if (generalization_instances_number == 0) {
+    return (0.0);
+  } else {
+    Vector<double> inputs(inputs_number);
+    Vector<double> outputs(outputs_number);
+    Vector<double> targets(outputs_number);
+
+    double generalization_objective = 0.0;
+
+    for (unsigned i = 0; i < generalization_instances_number; i++) {
       // Input vector
 
-	  inputs = data_set_pointer->get_training_input_instance(i);
+      inputs = data_set_pointer->get_generalization_input_instance(i);
 
       // Output vector
 
@@ -248,598 +383,497 @@ double MeanSquaredError::calculate_performance(void) const
 
       // Target vector
 
-      targets = data_set_pointer->get_training_target_instance(i);
+      targets = data_set_pointer->get_generalization_target_instance(i);
 
-      // Sum squared error
+      // Sum of squares error
 
-	  sum_squared_error += outputs.calculate_sum_squared_error(targets);
-   }
+      generalization_objective += outputs.calculate_sum_squared_error(targets);
+    }
 
-   return(sum_squared_error/(double)training_instances_number);
+    return (generalization_objective / (double)generalization_instances_number);
+  }
 }
-
-
-// double calculate_performance(const Vector<double>&) const method
-
-/// Returns which would be the performance term of a neural network for an hypothetical
-/// vector of parameters. It does not set that vector of parameters to the neural network. 
-/// @param parameters Vector of potential parameters for the neural network associated to the performance term.
-
-double MeanSquaredError::calculate_performance(const Vector<double>& parameters) const
-{
-   // Control sentence (if debug)
-
-   #ifndef NDEBUG 
-
-   check();
-
-   #endif
-
-   #ifndef NDEBUG 
-
-   const unsigned size = parameters.size();
-
-   const unsigned parameters_number = neural_network_pointer->count_parameters_number();
-
-   if(size != parameters_number)
-   {
-      std::ostringstream buffer;
-
-      buffer << "OpenNN Exception: MeanSquaredError class.\n"
-             << "double calculate_performance(const Vector<double>&) const method.\n"
-             << "Size (" << size << ") must be equal to number of parameters (" << parameters_number << ").\n";
-
-      throw std::logic_error(buffer.str());
-   }
-
-   #endif
-
-   // Neural network stuff
-
-   const MultilayerPerceptron* multilayer_perceptron_pointer = neural_network_pointer->get_multilayer_perceptron_pointer();
-
-   const unsigned inputs_number = multilayer_perceptron_pointer->get_inputs_number();
-   const unsigned outputs_number = multilayer_perceptron_pointer->get_outputs_number();
-
-   // Data set stuff
-
-   const Instances& instances = data_set_pointer->get_instances();
-
-   const unsigned training_instances_number = instances.count_training_instances_number();
-
-   // Mean squared error stuff
-
-   Vector<double> inputs(inputs_number);
-   Vector<double> outputs(outputs_number);
-   Vector<double> targets(outputs_number);
-
-   double sum_squared_error = 0.0;
-
-   for(unsigned i = 0; i < training_instances_number; i++)
-   {
-      // Input vector
-
-      inputs = data_set_pointer->get_training_input_instance(i);
-
-      // Output vector
-
-      outputs = multilayer_perceptron_pointer->calculate_outputs(inputs, parameters);
-
-      // Target vector
-
-      targets = data_set_pointer->get_training_target_instance(i);
-
-      // Sum squared error
-
-      sum_squared_error += outputs.calculate_sum_squared_error(targets);
-   }
-
-   return(sum_squared_error/(double)training_instances_number);
-}
-
-
-// double calculate_generalization_performance(void) const method
-
-/// Returns the mean squared error of the multilayer perceptron measured on the generalization instances of the 
-/// data set.
-
-double MeanSquaredError::calculate_generalization_performance(void) const
-{
-   // Control sentence (if debug)
-
-   #ifndef NDEBUG 
-
-   check();
-
-   #endif
-
-   const MultilayerPerceptron* multilayer_perceptron_pointer = neural_network_pointer->get_multilayer_perceptron_pointer();
-
-   const unsigned inputs_number = multilayer_perceptron_pointer->get_inputs_number();
-   const unsigned outputs_number = multilayer_perceptron_pointer->get_outputs_number();
-
-   const Instances& instances = data_set_pointer->get_instances();
-
-   const unsigned generalization_instances_number = instances.count_generalization_instances_number();
-
-   if(generalization_instances_number == 0)
-   {
-      return(0.0);
-   }
-   else
-   {
-      Vector<double> inputs(inputs_number);
-      Vector<double> outputs(outputs_number);
-      Vector<double> targets(outputs_number);
-
-      double generalization_objective = 0.0;
-
-      for(unsigned i = 0; i < generalization_instances_number; i++)
-      {
-         // Input vector
-
-   	     inputs = data_set_pointer->get_generalization_input_instance(i);
-
-         // Output vector
-
-         outputs = multilayer_perceptron_pointer->calculate_outputs(inputs);
-
-         // Target vector
-
-         targets = data_set_pointer->get_generalization_target_instance(i);
-
-         // Sum of squares error
-
-         generalization_objective += outputs.calculate_sum_squared_error(targets);           
-      }
-
-      return(generalization_objective/(double)generalization_instances_number);
-   }
-}
-
 
 // Vector<double> calculate_gradient(void) const method
 
-/// Calculates the objective gradient by means of the back-propagation algorithm, 
-/// and returns it in a single vector of size the number of multilayer perceptron parameters.
+/// Calculates the objective gradient by means of the back-propagation
+/// algorithm,
+/// and returns it in a single vector of size the number of multilayer
+/// perceptron parameters.
 
-Vector<double> MeanSquaredError::calculate_gradient(void) const
-{
-   // Control sentence (if debug)
+Vector<double> MeanSquaredError::calculate_gradient(void) const {
+// Control sentence (if debug)
 
-   #ifndef NDEBUG 
+#ifndef NDEBUG
 
-   check();
+  check();
 
-   #endif
+#endif
 
-   // Multilayer percepron stuff
+  // Multilayer percepron stuff
 
-   const MultilayerPerceptron* multilayer_perceptron_pointer = neural_network_pointer->get_multilayer_perceptron_pointer();
+  const MultilayerPerceptron* multilayer_perceptron_pointer =
+      neural_network_pointer->get_multilayer_perceptron_pointer();
 
-   const unsigned inputs_number = multilayer_perceptron_pointer->get_inputs_number();
-   const unsigned outputs_number = multilayer_perceptron_pointer->get_outputs_number();
+  const unsigned inputs_number =
+      multilayer_perceptron_pointer->get_inputs_number();
+  const unsigned outputs_number =
+      multilayer_perceptron_pointer->get_outputs_number();
 
-   const unsigned layers_number = multilayer_perceptron_pointer->get_layers_number();
+  const unsigned layers_number =
+      multilayer_perceptron_pointer->get_layers_number();
 
-   const unsigned parameters_number = multilayer_perceptron_pointer->count_parameters_number();
+  const unsigned parameters_number =
+      multilayer_perceptron_pointer->count_parameters_number();
 
-   Vector< Vector< Vector<double> > > first_order_forward_propagation(2); 
+  Vector<Vector<Vector<double> > > first_order_forward_propagation(2);
 
-   const bool has_conditions_layer = neural_network_pointer->has_conditions_layer();
+  const bool has_conditions_layer =
+      neural_network_pointer->has_conditions_layer();
 
-   const ConditionsLayer* conditions_layer_pointer = has_conditions_layer ? neural_network_pointer->get_conditions_layer_pointer() : NULL;
+  const ConditionsLayer* conditions_layer_pointer =
+      has_conditions_layer
+          ? neural_network_pointer->get_conditions_layer_pointer()
+          : NULL;
 
-   Vector<double> particular_solution;
-   Vector<double> homogeneous_solution;
+  Vector<double> particular_solution;
+  Vector<double> homogeneous_solution;
 
-   // Data set stuff
+  // Data set stuff
 
-   const Instances& instances = data_set_pointer->get_instances();
+  const Instances& instances = data_set_pointer->get_instances();
 
-   const unsigned training_instances_number = instances.count_training_instances_number();
+  const unsigned training_instances_number =
+      instances.count_training_instances_number();
 
-   Vector<double> inputs(inputs_number);
-   Vector<double> targets(outputs_number);
+  Vector<double> inputs(inputs_number);
+  Vector<double> targets(outputs_number);
 
-   // Mean squared error stuff
+  // Mean squared error stuff
 
-   Vector< Vector<double> > layers_delta; 
+  Vector<Vector<double> > layers_delta;
 
-   Vector<double> output_objective_gradient(outputs_number);
+  Vector<double> output_objective_gradient(outputs_number);
 
-   Vector<double> point_gradient(parameters_number, 0.0);
+  Vector<double> point_gradient(parameters_number, 0.0);
 
-   Vector<double> objective_gradient(parameters_number, 0.0);
+  Vector<double> objective_gradient(parameters_number, 0.0);
 
-   // Main loop
+  // Main loop
 
-   for(unsigned i = 0; i < training_instances_number; i++)
-   {
-      inputs = data_set_pointer->get_training_input_instance(i);
+  for (unsigned i = 0; i < training_instances_number; i++) {
+    inputs = data_set_pointer->get_training_input_instance(i);
 
-      targets = data_set_pointer->get_training_target_instance(i);
+    targets = data_set_pointer->get_training_target_instance(i);
 
-      first_order_forward_propagation = multilayer_perceptron_pointer->calculate_first_order_forward_propagation(inputs);
+    first_order_forward_propagation = multilayer_perceptron_pointer
+        ->calculate_first_order_forward_propagation(inputs);
 
-	  const Vector< Vector<double> >& layers_activation = first_order_forward_propagation[0];
-      const Vector< Vector<double> >& layers_activation_derivative = first_order_forward_propagation[1];
+    const Vector<Vector<double> >& layers_activation =
+        first_order_forward_propagation[0];
+    const Vector<Vector<double> >& layers_activation_derivative =
+        first_order_forward_propagation[1];
 
-      if(!has_conditions_layer)
-      {
-         output_objective_gradient = (layers_activation[layers_number-1]-targets)*(2.0/(double)training_instances_number);
+    if (!has_conditions_layer) {
+      output_objective_gradient =
+          (layers_activation[layers_number - 1] - targets) *
+          (2.0 / (double)training_instances_number);
 
-         layers_delta = calculate_layers_delta(layers_activation_derivative, output_objective_gradient);
-      }
-      else
-      {
-         particular_solution = conditions_layer_pointer->calculate_particular_solution(inputs);
-         homogeneous_solution = conditions_layer_pointer->calculate_homogeneous_solution(inputs);
+      layers_delta = calculate_layers_delta(layers_activation_derivative,
+                                            output_objective_gradient);
+    } else {
+      particular_solution =
+          conditions_layer_pointer->calculate_particular_solution(inputs);
+      homogeneous_solution =
+          conditions_layer_pointer->calculate_homogeneous_solution(inputs);
 
-         output_objective_gradient = (particular_solution+homogeneous_solution*layers_activation[layers_number-1] - targets)*(2.0/(double)training_instances_number);              
+      output_objective_gradient =
+          (particular_solution +
+           homogeneous_solution * layers_activation[layers_number - 1] -
+           targets) *
+          (2.0 / (double)training_instances_number);
 
-		 layers_delta = calculate_layers_delta(layers_activation_derivative, homogeneous_solution, output_objective_gradient);
-      }
+      layers_delta = calculate_layers_delta(layers_activation_derivative,
+                                            homogeneous_solution,
+                                            output_objective_gradient);
+    }
 
-      point_gradient = calculate_point_gradient(inputs, layers_activation, layers_delta);
+    point_gradient =
+        calculate_point_gradient(inputs, layers_activation, layers_delta);
 
-      objective_gradient += point_gradient;
-   }
+    objective_gradient += point_gradient;
+  }
 
-   return(objective_gradient);
+  return (objective_gradient);
 }
-
 
 // Matrix<double> calculate_Hessian(void) const method
 
 /// @todo
 
-Matrix<double> MeanSquaredError::calculate_Hessian(void) const
-{
-   Matrix<double> H;
+Matrix<double> MeanSquaredError::calculate_Hessian(void) const {
+  Matrix<double> H;
 
-   return(H);
+  return (H);
 }
-
 
 // FirstOrderPerformance calculate_first_order_performance(void) const method
 
 /// @todo
 
-PerformanceTerm::FirstOrderPerformance MeanSquaredError::calculate_first_order_performance(void) const
-{
-    // Control sentence
+PerformanceTerm::FirstOrderPerformance
+MeanSquaredError::calculate_first_order_performance(void) const {
+// Control sentence
 
-    #ifndef NDEBUG
+#ifndef NDEBUG
 
-    check();
+  check();
 
-    #endif
+#endif
 
-   FirstOrderPerformance first_order_performance;
+  FirstOrderPerformance first_order_performance;
 
-   first_order_performance.performance = calculate_performance();
-   first_order_performance.gradient = calculate_gradient();
+  first_order_performance.performance = calculate_performance();
+  first_order_performance.gradient = calculate_gradient();
 
-   return(first_order_performance);
+  return (first_order_performance);
 }
-
 
 // SecondOrderperformance calculate_second_order_performance(void) const method
 
 /// @todo
 
-PerformanceTerm::SecondOrderPerformance MeanSquaredError::calculate_second_order_performance(void) const
-{
-    // Control sentence
+PerformanceTerm::SecondOrderPerformance
+MeanSquaredError::calculate_second_order_performance(void) const {
+// Control sentence
 
-    #ifndef NDEBUG
+#ifndef NDEBUG
 
-    check();
+  check();
 
-    #endif
+#endif
 
-   SecondOrderPerformance second_order_performance;
+  SecondOrderPerformance second_order_performance;
 
-   second_order_performance.performance = calculate_performance();
-   second_order_performance.gradient = calculate_gradient();
-   second_order_performance.Hessian = calculate_Hessian();
+  second_order_performance.performance = calculate_performance();
+  second_order_performance.gradient = calculate_gradient();
+  second_order_performance.Hessian = calculate_Hessian();
 
-   return(second_order_performance);
+  return (second_order_performance);
 }
-
 
 // Vector<double> calculate_terms(void) const method
 
-/// Returns performance vector of the objective terms function for the mean squared error. 
+/// Returns performance vector of the objective terms function for the mean
+/// squared error.
 /// It uses the error back-propagation method.
 
-Vector<double> MeanSquaredError::calculate_terms(void) const
-{
-   // Control sentence
+Vector<double> MeanSquaredError::calculate_terms(void) const {
+// Control sentence
 
-   #ifndef NDEBUG 
+#ifndef NDEBUG
 
-   check();
+  check();
 
-   #endif
+#endif
 
-   // Neural network stuff
+  // Neural network stuff
 
-   const MultilayerPerceptron* multilayer_perceptron_pointer = neural_network_pointer->get_multilayer_perceptron_pointer();
+  const MultilayerPerceptron* multilayer_perceptron_pointer =
+      neural_network_pointer->get_multilayer_perceptron_pointer();
 
-   const unsigned inputs_number = multilayer_perceptron_pointer->get_inputs_number();
-   const unsigned outputs_number = multilayer_perceptron_pointer->get_outputs_number();
+  const unsigned inputs_number =
+      multilayer_perceptron_pointer->get_inputs_number();
+  const unsigned outputs_number =
+      multilayer_perceptron_pointer->get_outputs_number();
 
-   // Data set stuff
+  // Data set stuff
 
-   const Instances& instances = data_set_pointer->get_instances();
+  const Instances& instances = data_set_pointer->get_instances();
 
-   const unsigned training_instances_number = instances.count_training_instances_number();
+  const unsigned training_instances_number =
+      instances.count_training_instances_number();
 
-   // Mean squared error stuff
+  // Mean squared error stuff
 
-   Vector<double> performance_terms(training_instances_number);
+  Vector<double> performance_terms(training_instances_number);
 
-   Vector<double> inputs(inputs_number);
-   Vector<double> outputs(outputs_number);
-   Vector<double> targets(outputs_number);
+  Vector<double> inputs(inputs_number);
+  Vector<double> outputs(outputs_number);
+  Vector<double> targets(outputs_number);
 
-   for(unsigned i = 0; i < training_instances_number; i++)
-   {
-      // Input vector
+  for (unsigned i = 0; i < training_instances_number; i++) {
+    // Input vector
 
-	  inputs = data_set_pointer->get_training_input_instance(i);
+    inputs = data_set_pointer->get_training_input_instance(i);
 
-      // Output vector
+    // Output vector
 
-      outputs = multilayer_perceptron_pointer->calculate_outputs(inputs);
+    outputs = multilayer_perceptron_pointer->calculate_outputs(inputs);
 
-      // Target vector
+    // Target vector
 
-      targets = data_set_pointer->get_training_target_instance(i);
+    targets = data_set_pointer->get_training_target_instance(i);
 
-      // Error
+    // Error
 
-      performance_terms[i] = outputs.calculate_distance(targets);
-   }
+    performance_terms[i] = outputs.calculate_distance(targets);
+  }
 
-   return(performance_terms/sqrt((double)training_instances_number));
+  return (performance_terms / sqrt((double)training_instances_number));
 }
-
 
 // Vector<double> calculate_terms(const Vector<double>&) const method
 
-/// Returns which would be the objective terms performance vector of a multilayer perceptron for an hypothetical vector of multilayer perceptron parameters.
-/// It does not set that vector of parameters to the multilayer perceptron. 
-/// @param network_parameters Vector of a potential multilayer_perceptron_pointer parameters for the multilayer perceptron associated to the performance functional.
+/// Returns which would be the objective terms performance vector of a
+/// multilayer perceptron for an hypothetical vector of multilayer perceptron
+/// parameters.
+/// It does not set that vector of parameters to the multilayer perceptron.
+/// @param network_parameters Vector of a potential
+/// multilayer_perceptron_pointer parameters for the multilayer perceptron
+/// associated to the performance functional.
 
-Vector<double> MeanSquaredError::calculate_terms(const Vector<double>& network_parameters) const
-{
-   // Control sentence (if debug)
+Vector<double> MeanSquaredError::calculate_terms(
+    const Vector<double>& network_parameters) const {
+// Control sentence (if debug)
 
-   #ifndef NDEBUG 
+#ifndef NDEBUG
 
-   check();
+  check();
 
-   #endif
+#endif
 
-   #ifndef NDEBUG 
+#ifndef NDEBUG
 
-   std::ostringstream buffer;
+  std::ostringstream buffer;
 
-   const unsigned size = network_parameters.size();
+  const unsigned size = network_parameters.size();
 
-   const unsigned parameters_number = neural_network_pointer->count_parameters_number();
+  const unsigned parameters_number =
+      neural_network_pointer->count_parameters_number();
 
-   if(size != parameters_number)
-   {
-      buffer << "OpenNN Exception: MeanSquaredError class.\n"
-             << "double calculate_terms(const Vector<double>&) const method.\n"
-             << "Size (" << size << ") must be equal to number of multilayer perceptron parameters (" << parameters_number << ").\n";
+  if (size != parameters_number) {
+    buffer << "OpenNN Exception: MeanSquaredError class.\n"
+           << "double calculate_terms(const Vector<double>&) const method.\n"
+           << "Size (" << size
+           << ") must be equal to number of multilayer perceptron parameters ("
+           << parameters_number << ").\n";
 
-      throw std::logic_error(buffer.str());
-   }
+    throw std::logic_error(buffer.str());
+  }
 
-   #endif
+#endif
 
-   NeuralNetwork neural_network_copy(*neural_network_pointer);
+  NeuralNetwork neural_network_copy(*neural_network_pointer);
 
-   neural_network_copy.set_parameters(network_parameters);
+  neural_network_copy.set_parameters(network_parameters);
 
-   MeanSquaredError mean_squared_error_copy(*this);
+  MeanSquaredError mean_squared_error_copy(*this);
 
-   mean_squared_error_copy.set_neural_network_pointer(&neural_network_copy);
+  mean_squared_error_copy.set_neural_network_pointer(&neural_network_copy);
 
-   return(mean_squared_error_copy.calculate_terms());
+  return (mean_squared_error_copy.calculate_terms());
 }
-
 
 // Matrix<double> calculate_terms_Jacobian(void) const method
 
-/// Returns the Jacobian matrix of the mean squared error function, whose elements are given by the 
-/// derivatives of the squared errors data set with respect to the multilayer perceptron parameters.
+/// Returns the Jacobian matrix of the mean squared error function, whose
+/// elements are given by the
+/// derivatives of the squared errors data set with respect to the multilayer
+/// perceptron parameters.
 
-Matrix<double> MeanSquaredError::calculate_terms_Jacobian(void) const
-{
-   // Control sentence
+Matrix<double> MeanSquaredError::calculate_terms_Jacobian(void) const {
+// Control sentence
 
-   #ifndef NDEBUG 
+#ifndef NDEBUG
 
-   check();
+  check();
 
-   #endif
+#endif
 
-   // Neural network stuff
+  // Neural network stuff
 
-   const MultilayerPerceptron* multilayer_perceptron_pointer = neural_network_pointer->get_multilayer_perceptron_pointer();
+  const MultilayerPerceptron* multilayer_perceptron_pointer =
+      neural_network_pointer->get_multilayer_perceptron_pointer();
 
-   const unsigned inputs_number = multilayer_perceptron_pointer->get_inputs_number();
-   const unsigned outputs_number = multilayer_perceptron_pointer->get_outputs_number();
+  const unsigned inputs_number =
+      multilayer_perceptron_pointer->get_inputs_number();
+  const unsigned outputs_number =
+      multilayer_perceptron_pointer->get_outputs_number();
 
-   const unsigned layers_number = multilayer_perceptron_pointer->get_layers_number();
+  const unsigned layers_number =
+      multilayer_perceptron_pointer->get_layers_number();
 
-   const unsigned neural_parameters_number = multilayer_perceptron_pointer->count_parameters_number();
+  const unsigned neural_parameters_number =
+      multilayer_perceptron_pointer->count_parameters_number();
 
-   Vector< Vector< Vector<double> > > first_order_forward_propagation(2);
+  Vector<Vector<Vector<double> > > first_order_forward_propagation(2);
 
-   Vector<double> particular_solution;
-   Vector<double> homogeneous_solution;
+  Vector<double> particular_solution;
+  Vector<double> homogeneous_solution;
 
-   const bool has_conditions_layer = neural_network_pointer->has_conditions_layer();
+  const bool has_conditions_layer =
+      neural_network_pointer->has_conditions_layer();
 
-   const ConditionsLayer* conditions_layer_pointer = has_conditions_layer ? neural_network_pointer->get_conditions_layer_pointer() : NULL;
+  const ConditionsLayer* conditions_layer_pointer =
+      has_conditions_layer
+          ? neural_network_pointer->get_conditions_layer_pointer()
+          : NULL;
 
-   // Data set stuff
+  // Data set stuff
 
-   const Instances& instances = data_set_pointer->get_instances();
+  const Instances& instances = data_set_pointer->get_instances();
 
-   const unsigned training_instances_number = instances.count_training_instances_number();
+  const unsigned training_instances_number =
+      instances.count_training_instances_number();
 
-   Vector<double> inputs(inputs_number);
-   Vector<double> targets(outputs_number);
+  Vector<double> inputs(inputs_number);
+  Vector<double> targets(outputs_number);
 
-   // Objective functional
+  // Objective functional
 
-   Vector<double> term(outputs_number);
-   double term_norm;
+  Vector<double> term(outputs_number);
+  double term_norm;
 
-   Vector<double> output_objective_gradient(outputs_number);
+  Vector<double> output_objective_gradient(outputs_number);
 
-   Vector< Vector<double> > layers_delta(layers_number);
-   Vector<double> point_gradient(neural_parameters_number);
+  Vector<Vector<double> > layers_delta(layers_number);
+  Vector<double> point_gradient(neural_parameters_number);
 
-   Matrix<double> terms_Jacobian(training_instances_number, neural_parameters_number);
+  Matrix<double> terms_Jacobian(training_instances_number,
+                                neural_parameters_number);
 
-   // Main loop
+  // Main loop
 
-   for(unsigned i = 0; i < training_instances_number; i++)
-   {
-      inputs = data_set_pointer->get_training_input_instance(i);
+  for (unsigned i = 0; i < training_instances_number; i++) {
+    inputs = data_set_pointer->get_training_input_instance(i);
 
-	  targets = data_set_pointer->get_training_target_instance(i);
+    targets = data_set_pointer->get_training_target_instance(i);
 
-      first_order_forward_propagation = multilayer_perceptron_pointer->calculate_first_order_forward_propagation(inputs);
+    first_order_forward_propagation = multilayer_perceptron_pointer
+        ->calculate_first_order_forward_propagation(inputs);
 
-      const Vector< Vector<double> >& layers_activation = first_order_forward_propagation[0];
-      const Vector< Vector<double> >& layers_activation_derivative = first_order_forward_propagation[1];
+    const Vector<Vector<double> >& layers_activation =
+        first_order_forward_propagation[0];
+    const Vector<Vector<double> >& layers_activation_derivative =
+        first_order_forward_propagation[1];
 
-      if(!has_conditions_layer)
-      {
-         const Vector<double>& outputs = first_order_forward_propagation[0][layers_number-1]; 
+    if (!has_conditions_layer) {
+      const Vector<double>& outputs =
+          first_order_forward_propagation[0][layers_number - 1];
 
-         term = (outputs-targets);
-         term_norm = term.calculate_norm();
+      term = (outputs - targets);
+      term_norm = term.calculate_norm();
 
-         if(term_norm == 0.0)
-   	     {
-	        output_objective_gradient.initialize(0.0);
-	     }
-         else
-	     {
-            output_objective_gradient = term/term_norm;	      
-	     }
-
-         layers_delta = calculate_layers_delta(layers_activation_derivative, output_objective_gradient);
+      if (term_norm == 0.0) {
+        output_objective_gradient.initialize(0.0);
+      } else {
+        output_objective_gradient = term / term_norm;
       }
-      else
-      {
-         particular_solution = conditions_layer_pointer->calculate_particular_solution(inputs);
-         homogeneous_solution = conditions_layer_pointer->calculate_homogeneous_solution(inputs);
 
-         term = (particular_solution+homogeneous_solution*layers_activation[layers_number-1] - targets)/sqrt((double)training_instances_number);              
-         term_norm = term.calculate_norm();
+      layers_delta = calculate_layers_delta(layers_activation_derivative,
+                                            output_objective_gradient);
+    } else {
+      particular_solution =
+          conditions_layer_pointer->calculate_particular_solution(inputs);
+      homogeneous_solution =
+          conditions_layer_pointer->calculate_homogeneous_solution(inputs);
 
-         if(term_norm == 0.0)
-   	     {
-	        output_objective_gradient.initialize(0.0);
-	     }
-	     else
-	     {
-            output_objective_gradient = term/term_norm;	      
-	     }
+      term = (particular_solution +
+              homogeneous_solution * layers_activation[layers_number - 1] -
+              targets) /
+             sqrt((double)training_instances_number);
+      term_norm = term.calculate_norm();
 
-		 layers_delta = calculate_layers_delta(layers_activation_derivative, homogeneous_solution, output_objective_gradient);
-	  }
+      if (term_norm == 0.0) {
+        output_objective_gradient.initialize(0.0);
+      } else {
+        output_objective_gradient = term / term_norm;
+      }
 
-      point_gradient = calculate_point_gradient(inputs, layers_activation, layers_delta);
+      layers_delta = calculate_layers_delta(layers_activation_derivative,
+                                            homogeneous_solution,
+                                            output_objective_gradient);
+    }
 
-      terms_Jacobian.set_row(i, point_gradient);
+    point_gradient =
+        calculate_point_gradient(inputs, layers_activation, layers_delta);
+
+    terms_Jacobian.set_row(i, point_gradient);
   }
 
-   return(terms_Jacobian/sqrt((double)training_instances_number));
+  return (terms_Jacobian / sqrt((double)training_instances_number));
 }
-
 
 // FirstOrderTerms calculate_first_order_terms(void) method
 
-/// Returns a first order objective terms performance structure, which contains the values and the Jacobian of the objective terms function. 
+/// Returns a first order objective terms performance structure, which contains
+/// the values and the Jacobian of the objective terms function.
 
 /// @todo
 
-MeanSquaredError::FirstOrderTerms MeanSquaredError::calculate_first_order_terms(void)
-{
-    // Control sentence (if debug)
+MeanSquaredError::FirstOrderTerms MeanSquaredError::calculate_first_order_terms(
+    void) {
+// Control sentence (if debug)
 
-    #ifndef NDEBUG
+#ifndef NDEBUG
 
-    check();
+  check();
 
-    #endif
+#endif
 
-   FirstOrderTerms first_order_terms;
+  FirstOrderTerms first_order_terms;
 
-   first_order_terms.terms = calculate_terms();
+  first_order_terms.terms = calculate_terms();
 
-   first_order_terms.Jacobian = calculate_terms_Jacobian();
+  first_order_terms.Jacobian = calculate_terms_Jacobian();
 
-   return(first_order_terms);
+  return (first_order_terms);
 }
-
 
 // std::string write_performance_term_type(void) const method
 
-/// Returns a string with the name of the mean squared error performance type, "MEAN_SQUARED_ERROR".
+/// Returns a string with the name of the mean squared error performance type,
+/// "MEAN_SQUARED_ERROR".
 
-std::string MeanSquaredError::write_performance_term_type(void) const
-{
-   return("MEAN_SQUARED_ERROR");
+std::string MeanSquaredError::write_performance_term_type(void) const {
+  return ("MEAN_SQUARED_ERROR");
 }
 
+// tinyxml2::XMLDocument* to_XML(void) const method
 
-// tinyxml2::XMLDocument* to_XML(void) const method 
+/// Serializes the mean squared error object into a XML document of the TinyXML
+/// library.
+/// See the OpenNN manual for more information about the format of this
+/// document->
 
-/// Serializes the mean squared error object into a XML document of the TinyXML library. 
-/// See the OpenNN manual for more information about the format of this document-> 
+tinyxml2::XMLDocument* MeanSquaredError::to_XML(void) const {
+  std::ostringstream buffer;
 
-tinyxml2::XMLDocument* MeanSquaredError::to_XML(void) const
-{
-   std::ostringstream buffer;
+  tinyxml2::XMLDocument* document = new tinyxml2::XMLDocument;
 
-   tinyxml2::XMLDocument* document = new tinyxml2::XMLDocument;
+  // Mean squared error
 
-   // Mean squared error
+  tinyxml2::XMLElement* mean_squared_error_element =
+      document->NewElement("MeanSquaredError");
 
-   tinyxml2::XMLElement* mean_squared_error_element = document->NewElement("MeanSquaredError");
+  document->InsertFirstChild(mean_squared_error_element);
 
-   document->InsertFirstChild(mean_squared_error_element);
+  // Display
 
-   // Display
+  {
+    tinyxml2::XMLElement* element = document->NewElement("Display");
+    mean_squared_error_element->LinkEndChild(element);
 
-   {
-      tinyxml2::XMLElement* element = document->NewElement("Display");
-      mean_squared_error_element->LinkEndChild(element);
+    buffer.str("");
+    buffer << display;
 
-      buffer.str("");
-      buffer << display;
+    tinyxml2::XMLText* text = document->NewText(buffer.str().c_str());
+    element->LinkEndChild(text);
+  }
 
-      tinyxml2::XMLText* text = document->NewText(buffer.str().c_str());
-      element->LinkEndChild(text);
-   }
-
-   return(document);
+  return (document);
 }
-
 }
 
 // OpenNN: Open Neural Networks Library.

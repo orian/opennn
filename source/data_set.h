@@ -1,13 +1,19 @@
 /****************************************************************************************************************/
 /*                                                                                                              */
-/*   OpenNN: Open Neural Networks Library                                                                       */
-/*   www.intelnics.com/opennn                                                                                   */
+/*   OpenNN: Open Neural Networks Library
+ */
+/*   www.intelnics.com/opennn
+ */
 /*                                                                                                              */
-/*   D A T A   S E T   C L A S S   H E A D E R                                                                  */
-/*                                                                                                              */ 
-/*   Roberto Lopez                                                                                              */ 
-/*   Intelnics - The artificial intelligence company                                                            */
-/*   robertolopez@intelnics.com                                                                                 */
+/*   D A T A   S E T   C L A S S   H E A D E R
+ */
+/*                                                                                                              */
+/*   Roberto Lopez
+ */
+/*   Intelnics - The artificial intelligence company
+ */
+/*   robertolopez@intelnics.com
+ */
 /*                                                                                                              */
 /****************************************************************************************************************/
 
@@ -35,315 +41,329 @@
 #include "variables.h"
 #include "instances.h"
 
-// TinyXml includes
+// TinyXml includes#include
 
-#include "../tinyxml2/tinyxml2.h"
+#include "tinyxml2_ext.h"
 
+#include "tinyxml2_ext.h"
 
-namespace OpenNN
-{
+namespace OpenNN {
 
-/// This class represents the concept of data set for data modelling problems, 
+/// This class represents the concept of data set for data modelling problems,
 /// such as function regression, pattern recognition and time series prediction.
-/// It basically consists of a data matrix plus a variables and an instances objects. 
+/// It basically consists of a data matrix plus a variables and an instances
+/// objects.
 
-class DataSet 
-{
+class DataSet {
 
-public:  
+ public:
 
-    // DEFAULT CONSTRUCTOR
+  // DEFAULT CONSTRUCTOR
 
-    explicit DataSet(void);
+  explicit DataSet(void);
 
-   // INSTANCES AND VARIABLES CONSTRUCTOR
+  // INSTANCES AND VARIABLES CONSTRUCTOR
 
-   explicit DataSet(const unsigned&, const unsigned&);
+  explicit DataSet(const unsigned&, const unsigned&);
 
-   // INSTANCES AND INPUT AND TARGET VARIABLES CONSTRUCTOR
+  // INSTANCES AND INPUT AND TARGET VARIABLES CONSTRUCTOR
 
-   explicit DataSet(const unsigned&, const unsigned&, const unsigned&);
+  explicit DataSet(const unsigned&, const unsigned&, const unsigned&);
 
-   // XML CONSTRUCTOR
+  // XML CONSTRUCTOR
 
-   explicit DataSet(const tinyxml2::XMLDocument&);
+  explicit DataSet(const tinyxml2::XMLDocument&);
 
-   // FILE CONSTRUCTOR
+  // FILE CONSTRUCTOR
 
-   explicit DataSet(const std::string&);
+  explicit DataSet(const std::string&);
 
-   // COPY CONSTRUCTOR
+  // COPY CONSTRUCTOR
 
-   DataSet(const DataSet&);
+  DataSet(const DataSet&);
 
-   // DESTRUCTOR
+  // DESTRUCTOR
 
-   virtual ~DataSet(void);
+  virtual ~DataSet(void);
 
-   // ASSIGNMENT OPERATOR
+  // ASSIGNMENT OPERATOR
 
-   DataSet& operator = (const DataSet&);
+  DataSet& operator=(const DataSet&);
 
-   // EQUAL TO OPERATOR
+  // EQUAL TO OPERATOR
 
-   bool operator == (const DataSet&) const;
+  bool operator==(const DataSet&) const;
 
-   // ENUMERATIONS
+  // ENUMERATIONS
 
-   /// Enumeration of available methods for scaling and unscaling the data.  
-   
-   enum ScalingUnscalingMethod{MinimumMaximum, MeanStandardDeviation};
+  /// Enumeration of available methods for scaling and unscaling the data.
 
-   // METHODS
+  enum ScalingUnscalingMethod {
+    MinimumMaximum,
+    MeanStandardDeviation
+  };
 
-   // Get methods
+  // METHODS
 
-   const std::string& get_data_file_name(void) const;
+  // Get methods
 
-   static ScalingUnscalingMethod get_scaling_unscaling_method(const std::string&);
+  const std::string& get_data_file_name(void) const;
 
-   const Variables& get_variables(void) const;
-   Variables* get_variables_pointer(void);
+  static ScalingUnscalingMethod get_scaling_unscaling_method(
+      const std::string&);
 
-   const Instances& get_instances(void) const;
-   Instances* get_instances_pointer(void);
+  const Variables& get_variables(void) const;
+  Variables* get_variables_pointer(void);
 
-   const bool& get_display(void) const;
+  const Instances& get_instances(void) const;
+  Instances* get_instances_pointer(void);
 
-   // Data methods
+  const bool& get_display(void) const;
 
-   bool empty(void) const;
+  // Data methods
 
-   const Matrix<double>& get_data(void) const;
+  bool empty(void) const;
 
-   Matrix<double> arrange_training_data(void) const;
-   Matrix<double> arrange_generalization_data(void) const;
-   Matrix<double> arrange_testing_data(void) const;
+  const Matrix<double>& get_data(void) const;
 
-   Matrix<double> arrange_input_data(void) const;
-   Matrix<double> arrange_target_data(void) const;
+  Matrix<double> arrange_training_data(void) const;
+  Matrix<double> arrange_generalization_data(void) const;
+  Matrix<double> arrange_testing_data(void) const;
 
-   Matrix<double> arrange_training_input_data(void) const;
-   Matrix<double> arrange_training_target_data(void) const;  
-   Matrix<double> get_generalization_input_data(void) const;
-   Matrix<double> get_generalization_target_data(void) const;
-   Matrix<double> arrange_testing_input_data(void) const;
-   Matrix<double> arrange_testing_target_data(void) const;
+  Matrix<double> arrange_input_data(void) const;
+  Matrix<double> arrange_target_data(void) const;
 
-   // Instance methods
+  Matrix<double> arrange_training_input_data(void) const;
+  Matrix<double> arrange_training_target_data(void) const;
+  Matrix<double> get_generalization_input_data(void) const;
+  Matrix<double> get_generalization_target_data(void) const;
+  Matrix<double> arrange_testing_input_data(void) const;
+  Matrix<double> arrange_testing_target_data(void) const;
 
-   Vector<double> get_instance(const unsigned&) const;
+  // Instance methods
 
-   Vector<double> get_training_instance(const unsigned&) const;
-   Vector<double> get_generalization_instance(const unsigned&) const;
-   Vector<double> get_testing_instance(const unsigned&) const;
+  Vector<double> get_instance(const unsigned&) const;
 
-   Vector<double> get_input_instance(const unsigned&) const;
-   Vector<double> get_target_instance(const unsigned&) const;
+  Vector<double> get_training_instance(const unsigned&) const;
+  Vector<double> get_generalization_instance(const unsigned&) const;
+  Vector<double> get_testing_instance(const unsigned&) const;
 
-   Vector<double> get_training_input_instance(const unsigned&) const;
-   Vector<double> get_training_target_instance(const unsigned&) const;
+  Vector<double> get_input_instance(const unsigned&) const;
+  Vector<double> get_target_instance(const unsigned&) const;
 
-   Vector<double> get_generalization_input_instance(const unsigned&) const;
-   Vector<double> get_generalization_target_instance(const unsigned&) const;
+  Vector<double> get_training_input_instance(const unsigned&) const;
+  Vector<double> get_training_target_instance(const unsigned&) const;
 
-   Vector<double> get_testing_input_instance(const unsigned&) const;
-   Vector<double> get_testing_target_instance(const unsigned&) const;
+  Vector<double> get_generalization_input_instance(const unsigned&) const;
+  Vector<double> get_generalization_target_instance(const unsigned&) const;
 
-   // Variable methods
+  Vector<double> get_testing_input_instance(const unsigned&) const;
+  Vector<double> get_testing_target_instance(const unsigned&) const;
 
-   Vector<double> get_variable(const unsigned&) const;
+  // Variable methods
 
-   // Set methods
+  Vector<double> get_variable(const unsigned&) const;
 
-   void set(void);
-   void set(const unsigned&, const unsigned&);
-   void set(const unsigned&, const unsigned&, const unsigned&);
-   void set(const DataSet&);
-   void set(const tinyxml2::XMLDocument&);
-   void set(const std::string&);
+  // Set methods
 
-   // Data methods
+  void set(void);
+  void set(const unsigned&, const unsigned&);
+  void set(const unsigned&, const unsigned&, const unsigned&);
+  void set(const DataSet&);
+  void set(const tinyxml2::XMLDocument&);
+  void set(const std::string&);
 
-   void set_data(const Matrix<double>&);
+  // Data methods
 
-   void set_instances_number(const unsigned&);
-   void set_variables_number(const unsigned&);
+  void set_data(const Matrix<double>&);
 
-   void set_data_file_name(const std::string&);
+  void set_instances_number(const unsigned&);
+  void set_variables_number(const unsigned&);
 
-   // Utilities
+  void set_data_file_name(const std::string&);
 
-   void set_display(const bool&);
+  // Utilities
 
-   void set_default(void);
+  void set_display(const bool&);
 
-   // Instance methods
+  void set_default(void);
 
-   void set_instance(const unsigned&, const Vector<double>&);
+  // Instance methods
 
-   void set_training_instance(const unsigned&, const Vector<double>&);
-   void set_generalization_instance(const unsigned&, const Vector<double>&);
-   void set_testing_instance(const unsigned&, const Vector<double>&);
+  void set_instance(const unsigned&, const Vector<double>&);
 
-   void set_input_instance(const unsigned&, const Vector<double>&);
-   void set_target_instance(const unsigned&, const Vector<double>&);
+  void set_training_instance(const unsigned&, const Vector<double>&);
+  void set_generalization_instance(const unsigned&, const Vector<double>&);
+  void set_testing_instance(const unsigned&, const Vector<double>&);
 
-   void set_training_input_instance(const unsigned&, const Vector<double>&);
-   void set_training_target_instance(const unsigned&, const Vector<double>&);
+  void set_input_instance(const unsigned&, const Vector<double>&);
+  void set_target_instance(const unsigned&, const Vector<double>&);
 
-   void set_generalization_input_instance(const unsigned&, const Vector<double>&);
-   void set_generalization_target_instance(const unsigned&, const Vector<double>&);
+  void set_training_input_instance(const unsigned&, const Vector<double>&);
+  void set_training_target_instance(const unsigned&, const Vector<double>&);
 
-   void set_testing_input_instance(const unsigned&, const Vector<double>&); 
-   void set_testing_target_instance(const unsigned&, const Vector<double>&);
+  void set_generalization_input_instance(const unsigned&,
+                                         const Vector<double>&);
+  void set_generalization_target_instance(const unsigned&,
+                                          const Vector<double>&);
 
-   // Data resizing methods
+  void set_testing_input_instance(const unsigned&, const Vector<double>&);
+  void set_testing_target_instance(const unsigned&, const Vector<double>&);
 
-   void add_instance(const Vector<double>&);
-   void subtract_instance(const unsigned&);
+  // Data resizing methods
 
-   void append_variable(const Vector<double>&);
-   void subtract_variable(const unsigned&);
+  void add_instance(const Vector<double>&);
+  void subtract_instance(const unsigned&);
 
-   Vector<unsigned> unuse_constant_variables(void);
-   Vector<unsigned> unuse_repeated_instances(void);
+  void append_variable(const Vector<double>&);
+  void subtract_variable(const unsigned&);
 
-   // Initialization methods
+  Vector<unsigned> unuse_constant_variables(void);
+  Vector<unsigned> unuse_repeated_instances(void);
 
-   void initialize_data(const double&);
+  // Initialization methods
 
-   void randomize_data_uniform(const double& minimum = -1.0, const double& maximum = 1.0);
-   void randomize_data_normal(const double& mean = 0.0, const double& standard_deviation = 1.0);
+  void initialize_data(const double&);
 
-   // Statistics methods
+  void randomize_data_uniform(const double& minimum = -1.0,
+                              const double& maximum = 1.0);
+  void randomize_data_normal(const double& mean = 0.0,
+                             const double& standard_deviation = 1.0);
 
-   Vector< Statistics<double> > calculate_data_statistics(void) const;
+  // Statistics methods
 
-   Matrix<double> calculate_data_statistics_matrix(void) const;
+  Vector<Statistics<double> > calculate_data_statistics(void) const;
 
-   Vector< Statistics<double> > calculate_training_instances_statistics(void) const;
-   Vector< Statistics<double> > calculate_generalization_instances_statistics(void) const;
-   Vector< Statistics<double> > calculate_testing_instances_statistics(void) const;
+  Matrix<double> calculate_data_statistics_matrix(void) const;
 
-   Vector< Statistics<double> > calculate_inputs_statistics(void) const;
-   Vector< Statistics<double> > calculate_targets_statistics(void) const;
-   
-   Vector<double> calculate_training_target_data_mean(void) const;
-   Vector<double> calculate_generalization_target_data_mean(void) const;
-   Vector<double> calculate_testing_target_data_mean(void) const;
+  Vector<Statistics<double> > calculate_training_instances_statistics(
+      void) const;
+  Vector<Statistics<double> > calculate_generalization_instances_statistics(
+      void) const;
+  Vector<Statistics<double> > calculate_testing_instances_statistics(
+      void) const;
 
-   // Correlation methods
+  Vector<Statistics<double> > calculate_inputs_statistics(void) const;
+  Vector<Statistics<double> > calculate_targets_statistics(void) const;
 
-   Matrix<double> calculate_linear_correlations(void) const;
+  Vector<double> calculate_training_target_data_mean(void) const;
+  Vector<double> calculate_generalization_target_data_mean(void) const;
+  Vector<double> calculate_testing_target_data_mean(void) const;
 
-   // Histrogram methods
+  // Correlation methods
 
-   Vector< Histogram<double> > calculate_data_histograms(const unsigned& = 10) const;
+  Matrix<double> calculate_linear_correlations(void) const;
 
-   // Data scaling
+  // Histrogram methods
 
-   void scale_data_minimum_maximum(const Vector< Statistics<double> >&);
-   void scale_data_mean_standard_deviation(const Vector< Statistics<double> >&);
+  Vector<Histogram<double> > calculate_data_histograms(const unsigned& =
+                                                           10) const;
 
-   Vector< Statistics<double> > scale_data_minimum_maximum(void);
-   Vector< Statistics<double> > scale_data_mean_standard_deviation(void);
+  // Data scaling
 
-   void scale_data(const std::string&, const Vector< Statistics<double> >&);
+  void scale_data_minimum_maximum(const Vector<Statistics<double> >&);
+  void scale_data_mean_standard_deviation(const Vector<Statistics<double> >&);
 
-   Vector< Statistics<double> > scale_data(const std::string&);
+  Vector<Statistics<double> > scale_data_minimum_maximum(void);
+  Vector<Statistics<double> > scale_data_mean_standard_deviation(void);
 
-   // Input variables scaling
+  void scale_data(const std::string&, const Vector<Statistics<double> >&);
 
-   void scale_inputs_minimum_maximum(const Vector< Statistics<double> >&);
-   Vector< Statistics<double> > scale_inputs_minimum_maximum(void);
+  Vector<Statistics<double> > scale_data(const std::string&);
 
-   void scale_inputs_mean_standard_deviation(const Vector< Statistics<double> >&);
-   Vector< Statistics<double> > scale_inputs_mean_standard_deviation(void);
+  // Input variables scaling
 
-   Vector< Statistics<double> > scale_inputs(const std::string&);
-   void scale_inputs(const std::string&, const Vector< Statistics<double> >&);
+  void scale_inputs_minimum_maximum(const Vector<Statistics<double> >&);
+  Vector<Statistics<double> > scale_inputs_minimum_maximum(void);
 
-   // Target variables scaling
+  void scale_inputs_mean_standard_deviation(const Vector<Statistics<double> >&);
+  Vector<Statistics<double> > scale_inputs_mean_standard_deviation(void);
 
-   void scale_targets_minimum_maximum(const Vector< Statistics<double> >&);
-   Vector< Statistics<double> > scale_targets_minimum_maximum(void);
+  Vector<Statistics<double> > scale_inputs(const std::string&);
+  void scale_inputs(const std::string&, const Vector<Statistics<double> >&);
 
-   void scale_targets_mean_standard_deviation(const Vector< Statistics<double> >&);
-   Vector< Statistics<double> > scale_targets_mean_standard_deviation(void);
+  // Target variables scaling
 
-   Vector< Statistics<double> > scale_targets(const std::string&);
-   void scale_targets(const std::string&, const Vector< Statistics<double> >&);
+  void scale_targets_minimum_maximum(const Vector<Statistics<double> >&);
+  Vector<Statistics<double> > scale_targets_minimum_maximum(void);
 
-   // Data unscaling
+  void scale_targets_mean_standard_deviation(
+      const Vector<Statistics<double> >&);
+  Vector<Statistics<double> > scale_targets_mean_standard_deviation(void);
 
-   void unscale_data_minimum_maximum(const Vector< Statistics<double> >&);
-   void unscale_data_mean_standard_deviation(const Vector< Statistics<double> >&);
+  Vector<Statistics<double> > scale_targets(const std::string&);
+  void scale_targets(const std::string&, const Vector<Statistics<double> >&);
 
-   // Input variables unscaling
+  // Data unscaling
 
-   void unscale_inputs_minimum_maximum(const Vector< Statistics<double> >&);
-   void unscale_inputs_mean_standard_deviation(const Vector< Statistics<double> >&);
+  void unscale_data_minimum_maximum(const Vector<Statistics<double> >&);
+  void unscale_data_mean_standard_deviation(const Vector<Statistics<double> >&);
 
-   // Target variables unscaling
+  // Input variables unscaling
 
-   void unscale_targets_minimum_maximum(const Vector< Statistics<double> >&);
-   void unscale_targets_mean_standard_deviation(const Vector< Statistics<double> >&);
+  void unscale_inputs_minimum_maximum(const Vector<Statistics<double> >&);
+  void unscale_inputs_mean_standard_deviation(
+      const Vector<Statistics<double> >&);
 
-   // Pattern recognition methods
+  // Target variables unscaling
 
-   Vector<unsigned> calculate_target_class_distribution(void) const;
+  void unscale_targets_minimum_maximum(const Vector<Statistics<double> >&);
+  void unscale_targets_mean_standard_deviation(
+      const Vector<Statistics<double> >&);
 
-   // Serialization methods
+  // Pattern recognition methods
 
-   std::string to_string(void) const;
+  Vector<unsigned> calculate_target_class_distribution(void) const;
 
-   void print(void) const;
+  // Serialization methods
 
-   tinyxml2::XMLDocument* to_XML(void) const;
-   void from_XML(const tinyxml2::XMLDocument&);
+  std::string to_string(void) const;
 
-   void save(const std::string&) const;
-   void load(const std::string&);
+  void print(void) const;
 
-   void print_data(void) const;
+  tinyxml2::XMLDocument* to_XML(void) const;
+  void from_XML(const tinyxml2::XMLDocument&);
 
-   void save_data(void) const;
-   void save_data(const std::string&) const;
+  void save(const std::string&) const;
+  void load(const std::string&);
 
-   void load_data(void);
-   void load_data(const std::string&);
+  void print_data(void) const;
 
-   bool has_data(void) const;
+  void save_data(void) const;
+  void save_data(const std::string&) const;
 
-private:
+  void load_data(void);
+  void load_data(const std::string&);
 
-   // MEMBERS
+  bool has_data(void) const;
 
-   /// Data file_name 
+ private:
 
-   std::string data_file_name;
+  // MEMBERS
 
-   //std::string column_separator;
-   //unsigned header_lines_number;
+  /// Data file_name
 
-   /// Data Matrix.
+  std::string data_file_name;
 
-   Matrix<double> data;
+  // std::string column_separator;
+  // unsigned header_lines_number;
 
-   /// Variables object (inputs and target variables).
+  /// Data Matrix.
 
-   Variables variables;
+  Matrix<double> data;
 
-   /// Instances  object (training, generalization and testing instances).
+  /// Variables object (inputs and target variables).
 
-   Instances instances;
+  Variables variables;
 
-   /// Display messages to screen.
-   
-   bool display;
+  /// Instances  object (training, generalization and testing instances).
+
+  Instances instances;
+
+  /// Display messages to screen.
+
+  bool display;
 };
-
 }
 
 #endif
@@ -364,4 +384,3 @@ private:
 // You should have received a copy of the GNU Lesser General Public
 // License along with this library; if not, write to the Free Software
 // Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
-

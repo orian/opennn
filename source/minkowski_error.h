@@ -1,13 +1,19 @@
 /****************************************************************************************************************/
 /*                                                                                                              */
-/*   OpenNN: Open Neural Networks Library                                                                       */
-/*   www.intelnics.com/opennn                                                                                   */
+/*   OpenNN: Open Neural Networks Library
+ */
+/*   www.intelnics.com/opennn
+ */
 /*                                                                                                              */
-/*   M I N K O W S K I   E R R O R   C L A S S   H E A D E R                                                    */
+/*   M I N K O W S K I   E R R O R   C L A S S   H E A D E R
+ */
 /*                                                                                                              */
-/*   Roberto Lopez                                                                                              */
-/*   Intelnics - The artificial intelligence company                                                            */
-/*   robertolopez@intelnics.com                                                                                 */
+/*   Roberto Lopez
+ */
+/*   Intelnics - The artificial intelligence company
+ */
+/*   robertolopez@intelnics.com
+ */
 /*                                                                                                              */
 /****************************************************************************************************************/
 
@@ -27,94 +33,91 @@
 #include "performance_term.h"
 #include "data_set.h"
 
-// TinyXml includes
+// TinyXml includes#include
 
-#include "../tinyxml2/tinyxml2.h"
+#include "tinyxml2_ext.h"
 
-namespace OpenNN
-{
+#include "tinyxml2_ext.h"
 
-/// This class represents the Minkowski error performance term. 
-/// The Minkowski error measures the difference between the outputs of a neural network and the targets in a data set. 
+namespace OpenNN {
+
+/// This class represents the Minkowski error performance term.
+/// The Minkowski error measures the difference between the outputs of a neural
+/// network and the targets in a data set.
 /// This performance term is used in data modeling problems.
-/// It can be more useful when the data set presents outliers. 
+/// It can be more useful when the data set presents outliers.
 
-class MinkowskiError : public PerformanceTerm
-{
+class MinkowskiError : public PerformanceTerm {
 
-public:
+ public:
 
-   // DEFAULT CONSTRUCTOR
+  // DEFAULT CONSTRUCTOR
 
-   explicit MinkowskiError(void);
+  explicit MinkowskiError(void);
 
-   // NEURAL NETWORK CONSTRUCTOR
+  // NEURAL NETWORK CONSTRUCTOR
 
-   explicit MinkowskiError(NeuralNetwork*);
+  explicit MinkowskiError(NeuralNetwork*);
 
-   // DATA SET CONSTRUCTOR
+  // DATA SET CONSTRUCTOR
 
-   explicit MinkowskiError(DataSet*);
+  explicit MinkowskiError(DataSet*);
 
-   // NEURAL NETWORK AND DATA SET CONSTRUCTOR
+  // NEURAL NETWORK AND DATA SET CONSTRUCTOR
 
-   explicit MinkowskiError(NeuralNetwork*, DataSet*);
+  explicit MinkowskiError(NeuralNetwork*, DataSet*);
 
-   // XML CONSTRUCTOR
+  // XML CONSTRUCTOR
 
-   explicit MinkowskiError(const tinyxml2::XMLDocument&);
+  explicit MinkowskiError(const tinyxml2::XMLDocument&);
 
-   // DESTRUCTOR
+  // DESTRUCTOR
 
-   virtual ~MinkowskiError(void);
+  virtual ~MinkowskiError(void);
 
+  // METHODS
 
-   // METHODS
+  // Get methods
 
-   // Get methods
+  double get_Minkowski_parameter(void) const;
 
-   double get_Minkowski_parameter(void) const;
+  // Set methods
 
-   // Set methods
+  void set_default(void);
 
-   void set_default(void);
+  void set_Minkowski_parameter(const double&);
 
-   void set_Minkowski_parameter(const double&);
+  // Checking methods
 
-   // Checking methods
+  void check(void) const;
 
-   void check(void) const;
+  // performance methods
 
-   // performance methods
+  double calculate_performance(void) const;
+  double calculate_performance(const Vector<double>&) const;
+  double calculate_generalization_performance(void) const;
 
-   double calculate_performance(void) const;
-   double calculate_performance(const Vector<double>&) const;   
-   double calculate_generalization_performance(void) const;   
+  Vector<double> calculate_gradient(void) const;
+  Matrix<double> calculate_Hessian(void) const;
 
-   Vector<double> calculate_gradient(void) const;
-   Matrix<double> calculate_Hessian(void) const;
+  std::string write_performance_term_type(void) const;
 
-   std::string write_performance_term_type(void) const;
+  // Serialization methods
 
-   // Serialization methods
+  tinyxml2::XMLDocument* to_XML(void) const;
+  void from_XML(const tinyxml2::XMLDocument&);
 
-   tinyxml2::XMLDocument* to_XML(void) const;   
-   void from_XML(const tinyxml2::XMLDocument&);   
+ private:
 
-private:
+  // MEMBERS
 
-   // MEMBERS
+  /// Minkowski exponent value.
 
-   /// Minkowski exponent value.
-
-   double Minkowski_parameter;
-
+  double Minkowski_parameter;
 };
-
 }
 
 #endif
-
 
 // OpenNN: Open Neural Networks Library.
 // Neural Designer Copyright © 2013 Roberto López and Ismael Santana (Intelnics)

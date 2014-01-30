@@ -1,13 +1,19 @@
 /****************************************************************************************************************/
 /*                                                                                                              */
-/*   OpenNN: Open Neural Networks Library                                                                       */
-/*   www.intelnics.com/opennn                                                                                   */
+/*   OpenNN: Open Neural Networks Library
+ */
+/*   www.intelnics.com/opennn
+ */
 /*                                                                                                              */
-/*   C O N D I T I O N S   L A Y E R   C L A S S   H E A D E R                                                  */
+/*   C O N D I T I O N S   L A Y E R   C L A S S   H E A D E R
+ */
 /*                                                                                                              */
-/*   Roberto Lopez                                                                                              */
-/*   Intelnics - The artificial intelligence company                                                            */
-/*   robertolopez@intelnics.com                                                                                 */
+/*   Roberto Lopez
+ */
+/*   Intelnics - The artificial intelligence company
+ */
+/*   robertolopez@intelnics.com
+ */
 /*                                                                                                              */
 /****************************************************************************************************************/
 
@@ -28,202 +34,243 @@
 #include "vector.h"
 #include "matrix.h"
 
-// TinyXml includes
+// TinyXml includes#include
 
-#include "../tinyxml2/tinyxml2.h"
+#include "tinyxml2_ext.h"
 
-namespace OpenNN
-{
+#include "tinyxml2_ext.h"
 
-/// This class represents a layer of conditions. 
-/// Conditions are used to ensure that given outputs are provided for given inputs. 
-/// Note that this is quite a difficult topic in the field of neural networks. 
+namespace OpenNN {
 
-class ConditionsLayer
-{
+/// This class represents a layer of conditions.
+/// Conditions are used to ensure that given outputs are provided for given
+/// inputs.
+/// Note that this is quite a difficult topic in the field of neural networks.
 
-public:
+class ConditionsLayer {
 
-   // DEFAULT CONSTRUCTOR
+ public:
 
-   explicit ConditionsLayer(void);
+  // DEFAULT CONSTRUCTOR
 
-   // INPUTS-CONDITIONS NUMBER CONSTRUCTOR
+  explicit ConditionsLayer(void);
 
-   explicit ConditionsLayer(const unsigned&, const unsigned&);
+  // INPUTS-CONDITIONS NUMBER CONSTRUCTOR
 
-   // XML CONSTRUCTOR
+  explicit ConditionsLayer(const unsigned&, const unsigned&);
 
-   explicit ConditionsLayer(const tinyxml2::XMLDocument&);
+  // XML CONSTRUCTOR
 
-   // COPY CONSTRUCTOR
+  explicit ConditionsLayer(const tinyxml2::XMLDocument&);
 
-   ConditionsLayer(const ConditionsLayer&);
+  // COPY CONSTRUCTOR
 
-   // DESTRUCTOR
+  ConditionsLayer(const ConditionsLayer&);
 
-   virtual ~ConditionsLayer(void);
+  // DESTRUCTOR
 
-   // ASSIGNMENT OPERATOR
+  virtual ~ConditionsLayer(void);
 
-   ConditionsLayer& operator = (const ConditionsLayer&);
+  // ASSIGNMENT OPERATOR
 
-   // EQUAL TO OPERATOR
+  ConditionsLayer& operator=(const ConditionsLayer&);
 
-   bool operator == (const ConditionsLayer&) const;
+  // EQUAL TO OPERATOR
 
-   // ENUMERATIONS
+  bool operator==(const ConditionsLayer&) const;
 
-   /// Enumeration of available methods for applying conditions.
-   
-   enum ConditionsMethod{NoConditions, OneCondition, TwoConditions, UserConditionsMethod};
+  // ENUMERATIONS
 
-   // GET METHODS
+  /// Enumeration of available methods for applying conditions.
 
-   const unsigned& get_external_inputs_number(void) const;
-   const unsigned& get_conditions_neurons_number(void) const;
+  enum ConditionsMethod {
+    NoConditions,
+    OneCondition,
+    TwoConditions,
+    UserConditionsMethod
+  };
 
-   const ConditionsMethod& get_conditions_method(void) const;
-   std::string write_conditions_method(void) const;
+  // GET METHODS
 
-   const Vector<double>& get_external_input_values(void) const;
-   const double& get_external_input_value(const unsigned&) const;
-   
-   const Matrix<double>& get_output_values(void) const;
-   const double& get_output_value(const unsigned&, const unsigned&) const;
+  const unsigned& get_external_inputs_number(void) const;
+  const unsigned& get_conditions_neurons_number(void) const;
 
-   const bool& get_display(void) const;
+  const ConditionsMethod& get_conditions_method(void) const;
+  std::string write_conditions_method(void) const;
 
-   // SET METHODS
+  const Vector<double>& get_external_input_values(void) const;
+  const double& get_external_input_value(const unsigned&) const;
 
-   void set(void);
-   void set(const unsigned&, const unsigned&);
-   void set(const ConditionsLayer&);
+  const Matrix<double>& get_output_values(void) const;
+  const double& get_output_value(const unsigned&, const unsigned&) const;
 
-   void set_external_inputs_number(const unsigned&);
-   void set_conditions_neurons_number(const unsigned&);
+  const bool& get_display(void) const;
 
-   void set_conditions_method(const ConditionsMethod&);
-   void set_conditions_method(const std::string&);
+  // SET METHODS
 
-   void set_external_input_values(const Vector<double>&);
-   void set_external_input_value(const unsigned&, const double&);
-   
-   void set_output_values(const Matrix<double>&);
-   void set_output_value(const unsigned&, const unsigned&, const double&);
+  void set(void);
+  void set(const unsigned&, const unsigned&);
+  void set(const ConditionsLayer&);
 
-   void set_display(const bool&);
+  void set_external_inputs_number(const unsigned&);
+  void set_conditions_neurons_number(const unsigned&);
 
-   void set_default(void);
+  void set_conditions_method(const ConditionsMethod&);
+  void set_conditions_method(const std::string&);
 
-   // Conditions 
+  void set_external_input_values(const Vector<double>&);
+  void set_external_input_value(const unsigned&, const double&);
 
-   void initialize_random(void);
+  void set_output_values(const Matrix<double>&);
+  void set_output_value(const unsigned&, const unsigned&, const double&);
 
-   void check(void) const;
+  void set_display(const bool&);
 
-   // Particular solution
+  void set_default(void);
 
-   /// Returns the particular solution for applying boundary conditions.
-   virtual Vector<double> calculate_particular_solution(const Vector<double>&) const;
+  // Conditions
 
-   /// Returns the particular solution Jacobian for applying boundary conditions.
-   virtual Matrix<double> calculate_particular_solution_Jacobian(const Vector<double>&) const;
+  void initialize_random(void);
 
-   virtual Vector< Matrix<double> > calculate_particular_solution_Hessian_form(const Vector<double>&) const;
+  void check(void) const;
 
-   // Homogeneous solution
+  // Particular solution
+
+  /// Returns the particular solution for applying boundary conditions.
+  virtual Vector<double> calculate_particular_solution(
+      const Vector<double>&) const;
+
+  /// Returns the particular solution Jacobian for applying boundary conditions.
+  virtual Matrix<double> calculate_particular_solution_Jacobian(
+      const Vector<double>&) const;
+
+  virtual Vector<Matrix<double> > calculate_particular_solution_Hessian_form(
+      const Vector<double>&) const;
 
-   /// Returns the homogeneous solution for applying boundary conditions.
-   virtual Vector<double> calculate_homogeneous_solution(const Vector<double>&) const;
+  // Homogeneous solution
 
-   /// Returns the homogeneous solution Jacobian for applying boundary conditions.
-   virtual Matrix<double> calculate_homogeneous_solution_Jacobian(const Vector<double>&) const;
+  /// Returns the homogeneous solution for applying boundary conditions.
+  virtual Vector<double> calculate_homogeneous_solution(
+      const Vector<double>&) const;
 
-   virtual Vector< Matrix<double> > calculate_homogeneous_solution_Hessian_form(const Vector<double>&) const;
+  /// Returns the homogeneous solution Jacobian for applying boundary
+  /// conditions.
+  virtual Matrix<double> calculate_homogeneous_solution_Jacobian(
+      const Vector<double>&) const;
 
-   Vector<double> calculate_outputs(const Vector<double>&, const Vector<double>&) const;
+  virtual Vector<Matrix<double> > calculate_homogeneous_solution_Hessian_form(
+      const Vector<double>&) const;
 
-   Matrix<double> calculate_Jacobian(const Vector<double>&, const Vector<double>&, const Matrix<double>&) const;
+  Vector<double> calculate_outputs(const Vector<double>&,
+                                   const Vector<double>&) const;
 
-   Vector< Matrix<double> > calculate_Hessian_form(const Vector<double>&, const Vector<double>&) const;
+  Matrix<double> calculate_Jacobian(const Vector<double>&,
+                                    const Vector<double>&,
+                                    const Matrix<double>&) const;
 
-   // One condition methods
+  Vector<Matrix<double> > calculate_Hessian_form(const Vector<double>&,
+                                                 const Vector<double>&) const;
 
-   Vector<double> calculate_one_condition_particular_solution(const Vector<double>&) const;
-   Matrix<double> calculate_one_condition_particular_solution_Jacobian(const Vector<double>&) const;
-   Vector< Matrix<double> > calculate_one_condition_particular_solution_Hessian_form(const Vector<double>&) const;
+  // One condition methods
 
-   Vector<double> calculate_one_condition_homogeneous_solution(const Vector<double>&) const;
-   Matrix<double> calculate_one_condition_homogeneous_solution_Jacobian(const Vector<double>&) const;
-   Vector< Matrix<double> > calculate_one_condition_homogeneous_solution_Hessian_form(const Vector<double>&) const;
+  Vector<double> calculate_one_condition_particular_solution(
+      const Vector<double>&) const;
+  Matrix<double> calculate_one_condition_particular_solution_Jacobian(
+      const Vector<double>&) const;
+  Vector<Matrix<double> >
+      calculate_one_condition_particular_solution_Hessian_form(
+          const Vector<double>&) const;
 
-   // Two conditions methods
+  Vector<double> calculate_one_condition_homogeneous_solution(
+      const Vector<double>&) const;
+  Matrix<double> calculate_one_condition_homogeneous_solution_Jacobian(
+      const Vector<double>&) const;
+  Vector<Matrix<double> >
+      calculate_one_condition_homogeneous_solution_Hessian_form(
+          const Vector<double>&) const;
 
-   Vector<double> calculate_two_conditions_particular_solution(const Vector<double>&) const;
-   Matrix<double> calculate_two_conditions_particular_solution_Jacobian(const Vector<double>&) const;
-   Vector< Matrix<double> > calculate_two_conditions_particular_solution_Hessian_form(const Vector<double>&) const;
+  // Two conditions methods
 
-   Vector<double> calculate_two_conditions_homogeneous_solution(const Vector<double>&) const;
-   Matrix<double> calculate_two_conditions_homogeneous_solution_Jacobian(const Vector<double>&) const;
-   Vector< Matrix<double> > calculate_two_conditions_homogeneous_solution_Hessian_form(const Vector<double>&) const;
+  Vector<double> calculate_two_conditions_particular_solution(
+      const Vector<double>&) const;
+  Matrix<double> calculate_two_conditions_particular_solution_Jacobian(
+      const Vector<double>&) const;
+  Vector<Matrix<double> >
+      calculate_two_conditions_particular_solution_Hessian_form(
+          const Vector<double>&) const;
 
-   // Expression methods
+  Vector<double> calculate_two_conditions_homogeneous_solution(
+      const Vector<double>&) const;
+  Matrix<double> calculate_two_conditions_homogeneous_solution_Jacobian(
+      const Vector<double>&) const;
+  Vector<Matrix<double> >
+      calculate_two_conditions_homogeneous_solution_Hessian_form(
+          const Vector<double>&) const;
 
-   virtual std::string write_particular_solution_expression(const Vector<std::string>&, const Vector<std::string>&) const;
-   virtual std::string write_homogeneous_solution_expression(const Vector<std::string>&, const Vector<std::string>&) const;
+  // Expression methods
 
-   std::string write_one_condition_particular_solution_expression(const Vector<std::string>&, const Vector<std::string>&) const;
-   std::string write_one_condition_homogeneous_solution_expression(const Vector<std::string>&, const Vector<std::string>&) const;
-   
-   std::string write_two_conditions_particular_solution_expression(const Vector<std::string>&, const Vector<std::string>&) const;
-   std::string write_two_conditions_homogeneous_solution_expression(const Vector<std::string>&, const Vector<std::string>&) const;
+  virtual std::string write_particular_solution_expression(
+      const Vector<std::string>&, const Vector<std::string>&) const;
+  virtual std::string write_homogeneous_solution_expression(
+      const Vector<std::string>&, const Vector<std::string>&) const;
 
-   std::string write_output_expression(const Vector<std::string>&, const Vector<std::string>&, const Vector<std::string>&, const Vector<std::string>&) const;
+  std::string write_one_condition_particular_solution_expression(
+      const Vector<std::string>&, const Vector<std::string>&) const;
+  std::string write_one_condition_homogeneous_solution_expression(
+      const Vector<std::string>&, const Vector<std::string>&) const;
 
-   std::string write_expression(const Vector<std::string>&, const Vector<std::string>&, const Vector<std::string>&) const;
+  std::string write_two_conditions_particular_solution_expression(
+      const Vector<std::string>&, const Vector<std::string>&) const;
+  std::string write_two_conditions_homogeneous_solution_expression(
+      const Vector<std::string>&, const Vector<std::string>&) const;
 
-   // Serialization methods
+  std::string write_output_expression(const Vector<std::string>&,
+                                      const Vector<std::string>&,
+                                      const Vector<std::string>&,
+                                      const Vector<std::string>&) const;
 
-   std::string to_string(void) const;
+  std::string write_expression(const Vector<std::string>&,
+                               const Vector<std::string>&,
+                               const Vector<std::string>&) const;
 
-   tinyxml2::XMLDocument* to_XML(void) const;
-   void from_XML(const tinyxml2::XMLDocument&);
+  // Serialization methods
 
-protected:
+  std::string to_string(void) const;
 
-   /// Number of inputs to the conditions layer. 
-   /// This will be the number of inputs to the neural network. 
+  tinyxml2::XMLDocument* to_XML(void) const;
+  void from_XML(const tinyxml2::XMLDocument&);
 
-   unsigned external_inputs_number;
+ protected:
 
-   /// Number of conditions neurons.
-   /// This will be the number of outputs from the neural network. 
+  /// Number of inputs to the conditions layer.
+  /// This will be the number of inputs to the neural network.
 
-   unsigned conditions_neurons_number;
+  unsigned external_inputs_number;
 
-   /// Conditions method (one or two conditions).
+  /// Number of conditions neurons.
+  /// This will be the number of outputs from the neural network.
 
-   ConditionsMethod conditions_method;
+  unsigned conditions_neurons_number;
 
-   /// Independent values of the conditions.
+  /// Conditions method (one or two conditions).
 
-   Vector<double> external_input_values;
+  ConditionsMethod conditions_method;
 
-   /// Dependent values of the conditions.
+  /// Independent values of the conditions.
 
-   Matrix<double> output_values;
+  Vector<double> external_input_values;
 
-   /// Display messages to screen. 
+  /// Dependent values of the conditions.
 
-   bool display;
+  Matrix<double> output_values;
 
+  /// Display messages to screen.
+
+  bool display;
 };
-
 }
 
 #endif
-
 
 // OpenNN: Open Neural Networks Library.
 // Neural Designer Copyright © 2013 Roberto López and Ismael Santana (Intelnics)
@@ -242,4 +289,3 @@ protected:
 // License along with this library; if not, write to the Free Software
 
 // Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
-

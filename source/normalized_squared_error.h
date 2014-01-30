@@ -1,13 +1,19 @@
 /****************************************************************************************************************/
 /*                                                                                                              */
-/*   OpenNN: Open Neural Networks Library                                                                       */
-/*   www.intelnics.com/opennn                                                                                   */
+/*   OpenNN: Open Neural Networks Library
+ */
+/*   www.intelnics.com/opennn
+ */
 /*                                                                                                              */
-/*   N O R M A L I Z E D   S Q U A R E D   E R R O R   C L A S S   H E A D E R                                  */
+/*   N O R M A L I Z E D   S Q U A R E D   E R R O R   C L A S S   H E A D E R
+ */
 /*                                                                                                              */
-/*   Roberto Lopez                                                                                              */ 
-/*   Intelnics - The artificial intelligence company                                                            */
-/*   robertolopez@intelnics.com                                                                                 */
+/*   Roberto Lopez
+ */
+/*   Intelnics - The artificial intelligence company
+ */
+/*   robertolopez@intelnics.com
+ */
 /*                                                                                                              */
 /****************************************************************************************************************/
 
@@ -29,108 +35,107 @@
 #include "performance_term.h"
 #include "data_set.h"
 
-// TinyXml includes
+// TinyXml includes#include
 
-#include "../tinyxml2/tinyxml2.h"
+#include "tinyxml2_ext.h"
 
-namespace OpenNN
-{
+#include "tinyxml2_ext.h"
 
-/// This class represents the normalized squared error performance term. 
+namespace OpenNN {
+
+/// This class represents the normalized squared error performance term.
 /// This performance term is used in data modeling problems.
-/// If it has a value of unity then the neural network is predicting the data "in the mean",
+/// If it has a value of unity then the neural network is predicting the data
+/// "in the mean",
 /// A value of zero means perfect prediction of data.
 
-class NormalizedSquaredError : public PerformanceTerm
-{
+class NormalizedSquaredError : public PerformanceTerm {
 
-public:
+ public:
 
-   // GENERAL CONSTRUCTOR
+  // GENERAL CONSTRUCTOR
 
-   explicit NormalizedSquaredError(NeuralNetwork*, DataSet*);
+  explicit NormalizedSquaredError(NeuralNetwork*, DataSet*);
 
-   // NEURAL NETWORK CONSTRUCTOR
+  // NEURAL NETWORK CONSTRUCTOR
 
-   explicit NormalizedSquaredError(NeuralNetwork*);
+  explicit NormalizedSquaredError(NeuralNetwork*);
 
-   // DATA SET CONSTRUCTOR
+  // DATA SET CONSTRUCTOR
 
-   explicit NormalizedSquaredError(DataSet*);
+  explicit NormalizedSquaredError(DataSet*);
 
-   // DEFAULT CONSTRUCTOR
+  // DEFAULT CONSTRUCTOR
 
-   explicit NormalizedSquaredError(void);
+  explicit NormalizedSquaredError(void);
 
-   // XML CONSTRUCTOR
+  // XML CONSTRUCTOR
 
-   explicit NormalizedSquaredError(const tinyxml2::XMLDocument&);
+  explicit NormalizedSquaredError(const tinyxml2::XMLDocument&);
 
-   // DESTRUCTOR
+  // DESTRUCTOR
 
-   virtual ~NormalizedSquaredError(void);
+  virtual ~NormalizedSquaredError(void);
 
-   // METHODS
+  // METHODS
 
-   // Get methods
+  // Get methods
 
-   // Set methods
+  // Set methods
 
-   // Normalization coefficients 
+  // Normalization coefficients
 
-   double calculate_normalization_coefficient(const Matrix<double>&, const Vector<double>&) const;
+  double calculate_normalization_coefficient(const Matrix<double>&,
+                                             const Vector<double>&) const;
 
-   // Checking methods
+  // Checking methods
 
-   void check(void) const;
+  void check(void) const;
 
-   // performance methods
+  // performance methods
 
-   double calculate_performance(void) const;
-   Vector<double> calculate_gradient(void) const;
-   Matrix<double> calculate_Hessian(void) const;
+  double calculate_performance(void) const;
+  Vector<double> calculate_gradient(void) const;
+  Matrix<double> calculate_Hessian(void) const;
 
-   double calculate_performance(const Vector<double>&) const;
+  double calculate_performance(const Vector<double>&) const;
 
-   double calculate_generalization_performance(void) const;   
+  double calculate_generalization_performance(void) const;
 
-   // Objective terms methods
+  // Objective terms methods
 
-   Vector<double> calculate_terms(void) const;
-   Vector<double> calculate_terms(const Vector<double>&) const;
+  Vector<double> calculate_terms(void) const;
+  Vector<double> calculate_terms(const Vector<double>&) const;
 
-   Matrix<double> calculate_terms_Jacobian(void) const;
+  Matrix<double> calculate_terms_Jacobian(void) const;
 
-   PerformanceTerm::FirstOrderTerms calculate_first_order_terms(void);
+  PerformanceTerm::FirstOrderTerms calculate_first_order_terms(void);
 
-   // Squared errors methods
+  // Squared errors methods
 
-   Vector<double> calculate_squared_errors(void) const;
+  Vector<double> calculate_squared_errors(void) const;
 
-   std::string write_performance_term_type(void) const;
+  std::string write_performance_term_type(void) const;
 
-   // Serialization methods
+  // Serialization methods
 
-   tinyxml2::XMLDocument* to_XML(void) const;   
+  tinyxml2::XMLDocument* to_XML(void) const;
 
-   void from_XML(const tinyxml2::XMLDocument&);
+  void from_XML(const tinyxml2::XMLDocument&);
 
-   std::string write_information(void) const;
+  std::string write_information(void) const;
 
+ private:
 
-private:
+  // MEMBERS
 
-   // MEMBERS
+  /// Mean values of all the target variables.
 
-   /// Mean values of all the target variables. 
-
-   Vector<double> training_target_mean;
+  Vector<double> training_target_mean;
 };
-
 }
 
 #endif
-
 
 // OpenNN: Open Neural Networks Library.
 // Neural Designer Copyright © 2013 Roberto López and Ismael Santana (Intelnics)
@@ -148,4 +153,3 @@ private:
 // You should have received a copy of the GNU Lesser General Public
 // License along with this library; if not, write to the Free Software
 // Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
-

@@ -1,13 +1,19 @@
 /****************************************************************************************************************/
 /*                                                                                                              */
-/*   OpenNN: Open Neural Networks Library                                                                       */
-/*   www.intelnics.com/opennn                                                                                   */
+/*   OpenNN: Open Neural Networks Library
+ */
+/*   www.intelnics.com/opennn
+ */
 /*                                                                                                              */
-/*   S O L U T I O N S   E R R O R   C L A S S   H E A D E R                                                    */
+/*   S O L U T I O N S   E R R O R   C L A S S   H E A D E R
+ */
 /*                                                                                                              */
-/*   Roberto Lopez                                                                                              */
-/*   Intelnics - The artificial intelligence company                                                            */
-/*   robertolopez@intelnics.com                                                                                 */
+/*   Roberto Lopez
+ */
+/*   Intelnics - The artificial intelligence company
+ */
+/*   robertolopez@intelnics.com
+ */
 /*                                                                                                              */
 /****************************************************************************************************************/
 
@@ -29,135 +35,141 @@
 
 #include "performance_term.h"
 
-// TinyXml includes
+// TinyXml includes#include
 
-#include "../tinyxml2/tinyxml2.h"
+#include "tinyxml2_ext.h"
 
-namespace OpenNN
-{
+#include "tinyxml2_ext.h"
 
-/// This class implements a performance term called solutions error. 
-/// This performance term is measured on a mathematical model. 
-/// It computes the difference between the solution from a mathematical model and a given target solution. 
-/// This type of functional is very used in optimal control problems, in which the neural network represents the control variables. 
-/// The first and second derivatives of this type of performance term are calculated with numerical differentiation. 
+namespace OpenNN {
 
-class SolutionsError : public PerformanceTerm
-{
+/// This class implements a performance term called solutions error.
+/// This performance term is measured on a mathematical model.
+/// It computes the difference between the solution from a mathematical model
+/// and a given target solution.
+/// This type of functional is very used in optimal control problems, in which
+/// the neural network represents the control variables.
+/// The first and second derivatives of this type of performance term are
+/// calculated with numerical differentiation.
 
-public:
+class SolutionsError : public PerformanceTerm {
 
-   // DEFAULT CONSTRUCTOR
+ public:
 
-   explicit SolutionsError(void);
+  // DEFAULT CONSTRUCTOR
 
-   // NEURAL NETWORK CONSTRUCTOR
+  explicit SolutionsError(void);
 
-   explicit SolutionsError(NeuralNetwork*);
+  // NEURAL NETWORK CONSTRUCTOR
 
-   // DATA SET CONSTRUCTOR
+  explicit SolutionsError(NeuralNetwork*);
 
-   explicit SolutionsError(MathematicalModel*);
+  // DATA SET CONSTRUCTOR
 
-   // GENERAL CONSTRUCTOR
+  explicit SolutionsError(MathematicalModel*);
 
-   explicit SolutionsError(NeuralNetwork*, MathematicalModel*);
+  // GENERAL CONSTRUCTOR
 
-   // XML CONSTRUCTOR
+  explicit SolutionsError(NeuralNetwork*, MathematicalModel*);
 
-   explicit SolutionsError(const tinyxml2::XMLDocument&);
+  // XML CONSTRUCTOR
 
-   // COPY CONSTRUCTOR
+  explicit SolutionsError(const tinyxml2::XMLDocument&);
 
-   SolutionsError(const SolutionsError&);
+  // COPY CONSTRUCTOR
 
-   // ASSIGNMENT OPERATOR
+  SolutionsError(const SolutionsError&);
 
-   SolutionsError& operator = (const SolutionsError&);
+  // ASSIGNMENT OPERATOR
 
-   // EQUAL TO OPERATOR
+  SolutionsError& operator=(const SolutionsError&);
 
-   bool operator == (const SolutionsError&) const;
+  // EQUAL TO OPERATOR
 
-   // DESTRUCTOR
+  bool operator==(const SolutionsError&) const;
 
-   virtual ~SolutionsError(void);
+  // DESTRUCTOR
 
-   // ENUMERATIONS
+  virtual ~SolutionsError(void);
 
-   /// Enumeration of the different methods to compute the errors between the mathematical model solutions and the target solutions. 
+  // ENUMERATIONS
 
-   enum SolutionsErrorMethod{SolutionsErrorSum, SolutionsErrorIntegral};
+  /// Enumeration of the different methods to compute the errors between the
+  /// mathematical model solutions and the target solutions.
 
-   // METHODS
+  enum SolutionsErrorMethod {
+    SolutionsErrorSum,
+    SolutionsErrorIntegral
+  };
 
-   // Get methods
+  // METHODS
 
-   const SolutionsErrorMethod& get_solutions_error_method(void) const;
-   std::string write_solutions_error_method(void) const;
+  // Get methods
 
-   const Vector<double>& get_solutions_errors_weights(void) const;
-   const double& get_solution_error_weight(const unsigned&) const;
+  const SolutionsErrorMethod& get_solutions_error_method(void) const;
+  std::string write_solutions_error_method(void) const;
 
-   // Set methods
+  const Vector<double>& get_solutions_errors_weights(void) const;
+  const double& get_solution_error_weight(const unsigned&) const;
 
-   void set(const SolutionsError&);
+  // Set methods
 
-   void set_solutions_error_method(const SolutionsErrorMethod&);
-   void set_solutions_error_method(const std::string&);
+  void set(const SolutionsError&);
 
-   void set_solutions_errors_weights(const Vector<double>&);
-   void set_solution_error_weight(const unsigned&, const double&);
+  void set_solutions_error_method(const SolutionsErrorMethod&);
+  void set_solutions_error_method(const std::string&);
 
-   void set_default(void);
+  void set_solutions_errors_weights(const Vector<double>&);
+  void set_solution_error_weight(const unsigned&, const double&);
 
-   // Target trajectories methods 
+  void set_default(void);
 
-   virtual Matrix<double> calculate_target_dependent_variables(const Matrix<double>&) const;
+  // Target trajectories methods
 
-   // Checking methods
+  virtual Matrix<double> calculate_target_dependent_variables(
+      const Matrix<double>&) const;
 
-   void check(void) const;
+  // Checking methods
 
-   // Constraints methods
+  void check(void) const;
 
-   double calculate_solutions_error_sum(void) const;   
-   double calculate_solutions_error_integral(void) const;   
+  // Constraints methods
 
-   virtual double calculate_performance(void) const;   
-   virtual double calculate_performance(const Vector<double>&) const;   
+  double calculate_solutions_error_sum(void) const;
+  double calculate_solutions_error_integral(void) const;
 
-   std::string write_performance_term_type(void) const;
+  virtual double calculate_performance(void) const;
+  virtual double calculate_performance(const Vector<double>&) const;
 
-   std::string write_information(void) const;
+  std::string write_performance_term_type(void) const;
 
-   // Serialization methods
+  std::string write_information(void) const;
 
-   virtual void print(void) const;
+  // Serialization methods
 
-   tinyxml2::XMLDocument* to_XML(void) const;   
-   void from_XML(const tinyxml2::XMLDocument&);
+  virtual void print(void) const;
 
-protected:
+  tinyxml2::XMLDocument* to_XML(void) const;
+  void from_XML(const tinyxml2::XMLDocument&);
 
-   /// Numerical integration object. 
+ protected:
 
-   NumericalIntegration numerical_integration;
+  /// Numerical integration object.
 
-   /// Method used to compute the error between the mathematical model solutions and the target solutions. 
+  NumericalIntegration numerical_integration;
 
-   SolutionsErrorMethod solutions_error_method;
+  /// Method used to compute the error between the mathematical model solutions
+  /// and the target solutions.
 
-   /// Weights for the different dependent variables errors. 
+  SolutionsErrorMethod solutions_error_method;
 
-   Vector<double> solutions_errors_weights;
+  /// Weights for the different dependent variables errors.
 
+  Vector<double> solutions_errors_weights;
 };
-
 }
 
 #endif
-
 
 // OpenNN: Open Neural Networks Library.
 // Neural Designer Copyright © 2013 Roberto López and Ismael Santana (Intelnics)

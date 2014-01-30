@@ -1,13 +1,19 @@
 /****************************************************************************************************************/
 /*                                                                                                              */
-/*   OpenNN: Open Neural Networks Library                                                                       */
-/*   www.intelnics.com/opennn                                                                                   */
+/*   OpenNN: Open Neural Networks Library
+ */
+/*   www.intelnics.com/opennn
+ */
 /*                                                                                                              */
-/*   T R A I N I N G   A L G O R I T H M   C L A S S   H E A D E R                                              */
+/*   T R A I N I N G   A L G O R I T H M   C L A S S   H E A D E R
+ */
 /*                                                                                                              */
-/*   Roberto Lopez                                                                                              */
-/*   Intelnics - The artificial intelligence company                                                            */
-/*   robertolopez@intelnics.com                                                                                 */
+/*   Roberto Lopez
+ */
+/*   Intelnics - The artificial intelligence company
+ */
+/*   robertolopez@intelnics.com
+ */
 /*                                                                                                              */
 /****************************************************************************************************************/
 
@@ -28,139 +34,135 @@
 
 #include "performance_functional.h"
 
-// TinyXml includes
+// TinyXml includes#include
 
-#include "../tinyxml2/tinyxml2.h"
+#include "tinyxml2_ext.h"
 
-namespace OpenNN
-{
+#include "tinyxml2_ext.h"
 
-/// This abstract class represents the concept of training algorithm for a neural network. 
+namespace OpenNN {
+
+/// This abstract class represents the concept of training algorithm for a
+/// neural network.
 /// Any derived class must implement the perform_training(void) method.
 
-class TrainingAlgorithm
-{
+class TrainingAlgorithm {
 
-public:
+ public:
 
-   // DEFAULT CONSTRUCTOR
+  // DEFAULT CONSTRUCTOR
 
-   explicit TrainingAlgorithm(void);
+  explicit TrainingAlgorithm(void);
 
-   // GENERAL CONSTRUCTOR
+  // GENERAL CONSTRUCTOR
 
-   explicit TrainingAlgorithm(PerformanceFunctional*);
+  explicit TrainingAlgorithm(PerformanceFunctional*);
 
-   // XML CONSTRUCTOR
+  // XML CONSTRUCTOR
 
-   explicit TrainingAlgorithm(const tinyxml2::XMLDocument&);
+  explicit TrainingAlgorithm(const tinyxml2::XMLDocument&);
 
-   // DESTRUCTOR
+  // DESTRUCTOR
 
-   virtual ~TrainingAlgorithm(void);
+  virtual ~TrainingAlgorithm(void);
 
-    // ASSIGNMENT OPERATOR
+  // ASSIGNMENT OPERATOR
 
-    virtual TrainingAlgorithm& operator = (const TrainingAlgorithm&);
+  virtual TrainingAlgorithm& operator=(const TrainingAlgorithm&);
 
-    // EQUAL TO OPERATOR
+  // EQUAL TO OPERATOR
 
-    virtual bool operator == (const TrainingAlgorithm&) const;
+  virtual bool operator==(const TrainingAlgorithm&) const;
 
+  // STRUCTURES
 
-   // STRUCTURES
+  ///
+  /// This structure contains the training algorithm results.
+  ///
 
-   ///
-   /// This structure contains the training algorithm results. 
-   ///
+  struct Results {
+    /// Returns a string representation of the results structure.
 
-   struct Results
-   {
-      /// Returns a string representation of the results structure. 
+    virtual std::string to_string(void) const {
+      std::string str;
 
-      virtual std::string to_string(void) const
-      {
-         std::string str;
+      return (str);
+    }
 
-         return(str);
-      }
+    /// Returns a default (empty) string matrix with the final results from
+    /// training.
 
-       /// Returns a default (empty) string matrix with the final results from training.
+    virtual Matrix<std::string> write_final_results(const unsigned&) const {
+      Matrix<std::string> final_results;
 
-       virtual Matrix<std::string> write_final_results(const unsigned&) const
-       {
-          Matrix<std::string> final_results;         
+      return (final_results);
+    }
+  };
 
-          return(final_results);
-       }
-   };
+  // METHODS
 
-   // METHODS
+  // Get methods
 
-   // Get methods
+  PerformanceFunctional* get_performance_functional_pointer(void) const;
 
-   PerformanceFunctional* get_performance_functional_pointer(void) const;
+  bool has_performance_functional(void) const;
 
-   bool has_performance_functional(void) const;
+  // Utilities
 
-   // Utilities
+  const bool& get_display(void) const;
 
-   const bool& get_display(void) const;
-  
-   // Set methods
+  // Set methods
 
-   void set(void);
-   void set(PerformanceFunctional*);
-   virtual void set_default(void);
+  void set(void);
+  void set(PerformanceFunctional*);
+  virtual void set_default(void);
 
-   virtual void set_performance_functional_pointer(PerformanceFunctional*);
+  virtual void set_performance_functional_pointer(PerformanceFunctional*);
 
-   void set_display(const bool&);
+  void set_display(const bool&);
 
-   // Training methods
+  // Training methods
 
-   virtual void check(void) const;
+  virtual void check(void) const;
 
-   /// Trains a neural network which has a performance functional associated. 
+  /// Trains a neural network which has a performance functional associated.
 
-   virtual Results* perform_training(void) = 0;
+  virtual Results* perform_training(void) = 0;
 
-   virtual std::string write_training_algorithm_type(void) const;
+  virtual std::string write_training_algorithm_type(void) const;
 
-   // Serialization methods
+  // Serialization methods
 
-   virtual std::string to_string(void) const;
-   void print(void) const;
+  virtual std::string to_string(void) const;
+  void print(void) const;
 
-   virtual Matrix<std::string> to_string_matrix(void) const;
+  virtual Matrix<std::string> to_string_matrix(void) const;
 
-   virtual tinyxml2::XMLDocument* to_XML(void) const;
-   virtual void from_XML(const tinyxml2::XMLDocument&);
+  virtual tinyxml2::XMLDocument* to_XML(void) const;
+  virtual void from_XML(const tinyxml2::XMLDocument&);
 
-   void save(const std::string&) const;
-   void load(const std::string&);
+  void save(const std::string&) const;
+  void load(const std::string&);
 
-   virtual void initialize_random(void);
+  virtual void initialize_random(void);
 
-protected:
+ protected:
 
-   // FIELDS
+  // FIELDS
 
-   /// Pointer to a performance functional for a multilayer perceptron object.
+  /// Pointer to a performance functional for a multilayer perceptron object.
 
-   PerformanceFunctional* performance_functional_pointer;
+  PerformanceFunctional* performance_functional_pointer;
 
-   // UTILITIES
+  // UTILITIES
 
-   /// Display messages to screen.
+  /// Display messages to screen.
 
-   bool display;
+  bool display;
 };
-
 }
 
 #endif
-
 
 // OpenNN: Open Neural Networks Library.
 // Neural Designer Copyright © 2013 Roberto López and Ismael Santana (Intelnics)
@@ -178,4 +180,3 @@ protected:
 // You should have received a copy of the GNU Lesser General Public
 // License along with this library; if not, write to the Free Software
 // Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
-

@@ -1,13 +1,19 @@
 /****************************************************************************************************************/
 /*                                                                                                              */
-/*   OpenNN: Open Neural Networks Library                                                                       */
-/*   www.intelnics.com/opennn                                                                                   */
+/*   OpenNN: Open Neural Networks Library
+ */
+/*   www.intelnics.com/opennn
+ */
 /*                                                                                                              */
-/*   P R O B A B I L I S T I C   L A Y E R   C L A S S   H E A D E R                                            */
+/*   P R O B A B I L I S T I C   L A Y E R   C L A S S   H E A D E R
+ */
 /*                                                                                                              */
-/*   Roberto Lopez                                                                                              */
-/*   Intelnics - The artificial intelligence company                                                            */
-/*   robertolopez@intelnics.com                                                                                 */
+/*   Roberto Lopez
+ */
+/*   Intelnics - The artificial intelligence company
+ */
+/*   robertolopez@intelnics.com
+ */
 /*                                                                                                              */
 /****************************************************************************************************************/
 
@@ -28,145 +34,157 @@
 #include "vector.h"
 #include "matrix.h"
 
-// TinyXml includes
+// TinyXml includes#include
 
-#include "../tinyxml2/tinyxml2.h"
+#include "tinyxml2_ext.h"
 
-namespace OpenNN
-{
+#include "tinyxml2_ext.h"
+
+namespace OpenNN {
 
 /// This class represents a layer of probabilistic neurons.
-/// The neural network defined in OpenNN includes a probabilistic layer for those problems 
-/// when the outptus are to be interpreted as probabilities. 
+/// The neural network defined in OpenNN includes a probabilistic layer for
+/// those problems
+/// when the outptus are to be interpreted as probabilities.
 
-class ProbabilisticLayer
-{
+class ProbabilisticLayer {
 
-public:
+ public:
 
-   // DEFAULT CONSTRUCTOR
+  // DEFAULT CONSTRUCTOR
 
-   explicit ProbabilisticLayer(void);
+  explicit ProbabilisticLayer(void);
 
-   // PROBABILISTIC NEURONS NUMBER CONSTRUCTOR
+  // PROBABILISTIC NEURONS NUMBER CONSTRUCTOR
 
-   explicit ProbabilisticLayer(const unsigned&);
+  explicit ProbabilisticLayer(const unsigned&);
 
-   // COPY CONSTRUCTOR
+  // COPY CONSTRUCTOR
 
-   ProbabilisticLayer(const ProbabilisticLayer&);
+  ProbabilisticLayer(const ProbabilisticLayer&);
 
-   // DESTRUCTOR
+  // DESTRUCTOR
 
-   virtual ~ProbabilisticLayer(void);
+  virtual ~ProbabilisticLayer(void);
 
-   // ASSIGNMENT OPERATOR
+  // ASSIGNMENT OPERATOR
 
-   ProbabilisticLayer& operator = (const ProbabilisticLayer&);
+  ProbabilisticLayer& operator=(const ProbabilisticLayer&);
 
-   // EQUAL TO OPERATOR
+  // EQUAL TO OPERATOR
 
-   bool operator == (const ProbabilisticLayer&) const;
+  bool operator==(const ProbabilisticLayer&) const;
 
-   // ENUMERATIONS
+  // ENUMERATIONS
 
-   /// Enumeration of available methods for interpreting variables as probabilities.  
-   
-   enum ProbabilisticMethod{Competitive, Softmax, NoProbabilistic};
+  /// Enumeration of available methods for interpreting variables as
+  /// probabilities.
 
-   // GET METHODS
+  enum ProbabilisticMethod {
+    Competitive,
+    Softmax,
+    NoProbabilistic
+  };
 
-   const unsigned& get_probabilistic_neurons_number(void) const;
+  // GET METHODS
 
-   // Probabilistic processing
+  const unsigned& get_probabilistic_neurons_number(void) const;
 
-   const ProbabilisticMethod& get_probabilistic_method(void) const;
-   std::string write_probabilistic_method(void) const;
-   std::string write_probabilistic_method_text(void) const;
+  // Probabilistic processing
 
-   // Display messages
+  const ProbabilisticMethod& get_probabilistic_method(void) const;
+  std::string write_probabilistic_method(void) const;
+  std::string write_probabilistic_method_text(void) const;
 
-   const bool& get_display(void) const;
+  // Display messages
 
-   // SET METHODS
+  const bool& get_display(void) const;
 
-   void set(void);
-   void set(const unsigned&);
-   void set(const ProbabilisticLayer&);
+  // SET METHODS
 
-   void set_probabilistic_neurons_number(const unsigned&);
+  void set(void);
+  void set(const unsigned&);
+  void set(const ProbabilisticLayer&);
 
-   void set_probabilistic_method(const ProbabilisticMethod&);
-   void set_probabilistic_method(const std::string&);
+  void set_probabilistic_neurons_number(const unsigned&);
 
-   virtual void set_default(void);
+  void set_probabilistic_method(const ProbabilisticMethod&);
+  void set_probabilistic_method(const std::string&);
 
-   // Display messages
+  virtual void set_default(void);
 
-   void set_display(const bool&);
+  // Display messages
 
-   // Pruning and growing
+  void set_display(const bool&);
 
-   void prune_probabilistic_neuron(void);
+  // Pruning and growing
 
-   // Initialization methods
+  void prune_probabilistic_neuron(void);
 
-   void initialize_random(void);
+  // Initialization methods
 
-   // Probabilistic post-processing
+  void initialize_random(void);
 
-   Vector<double> calculate_outputs(const Vector<double>&) const;
-   Matrix<double> calculate_Jacobian(const Vector<double>&) const;
-   Vector< Matrix<double> > calculate_Hessian_form(const Vector<double>&) const;
+  // Probabilistic post-processing
 
-   Vector<double> calculate_competitive_output(const Vector<double>&) const;
-   Matrix<double> calculate_competitive_Jacobian(const Vector<double>&) const;
-   Vector< Matrix<double> > calculate_competitive_Hessian_form(const Vector<double>&) const;
+  Vector<double> calculate_outputs(const Vector<double>&) const;
+  Matrix<double> calculate_Jacobian(const Vector<double>&) const;
+  Vector<Matrix<double> > calculate_Hessian_form(const Vector<double>&) const;
 
-   Vector<double> calculate_softmax_output(const Vector<double>&) const;
-   Matrix<double> calculate_softmax_Jacobian(const Vector<double>&) const;
-   Vector< Matrix<double> > calculate_softmax_Hessian_form(const Vector<double>&) const;
+  Vector<double> calculate_competitive_output(const Vector<double>&) const;
+  Matrix<double> calculate_competitive_Jacobian(const Vector<double>&) const;
+  Vector<Matrix<double> > calculate_competitive_Hessian_form(
+      const Vector<double>&) const;
 
-   Vector<double> calculate_no_probabilistic_output(const Vector<double>&) const;
-   Matrix<double> calculate_no_probabilistic_Jacobian(const Vector<double>&) const;
-   Vector< Matrix<double> > calculate_no_probabilistic_Hessian_form(const Vector<double>&) const;
+  Vector<double> calculate_softmax_output(const Vector<double>&) const;
+  Matrix<double> calculate_softmax_Jacobian(const Vector<double>&) const;
+  Vector<Matrix<double> > calculate_softmax_Hessian_form(
+      const Vector<double>&) const;
 
-   // Expression methods
+  Vector<double> calculate_no_probabilistic_output(const Vector<double>&) const;
+  Matrix<double> calculate_no_probabilistic_Jacobian(
+      const Vector<double>&) const;
+  Vector<Matrix<double> > calculate_no_probabilistic_Hessian_form(
+      const Vector<double>&) const;
 
-   std::string write_competitive_expression(const Vector<std::string>&, const Vector<std::string>&) const;
-   std::string write_softmax_expression(const Vector<std::string>&, const Vector<std::string>&) const;
-   std::string write_no_probabilistic_expression(const Vector<std::string>&, const Vector<std::string>&) const;
+  // Expression methods
 
-   std::string write_expression(const Vector<std::string>&, const Vector<std::string>&) const;
+  std::string write_competitive_expression(const Vector<std::string>&,
+                                           const Vector<std::string>&) const;
+  std::string write_softmax_expression(const Vector<std::string>&,
+                                       const Vector<std::string>&) const;
+  std::string write_no_probabilistic_expression(
+      const Vector<std::string>&, const Vector<std::string>&) const;
 
-   // Serialization methods
+  std::string write_expression(const Vector<std::string>&,
+                               const Vector<std::string>&) const;
 
-   std::string to_string(void) const;
+  // Serialization methods
 
-   virtual tinyxml2::XMLDocument* to_XML(void) const;
-   virtual void from_XML(const tinyxml2::XMLDocument&);
+  std::string to_string(void) const;
 
-protected:
+  virtual tinyxml2::XMLDocument* to_XML(void) const;
+  virtual void from_XML(const tinyxml2::XMLDocument&);
 
-   // MEMBERS
+ protected:
 
-   /// Number of probabilistic neurons in the layer. 
+  // MEMBERS
 
-   unsigned probabilistic_neurons_number;
+  /// Number of probabilistic neurons in the layer.
 
-   /// Probabilistic processing method.
+  unsigned probabilistic_neurons_number;
 
-   ProbabilisticMethod probabilistic_method;
+  /// Probabilistic processing method.
 
-   /// Display messages to screen. 
+  ProbabilisticMethod probabilistic_method;
 
-   bool display;
+  /// Display messages to screen.
+
+  bool display;
 };
-
 }
 
 #endif
-
 
 // OpenNN: Open Neural Networks Library.
 // Neural Designer Copyright © 2013 Roberto López and Ismael Santana (Intelnics)
@@ -185,4 +203,3 @@ protected:
 // License along with this library; if not, write to the Free Software
 
 // Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
-

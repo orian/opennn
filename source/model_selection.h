@@ -1,13 +1,19 @@
 /****************************************************************************************************************/
 /*                                                                                                              */
-/*   OpenNN: Open Neural Networks Library                                                                       */
-/*   www.intelnics.com/opennn                                                                                   */
+/*   OpenNN: Open Neural Networks Library
+ */
+/*   www.intelnics.com/opennn
+ */
 /*                                                                                                              */
-/*   M O D E L   S E L E C T I O N   C L A S S   H E A D E R                                                    */
+/*   M O D E L   S E L E C T I O N   C L A S S   H E A D E R
+ */
 /*                                                                                                              */
-/*   Roberto Lopez                                                                                              */ 
-/*   Intelnics - The artificial intelligence company                                                            */
-/*   robertolopez@intelnics.com                                                                                 */
+/*   Roberto Lopez
+ */
+/*   Intelnics - The artificial intelligence company
+ */
+/*   robertolopez@intelnics.com
+ */
 /*                                                                                                              */
 /****************************************************************************************************************/
 
@@ -32,189 +38,194 @@
 
 #include "training_strategy.h"
 
-// TinyXml includes
+// TinyXml includes#include
 
-#include "../tinyxml2/tinyxml2.h"
+#include "tinyxml2_ext.h"
 
-namespace OpenNN
-{
+#include "tinyxml2_ext.h"
+
+namespace OpenNN {
 
 /// This class represents the concept of model selection algorithm.
-/// It is used for finding a network architecture with maximum generalization capabilities. 
+/// It is used for finding a network architecture with maximum generalization
+/// capabilities.
 
-class ModelSelection
-{
+class ModelSelection {
 
-public:  
+ public:
 
-   // DEFAULT CONSTRUCTOR
+  // DEFAULT CONSTRUCTOR
 
-   explicit ModelSelection(void);
+  explicit ModelSelection(void);
 
-   // TRAINING STRATEGY CONSTRUCTOR
+  // TRAINING STRATEGY CONSTRUCTOR
 
-   explicit ModelSelection(TrainingStrategy*);
+  explicit ModelSelection(TrainingStrategy*);
 
-   // FILE CONSTRUCTOR
+  // FILE CONSTRUCTOR
 
-   explicit ModelSelection(const std::string&);
+  explicit ModelSelection(const std::string&);
 
-   // XML CONSTRUCTOR
+  // XML CONSTRUCTOR
 
-   explicit ModelSelection(const tinyxml2::XMLDocument&);
+  explicit ModelSelection(const tinyxml2::XMLDocument&);
 
+  // DESTRUCTOR
 
-   // DESTRUCTOR
+  virtual ~ModelSelection(void);
 
-   virtual ~ModelSelection(void);
+  // STRUCTURES
 
-   // STRUCTURES
+  ///
+  /// This structure contains the results from the model selection process.
+  ///
 
-   ///
-   /// This structure contains the results from the model selection process. 
-   ///
+  struct ModelSelectionResults {
+    /// Parameters of the different neural networks.
 
-   struct ModelSelectionResults
-   {
-      /// Parameters of the different neural networks. 
+    Matrix<Vector<double> > parameters_data;
 
-      Matrix< Vector<double> > parameters_data;
+    /// Performance performance of the different neural networks.
 
-      /// Performance performance of the different neural networks. 
+    Matrix<double> performance_data;
 
-      Matrix<double> performance_data;
+    /// Generalization performance of the different neural networks.
 
-      /// Generalization performance of the different neural networks. 
+    Matrix<double> generalization_performance_data;
 
-      Matrix<double> generalization_performance_data;
+    /// Vector of parameters for the neural network with minimum generalization
+    /// performance.
 
-	  /// Vector of parameters for the neural network with minimum generalization performance. 
+    Vector<double> minimal_parameters;
 
-	  Vector<double> minimal_parameters;
+    /// Statistics of the performance functional performance for the different
+    /// neural networks.
 
-	  /// Statistics of the performance functional performance for the different neural networks.
+    Vector<Vector<double> > performance_data_statistics;
 
-	  Vector< Vector<double> > performance_data_statistics;
+    /// Statistics of the generalization performance for the different neural
+    /// networks.
 
-	  /// Statistics of the generalization performance for the different neural networks.
+    Vector<Vector<double> > generalization_performance_data_statistics;
+  };
 
-	  Vector< Vector<double> > generalization_performance_data_statistics; 
-   };
+  // METHODS
 
-   // METHODS
+  // Get methods
 
-   // Get methods
+  TrainingStrategy* get_training_strategy_pointer(void) const;
 
-   TrainingStrategy* get_training_strategy_pointer(void) const;
+  const Vector<unsigned>& get_hidden_perceptrons_numbers(void) const;
+  const unsigned& get_parameters_assays_number(void) const;
 
-   const Vector<unsigned>& get_hidden_perceptrons_numbers(void) const;
-   const unsigned& get_parameters_assays_number(void) const;
+  const bool& get_reserve_parameters_data(void);
+  const bool& get_reserve_performance_data(void);
+  const bool& get_reserve_generalization_performance_data(void);
+  const bool& get_reserve_minimal_parameters(void);
+  const bool& get_reserve_performance_data_statistics(void);
+  const bool& get_reserve_generalization_performance_data_statistics(void);
+  const bool& get_reserve_model_order_selection_plot(void);
 
-   const bool& get_reserve_parameters_data(void);
-   const bool& get_reserve_performance_data(void);
-   const bool& get_reserve_generalization_performance_data(void);
-   const bool& get_reserve_minimal_parameters(void);
-   const bool& get_reserve_performance_data_statistics(void);
-   const bool& get_reserve_generalization_performance_data_statistics(void);
-   const bool& get_reserve_model_order_selection_plot(void);
+  const bool& get_display(void) const;
 
-   const bool& get_display(void) const;
+  // Set methods
 
-   // Set methods
+  void set_training_strategy_pointer(TrainingStrategy*);
 
-   void set_training_strategy_pointer(TrainingStrategy*);
+  void set_default(void);
 
-   void set_default(void);
+  void set_hidden_perceptrons_numbers(const Vector<unsigned>&);
+  void set_parameters_assays_number(const unsigned&);
 
-   void set_hidden_perceptrons_numbers(const Vector<unsigned>&);
-   void set_parameters_assays_number(const unsigned&);
+  void set_assays_numbers(const unsigned&, const unsigned&);
 
-   void set_assays_numbers(const unsigned&, const unsigned&);
+  void set_reserve_parameters_data(const bool&);
+  void set_reserve_performance_data(const bool&);
+  void set_reserve_generalization_performance_data(const bool&);
+  void set_reserve_minimal_parameters(const bool&);
+  void set_reserve_performance_data_statistics(const bool&);
+  void set_reserve_generalization_performance_data_statistics(const bool&);
+  void set_reserve_model_order_selection_plot(const bool&);
 
-   void set_reserve_parameters_data(const bool&);
-   void set_reserve_performance_data(const bool&);
-   void set_reserve_generalization_performance_data(const bool&);
-   void set_reserve_minimal_parameters(const bool&);
-   void set_reserve_performance_data_statistics(const bool&);
-   void set_reserve_generalization_performance_data_statistics(const bool&);
-   void set_reserve_model_order_selection_plot(const bool&);
+  void set_display(const bool&);
 
-   void set_display(const bool&);
+  // Model order selection methods
 
-   // Model order selection methods
+  void check(void) const;
 
-   void check(void) const;
+  ModelSelectionResults perform_model_inputs_selection(void) const;
 
-   ModelSelectionResults perform_model_inputs_selection(void) const;
+  ModelSelectionResults perform_model_order_selection(void) const;
 
-   ModelSelectionResults perform_model_order_selection(void) const;
+  ModelSelectionResults perform_model_selection(void) const;
 
-   ModelSelectionResults perform_model_selection(void) const;
+  // Serialization methods
 
-   // Serialization methods
+  tinyxml2::XMLDocument* to_XML(void) const;
+  void from_XML(const tinyxml2::XMLDocument&);
 
-   tinyxml2::XMLDocument* to_XML(void) const;
-   void from_XML(const tinyxml2::XMLDocument&);
+  void print(void) const;
+  void save(const std::string&) const;
+  void load(const std::string&);
 
-   void print(void) const;
-   void save(const std::string&) const;
-   void load(const std::string&);
+ private:
 
-private: 
+  // MEMBERS
 
-   // MEMBERS
+  /// Pointer to a training strategy object.
 
-   /// Pointer to a training strategy object.
+  TrainingStrategy* training_strategy_pointer;
 
-   TrainingStrategy* training_strategy_pointer;
+  /// Indices for selecting the input variables.
 
-   /// Indices for selecting the input variables. 
+  Vector<Vector<unsigned> > inputs_indices;
 
-   Vector< Vector<unsigned> > inputs_indices;
+  /// Complexities for selecting the network architecture.
 
-   /// Complexities for selecting the network architecture. 
+  Vector<unsigned> hidden_perceptrons_numbers;
 
-   Vector<unsigned> hidden_perceptrons_numbers;
+  /// Number of trials for each neural network.
 
-   /// Number of trials for each neural network. 
+  unsigned parameters_assays_number;
 
-   unsigned parameters_assays_number;
+  // Model selection results
 
-   // Model selection results
+  /// True if the parameters of all neural networks are to be reserved.
 
-   /// True if the parameters of all neural networks are to be reserved. 
+  bool reserve_parameters_data;
 
-   bool reserve_parameters_data;
+  /// True if the performance of all neural networks are to be reserved.
 
-   /// True if the performance of all neural networks are to be reserved. 
+  bool reserve_performance_data;
 
-   bool reserve_performance_data;
+  /// True if the generalization performance of all neural networks are to be
+  /// reserved.
 
-   /// True if the generalization performance of all neural networks are to be reserved. 
+  bool reserve_generalization_performance_data;
 
-   bool reserve_generalization_performance_data;
+  /// True if the vector parameters of the neural network presenting minimum
+  /// generalization performance is to be reserved.
 
-   /// True if the vector parameters of the neural network presenting minimum generalization performance is to be reserved. 
+  bool reserve_minimal_parameters;
 
-   bool reserve_minimal_parameters;
+  /// True if the statistics of the different performances are to be reserved.
 
-   /// True if the statistics of the different performances are to be reserved. 
+  bool reserve_performance_data_statistics;
 
-   bool reserve_performance_data_statistics;
+  /// True if the statistics of the different generalization performances are to
+  /// be reserved.
 
-   /// True if the statistics of the different generalization performances are to be reserved. 
+  bool reserve_generalization_performance_data_statistics;
 
-   bool reserve_generalization_performance_data_statistics;
+  /// True if the data needed to plot the results from the model selection plot
+  /// is to be reserved.
 
-   /// True if the data needed to plot the results from the model selection plot is to be reserved. 
+  bool reserve_model_order_selection_plot;
 
-   bool reserve_model_order_selection_plot;
+  /// Display messages to screen.
 
-   /// Display messages to screen.
-   
-   bool display;
+  bool display;
 };
-
 }
 
 #endif

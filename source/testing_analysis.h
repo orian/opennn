@@ -1,13 +1,19 @@
 /****************************************************************************************************************/
 /*                                                                                                              */
-/*   OpenNN: Open Neural Networks Library                                                                       */
-/*   www.intelnics.com/opennn                                                                                   */
+/*   OpenNN: Open Neural Networks Library
+ */
+/*   www.intelnics.com/opennn
+ */
 /*                                                                                                              */
-/*   T E S T I N G   A N A L Y S I S   C L A S S   H E A D E R                                                  */
+/*   T E S T I N G   A N A L Y S I S   C L A S S   H E A D E R
+ */
 /*                                                                                                              */
-/*   Roberto Lopez                                                                                              */
-/*   Intelnics - The artificial intelligence company                                                            */
-/*   robertolopez@intelnics.com                                                                                 */
+/*   Roberto Lopez
+ */
+/*   Intelnics - The artificial intelligence company
+ */
+/*   robertolopez@intelnics.com
+ */
 /*                                                                                                              */
 /****************************************************************************************************************/
 
@@ -32,166 +38,167 @@
 
 #include "neural_network.h"
 
-namespace OpenNN
-{
+namespace OpenNN {
 
-/// This class contains tools for testing neural networks in different learning tasks. 
-/// In particular, it can be used for testing function regression, pattern recognition
+/// This class contains tools for testing neural networks in different learning
+/// tasks.
+/// In particular, it can be used for testing function regression, pattern
+/// recognition
 /// or time series prediction problems.
 
-class TestingAnalysis
-{
+class TestingAnalysis {
 
-public:  
+ public:
 
-   // DEFAULT CONSTRUCTOR
+  // DEFAULT CONSTRUCTOR
 
-   explicit TestingAnalysis(void);
+  explicit TestingAnalysis(void);
 
-   // NEURAL NETWORK CONSTRUCTOR
+  // NEURAL NETWORK CONSTRUCTOR
 
-   explicit TestingAnalysis(NeuralNetwork*);
+  explicit TestingAnalysis(NeuralNetwork*);
 
-   // MATHEMATICAL MODEL CONSTRUCTOR
+  // MATHEMATICAL MODEL CONSTRUCTOR
 
-   explicit TestingAnalysis(MathematicalModel*);
+  explicit TestingAnalysis(MathematicalModel*);
 
-   // DATA SET CONSTRUCTOR
+  // DATA SET CONSTRUCTOR
 
-   explicit TestingAnalysis(DataSet*);
+  explicit TestingAnalysis(DataSet*);
 
-   // NEURAL NETWORK AND DATA SET CONSTRUCTOR
+  // NEURAL NETWORK AND DATA SET CONSTRUCTOR
 
-   explicit TestingAnalysis(NeuralNetwork*, DataSet*);
+  explicit TestingAnalysis(NeuralNetwork*, DataSet*);
 
-   // NEURAL NETWORK AND MATHEMATICAL MODEL CONSTRUCTOR
+  // NEURAL NETWORK AND MATHEMATICAL MODEL CONSTRUCTOR
 
-   explicit TestingAnalysis(NeuralNetwork*, MathematicalModel*);
+  explicit TestingAnalysis(NeuralNetwork*, MathematicalModel*);
 
-   // NEURAL NETWORK, DATA SET AND MATHEMATICAL MODEL CONSTRUCTOR
+  // NEURAL NETWORK, DATA SET AND MATHEMATICAL MODEL CONSTRUCTOR
 
-   explicit TestingAnalysis(NeuralNetwork*, DataSet*, MathematicalModel*);
+  explicit TestingAnalysis(NeuralNetwork*, DataSet*, MathematicalModel*);
 
-   // XML CONSTRUCTOR
+  // XML CONSTRUCTOR
 
-   explicit TestingAnalysis(const tinyxml2::XMLDocument&);
+  explicit TestingAnalysis(const tinyxml2::XMLDocument&);
 
-   // FILE CONSTRUCTOR
+  // FILE CONSTRUCTOR
 
-   explicit TestingAnalysis(const std::string&);
+  explicit TestingAnalysis(const std::string&);
 
+  // DESTRUCTOR
 
-   // DESTRUCTOR
+  virtual ~TestingAnalysis(void);
 
-   virtual ~TestingAnalysis(void);
+  // STRUCTURES
 
-    // STRUCTURES
+  ///
+  /// Structure with the results from a linear regression analysis.
+  ///
 
-    ///
-    /// Structure with the results from a linear regression analysis.
-    ///
+  struct LinearRegressionResults {
+    /// Intercept, slope and correlation coefficient for each output variable.
 
-    struct LinearRegressionResults
-    {
-       /// Intercept, slope and correlation coefficient for each output variable.
+    Vector<LinearRegressionParameters<double> > linear_regression_parameters;
 
-       Vector< LinearRegressionParameters<double> > linear_regression_parameters;
+    /// Target data from data set and output data from neural network.
 
-       /// Target data from data set and output data from neural network.
+    Vector<Matrix<double> > target_output_data;
 
-       Vector< Matrix<double> > target_output_data;
+    void save(const std::string&) const;
+  };
 
-       void save(const std::string&) const;
-    };
+  // METHODS
 
-   // METHODS
+  // Get methods
 
-   // Get methods
+  NeuralNetwork* get_neural_network_pointer(void) const;
+  DataSet* get_data_set_pointer(void) const;
+  MathematicalModel* get_mathematical_model_pointer(void) const;
 
-   NeuralNetwork* get_neural_network_pointer(void) const;
-   DataSet* get_data_set_pointer(void) const;
-   MathematicalModel* get_mathematical_model_pointer(void) const;
+  const bool& get_display(void) const;
 
-   const bool& get_display(void) const;
+  // Set methods
 
-   // Set methods
+  void set_neural_network_pointer(NeuralNetwork*);
+  void set_data_set_pointer(DataSet*);
+  void set_mathematical_model_pointer(MathematicalModel*);
 
-   void set_neural_network_pointer(NeuralNetwork*);
-   void set_data_set_pointer(DataSet*);
-   void set_mathematical_model_pointer(MathematicalModel*);
+  void set_display(const bool&);
 
-   void set_display(const bool&);
+  void set_default(void);
 
-   void set_default(void);
+  // Checking methods
 
-   // Checking methods
+  void check(void) const;
 
-   void check(void) const;
+  // Target and output data methods
 
-   // Target and output data methods
+  Vector<Matrix<double> > calculate_target_output_data(void) const;
 
-   Vector< Matrix<double> > calculate_target_output_data(void) const;
+  // Error data methods
 
-   // Error data methods
+  Vector<Matrix<double> > calculate_error_data(void) const;
 
-   Vector< Matrix<double> > calculate_error_data(void) const;
+  Vector<Vector<Statistics<double> > > calculate_error_data_statistics(
+      void) const;
+  Vector<Matrix<double> > calculate_error_data_statistics_matrices(void) const;
 
-   Vector< Vector< Statistics<double> > > calculate_error_data_statistics(void) const;
-   Vector< Matrix<double> > calculate_error_data_statistics_matrices(void) const;
+  Vector<Histogram<double> > calculate_error_data_histograms(const unsigned& =
+                                                                 10) const;
 
-   Vector< Histogram<double> > calculate_error_data_histograms(const unsigned& = 10) const;
+  // Linear regression analysis methods
 
-   // Linear regression analysis methods
+  Vector<LinearRegressionParameters<double> >
+      calculate_linear_regression_parameters(void) const;
 
-   Vector< LinearRegressionParameters<double> > calculate_linear_regression_parameters(void) const;
+  LinearRegressionResults perform_linear_regression_analysis(void) const;
 
-   LinearRegressionResults perform_linear_regression_analysis(void) const;
+  // Binary classifcation methods
 
-   // Binary classifcation methods
+  Vector<double> calculate_binary_classification_tests(void) const;
 
-   Vector<double> calculate_binary_classification_tests(void) const;
+  // Confusion methods
 
-   // Confusion methods
+  Matrix<unsigned> calculate_confusion_binary_classification(
+      const Matrix<double>&, const Matrix<double>&) const;
+  Matrix<unsigned> calculate_confusion_multiple_classification(
+      const Matrix<double>&, const Matrix<double>&) const;
 
-   Matrix<unsigned> calculate_confusion_binary_classification(const Matrix<double>&, const Matrix<double>&) const;
-   Matrix<unsigned> calculate_confusion_multiple_classification(const Matrix<double>&, const Matrix<double>&) const;
+  Matrix<unsigned> calculate_confusion(void) const;
 
-   Matrix<unsigned> calculate_confusion(void) const;
+  // Serialization methods
 
-   // Serialization methods 
+  std::string to_string(void) const;
 
-   std::string to_string(void) const;
+  void print(void) const;
 
-   void print(void) const;
+  virtual tinyxml2::XMLDocument* to_XML(void) const;
+  virtual void from_XML(const tinyxml2::XMLDocument&);
 
-   virtual tinyxml2::XMLDocument* to_XML(void) const;
-   virtual void from_XML(const tinyxml2::XMLDocument&);
+  void save(const std::string&) const;
+  void load(const std::string&);
 
-   void save(const std::string&) const;
-   void load(const std::string&);
+ private:
 
+  // MEMBERS
 
-private: 
+  /// Pointer to the neural network object to be tested.
 
-   // MEMBERS
+  NeuralNetwork* neural_network_pointer;
 
-   /// Pointer to the neural network object to be tested. 
+  /// Pointer to a data set object.
 
-   NeuralNetwork* neural_network_pointer;
+  DataSet* data_set_pointer;
 
-   /// Pointer to a data set object.
+  /// Pointer to a mathematical model object.
 
-   DataSet* data_set_pointer;
+  MathematicalModel* mathematical_model_pointer;
 
-   /// Pointer to a mathematical model object.
+  /// Display messages to screen.
 
-   MathematicalModel* mathematical_model_pointer;
-
-   /// Display messages to screen.
-   
-   bool display;
+  bool display;
 };
-
 }
 
 #endif

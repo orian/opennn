@@ -1,13 +1,19 @@
 /****************************************************************************************************************/
 /*                                                                                                              */
-/*   OpenNN: Open Neural Networks Library                                                                       */
-/*   www.intelnics.com/opennn                                                                                   */
+/*   OpenNN: Open Neural Networks Library
+ */
+/*   www.intelnics.com/opennn
+ */
 /*                                                                                                              */
-/*   N E U R A L   P A R A M E T E R S   N O R M   C L A S S   H E A D E R                                      */
+/*   N E U R A L   P A R A M E T E R S   N O R M   C L A S S   H E A D E R
+ */
 /*                                                                                                              */
-/*   Roberto Lopez                                                                                              */
-/*   Intelnics - The artificial intelligence company                                                            */
-/*   robertolopez@intelnics.com                                                                                 */
+/*   Roberto Lopez
+ */
+/*   Intelnics - The artificial intelligence company
+ */
+/*   robertolopez@intelnics.com
+ */
 /*                                                                                                              */
 /****************************************************************************************************************/
 
@@ -27,87 +33,85 @@
 
 #include "performance_term.h"
 
-// TinyXml includes
+// TinyXml includes#include
 
-#include "../tinyxml2/tinyxml2.h"
+#include "tinyxml2_ext.h"
 
-namespace OpenNN
-{
+#include "tinyxml2_ext.h"
 
-/// This class represents the neural parameters norm performance term. 
-/// This performance term is very useful as a regularization functional in data modeling, optimal control or inverse problems.
+namespace OpenNN {
 
-class NeuralParametersNorm : public PerformanceTerm
-{
+/// This class represents the neural parameters norm performance term.
+/// This performance term is very useful as a regularization functional in data
+/// modeling, optimal control or inverse problems.
 
-public:
+class NeuralParametersNorm : public PerformanceTerm {
 
-   // DEFAULT CONSTRUCTOR
+ public:
 
-   explicit NeuralParametersNorm(void);
+  // DEFAULT CONSTRUCTOR
 
-   // NEURAL NETWORK CONSTRUCTOR
+  explicit NeuralParametersNorm(void);
 
-   explicit NeuralParametersNorm(NeuralNetwork*);
+  // NEURAL NETWORK CONSTRUCTOR
 
-   // XML CONSTRUCTOR
+  explicit NeuralParametersNorm(NeuralNetwork*);
 
-   explicit NeuralParametersNorm(const tinyxml2::XMLDocument&);
+  // XML CONSTRUCTOR
 
-   // DESTRUCTOR
+  explicit NeuralParametersNorm(const tinyxml2::XMLDocument&);
 
-   virtual ~NeuralParametersNorm(void);    
+  // DESTRUCTOR
 
-   // METHODS
+  virtual ~NeuralParametersNorm(void);
 
-   // Get methods
+  // METHODS
 
-   const double& get_neural_parameters_norm_weight(void) const;
+  // Get methods
 
-   // Set methods
+  const double& get_neural_parameters_norm_weight(void) const;
 
-   void set_neural_parameters_norm_weight(const double&);
+  // Set methods
 
-   void set_default(void);
+  void set_neural_parameters_norm_weight(const double&);
 
-   // Checking methods
+  void set_default(void);
 
-   void check(void) const;
+  // Checking methods
 
-   // performance methods
+  void check(void) const;
 
-   double calculate_performance(void) const;   
-   Vector<double> calculate_gradient(void) const;
-   Matrix<double> calculate_Hessian(void) const;
+  // performance methods
 
-   double calculate_performance(const Vector<double>&) const;
-   Vector<double> calculate_gradient(const Vector<double>&) const;
-   Matrix<double> calculate_Hessian(const Vector<double>&) const;
+  double calculate_performance(void) const;
+  Vector<double> calculate_gradient(void) const;
+  Matrix<double> calculate_Hessian(void) const;
 
-//   double calculate_generalization_performance(void) const;
+  double calculate_performance(const Vector<double>&) const;
+  Vector<double> calculate_gradient(const Vector<double>&) const;
+  Matrix<double> calculate_Hessian(const Vector<double>&) const;
 
-   std::string write_performance_term_type(void) const;
+  //   double calculate_generalization_performance(void) const;
 
-   std::string write_information(void) const;
+  std::string write_performance_term_type(void) const;
 
-   // Serialization methods
+  std::string write_information(void) const;
 
-   tinyxml2::XMLDocument* to_XML(void) const;   
+  // Serialization methods
 
-   void from_XML(const tinyxml2::XMLDocument&);
+  tinyxml2::XMLDocument* to_XML(void) const;
 
-private:
+  void from_XML(const tinyxml2::XMLDocument&);
 
-   /// Weight value for the neural parameters norm regularization term.
+ private:
 
-   double neural_parameters_norm_weight;
+  /// Weight value for the neural parameters norm regularization term.
 
+  double neural_parameters_norm_weight;
 };
-
 }
 
 #endif
-
 
 // OpenNN: Open Neural Networks Library.
 // Neural Designer Copyright © 2013 Roberto López and Ismael Santana (Intelnics)

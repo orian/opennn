@@ -1,13 +1,19 @@
 /****************************************************************************************************************/
 /*                                                                                                              */
-/*   OpenNN: Open Neural Networks Library                                                                       */
-/*   www.intelnics.com/opennn                                                                                   */
+/*   OpenNN: Open Neural Networks Library
+ */
+/*   www.intelnics.com/opennn
+ */
 /*                                                                                                              */
-/*   I N D E P E N D E N T    P A R A M E T E R S   C L A S S   H E A D E R                                     */
+/*   I N D E P E N D E N T    P A R A M E T E R S   C L A S S   H E A D E R
+ */
 /*                                                                                                              */
-/*   Roberto Lopez                                                                                              */
-/*   Intelnics - The artificial intelligence company                                                            */
-/*   robertolopez@intelnics.com                                                                                 */
+/*   Roberto Lopez
+ */
+/*   Intelnics - The artificial intelligence company
+ */
+/*   robertolopez@intelnics.com
+ */
 /*                                                                                                              */
 /****************************************************************************************************************/
 
@@ -28,310 +34,318 @@
 #include "vector.h"
 #include "matrix.h"
 
-// TinyXml includes
+// TinyXml includes#include
 
-#include "../tinyxml2/tinyxml2.h"
+#include "tinyxml2_ext.h"
 
+#include "tinyxml2_ext.h"
 
-namespace OpenNN
-{
+namespace OpenNN {
 
-/// This class represents the concept of independent parameters. 
-/// Independent parameters are set of free parameters which do not belong to any class of neuron. 
-/// They can be used for many different purposes, including a turn around for function optimization problems.
+/// This class represents the concept of independent parameters.
+/// Independent parameters are set of free parameters which do not belong to any
+/// class of neuron.
+/// They can be used for many different purposes, including a turn around for
+/// function optimization problems.
 
-class IndependentParameters
-{
+class IndependentParameters {
 
-public:
+ public:
 
-   // DEFAULT CONSTRUCTOR
+  // DEFAULT CONSTRUCTOR
 
-   explicit IndependentParameters(void);
+  explicit IndependentParameters(void);
 
-   // INDEPENDENT PARAMETERS NUMBER CONSTRUCTOR
+  // INDEPENDENT PARAMETERS NUMBER CONSTRUCTOR
 
-   explicit IndependentParameters(const unsigned&);
+  explicit IndependentParameters(const unsigned&);
 
-   // INDEPENDENT PARAMETERS CONSTRUCTOR
+  // INDEPENDENT PARAMETERS CONSTRUCTOR
 
-   //explicit IndependentParameters(const Vector<double>&);
+  // explicit IndependentParameters(const Vector<double>&);
 
-   // COPY CONSTRUCTOR
+  // COPY CONSTRUCTOR
 
-   IndependentParameters(const IndependentParameters&);
+  IndependentParameters(const IndependentParameters&);
 
-   // DESTRUCTOR
+  // DESTRUCTOR
 
-   virtual ~IndependentParameters(void);
+  virtual ~IndependentParameters(void);
 
-   // ASSIGNMENT OPERATOR
+  // ASSIGNMENT OPERATOR
 
-   IndependentParameters& operator = (const IndependentParameters&);
+  IndependentParameters& operator=(const IndependentParameters&);
 
-   // EQUAL TO OPERATOR
+  // EQUAL TO OPERATOR
 
-   bool operator == (const IndependentParameters&) const;
+  bool operator==(const IndependentParameters&) const;
 
-   // ENUMERATIONS
+  // ENUMERATIONS
 
-   /// Enumeration of available methods for scaling and unscaling the independent parameters.  
-   
-   enum ScalingMethod{NoScaling, MeanStandardDeviation, MinimumMaximum};
+  /// Enumeration of available methods for scaling and unscaling the independent
+  /// parameters.
 
-   /// Enumeration of available methods for bounding the independent parameters.
+  enum ScalingMethod {
+    NoScaling,
+    MeanStandardDeviation,
+    MinimumMaximum
+  };
 
-   enum BoundingMethod{NoBounding, Bounding};
+  /// Enumeration of available methods for bounding the independent parameters.
 
-   // GET METHODS
+  enum BoundingMethod {
+    NoBounding,
+    Bounding
+  };
 
-   // Independent parameters
+  // GET METHODS
 
-   /// Returns the number of parameters independent of the multilayer perceptron
-   /// Independent parameters can be used in the context of neural netwotks for many purposes.
+  // Independent parameters
 
-   inline int get_parameters_number(void) const
-   {
-      return(parameters.size());
-   }
+  /// Returns the number of parameters independent of the multilayer perceptron
+  /// Independent parameters can be used in the context of neural netwotks for
+  /// many purposes.
 
-   const Vector<double>& get_parameters(void) const;   
-   double get_parameter(const unsigned&) const;   
+  inline int get_parameters_number(void) const { return (parameters.size()); }
 
-   // Independent parameters information
+  const Vector<double>& get_parameters(void) const;
+  double get_parameter(const unsigned&) const;
 
-   const Vector<std::string>& get_names(void) const;
-   const std::string& get_name(const unsigned&) const;
+  // Independent parameters information
 
-   const Vector<std::string>& get_units(void) const;
-   const std::string& get_unit(const unsigned&) const;
+  const Vector<std::string>& get_names(void) const;
+  const std::string& get_name(const unsigned&) const;
 
-   const Vector<std::string>& get_descriptions(void) const;
-   const std::string& get_description(const unsigned&) const;
+  const Vector<std::string>& get_units(void) const;
+  const std::string& get_unit(const unsigned&) const;
 
-   // Independent parameters statistics
+  const Vector<std::string>& get_descriptions(void) const;
+  const std::string& get_description(const unsigned&) const;
 
-   const Vector<double>& get_minimums(void) const;
-   double get_minimum(const unsigned&) const;
+  // Independent parameters statistics
 
-   const Vector<double>& get_maximums(void) const;
-   double get_maximum(const unsigned&) const;
+  const Vector<double>& get_minimums(void) const;
+  double get_minimum(const unsigned&) const;
 
-   const Vector<double>& get_means(void) const;
-   double get_mean(const unsigned&) const;
+  const Vector<double>& get_maximums(void) const;
+  double get_maximum(const unsigned&) const;
 
-   const Vector<double>& get_standard_deviations(void) const;
-   double get_standard_deviation(const unsigned&) const;
+  const Vector<double>& get_means(void) const;
+  double get_mean(const unsigned&) const;
 
-   // Independent parameters scaling and unscaling
+  const Vector<double>& get_standard_deviations(void) const;
+  double get_standard_deviation(const unsigned&) const;
 
-   const ScalingMethod& get_scaling_method(void) const;
-   std::string write_scaling_method(void) const;
+  // Independent parameters scaling and unscaling
 
-   // Independent parameters bounds
+  const ScalingMethod& get_scaling_method(void) const;
+  std::string write_scaling_method(void) const;
 
-   const Vector<double>& get_lower_bounds(void) const;
-   double get_lower_bound(const unsigned&) const;
+  // Independent parameters bounds
 
-   const Vector<double>& get_upper_bounds(void) const;
-   double get_upper_bound(const unsigned&) const;
+  const Vector<double>& get_lower_bounds(void) const;
+  double get_lower_bound(const unsigned&) const;
 
-   Vector< Vector<double>* > get_bounds(void);
+  const Vector<double>& get_upper_bounds(void) const;
+  double get_upper_bound(const unsigned&) const;
 
-   const BoundingMethod& get_bounding_method(void) const;
-   std::string write_bounding_method(void) const;
+  Vector<Vector<double>*> get_bounds(void);
 
-   // Display messages
+  const BoundingMethod& get_bounding_method(void) const;
+  std::string write_bounding_method(void) const;
 
-   const bool& get_display(void) const;
+  // Display messages
 
-   // SET METHODS
+  const bool& get_display(void) const;
 
-   void set(void);
-   void set(const unsigned&);
-   void set(const Vector<double>&);
-   void set(const IndependentParameters&);
+  // SET METHODS
 
-   virtual void set_default(void);
+  void set(void);
+  void set(const unsigned&);
+  void set(const Vector<double>&);
+  void set(const IndependentParameters&);
 
-   // Independent parameters
+  virtual void set_default(void);
 
-   void set_parameters_number(const unsigned&);
+  // Independent parameters
 
-   void set_parameters(const Vector<double>&);
-   void set_parameter(const unsigned&, const double&);
+  void set_parameters_number(const unsigned&);
 
-   // Independent parameters information
+  void set_parameters(const Vector<double>&);
+  void set_parameter(const unsigned&, const double&);
 
-   void set_names(const Vector<std::string>&);
-   void set_name(const unsigned&, const std::string&);
+  // Independent parameters information
 
-   void set_units(const Vector<std::string>&);
-   void set_unit(const unsigned&, const std::string&);
+  void set_names(const Vector<std::string>&);
+  void set_name(const unsigned&, const std::string&);
 
-   void set_descriptions(const Vector<std::string>&);
-   void set_description(const unsigned&, const std::string&);
+  void set_units(const Vector<std::string>&);
+  void set_unit(const unsigned&, const std::string&);
 
-   // Independent parameters statistics
+  void set_descriptions(const Vector<std::string>&);
+  void set_description(const unsigned&, const std::string&);
 
-   void set_minimums(const Vector<double>&);
-   void set_minimum(const unsigned&, const double&);
+  // Independent parameters statistics
 
-   void set_maximums(const Vector<double>&);
-   void set_maximum(const unsigned&, const double&);
+  void set_minimums(const Vector<double>&);
+  void set_minimum(const unsigned&, const double&);
 
-   void set_means(const Vector<double>&);
-   void set_mean(const unsigned&, const double&);
+  void set_maximums(const Vector<double>&);
+  void set_maximum(const unsigned&, const double&);
 
-   void set_standard_deviations(const Vector<double>&);
-   void set_standard_deviation(const unsigned&, const double&);
-   
-   // Independent parameters scaling and unscaling
+  void set_means(const Vector<double>&);
+  void set_mean(const unsigned&, const double&);
 
-   void set_scaling_method(const ScalingMethod&);
-   void set_scaling_method(const std::string&);
+  void set_standard_deviations(const Vector<double>&);
+  void set_standard_deviation(const unsigned&, const double&);
 
-   // Independent parameters bounds
+  // Independent parameters scaling and unscaling
 
-   void set_lower_bounds(void);
-   void set_lower_bounds(const Vector<double>&);
-   void set_lower_bound(const unsigned&, const double&);
+  void set_scaling_method(const ScalingMethod&);
+  void set_scaling_method(const std::string&);
 
-   void set_upper_bounds(void);
-   void set_upper_bounds(const Vector<double>&);
-   void set_upper_bound(const unsigned&, const double&);
+  // Independent parameters bounds
 
-   void set_bounds(void);
-   void set_bounds(const Vector< Vector<double> >&);
+  void set_lower_bounds(void);
+  void set_lower_bounds(const Vector<double>&);
+  void set_lower_bound(const unsigned&, const double&);
 
-   void set_bounding_method(const BoundingMethod&);
-   void set_bounding_method(const std::string&);
+  void set_upper_bounds(void);
+  void set_upper_bounds(const Vector<double>&);
+  void set_upper_bound(const unsigned&, const double&);
 
-   // Display messages
+  void set_bounds(void);
+  void set_bounds(const Vector<Vector<double> >&);
 
-   void set_display(const bool&);
+  void set_bounding_method(const BoundingMethod&);
+  void set_bounding_method(const std::string&);
 
-   // Check methods
+  // Display messages
 
-   bool is_empty(void) const;   
+  void set_display(const bool&);
 
-   // Independent parameters initialization methods
+  // Check methods
 
-   void initialize_random(void);
+  bool is_empty(void) const;
 
-   void initialize_parameters(const double&);
+  // Independent parameters initialization methods
 
-   void randomize_parameters_uniform(void);
-   void randomize_parameters_uniform(const double&, const double&);
-   void randomize_parameters_uniform(const Vector<double>&, const Vector<double>&);
-   void randomize_parameters_uniform(const Vector< Vector<double> >&);
+  void initialize_random(void);
 
-   void randomize_parameters_normal(void);
-   void randomize_parameters_normal(const double&, const double&);
-   void randomize_parameters_normal(const Vector<double>&, const Vector<double>&);
-   void randomize_parameters_normal(const Vector< Vector<double> >&);
+  void initialize_parameters(const double&);
 
-   // Parameters norm 
+  void randomize_parameters_uniform(void);
+  void randomize_parameters_uniform(const double&, const double&);
+  void randomize_parameters_uniform(const Vector<double>&,
+                                    const Vector<double>&);
+  void randomize_parameters_uniform(const Vector<Vector<double> >&);
 
-   //double calculate_parameters_norm(void) const;
+  void randomize_parameters_normal(void);
+  void randomize_parameters_normal(const double&, const double&);
+  void randomize_parameters_normal(const Vector<double>&,
+                                   const Vector<double>&);
+  void randomize_parameters_normal(const Vector<Vector<double> >&);
 
-   // Independent parameters
+  // Parameters norm
 
-   Vector<double> calculate_scaled_parameters(void) const;
-   void unscale_parameters(const Vector<double>&);
+  // double calculate_parameters_norm(void) const;
 
-   void bound_parameters(void);
-   void bound_parameter(const unsigned&);
+  // Independent parameters
 
-   // Information 
+  Vector<double> calculate_scaled_parameters(void) const;
+  void unscale_parameters(const Vector<double>&);
 
-   Vector< Vector<std::string> > arrange_information(void);     
+  void bound_parameters(void);
+  void bound_parameter(const unsigned&);
 
-   //void set_information(const Vector< Vector<std::string> >&);     
+  // Information
 
-   // Statistics 
+  Vector<Vector<std::string> > arrange_information(void);
 
-   Vector< Vector<double> > arrange_statistics(void);
+  // void set_information(const Vector< Vector<std::string> >&);
 
-   Vector< Vector<double> > arrange_minimums_maximums(void);
-   Vector< Vector<double> > arrange_means_standard_deviations(void);
+  // Statistics
 
-   void set_statistics(const Vector< Vector<double> >&);
-   void set_minimums_maximums(const Vector< Vector<double> >&);
-   void set_means_standard_deviations(const Vector< Vector<double> >&);
+  Vector<Vector<double> > arrange_statistics(void);
 
-   // Serialization methods
+  Vector<Vector<double> > arrange_minimums_maximums(void);
+  Vector<Vector<double> > arrange_means_standard_deviations(void);
 
-   std::string to_string(void) const;
+  void set_statistics(const Vector<Vector<double> >&);
+  void set_minimums_maximums(const Vector<Vector<double> >&);
+  void set_means_standard_deviations(const Vector<Vector<double> >&);
 
-   tinyxml2::XMLDocument* to_XML(void) const;
-   void from_XML(const tinyxml2::XMLDocument&);
+  // Serialization methods
 
-protected:
+  std::string to_string(void) const;
 
-   // MEMBERS
+  tinyxml2::XMLDocument* to_XML(void) const;
+  void from_XML(const tinyxml2::XMLDocument&);
 
-   /// Independent parameters.
+ protected:
 
-   Vector<double> parameters;
+  // MEMBERS
 
-   /// Name of independent parameters.
+  /// Independent parameters.
 
-   Vector<std::string> names;
+  Vector<double> parameters;
 
-   /// Units of independent parameters.
+  /// Name of independent parameters.
 
-   Vector<std::string> units;
+  Vector<std::string> names;
 
-   /// Description of independent parameters.
+  /// Units of independent parameters.
 
-   Vector<std::string> descriptions;
+  Vector<std::string> units;
 
-   /// Minimum of independent parameters.
+  /// Description of independent parameters.
 
-   Vector<double> minimums;
+  Vector<std::string> descriptions;
 
-   /// Maximum of independent parameters.
+  /// Minimum of independent parameters.
 
-   Vector<double> maximums;
+  Vector<double> minimums;
 
-   /// Mean of independent parameters.
+  /// Maximum of independent parameters.
 
-   Vector<double> means;
+  Vector<double> maximums;
 
-   /// Standard deviation of independent parameters.
+  /// Mean of independent parameters.
 
-   Vector<double> standard_deviations;
+  Vector<double> means;
 
-   /// Lower bound of independent parameters.
+  /// Standard deviation of independent parameters.
 
-   Vector<double> lower_bounds;
+  Vector<double> standard_deviations;
 
-   /// Upper bound of independent parameters.
+  /// Lower bound of independent parameters.
 
-   Vector<double> upper_bounds;
+  Vector<double> lower_bounds;
 
-   /// Independent parameters scaling and unscaling method.
+  /// Upper bound of independent parameters.
 
-   ScalingMethod scaling_method;
+  Vector<double> upper_bounds;
 
-   /// Independent parameters bounding method.
+  /// Independent parameters scaling and unscaling method.
 
-   BoundingMethod bounding_method;
+  ScalingMethod scaling_method;
 
-   /// Display warnings when the the independent parameters fall outside their minimum-maximum range. 
+  /// Independent parameters bounding method.
 
-   bool display_range_warning;
+  BoundingMethod bounding_method;
 
-   /// Display messages to screen. 
+  /// Display warnings when the the independent parameters fall outside their
+  /// minimum-maximum range.
 
-   bool display;
+  bool display_range_warning;
+
+  /// Display messages to screen.
+
+  bool display;
 };
-
 }
 
 #endif
-
 
 // OpenNN: Open Neural Networks Library.
 // Neural Designer Copyright © 2013 Roberto López and Ismael Santana (Intelnics)
@@ -350,4 +364,3 @@ protected:
 // License along with this library; if not, write to the Free Software
 
 // Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
-

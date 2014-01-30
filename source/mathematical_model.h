@@ -1,13 +1,19 @@
 /****************************************************************************************************************/
 /*                                                                                                              */
-/*   OpenNN: Open Neural Networks Library                                                                       */
-/*   www.intelnics.com/opennn                                                                                   */
+/*   OpenNN: Open Neural Networks Library
+ */
+/*   www.intelnics.com/opennn
+ */
 /*                                                                                                              */
-/*   M A T H E M A T I C A L   M O D E L   C L A S S   H E A D E R                                              */
+/*   M A T H E M A T I C A L   M O D E L   C L A S S   H E A D E R
+ */
 /*                                                                                                              */
-/*   Roberto Lopez                                                                                              */ 
-/*   Intelnics - The artificial intelligence company                                                            */
-/*   robertolopez@intelnics.com                                                                                 */
+/*   Roberto Lopez
+ */
+/*   Intelnics - The artificial intelligence company
+ */
+/*   robertolopez@intelnics.com
+ */
 /*                                                                                                              */
 /****************************************************************************************************************/
 
@@ -16,10 +22,10 @@
 
 // System includes
 
-#include<fstream>
-#include<iostream>
-#include<string>
-#include<sstream>
+#include <fstream>
+#include <iostream>
+#include <string>
+#include <sstream>
 #include <time.h>
 
 // OpenNN includes
@@ -29,111 +35,108 @@
 #include "vector.h"
 #include "matrix.h"
 
-namespace OpenNN
-{
+namespace OpenNN {
 
-/// 
+///
 /// This class represents the concept of mathematical model.
-/// A mathematical model is the base for learning in some types of problems, such as optimal control and inverse problems. 
-/// 
+/// A mathematical model is the base for learning in some types of problems,
+/// such as optimal control and inverse problems.
+///
 
-class MathematicalModel
-{
+class MathematicalModel {
 
-public:
+ public:
 
-   // DEFAULT CONSTRUCTOR
+  // DEFAULT CONSTRUCTOR
 
-   explicit MathematicalModel(void);
+  explicit MathematicalModel(void);
 
-   // XML CONSTRUCTOR
+  // XML CONSTRUCTOR
 
-   explicit MathematicalModel(const tinyxml2::XMLDocument&);
+  explicit MathematicalModel(const tinyxml2::XMLDocument&);
 
-   // FILE CONSTRUCTOR
+  // FILE CONSTRUCTOR
 
-   explicit MathematicalModel(const std::string&);
+  explicit MathematicalModel(const std::string&);
 
-   // COPY CONSTRUCTOR
+  // COPY CONSTRUCTOR
 
-   MathematicalModel(const MathematicalModel&);
+  MathematicalModel(const MathematicalModel&);
 
-   // DESTRUCTOR
+  // DESTRUCTOR
 
-   virtual ~MathematicalModel(void);
+  virtual ~MathematicalModel(void);
 
-   // ASSIGNMENT OPERATOR
+  // ASSIGNMENT OPERATOR
 
-   virtual MathematicalModel& operator = (const MathematicalModel&);
+  virtual MathematicalModel& operator=(const MathematicalModel&);
 
-   // EQUAL TO OPERATOR
+  // EQUAL TO OPERATOR
 
-   virtual bool operator == (const MathematicalModel&) const;
+  virtual bool operator==(const MathematicalModel&) const;
 
-   // METHODS
+  // METHODS
 
-   // Get methods
+  // Get methods
 
-   const unsigned& get_independent_variables_number(void) const;
-   const unsigned& get_dependent_variables_number(void) const;
+  const unsigned& get_independent_variables_number(void) const;
+  const unsigned& get_dependent_variables_number(void) const;
 
-   unsigned count_variables_number(void) const;
+  unsigned count_variables_number(void) const;
 
-   const bool& get_display(void) const;
+  const bool& get_display(void) const;
 
-   // Set methods
+  // Set methods
 
-   virtual void set(const MathematicalModel&);
+  virtual void set(const MathematicalModel&);
 
-   void set_independent_variables_number(const unsigned&);
-   void set_dependent_variables_number(const unsigned&);
+  void set_independent_variables_number(const unsigned&);
+  void set_dependent_variables_number(const unsigned&);
 
-   void set_display(const bool&);
+  void set_display(const bool&);
 
-   virtual void set_default(void);
+  virtual void set_default(void);
 
-   // Mathematical model
+  // Mathematical model
 
-   virtual Matrix<double> calculate_solutions(const NeuralNetwork&) const;
+  virtual Matrix<double> calculate_solutions(const NeuralNetwork&) const;
 
-   virtual Vector<double> calculate_final_solutions(const NeuralNetwork&) const;
+  virtual Vector<double> calculate_final_solutions(const NeuralNetwork&) const;
 
-   virtual Matrix<double> calculate_dependent_variables(const NeuralNetwork&, const Matrix<double>&) const;  
+  virtual Matrix<double> calculate_dependent_variables(
+      const NeuralNetwork&, const Matrix<double>&) const;
 
+  // Serialization methods
 
-   // Serialization methods
+  virtual std::string to_string(void) const;
 
-   virtual std::string to_string(void) const;
+  void print(void) const;
 
-   void print(void) const;
+  virtual tinyxml2::XMLDocument* to_XML(void) const;
+  virtual void from_XML(const tinyxml2::XMLDocument&);
 
-   virtual tinyxml2::XMLDocument* to_XML(void) const;   
-   virtual void from_XML(const tinyxml2::XMLDocument&);
+  void save(const std::string&) const;
+  void load(const std::string&);
 
-   void save(const std::string&) const;
-   void load(const std::string&);
+  virtual void save_data(const NeuralNetwork&, const std::string&) const;
 
-   virtual void save_data(const NeuralNetwork&, const std::string&) const;
+ protected:
 
-protected: 
+  /// Number of independent variables defining the mathematical model.
 
-   /// Number of independent variables defining the mathematical model. 
+  unsigned independent_variables_number;
 
-   unsigned independent_variables_number;
+  /// Number of dependent variables defining the mathematical model.
 
-   /// Number of dependent variables defining the mathematical model. 
+  unsigned dependent_variables_number;
 
-   unsigned dependent_variables_number;
+  /// Flag for displaying warnings.
 
-   /// Flag for displaying warnings. 
-
-   bool display;
+  bool display;
 };
-
 }
 
 #endif
-
 
 // OpenNN: Open Neural Networks Library.
 // Neural Designer Copyright © 2013 Roberto López and Ismael Santana (Intelnics)

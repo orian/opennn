@@ -1,13 +1,19 @@
 /****************************************************************************************************************/
 /*                                                                                                              */
-/*   OpenNN: Open Neural Networks Library                                                                       */
-/*   www.intelnics.com/opennn                                                                                   */
+/*   OpenNN: Open Neural Networks Library
+ */
+/*   www.intelnics.com/opennn
+ */
 /*                                                                                                              */
-/*   O U T P U T S   C L A S S   H E A D E R                                                                    */
+/*   O U T P U T S   C L A S S   H E A D E R
+ */
 /*                                                                                                              */
-/*   Roberto Lopez                                                                                              */
-/*   Intelnics - The artificial intelligence company                                                            */
-/*   robertolopez@intelnics.com                                                                                 */
+/*   Roberto Lopez
+ */
+/*   Intelnics - The artificial intelligence company
+ */
+/*   robertolopez@intelnics.com
+ */
 /*                                                                                                              */
 /****************************************************************************************************************/
 
@@ -28,171 +34,164 @@
 #include "vector.h"
 #include "matrix.h"
 
-// TinyXml includes
+// TinyXml includes#include
 
-#include "../tinyxml2/tinyxml2.h"
+#include "tinyxml2_ext.h"
 
-namespace OpenNN
-{
+#include "tinyxml2_ext.h"
 
-/// This class is used to store some information about the output variables of a neural network.
-/// That information basically consists on the names, units and descriptions of the output variables.
+namespace OpenNN {
 
-class Outputs
-{
+/// This class is used to store some information about the output variables of a
+/// neural network.
+/// That information basically consists on the names, units and descriptions of
+/// the output variables.
 
-public:
+class Outputs {
 
-   // DEFAULT CONSTRUCTOR
+ public:
 
-   explicit Outputs(void);
+  // DEFAULT CONSTRUCTOR
 
+  explicit Outputs(void);
 
-   // OUTPUTS NUMBER CONSTRUCTOR
+  // OUTPUTS NUMBER CONSTRUCTOR
 
-   explicit Outputs(const unsigned&);
+  explicit Outputs(const unsigned&);
 
+  // XML CONSTRUCTOR
 
-   // XML CONSTRUCTOR
+  explicit Outputs(const tinyxml2::XMLDocument&);
 
-   explicit Outputs(const tinyxml2::XMLDocument&);
+  // COPY CONSTRUCTOR
 
+  Outputs(const Outputs&);
 
-   // COPY CONSTRUCTOR
+  // DESTRUCTOR
 
-   Outputs(const Outputs&);
+  virtual ~Outputs(void);
 
-   // DESTRUCTOR
+  // ASSIGNMENT OPERATOR
 
-   virtual ~Outputs(void);
+  Outputs& operator=(const Outputs&);
 
-   // ASSIGNMENT OPERATOR
+  // EQUAL TO OPERATOR
 
-   Outputs& operator = (const Outputs&);
+  bool operator==(const Outputs&) const;
 
-   // EQUAL TO OPERATOR
+  ///
+  /// This structure contains the information of a single output.
+  ///
 
-   bool operator == (const Outputs&) const;
+  struct Item {
+    /// Name of neural network output.
 
-   ///
-   /// This structure contains the information of a single output.
-   ///
+    std::string name;
 
-   struct Item
-   {
-       /// Name of neural network output.
+    /// Units of neural network output.
 
-       std::string name;
+    std::string units;
 
-       /// Units of neural network output.
+    /// Description of neural network output.
 
-       std::string units;
+    std::string description;
+  };
 
-       /// Description of neural network output.
+  // METHODS
 
-       std::string description;
-   };
+  bool is_empty(void) const;
 
-   // METHODS
+  /// Returns the number of outputs neurons in the neural network
 
-   bool is_empty(void) const;
+  inline int get_outputs_number(void) const { return (items.size()); }
 
-   /// Returns the number of outputs neurons in the neural network
+  // Output variables information
 
-   inline int get_outputs_number(void) const
-   {
-      return(items.size());
-   }
+  Vector<std::string> arrange_names(void) const;
+  const std::string& get_name(const unsigned&) const;
 
-   // Output variables information
+  Vector<std::string> arrange_units(void) const;
+  const std::string& get_unit(const unsigned&) const;
 
-   Vector<std::string> arrange_names(void) const;
-   const std::string& get_name(const unsigned&) const;
+  Vector<std::string> arrange_descriptions(void) const;
+  const std::string& get_description(const unsigned&) const;
 
-   Vector<std::string> arrange_units(void) const;
-   const std::string& get_unit(const unsigned&) const;
+  // Variables
 
-   Vector<std::string> arrange_descriptions(void) const;
-   const std::string& get_description(const unsigned&) const;
+  Matrix<std::string> arrange_information(void) const;
 
-   // Variables
+  // Display messages
 
-   Matrix<std::string> arrange_information(void) const;
+  const bool& get_display(void) const;
 
-   // Display messages
+  // SET METHODS
 
-   const bool& get_display(void) const;
+  void set(void);
+  void set(const unsigned&);
+  void set(const Vector<Item>&);
+  void set(const Outputs&);
 
-   // SET METHODS
+  void set_outputs_number(const unsigned&);
 
-   void set(void);
-   void set(const unsigned&);
-   void set(const Vector<Item>&);
-   void set(const Outputs&);
+  virtual void set_default(void);
 
-   void set_outputs_number(const unsigned&);
+  // Output variables information
 
-   virtual void set_default(void);
+  void set_names(const Vector<std::string>&);
+  void set_name(const unsigned&, const std::string&);
 
-   // Output variables information
+  void set_units(const Vector<std::string>&);
+  void set_unit(const unsigned&, const std::string&);
 
-   void set_names(const Vector<std::string>&);
-   void set_name(const unsigned&, const std::string&);
+  void set_descriptions(const Vector<std::string>&);
+  void set_description(const unsigned&, const std::string&);
 
-   void set_units(const Vector<std::string>&);
-   void set_unit(const unsigned&, const std::string&);
+  // Variables
 
-   void set_descriptions(const Vector<std::string>&);
-   void set_description(const unsigned&, const std::string&);
+  void set_information(const Matrix<std::string>&);
 
-   // Variables
+  void set_display(const bool&);
 
-   void set_information(const Matrix<std::string>&);
+  // Growing and pruning
 
-   void set_display(const bool&);
+  void grow_output(void);
 
-   // Growing and pruning
+  void prune_output(const unsigned&);
 
-   void grow_output(void);
+  // Default names
 
-   void prune_output(const unsigned&);
+  Vector<std::string> write_default_names(void) const;
 
-   // Default names
+  // Serialization methods
 
-   Vector<std::string> write_default_names(void) const;
+  std::string to_string(void) const;
 
-   // Serialization methods
+  virtual tinyxml2::XMLDocument* to_XML(void) const;
+  virtual void from_XML(const tinyxml2::XMLDocument&);
 
-   std::string to_string(void) const;
+ protected:
 
-   virtual tinyxml2::XMLDocument* to_XML(void) const;
-   virtual void from_XML(const tinyxml2::XMLDocument&);
+  // MEMBERS
 
-protected:
+  /// Name of output variables.
 
-   // MEMBERS
+  Vector<Item> items;
 
-   /// Name of output variables.
+  /// Units of output variables.
 
-   Vector<Item> items;
+  Vector<std::string> units;
 
-   /// Units of output variables.
+  /// Description of output variables.
 
-   Vector<std::string> units;
+  Vector<std::string> descriptions;
 
-   /// Description of output variables.
+  /// Display messages to screen.
 
-   Vector<std::string> descriptions;
-
-   /// Display messages to screen. 
-
-   bool display;
+  bool display;
 };
-
 }
 
 #endif
-
 
 // OpenNN: Open Neural Networks Library.
 // Neural Designer Copyright © 2013 Roberto López and Ismael Santana (Intelnics)
@@ -211,4 +210,3 @@ protected:
 // License along with this library; if not, write to the Free Software
 
 // Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
-

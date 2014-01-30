@@ -1,13 +1,19 @@
 /****************************************************************************************************************/
 /*                                                                                                              */
-/*   OpenNN: Open Neural Networks Library                                                                       */
-/*   www.intelnics.com/opennn                                                                                   */
+/*   OpenNN: Open Neural Networks Library
+ */
+/*   www.intelnics.com/opennn
+ */
 /*                                                                                                              */
-/*   P E R C E P T R O N   L A Y E R   C L A S S   H E A D E R                                                  */
+/*   P E R C E P T R O N   L A Y E R   C L A S S   H E A D E R
+ */
 /*                                                                                                              */
-/*   Roberto Lopez                                                                                              */
-/*   Intelnics - The artificial intelligence company                                                            */
-/*   robertolopez@intelnics.com                                                                                 */
+/*   Roberto Lopez
+ */
+/*   Intelnics - The artificial intelligence company
+ */
+/*   robertolopez@intelnics.com
+ */
 /*                                                                                                              */
 /****************************************************************************************************************/
 
@@ -30,197 +36,203 @@
 #include "vector.h"
 #include "matrix.h"
 
-namespace OpenNN
-{
+namespace OpenNN {
 
 /// This class represents a layer of perceptrons.
-/// Layers of perceptrons will be used to construct multilayer perceptrons. 
+/// Layers of perceptrons will be used to construct multilayer perceptrons.
 
-class PerceptronLayer
-{
+class PerceptronLayer {
 
-public:
+ public:
 
-   // DEFAULT CONSTRUCTOR
+  // DEFAULT CONSTRUCTOR
 
-   explicit PerceptronLayer(void);
+  explicit PerceptronLayer(void);
 
-   // ARCHITECTURE CONSTRUCTOR 
+  // ARCHITECTURE CONSTRUCTOR
 
-   explicit PerceptronLayer(const unsigned&, const unsigned&);
+  explicit PerceptronLayer(const unsigned&, const unsigned&);
 
-   // COPY CONSTRUCTOR
+  // COPY CONSTRUCTOR
 
-   PerceptronLayer(const PerceptronLayer&);
+  PerceptronLayer(const PerceptronLayer&);
 
-   // DESTRUCTOR
-   
-   virtual ~PerceptronLayer(void);
+  // DESTRUCTOR
 
-   // ASSIGNMENT OPERATOR
+  virtual ~PerceptronLayer(void);
 
-   PerceptronLayer& operator = (const PerceptronLayer&);
+  // ASSIGNMENT OPERATOR
 
-   // EQUAL TO OPERATOR
+  PerceptronLayer& operator=(const PerceptronLayer&);
 
-   bool operator == (const PerceptronLayer&) const;
+  // EQUAL TO OPERATOR
 
-   // GET METHODS
+  bool operator==(const PerceptronLayer&) const;
 
-   bool is_empty(void) const;
+  // GET METHODS
 
-   const Vector<Perceptron>& get_perceptrons(void) const;
-   const Perceptron& get_perceptron(const unsigned&) const;
+  bool is_empty(void) const;
 
-   unsigned get_inputs_number(void) const;
-   unsigned get_perceptrons_number(void) const;
+  const Vector<Perceptron>& get_perceptrons(void) const;
+  const Perceptron& get_perceptron(const unsigned&) const;
 
-   // PerceptronLayer parameters
+  unsigned get_inputs_number(void) const;
+  unsigned get_perceptrons_number(void) const;
 
-   Vector<double> arrange_biases(void) const;
-   Matrix<double> arrange_synaptic_weights(void) const;
+  // PerceptronLayer parameters
 
-   unsigned count_parameters_number(void) const;
-   Vector<double> arrange_parameters(void) const;
+  Vector<double> arrange_biases(void) const;
+  Matrix<double> arrange_synaptic_weights(void) const;
 
-   unsigned count_perceptron_parameters_number(void) const;
-   Vector< Vector<double> > arrange_perceptrons_parameters(void) const;
+  unsigned count_parameters_number(void) const;
+  Vector<double> arrange_parameters(void) const;
 
+  unsigned count_perceptron_parameters_number(void) const;
+  Vector<Vector<double> > arrange_perceptrons_parameters(void) const;
 
-   Vector<unsigned> count_cumulative_parameters_number(void) const;
+  Vector<unsigned> count_cumulative_parameters_number(void) const;
 
-   // Activation functions
+  // Activation functions
 
-   const Perceptron::ActivationFunction& get_activation_function(void) const;
+  const Perceptron::ActivationFunction& get_activation_function(void) const;
 
-   std::string write_activation_function(void) const;
+  std::string write_activation_function(void) const;
 
-   // Display messages
+  // Display messages
 
-   const bool& get_display(void) const;
+  const bool& get_display(void) const;
 
-   // SET METHODS
+  // SET METHODS
 
-   void set(void);
-   void set(const Vector<Perceptron>&);
-   void set(const unsigned&, const unsigned&);
-   void set(const PerceptronLayer&);
+  void set(void);
+  void set(const Vector<Perceptron>&);
+  void set(const unsigned&, const unsigned&);
+  void set(const PerceptronLayer&);
 
-   void set_default(void);
+  void set_default(void);
 
-   // Architecture
+  // Architecture
 
-   void set_inputs_number(const unsigned&);
-   void set_perceptrons_number(const unsigned&);
+  void set_inputs_number(const unsigned&);
+  void set_perceptrons_number(const unsigned&);
 
-   void set_perceptrons(const Vector<Perceptron>&);
-   void set_perceptron(const unsigned&, const Perceptron&);
+  void set_perceptrons(const Vector<Perceptron>&);
+  void set_perceptron(const unsigned&, const Perceptron&);
 
-   // PerceptronLayer parameters
+  // PerceptronLayer parameters
 
-   void set_biases(const Vector<double>&);
-   void set_synaptic_weights(const Matrix<double>&);
+  void set_biases(const Vector<double>&);
+  void set_synaptic_weights(const Matrix<double>&);
 
-   void set_parameters(const Vector<double>&);
+  void set_parameters(const Vector<double>&);
 
-   // Activation functions
+  // Activation functions
 
-   void set_activation_function(const Perceptron::ActivationFunction&);
-   void set_activation_function(const std::string&);
+  void set_activation_function(const Perceptron::ActivationFunction&);
+  void set_activation_function(const std::string&);
 
-   // Display messages
+  // Display messages
 
-   void set_display(const bool&);
+  void set_display(const bool&);
 
-   // Growing and pruning
+  // Growing and pruning
 
-   void grow_input(void);
-   void grow_perceptron(void);
+  void grow_input(void);
+  void grow_perceptron(void);
 
-   void prune_input(const unsigned&);
-   void prune_perceptron(const unsigned&);
+  void prune_input(const unsigned&);
+  void prune_perceptron(const unsigned&);
 
-   // PerceptronLayer initialization methods
+  // PerceptronLayer initialization methods
 
-   void initialize_random(void);
+  void initialize_random(void);
 
-   // Parameters initialization methods
+  // Parameters initialization methods
 
-   void initialize_biases(const double&); 
-   void initialize_synaptic_weights(const double&);
+  void initialize_biases(const double&);
+  void initialize_synaptic_weights(const double&);
 
-   void initialize_parameters(const double&);
+  void initialize_parameters(const double&);
 
-   void randomize_parameters_uniform(void);
-   void randomize_parameters_uniform(const double&, const double&);
-   void randomize_parameters_uniform(const Vector<double>&, const Vector<double>&);
-   void randomize_parameters_uniform(const Vector< Vector<double> >&);
+  void randomize_parameters_uniform(void);
+  void randomize_parameters_uniform(const double&, const double&);
+  void randomize_parameters_uniform(const Vector<double>&,
+                                    const Vector<double>&);
+  void randomize_parameters_uniform(const Vector<Vector<double> >&);
 
-   void randomize_parameters_normal(void);
-   void randomize_parameters_normal(const double&, const double&);
-   void randomize_parameters_normal(const Vector<double>&, const Vector<double>&);
-   void randomize_parameters_normal(const Vector< Vector<double> >&);
+  void randomize_parameters_normal(void);
+  void randomize_parameters_normal(const double&, const double&);
+  void randomize_parameters_normal(const Vector<double>&,
+                                   const Vector<double>&);
+  void randomize_parameters_normal(const Vector<Vector<double> >&);
 
-   // Parameters norm 
+  // Parameters norm
 
-   double calculate_parameters_norm(void) const;
+  double calculate_parameters_norm(void) const;
 
-   // Perceptron layer combinations
+  // Perceptron layer combinations
 
-   Vector<double> calculate_combinations(const Vector<double>&) const;
-   Matrix<double> calculate_combinations_Jacobian(const Vector<double>&) const;
-   Vector< Matrix<double> > calculate_combinations_Hessian_form(const Vector<double>&) const;
+  Vector<double> calculate_combinations(const Vector<double>&) const;
+  Matrix<double> calculate_combinations_Jacobian(const Vector<double>&) const;
+  Vector<Matrix<double> > calculate_combinations_Hessian_form(
+      const Vector<double>&) const;
 
-   Vector<double> calculate_combinations(const Vector<double>&, const Vector<double>&) const;
-   Matrix<double> calculate_combinations_Jacobian(const Vector<double>&, const Vector<double>&) const;
-   Vector< Matrix<double> > calculate_combinations_Hessian_form(const Vector<double>&, const Vector<double>&) const;
+  Vector<double> calculate_combinations(const Vector<double>&,
+                                        const Vector<double>&) const;
+  Matrix<double> calculate_combinations_Jacobian(const Vector<double>&,
+                                                 const Vector<double>&) const;
+  Vector<Matrix<double> > calculate_combinations_Hessian_form(
+      const Vector<double>&, const Vector<double>&) const;
 
-   // Perceptron layer activations
+  // Perceptron layer activations
 
-   Vector<double> calculate_activations(const Vector<double>&) const;
-   Vector<double> calculate_activations_derivatives(const Vector<double>&) const;
-   Vector<double> calculate_activations_second_derivatives(const Vector<double>&) const;
+  Vector<double> calculate_activations(const Vector<double>&) const;
+  Vector<double> calculate_activations_derivatives(const Vector<double>&) const;
+  Vector<double> calculate_activations_second_derivatives(
+      const Vector<double>&) const;
 
-   Matrix<double> arrange_activations_Jacobian(const Vector<double>&) const;
-   Vector< Matrix<double> > arrange_activations_Hessian_form(const Vector<double>&) const;
+  Matrix<double> arrange_activations_Jacobian(const Vector<double>&) const;
+  Vector<Matrix<double> > arrange_activations_Hessian_form(
+      const Vector<double>&) const;
 
-   // Perceptron layer outputs
+  // Perceptron layer outputs
 
-   Vector<double> calculate_outputs(const Vector<double>&) const;
-   Matrix<double> calculate_Jacobian(const Vector<double>&) const;
-   Vector< Matrix<double> > calculate_Hessian_form(const Vector<double>&) const;
+  Vector<double> calculate_outputs(const Vector<double>&) const;
+  Matrix<double> calculate_Jacobian(const Vector<double>&) const;
+  Vector<Matrix<double> > calculate_Hessian_form(const Vector<double>&) const;
 
-   Vector<double> calculate_outputs(const Vector<double>&, const Vector<double>&) const;
-   Matrix<double> calculate_Jacobian(const Vector<double>&, const Vector<double>&) const;
-   Vector< Matrix<double> > calculate_Hessian_form(const Vector<double>&, const Vector<double>&) const;
+  Vector<double> calculate_outputs(const Vector<double>&,
+                                   const Vector<double>&) const;
+  Matrix<double> calculate_Jacobian(const Vector<double>&,
+                                    const Vector<double>&) const;
+  Vector<Matrix<double> > calculate_Hessian_form(const Vector<double>&,
+                                                 const Vector<double>&) const;
 
-   // Expression methods
+  // Expression methods
 
-   std::string write_expression(const Vector<std::string>&, const Vector<std::string>&) const;
+  std::string write_expression(const Vector<std::string>&,
+                               const Vector<std::string>&) const;
 
-   // Hinton diagram methods
+  // Hinton diagram methods
 
-   // Serialization methods
+  // Serialization methods
 
+ protected:
 
-protected:
+  // MEMBERS
 
-   // MEMBERS
+  /// Vectors of perceptrons which defines the layer.
+  /// The size of the vector is equal to the number of perceptrons in the layer.
 
-   /// Vectors of perceptrons which defines the layer.
-   /// The size of the vector is equal to the number of perceptrons in the layer.
+  Vector<Perceptron> perceptrons;
 
-   Vector<Perceptron> perceptrons;
+  /// Display messages to screen.
 
-   /// Display messages to screen. 
-
-   bool display;
+  bool display;
 };
-
 }
 
 #endif
-
 
 // OpenNN: Open Neural Networks Library.
 // Neural Designer Copyright © 2013 Roberto López and Ismael Santana (Intelnics)
@@ -239,4 +251,3 @@ protected:
 // License along with this library; if not, write to the Free Software
 
 // Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
-

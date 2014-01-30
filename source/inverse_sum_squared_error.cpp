@@ -1,13 +1,19 @@
 /****************************************************************************************************************/
 /*                                                                                                              */
-/*   OpenNN: Open Neural Networks Library                                                                       */
-/*   www.intelnics.com/opennn                                                                                   */
+/*   OpenNN: Open Neural Networks Library
+ */
+/*   www.intelnics.com/opennn
+ */
 /*                                                                                                              */
-/*   I N V E R S E   S U M   S Q U A R E D   E R R O R   C L A S S                                              */
+/*   I N V E R S E   S U M   S Q U A R E D   E R R O R   C L A S S
+ */
 /*                                                                                                              */
-/*   Roberto Lopez                                                                                              */
-/*   Intelnics - The artificial intelligence company                                                            */
-/*   robertolopez@intelnics.com                                                                                 */
+/*   Roberto Lopez
+ */
+/*   Intelnics - The artificial intelligence company
+ */
+/*   robertolopez@intelnics.com
+ */
 /*                                                                                                              */
 /****************************************************************************************************************/
 
@@ -15,461 +21,447 @@
 
 #include "inverse_sum_squared_error.h"
 
-
-namespace OpenNN
-{
+namespace OpenNN {
 
 // DEFAULT CONSTRUCTOR
 
-/// Default constructor. 
-/// It creates an inverse sum squared error performance term not associated to any neural network and not measured on any mathematical model and data set.
+/// Default constructor.
+/// It creates an inverse sum squared error performance term not associated to
+/// any neural network and not measured on any mathematical model and data set.
 /// It also initializes all the rest of class members to their default values.
 
-InverseSumSquaredError::InverseSumSquaredError(void) : PerformanceTerm()
-{
-   construct_numerical_differentiation();
+InverseSumSquaredError::InverseSumSquaredError(void) : PerformanceTerm() {
+  construct_numerical_differentiation();
 
-   set_default();
+  set_default();
 }
 
 // NEURAL NETWORK CONSTRUCTOR
 
-/// Neural network constructor. 
-/// It creates an inverse sum squared error associated to a neural network but neither measured on a mathematical model nor on a data set.
+/// Neural network constructor.
+/// It creates an inverse sum squared error associated to a neural network but
+/// neither measured on a mathematical model nor on a data set.
 /// It also initializes all the rest of class members to their default values.
 /// @param new_neural_network_pointer Pointer to a neural network object.
 
-InverseSumSquaredError::InverseSumSquaredError(NeuralNetwork* new_neural_network_pointer)
- : PerformanceTerm(new_neural_network_pointer)
-{
-   construct_numerical_differentiation();
+InverseSumSquaredError::InverseSumSquaredError(
+    NeuralNetwork* new_neural_network_pointer)
+    : PerformanceTerm(new_neural_network_pointer) {
+  construct_numerical_differentiation();
 
-   set_default();
+  set_default();
 }
-
 
 // GENERAL CONSTRUCTOR
 
-/// Neural network, mathematical model and data set constructor. 
-/// It creates an inverse sum squared error associated to a neural network and measured on a mathematical model and a data set.
+/// Neural network, mathematical model and data set constructor.
+/// It creates an inverse sum squared error associated to a neural network and
+/// measured on a mathematical model and a data set.
 /// It also initializes all the rest of class members to their default values.
 /// @param new_neural_network_pointer Pointer to a neural network object.
-/// @param new_mathematical_model_pointer Pointer to a mathematical model object.
+/// @param new_mathematical_model_pointer Pointer to a mathematical model
+/// object.
 /// @param new_data_set_pointer Pointer to a data set object.
 
-InverseSumSquaredError::InverseSumSquaredError(NeuralNetwork* new_neural_network_pointer, MathematicalModel* new_mathematical_model_pointer, DataSet* new_data_set_pointer)
- : PerformanceTerm(new_neural_network_pointer, new_mathematical_model_pointer, new_data_set_pointer)
-{
-   construct_numerical_differentiation();
+InverseSumSquaredError::InverseSumSquaredError(
+    NeuralNetwork* new_neural_network_pointer,
+    MathematicalModel* new_mathematical_model_pointer,
+    DataSet* new_data_set_pointer)
+    : PerformanceTerm(new_neural_network_pointer,
+                      new_mathematical_model_pointer, new_data_set_pointer) {
+  construct_numerical_differentiation();
 
-   set_default();
+  set_default();
 }
-
 
 // XML CONSTRUCTOR
 
-/// XML constructor. 
-/// It creates an inverse sum squared error performance term not associated to any neural network and not measured on any mathematical model and data set.
+/// XML constructor.
+/// It creates an inverse sum squared error performance term not associated to
+/// any neural network and not measured on any mathematical model and data set.
 /// It initializes all the member data from a XML document.
-/// @param inverse_sum_squared_error_document Pointer to a TinyXML document containing the inverse sum squared error data. 
+/// @param inverse_sum_squared_error_document Pointer to a TinyXML document
+/// containing the inverse sum squared error data.
 
-InverseSumSquaredError::InverseSumSquaredError(const tinyxml2::XMLDocument& inverse_sum_squared_error_document)
- : PerformanceTerm(inverse_sum_squared_error_document)
-{
-   construct_numerical_differentiation();
+InverseSumSquaredError::InverseSumSquaredError(
+    const tinyxml2::XMLDocument& inverse_sum_squared_error_document)
+    : PerformanceTerm(inverse_sum_squared_error_document) {
+  construct_numerical_differentiation();
 
-   set_default();
+  set_default();
 }
-
 
 // DESTRUCTOR
 
-/// Destructor. 
-/// It does not delete any object. 
+/// Destructor.
+/// It does not delete any object.
 
-InverseSumSquaredError::~InverseSumSquaredError(void) 
-{
-}
-
+InverseSumSquaredError::~InverseSumSquaredError(void) {}
 
 // METHODS
 
 // const UnknownsMethod& get_unknowns_method(void) const method
 
-/// This returns the method for entering the unknown values or functions into the mathematical model. 
+/// This returns the method for entering the unknown values or functions into
+/// the mathematical model.
 
-const InverseSumSquaredError::UnknownsMethod& InverseSumSquaredError::get_unknowns_method(void) const
-{
-   return(unknowns_method);
+const InverseSumSquaredError::UnknownsMethod&
+InverseSumSquaredError::get_unknowns_method(void) const {
+  return (unknowns_method);
 }
-
 
 // std::string write_unknowns_method(void) const method
 
-/// This returns a string with the name of the method for entering the unknown values or functions into the mathematical model. 
+/// This returns a string with the name of the method for entering the unknown
+/// values or functions into the mathematical model.
 
-std::string InverseSumSquaredError::write_unknowns_method(void) const
-{
-   switch(unknowns_method)
-   {
-      case LookUpTable:
-      {
-         return("LookUpTable");
-      }
-      break;
+std::string InverseSumSquaredError::write_unknowns_method(void) const {
+  switch (unknowns_method) {
+    case LookUpTable: {
+      return ("LookUpTable");
+    } break;
 
-      case IndependentParametersValues:
-      {
-         return("IndependentParametersValues");
-      }
-      break;
+    case IndependentParametersValues: {
+      return ("IndependentParametersValues");
+    } break;
 
-      default:
-      {
-         std::ostringstream buffer;
+    default: {
+      std::ostringstream buffer;
 
-         buffer << "OpenNN Exception: InverseSumSquaredError class.\n"
-                << "std::string write_unknowns_method(void) const method.\n"
-                << "Unknown property method.\n";
- 
-	     throw std::logic_error(buffer.str());
-      }
-      break;
-   }   
+      buffer << "OpenNN Exception: InverseSumSquaredError class.\n"
+             << "std::string write_unknowns_method(void) const method.\n"
+             << "Unknown property method.\n";
+
+      throw std::logic_error(buffer.str());
+    } break;
+  }
 }
-
 
 // void set_unknowns_method(const UnknownsMethod&) method
 
-/// This sets a new the method for entering the unknown values or functions into the mathematical model. 
-/// @param new_unknowns_method Unknowns method (independent parameters, look-up table, ...).
+/// This sets a new the method for entering the unknown values or functions into
+/// the mathematical model.
+/// @param new_unknowns_method Unknowns method (independent parameters, look-up
+/// table, ...).
 
-void InverseSumSquaredError::set_unknowns_method(const UnknownsMethod& new_unknowns_method)
-{
-   unknowns_method = new_unknowns_method;
+void InverseSumSquaredError::set_unknowns_method(
+    const UnknownsMethod& new_unknowns_method) {
+  unknowns_method = new_unknowns_method;
 }
-
 
 // void set_unknowns_method(const std::string&) method
 
-/// This sets a new the method for entering the unknown values or functions into the mathematical model. 
-/// @param new_unknowns_method String with the name of the unknowns method (independent parameters, look-up table, ...).
+/// This sets a new the method for entering the unknown values or functions into
+/// the mathematical model.
+/// @param new_unknowns_method String with the name of the unknowns method
+/// (independent parameters, look-up table, ...).
 
-void InverseSumSquaredError::set_unknowns_method(const std::string& new_unknowns_method)
-{
-   if(new_unknowns_method == "LookUpTable")
-   {
-      set_unknowns_method(LookUpTable);
-   }
-   else if(new_unknowns_method == "IndependentParametersValues")
-   {
-      set_unknowns_method(IndependentParametersValues);
-   }
-   else
-   {
-      std::ostringstream buffer;
+void InverseSumSquaredError::set_unknowns_method(
+    const std::string& new_unknowns_method) {
+  if (new_unknowns_method == "LookUpTable") {
+    set_unknowns_method(LookUpTable);
+  } else if (new_unknowns_method == "IndependentParametersValues") {
+    set_unknowns_method(IndependentParametersValues);
+  } else {
+    std::ostringstream buffer;
 
-      buffer << "OpenNN Exception: ScalingLayer class.\n"
-             << "void set_unknowns_method(const std::string&) method.\n"
-			 << "Unknown property method: " << new_unknowns_method << ".\n";
+    buffer << "OpenNN Exception: ScalingLayer class.\n"
+           << "void set_unknowns_method(const std::string&) method.\n"
+           << "Unknown property method: " << new_unknowns_method << ".\n";
 
-	  throw std::logic_error(buffer.str());
-   }
+    throw std::logic_error(buffer.str());
+  }
 }
-
 
 // void set_default(void) method
 
 /// Sets the default values of the inverse sum squared error:
 /// <ul>
 /// <li> Unknowns method: Independent parameters values.
-/// <li> Display: true. 
+/// <li> Display: true.
 /// </ul>
 
-void InverseSumSquaredError::set_default(void)
-{
-   unknowns_method = IndependentParametersValues;
+void InverseSumSquaredError::set_default(void) {
+  unknowns_method = IndependentParametersValues;
 
-   display = true;
+  display = true;
 }
-
 
 // void check(void) const method
 
-/// Checks that there are a neural network, a mathemacial model and a data set associated to the inverse sum squared error. 
-/// If some of the above conditions is not hold, the method throws an exception. 
+/// Checks that there are a neural network, a mathemacial model and a data set
+/// associated to the inverse sum squared error.
+/// If some of the above conditions is not hold, the method throws an exception.
 
-void InverseSumSquaredError::check(void) const
-{
-   std::ostringstream buffer;
+void InverseSumSquaredError::check(void) const {
+  std::ostringstream buffer;
 
-   // Neural network stuff
+  // Neural network stuff
 
-   if(!neural_network_pointer)
-   {
-      buffer << "OpenNN Exception: InverseSumSquaredError class.\n"
-             << "void check(void) const method.\n"
-             << "Pointer to neural network is NULL.\n";
+  if (!neural_network_pointer) {
+    buffer << "OpenNN Exception: InverseSumSquaredError class.\n"
+           << "void check(void) const method.\n"
+           << "Pointer to neural network is NULL.\n";
 
-      throw std::logic_error(buffer.str());	  
-   }
+    throw std::logic_error(buffer.str());
+  }
 
-   const MultilayerPerceptron* multilayer_perceptron_pointer = neural_network_pointer->get_multilayer_perceptron_pointer();
+  const MultilayerPerceptron* multilayer_perceptron_pointer =
+      neural_network_pointer->get_multilayer_perceptron_pointer();
 
-   if(!multilayer_perceptron_pointer)
-   {
-      buffer << "OpenNN Exception: InverseSumSquaredError class.\n"
-             << "void check(void) const method.\n"
-             << "Pointer to multilayer perceptron is NULL.\n";
+  if (!multilayer_perceptron_pointer) {
+    buffer << "OpenNN Exception: InverseSumSquaredError class.\n"
+           << "void check(void) const method.\n"
+           << "Pointer to multilayer perceptron is NULL.\n";
 
-      throw std::logic_error(buffer.str());	  
-   }
+    throw std::logic_error(buffer.str());
+  }
 
-   const unsigned inputs_number = multilayer_perceptron_pointer->get_inputs_number();
-   const unsigned outputs_number = multilayer_perceptron_pointer->get_outputs_number();
+  const unsigned inputs_number =
+      multilayer_perceptron_pointer->get_inputs_number();
+  const unsigned outputs_number =
+      multilayer_perceptron_pointer->get_outputs_number();
 
-   if(inputs_number == 0)
-   {
-      buffer << "OpenNN Exception: InverseSumSquaredError class.\n"
-             << "void check(void) const method.\n"
-             << "Number of inputs in multilayer perceptron object is zero.\n";
+  if (inputs_number == 0) {
+    buffer << "OpenNN Exception: InverseSumSquaredError class.\n"
+           << "void check(void) const method.\n"
+           << "Number of inputs in multilayer perceptron object is zero.\n";
 
-      throw std::logic_error(buffer.str());	  
-   }
+    throw std::logic_error(buffer.str());
+  }
 
-   if(outputs_number == 0)
-   {
-      buffer << "OpenNN Exception: InverseSumSquaredError class.\n"
-             << "void check(void) const method.\n"
-             << "Number of outputs in multilayer perceptron object is zero.\n";
+  if (outputs_number == 0) {
+    buffer << "OpenNN Exception: InverseSumSquaredError class.\n"
+           << "void check(void) const method.\n"
+           << "Number of outputs in multilayer perceptron object is zero.\n";
 
-      throw std::logic_error(buffer.str());	  
-   }
+    throw std::logic_error(buffer.str());
+  }
 
-   // Mathematical model stuff
+  // Mathematical model stuff
 
-   if(!mathematical_model_pointer)
-   {
-      buffer << "OpenNN Exception: InverseSumSquaredError class.\n"
-             << "void check(void) const method.\n"
-             << "Pointer to mathematical model is NULL.\n";
+  if (!mathematical_model_pointer) {
+    buffer << "OpenNN Exception: InverseSumSquaredError class.\n"
+           << "void check(void) const method.\n"
+           << "Pointer to mathematical model is NULL.\n";
 
-      throw std::logic_error(buffer.str());	  
-   }
+    throw std::logic_error(buffer.str());
+  }
 
-   // Data set stuff 
+  // Data set stuff
 
-   if(!data_set_pointer)
-   {
-      buffer << "OpenNN Exception: InverseSumSquaredError class.\n"
-             << "void check(void) const method.\n"
-             << "Pointer to data set is NULL.\n";
+  if (!data_set_pointer) {
+    buffer << "OpenNN Exception: InverseSumSquaredError class.\n"
+           << "void check(void) const method.\n"
+           << "Pointer to data set is NULL.\n";
 
-      throw std::logic_error(buffer.str());	  
-   }
+    throw std::logic_error(buffer.str());
+  }
 
-   // Final solutions error stuff
-
+  // Final solutions error stuff
 }
-
 
 // double calculate_performance(void) const method
 
 /// @todo
 
-double InverseSumSquaredError::calculate_performance(void) const
-{
-   // Control sentence
+double InverseSumSquaredError::calculate_performance(void) const {
+// Control sentence
 
-   #ifndef NDEBUG 
+#ifndef NDEBUG
 
-   check();
+  check();
 
-   #endif
+#endif
 
-   // Data set stuff
+  // Data set stuff
 
-   const Matrix<double> training_input_data = data_set_pointer->arrange_training_input_data();
-   const Matrix<double> training_target_data = data_set_pointer->arrange_training_target_data();
+  const Matrix<double> training_input_data =
+      data_set_pointer->arrange_training_input_data();
+  const Matrix<double> training_target_data =
+      data_set_pointer->arrange_training_target_data();
 
-   const unsigned training_instances_number = training_input_data.get_rows_number();
+  const unsigned training_instances_number =
+      training_input_data.get_rows_number();
 
-   // Mathematical model stuff 
+  // Mathematical model stuff
 
-   const Matrix<double> training_solution_data = mathematical_model_pointer->calculate_dependent_variables(*neural_network_pointer, training_input_data);
+  const Matrix<double> training_solution_data =
+      mathematical_model_pointer->calculate_dependent_variables(
+          *neural_network_pointer, training_input_data);
 
-   return(training_solution_data.calculate_sum_squared_error(training_target_data)/(double)training_instances_number);
+  return (
+      training_solution_data.calculate_sum_squared_error(training_target_data) /
+      (double)training_instances_number);
 }
-
 
 // double calculate_performance(const Vector<double>&) const method
 
-double InverseSumSquaredError::calculate_performance(const Vector<double>& potential_parameters) const
-{
-   // Control sentence (if debug)
+double InverseSumSquaredError::calculate_performance(
+    const Vector<double>& potential_parameters) const {
+// Control sentence (if debug)
 
-   #ifndef NDEBUG 
+#ifndef NDEBUG
 
-   check();
+  check();
 
-   #endif
+#endif
 
-   #ifndef NDEBUG 
+#ifndef NDEBUG
 
-   const unsigned size = potential_parameters.size();
+  const unsigned size = potential_parameters.size();
 
-   const unsigned parameters_number = neural_network_pointer->count_parameters_number();
+  const unsigned parameters_number =
+      neural_network_pointer->count_parameters_number();
 
-   if(size != parameters_number)
-   {
-      std::ostringstream buffer;
+  if (size != parameters_number) {
+    std::ostringstream buffer;
 
-      buffer << "OpenNN Exception: InverseSumSquaredError class.\n"
-             << "double calculate_performance(const Vector<double>&) const method.\n"
-             << "Size (" << size << ") must be equal to number of parameters (" << parameters_number << ").\n";
+    buffer
+        << "OpenNN Exception: InverseSumSquaredError class.\n"
+        << "double calculate_performance(const Vector<double>&) const method.\n"
+        << "Size (" << size << ") must be equal to number of parameters ("
+        << parameters_number << ").\n";
 
-      throw std::logic_error(buffer.str());	  
-   }
+    throw std::logic_error(buffer.str());
+  }
 
-   #endif
+#endif
 
-   NeuralNetwork neural_network_copy(*neural_network_pointer);
+  NeuralNetwork neural_network_copy(*neural_network_pointer);
 
-   neural_network_copy.set_parameters(potential_parameters);
+  neural_network_copy.set_parameters(potential_parameters);
 
-   InverseSumSquaredError inverse_sum_squared_error_copy(*this);
+  InverseSumSquaredError inverse_sum_squared_error_copy(*this);
 
-   inverse_sum_squared_error_copy.set_neural_network_pointer(&neural_network_copy);
+  inverse_sum_squared_error_copy.set_neural_network_pointer(
+      &neural_network_copy);
 
-   return(inverse_sum_squared_error_copy.calculate_performance());
+  return (inverse_sum_squared_error_copy.calculate_performance());
 }
-
 
 // double calculate_generalization_performance(void) const method
 
 /// @todo
 
-double InverseSumSquaredError::calculate_generalization_performance(void) const
-{
-   // Control sentence (if debug)
+double InverseSumSquaredError::calculate_generalization_performance(
+    void) const {
+// Control sentence (if debug)
 
-   #ifndef NDEBUG 
+#ifndef NDEBUG
 
-   check();
+  check();
 
-   #endif
+#endif
 
-   const MultilayerPerceptron* multilayer_perceptron_pointer = neural_network_pointer->get_multilayer_perceptron_pointer();
+  const MultilayerPerceptron* multilayer_perceptron_pointer =
+      neural_network_pointer->get_multilayer_perceptron_pointer();
 
-   const unsigned inputs_number = multilayer_perceptron_pointer->get_inputs_number();
-   const unsigned outputs_number = multilayer_perceptron_pointer->get_outputs_number();
+  const unsigned inputs_number =
+      multilayer_perceptron_pointer->get_inputs_number();
+  const unsigned outputs_number =
+      multilayer_perceptron_pointer->get_outputs_number();
 
-   const Instances& instances = data_set_pointer->get_instances();
+  const Instances& instances = data_set_pointer->get_instances();
 
-   const unsigned generalization_instances_number = instances.count_generalization_instances_number();
+  const unsigned generalization_instances_number =
+      instances.count_generalization_instances_number();
 
-   Vector<double> inputs(inputs_number);
-   Vector<double> outputs(outputs_number);
-   Vector<double> targets(outputs_number);
+  Vector<double> inputs(inputs_number);
+  Vector<double> outputs(outputs_number);
+  Vector<double> targets(outputs_number);
 
-   double generalization_objective = 0.0;
+  double generalization_objective = 0.0;
 
-   for(unsigned i = 0; i < generalization_instances_number; i++)
-   {
-      // Input vector
+  for (unsigned i = 0; i < generalization_instances_number; i++) {
+    // Input vector
 
-	  inputs = data_set_pointer->get_generalization_input_instance(i);
+    inputs = data_set_pointer->get_generalization_input_instance(i);
 
-      // Output vector
+    // Output vector
 
-      outputs = multilayer_perceptron_pointer->calculate_outputs(inputs);
+    outputs = multilayer_perceptron_pointer->calculate_outputs(inputs);
 
-      // Target vector
+    // Target vector
 
-      targets = data_set_pointer->get_generalization_target_instance(i);
+    targets = data_set_pointer->get_generalization_target_instance(i);
 
-      // Sum of squares error
+    // Sum of squares error
 
-      generalization_objective += outputs.calculate_sum_squared_error(targets);           
-   }
+    generalization_objective += outputs.calculate_sum_squared_error(targets);
+  }
 
-   return(generalization_objective);
+  return (generalization_objective);
 }
-
 
 // std::string write_performance_term_type(void) const method
 
-/// Returns a string with the name of the inverser sum squared error performance type, "INVERSE_SUM_SQUARED_ERROR".
+/// Returns a string with the name of the inverser sum squared error performance
+/// type, "INVERSE_SUM_SQUARED_ERROR".
 
-std::string InverseSumSquaredError::write_performance_term_type(void) const
-{
-   return("INVERSE_SUM_SQUARED_ERROR");
+std::string InverseSumSquaredError::write_performance_term_type(void) const {
+  return ("INVERSE_SUM_SQUARED_ERROR");
 }
 
+// tinyxml2::XMLDocument* to_XML(void) const method
 
-// tinyxml2::XMLDocument* to_XML(void) const method 
+/// Serializes the inverse sum squared error object into a XML document of the
+/// TinyXML library.
+/// See the OpenNN manual for more information about the format of this
+/// document->
 
-/// Serializes the inverse sum squared error object into a XML document of the TinyXML library. 
-/// See the OpenNN manual for more information about the format of this document-> 
+tinyxml2::XMLDocument* InverseSumSquaredError::to_XML(void) const {
+  std::ostringstream buffer;
 
-tinyxml2::XMLDocument* InverseSumSquaredError::to_XML(void) const
-{
-   std::ostringstream buffer;
+  tinyxml2::XMLDocument* document = new tinyxml2::XMLDocument;
 
-   tinyxml2::XMLDocument* document = new tinyxml2::XMLDocument;
+  // Inverse sum squared error
 
-   // Inverse sum squared error
+  tinyxml2::XMLElement* inverse_sum_squared_error_element =
+      document->NewElement("InverseSumSquaredError");
 
-   tinyxml2::XMLElement* inverse_sum_squared_error_element = document->NewElement("InverseSumSquaredError");
+  document->InsertFirstChild(inverse_sum_squared_error_element);
 
-   document->InsertFirstChild(inverse_sum_squared_error_element);
+  // Numerical differentiation
 
-   // Numerical differentiation
+  if (numerical_differentiation_pointer) {
+    tinyxml2::XMLElement* element =
+        numerical_differentiation_pointer->to_XML()->FirstChildElement();
+    inverse_sum_squared_error_element->LinkEndChild(element);
+  }
 
-   if(numerical_differentiation_pointer)
-   {
-	  tinyxml2::XMLElement* element = numerical_differentiation_pointer->to_XML()->FirstChildElement();
-      inverse_sum_squared_error_element->LinkEndChild(element);
-   }
+  // Unknowns method
+  {
+    tinyxml2::XMLElement* element = document->NewElement("UnknownsMethod");
+    inverse_sum_squared_error_element->LinkEndChild(element);
 
-   // Unknowns method
-   {
-      tinyxml2::XMLElement* element = document->NewElement("UnknownsMethod");
-      inverse_sum_squared_error_element->LinkEndChild(element);
+    tinyxml2::XMLText* text =
+        document->NewText(write_unknowns_method().c_str());
+    element->LinkEndChild(text);
+  }
 
-      tinyxml2::XMLText* text = document->NewText(write_unknowns_method().c_str());
-      element->LinkEndChild(text);
-   }
+  // Display
 
-   // Display
+  {
+    tinyxml2::XMLElement* display_element = document->NewElement("Display");
+    inverse_sum_squared_error_element->LinkEndChild(display_element);
 
-   {
-      tinyxml2::XMLElement* display_element = document->NewElement("Display");
-      inverse_sum_squared_error_element->LinkEndChild(display_element);
+    buffer.str("");
+    buffer << display;
 
-      buffer.str("");
-      buffer << display;
+    tinyxml2::XMLText* display_text = document->NewText(buffer.str().c_str());
+    display_element->LinkEndChild(display_text);
+  }
 
-      tinyxml2::XMLText* display_text = document->NewText(buffer.str().c_str());
-      display_element->LinkEndChild(display_text);
-   }
-
-   return(document);
-
+  return (document);
 }
-
 
 // void from_XML(const tinyxml2::XMLDocument&) method
 
 /// @todo
 
-void InverseSumSquaredError::from_XML(const tinyxml2::XMLDocument&)   
-{
-
+void InverseSumSquaredError::from_XML(const tinyxml2::XMLDocument&) {}
 }
-
-}
-
 
 // OpenNN: Open Neural Networks Library.
 // Neural Designer Copyright © 2013 Roberto López and Ismael Santana (Intelnics)
